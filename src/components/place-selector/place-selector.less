@@ -1,0 +1,52 @@
+arcus-place-selector {
+  display: block;
+  width: 100%;
+  button {
+    margin: 0;
+    margin-top: @gutter/4;
+  }
+  .panel-menu {
+    list-style: none;
+    padding-left: 0;
+    overflow-y: scroll;
+    border-top: @border;
+    border-bottom: @border;
+    margin-bottom: 30px;
+    margin-top: @gutter*1.5;
+  }
+  .radio-wrapper {
+    border: none;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 30px;
+    &:first-child {
+      padding-top: 30px;
+    }
+    > * {
+      margin-right: @gutter/2;
+    }
+    .check {
+      align-self: center;
+    }
+    label {
+      //this is so the place-avatar is clickable too
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 155px;
+      margin-left: -155px;
+      white-space: normal;
+      .breakpoint(sm-down {
+        font-size: @font-size-large;
+        margin-right: 0;
+      });
+    }
+  }
+  h3 {
+    margin: 0;
+    padding-bottom: @gutter*1.5;
+  }
+  .btn-primary {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+  }
+}

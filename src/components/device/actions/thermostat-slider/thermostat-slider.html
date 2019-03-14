@@ -1,0 +1,60 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  .demo-container {
+    width: 242px;
+    margin-left: 30px;
+    margin-top: 80px;
+  }
+</style>
+
+<script type="text/stache" id="demo-html">
+  <select {^$value}="device.therm:hvacmode">
+    <option value="AUTO">Auto</option>
+    <option value="HEAT">Heat</option>
+    <option value="COOL">Cool</option>
+    <option value="ECO">Eco</option>
+    <option value="OFF">Off</option>
+  </select>
+
+  Value: {{device["therm:hvacmode"]}}
+
+  <div class="demo-container">
+    <arcus-device-action-thermostat-slider {device}="device" />
+  </div>
+</script>
+
+<script src="../../../../../node_modules/steal/steal.js" data-main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import CanViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Device from 'i2web/models/device';
+  import nestThermostatData from 'i2web/models/fixtures/data/device/nest_thermostats.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/device/actions/thermostat-slider/';
+
+  const config = new CanMap({
+    device: new Device(nestThermostatData[0])
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: config,
+    appScope: {},
+  });
+</script>

@@ -1,0 +1,99 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-template">
+  <arcus-notifications {(events)}="notifications" />
+
+  <button ($click)="testTimeout">Test Timeout</button>
+  <button ($click)="testError">Test Error</button>
+  <button ($click)="testSuccess">Test Success</button>
+
+  <div id="demo-area"></div>
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import { ViewModel as PanelViewModel } from 'i2web/components/device/remove-panel/';
+  import Cornea from 'i2web/cornea/';
+  import Device from 'i2web/models/device';
+  import DeviceData from 'i2web/models/fixtures/data/device/lights.json';
+  import SidePanel from 'i2web/plugins/side-panel';
+  import stache from 'can-stache';
+  import 'i2web/plugins/polyfills';
+  import 'i2web/components/notifications/';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+
+  // make SidePanel call test close() method since the side panel isn't open in this example page
+  SidePanel.close = function overriddenClose() {
+    TestButtonsVM.prototype.close.call(this);
+  };
+
+  const testDevice = new Device(DeviceData[0]);
+  testDevice.ForceRemove = () => {
+    fakeBaseDeleted();
+    Promise.resolve();
+  };
+
+  function fakeBaseDeleted() {
+    Cornea.emit(`dev base:Deleted`, testDevice.attr());
+  }
+
+  const TestButtonsVM = CanMap.extend({
+    device: testDevice,
+    notifications: [],
+    open() {
+      document.getElementById('demo-area').appendChild(
+        stache(
+          `<arcus-device-remove-panel {device}="device"
+              {remove-time-out-length}="5000" />`
+        )({ device: this.attr('device') })
+      );
+    },
+    close() {
+      document.getElementById('demo-area').innerHTML = '';
+    },
+    testTimeout() {
+      testDevice.Remove = () => new Promise(() => {});
+      this.open();
+    },
+    testError() {
+      testDevice.Remove = () => Promise.reject('demo error');
+      this.open();
+    },
+    testSuccess() {
+      testDevice.Remove = () => {
+        fakeBaseDeleted();
+        Promise.resolve({
+          steps: [{id: 'pair/remove1'}], // zigbee devices all have a single return step
+        });
+      };
+      this.open();
+    },
+  });
+  const testButtonsVM = new TestButtonsVM();
+
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-template',
+    scope: testButtonsVM,
+    appScope: {
+      notifications: [],
+    },
+  }).then(({cleanup, appState}) => {
+    testButtonsVM.attr('notifications', appState.notifications);
+  });
+</script>

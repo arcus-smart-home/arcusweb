@@ -1,0 +1,186 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-completed-device">
+  <template>
+    <can-import from="i2web/components/animated/check.component"/>
+    <can-import from="i2web/components/pairing/device-state/" />
+    {{#if device}}
+      <p>
+        <strong>This device is securely connected to your Arcus system.</strong>
+      </p>
+      <arcus-animated-check {checked}="checked" icon="{{iconClass}}" />
+      <h3>{{device.name}}</h3>
+      {{#if otherPairingDevices.length}}
+        <hr />
+        <p class="ready-customize">
+          The following device(s) are ready to customize:
+        </p>
+        <div class="state-list">
+          {{#each otherPairingDevices}}
+            <arcus-pairing-device-state
+              {on-customize}="@onCustomize"
+              {on-remove}="@onRemove"
+              {on-try-again}="@onTryAgain"
+              {pairing-device}="."
+            />
+          {{/each}}
+        </div>
+      {{/if}}
+      <button class="btn" ($click)="pairAnotherDevice()">
+        Pair Another Device
+      </button>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import CanList from 'can-list';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import canRoute from 'can-route';
+    import { deviceTypeConfig as deviceTypeConfigs, productConfig as productConfigs } from 'config/device';
+    import Device from 'i2web/models/device';
+    import PairingDevice from 'i2web/models/pairing-device';
+    import Errors from 'i2web/plugins/errors';
+    import find from 'lodash/find';
+    import getAppState from 'i2web/plugins/get-app-state';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Boolean} checked
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description A flag that is changed to show the "checked" symbol
+         */
+        checked: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {Object} device
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The device that is going to be customized
+         */
+        device: {
+          get(lastSet, asyncReturn) {
+            if (lastSet) return lastSet;
+
+            const address = this.attr('pairingDevice.pairdev:deviceAddress');
+            const devices = getAppState().attr('devices') || [];
+
+            if (address) {
+              const device = find(devices, d => d.attr('base:address') === address);
+              if (device) {
+                return device;
+              }
+              Device.get({ 'base:address': address })
+                .then(asyncReturn).catch(Errors.log);
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} iconClass
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The device icon to display to the User
+         */
+        iconClass: {
+          get() {
+            const productConfig = productConfigs[this.attr('product.product:id')];
+            const deviceType = this.attr('device.web:dev:devtypehint')
+              ? this.attr('device.web:dev:devtypehint').toLowerCase()
+              : '';
+            const deviceConfig = deviceTypeConfigs[deviceType];
+            return (productConfig && productConfig['web:icon:catalog'])
+              || (deviceConfig && deviceConfig['web:icon:catalog'])
+              || 'icon-app-devices';
+          },
+        },
+        /**
+         * @property {PairingDevice} pairingDevice
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The PairingDevice instance
+         */
+        pairingDevice: {
+          Type: PairingDevice,
+        },
+        /**
+         * @property {CanList<PairingDevice>} pairingDevices
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The list of PairingDevices remaining on the Subsystem
+         */
+        pairingDevices: {
+          Type: CanList,
+        },
+        /**
+         * @property {CanList<PairingDevice>} otherPairingDevice
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The list of PairingDevices on the Subsystem other than the currently selected one.
+         *  We need this since the pairing device list still contains the completed device momentarily, as it's
+         *  dismissal occurs while this component is visible.
+         */
+        otherPairingDevices: {
+          get() {
+            const currentPairDevAddr = this.attr('pairingDevice.base:address');
+            return this.attr('pairingDevices').filter(d => d.attr('base:address') !== currentPairDevAddr);
+          },
+        },
+        /**
+         * @property {Object} product
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description Specific product from the product catalog. Used when pairing devices.
+         */
+        product: {
+          Type: CanMap,
+          get(lastSet) {
+            return this.attr('device.product')
+              ? this.attr('device.product')
+              : lastSet;
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/completed/device
+         * @description The title to be shown on the pairing page
+         */
+        title: {
+          value: 'Paired and ready for action!',
+        },
+      },
+      /**
+       * @function pairAnotherDevice
+       * @parent i2web/components/pairing/customize/completed/device
+       * @description Change the route allowing the User to pair another device
+       */
+      pairAnotherDevice() {
+        canRoute.attr({ page: 'product-catalog', subpage: 'brands', action: undefined });
+      },
+    });
+  </script>
+  <script type="events">
+    import Errors from 'i2web/plugins/errors';
+
+    export default {
+      // when this component is shown it's time to dismiss the pairing device
+      inserted() {
+        this.viewModel.attr('pairingDevice').Dismiss().catch(Errors.log);
+      },
+      // when the pairing device is removed by the platform, indicate it's pairing is complete
+      '{viewModel.pairingDevice} base:Deleted': function pairingDeviceDeleted() {
+        this.viewModel.attr('checked', true);
+      },
+    };
+  </script>
+</can-component>

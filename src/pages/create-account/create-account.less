@@ -1,0 +1,105 @@
+arcus-page-create-account {
+  display: block;
+  text-align: center;
+  padding-left: @gutter/2;
+  padding-right: @gutter/2;
+  margin-bottom: @gutter;
+
+  arcus-create-account-billing-address,
+  arcus-create-account-billing-info,
+  arcus-create-account-how-to-use,
+  arcus-create-account-zip-code,
+  arcus-create-account-name,
+  arcus-create-account-pin,
+  arcus-service-plans,
+  arcus-create-account-acknowledge,
+  arcus-create-account-login,
+  arcus-create-account-step-login .already-registered,
+  arcus-create-account-security-questions,
+  arcus-create-account-welcome,
+  arcus-create-account-input-address,
+  arcus-create-account-not-available,
+  arcus-create-account-use-mobile,
+  arcus-create-account-confirm-address {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+//for pages with the context bar (promon)
+  arcus-pro-monitoring-step-welcome,
+  arcus-pro-monitoring-step-permit-required,
+  arcus-pro-monitoring-step-review-your-information,
+  arcus-pro-monitoring-step-connection-test,
+  arcus-create-account-step-additional-info {
+    .container {
+      padding-top: (68px + @gutter); //68px = context bar height
+      .breakpoint(md, {
+        padding-top: (68px + (@gutter/2)); //68px = context bar height
+      });
+      p {
+        max-width: 100%;
+      }
+    }
+  }
+
+  arcus-wizard .button-panel {
+    border-top: none;
+    justify-content: center;
+  }
+  arcus-tooltip {
+    text-align: left;
+  }
+
+  arcus-create-account-not-available {
+    button:first-of-type {
+      margin-top: @gutter;
+    }
+    button {
+      &.not-available {
+        margin-bottom: @gutter / 2;
+      }
+    }
+  }
+
+  arcus-context-bar {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    .context-bar {
+      border-top: @border;
+      position: relative;
+      margin-top: 0;
+      justify-content: center;
+      h2 {
+        overflow: visible;
+      }
+    }
+  }
+
+  arcus-create-account-use-mobile {
+    .modal-content {
+      .breakpoint(md-down, {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 100vh;
+      });
+      p {
+        text-align: left;
+        margin-bottom: @gutter/2;
+      }
+      .btn {
+        margin-bottom: @gutter/1.5;
+      }
+    }
+  }
+
+  //this is a specific flexboxgrid override:
+  .container {
+    @media only screen and (min-width: 48em) {
+      width: auto;
+      max-width: 49rem; //this was originally default width
+    }
+  }
+}

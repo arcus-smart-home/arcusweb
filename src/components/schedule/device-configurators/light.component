@@ -1,0 +1,158 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-light">
+  <template>
+    <h4>Choose a state for <strong>{{thing['dev:name']}}</strong></h4>
+    <hr />
+    <can-import from="i2web/components/control-switch/" />
+    {{#if attributes['swit:state']}}
+      <div class="switch-value">
+        <h4>{{switchState}}</h4>
+        <arcus-control-switch
+          {is-on}="equal(~attributes['swit:state'], 'ON')"
+          {toggle}="@toggleSwitch" />
+      </div>
+    {{/if}}
+    {{#eq attributes['swit:state'] 'ON'}}
+      {{#if hasBrightness}}
+        <hr />
+        <div class="configurator">
+          <div class="configurator-header">
+            <h4 class="config-title">Brightness</h4>
+            <span class="config-value">
+              {{brightness}}
+              <span class="value-unit">%</span>
+            </span>
+          </div>
+          <div class="range-wrapper brightness-control">
+            {{#isIE}}
+              <input type="range"
+                {$value}="{{brightness}}"
+                ($change)="adjustBrightness(%event)"
+                min="10"
+                max="100"
+                step="10"
+                aria-valuenow="{{brightness}}"
+                aria-valuemin="10"
+                aria-valuemax="100" />
+            {{else}}
+              <input type="range"
+                {$value}="{{brightness}}"
+                ($input)="adjustBrightness(%event)"
+                min="10"
+                max="100"
+                step="10"
+                aria-valuenow="{{brightness}}"
+                aria-valuemin="10"
+                aria-valuemax="100" />
+            {{/isIE}}
+          </div>
+        </div>
+      {{/if}}
+    {{/eq}}
+    <hr />
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/lights
+         * @description The device attributes used for displaying the configurator
+         */
+        attributes: {
+          type: '*',
+          set(attributes) {
+            const brightness = attributes.attr('dim:brightness');
+            if (brightness) {
+              this.attr('brightness', brightness);
+            }
+            return attributes;
+          },
+        },
+        /**
+         * @property {Number} brightness
+         * @parent i2web/components/schedule/device-configurators/lights
+         * @description Rounded (to the nearest 10) brightness
+         */
+        brightness: {
+          get(currentVal) {
+            const brightness = currentVal || this.attr('thing.dim:brightness');
+            return Math.round(brightness / 10) * 10;
+          },
+        },
+        /**
+         * @property {Boolean} hasBrightness
+         * @parent i2web/components/schedule/device-configurators/lights
+         * @description Whether attributes includes the 'dim:brightness' property
+         */
+        hasBrightness: {
+          get() {
+            return this.attr('thing').hasCapability('dim');
+          },
+        },
+        /**
+         * @property {String} switchState
+         * @parent i2web/components/schedule/device-configurators/lights
+         * @description The textual representation of the switche' state (ON/OFF)
+         */
+        switchState: {
+          get() {
+            return this.attr('attributes.swit:state').toLowerCase();
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/lights
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+      },
+      /**
+       * @function adjustBrightness
+       * @param {Object} event
+       * @parent i2web/components/schedule/device-configurators/lights
+       * @description Sets the brightness to the new value captured in the event
+       */
+      adjustBrightness(event) {
+        this.attr('brightness', +event.target.value);
+        this.attr('attributes.dim:brightness', this.attr('brightness'));
+      },
+      /**
+       * @function toggleSwitch
+       * @parent i2web/components/schedule/device-configurators/lights
+       * @description Toggles the a binary property ON or OFF
+       */
+      toggleSwitch() {
+        const state = (this.attr('attributes.swit:state') === 'ON') ? 'OFF' : 'ON';
+        if (state === 'ON') {
+          this.attr('attributes.dim:brightness', this.attr('brightness'));
+        } else {
+          this.removeAttr('attributes.dim:brightness');
+        }
+        this.attr('attributes.swit:state', state);
+      },
+    });
+  </script>
+</can-component>

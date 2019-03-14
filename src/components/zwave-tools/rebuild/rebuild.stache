@@ -1,0 +1,79 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/progress-bar/" />
+
+{{#if showModal}}
+  <div class="modal-container">
+    <div class="modal-content">
+      <h4>{{headerText}}</h4>
+
+      <hr/>
+
+      <arcus-progress-bar {percent-complete}="healPercent" />
+
+      {{#switch mode}}
+        {{#case 'rebuild'}}
+          <p>
+            The rebuild process time varies depending on the number of Z-Wave devices in your
+            home. It may take a few minutes or several hours to complete.
+          </p>
+
+          <p>
+            During this process, Z-Wave devices will not work optimally. These devices may
+            disconnect and reconnect to the Hub until the rebuild process is complete.
+          </p>
+        {{/case}}
+        {{#case 'confirm-cancel'}}
+          <p>
+            Cancelling the Z-Wave rebuild process will abandon any improvements to your
+            Z-Wave network. It may take a few minutes to stop rebuilding.
+          </p>
+        {{/case}}
+        {{#case 'success'}}
+          <p>
+            The Z-Wave network rebuild process has completed.
+          </p>
+        {{/case}}
+      {{/switch}}
+
+      <div class="buttons">
+        {{#switch mode}}
+          {{#case 'rebuild'}}
+            <button class="btn" ($click)="close()">Close & Continue</button>
+            <button class="btn-cancel" ($click)="setMode('confirm-cancel')">Cancel Rebuild</button>
+          {{/case}}
+          {{#case 'confirm-cancel'}}
+            <button class="btn {{#if isCancelInProgress}}disabled{{/if}}"
+                    ($click)="setMode('rebuild')">
+              Continue Rebuild
+            </button>
+            <button class="btn-cancel {{#if isCancelInProgress}}active disabled{{/if}}"
+                    ($click)="cancelHeal()">
+              {{#if isCancelInProgress}}<div class="loader">Loading...</div>{{/if}}
+              Cancel Rebuild
+            </button>
+          {{/case}}
+          {{#case 'success'}}
+            <button class="btn" ($click)="close()">Done</button>
+          {{/case}}
+        {{/switch}}
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop"></div>
+{{/if}}

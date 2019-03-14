@@ -1,0 +1,161 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache/helpers/route" />
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/carousel/" />
+<can-import from="i2web/components/form/delete-account/" />
+<can-import from="i2web/components/settings/profile/info.component" />
+
+<arcus-settings-profile-info
+  {account}="account"
+  {change-password}="@changePassword"
+  {edit-billing}="@editBilling"
+  {edit-contact-info}="@editContactInfo"
+  {person}="person"
+  {place}="place"
+  {service-level}="serviceLevel"
+/>
+
+<arcus-accordion {on-panel-activation}="@updateRoute">
+  <arcus-accordion-panel header="" action="security-questions" {active}="isPanelActive('security-questions')">
+    <arcus-accordion-panel-heading>
+      <h2>Security Questions</h2>
+    </arcus-accordion-panel-heading>
+    <arcus-accordion-panel-body>
+      {{#if securityQAs}}
+        {{#each securityQAs}}
+          <div class="accordion-panel-content">
+            <div class="accordion-panel-copy">
+              {{#if saved}}
+                <h3>Question {{%indexNum 1}}</h3>
+                <p>{{question}}</p>
+              {{else}}
+                <h3>Add an additional question for enhanced security.</h3>
+              {{/if}}
+            </div>
+          </div>
+          <div class="accordion-panel-action">
+            <div class="accordion-buttons">
+              <button class="btn-primary" ($click)="editSecurityQuestion(%index, .)">
+                {{#if saved}} Edit {{else}} Add {{/if}}
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <div class="loader">Loading...</div>
+      {{/if}}
+    </arcus-accordion-panel-body>
+  </arcus-accordion-panel>
+
+  <arcus-accordion-panel action="change-pin" {active}="isPanelActive('change-pin')">
+    <arcus-accordion-panel-heading>
+      <h2>Change Pin Code</h2>
+    </arcus-accordion-panel-heading>
+    <arcus-accordion-panel-body>
+      {{#if places}}
+        {{#each places}}
+          <div class="accordion-panel-content">
+            <div class="place-avatar">
+              <img src="/src/images/default-home.jpg"/>
+            </div>
+            <div class="accordion-panel-copy">
+              <h3 class="place-name">{{['place:name']}}</h3>
+              {{#if .['isPromon']}}
+                <span class="pro-badge">Pro</span>
+              {{/if}}
+              {{#if place['place:streetAddress1']}}
+                <p class="subheader">
+                  {{['place:streetAddress1']}}
+                  <br/>
+                  {{#if ['place:streetAddress2']}}
+                    {{['place:streetAddress2']}}
+                    <br/>
+                  {{/if}}
+                  {{['place:city']}}, {{['place:state']}} {{['place:zipCode']}}
+                </p>
+              {{/if}}
+              {{#if ['web:userOwnsPlace']}}
+                <p class="subheader">
+                  <span class="uppercase">Account Owner</span>
+                </p>
+              {{/if}}
+            </div>
+          </div>
+          <div class="accordion-panel-action">
+            <div class="accordion-buttons">
+              <button class="btn-primary" ($click)="changePinCode(.)">Change Pin Code</button>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <div class="loader">Loading...</div>
+      {{/if}}
+    </arcus-accordion-panel-body>
+  </arcus-accordion-panel>
+
+  <arcus-accordion-panel action="push-notifications" {active}="isPanelActive('push-notifications')">
+    <arcus-accordion-panel-heading>
+      <h2>Push Notifications</h2>
+    </arcus-accordion-panel-heading>
+    <arcus-accordion-panel-body>
+      <div class="accordion-panel-content">
+        <div class="accordion-panel-copy">
+          <h3>Manage Your Push Notifications</h3>
+          <p>Click on Edit to view the list of devices that currently receive your push notifications. You will not receive push notifications on the devices you remove from that list.</p>
+        </div>
+      </div>
+      <div class="accordion-panel-action">
+        <div class="accordion-buttons">
+          <button class="btn-primary" ($click)="pickPushNotifications()">Edit</button>
+        </div>
+      </div>
+      <div class="accordion-panel top-line">
+        <div class="accordion-panel-content full-width">
+          <div class="accordion-panel-copy">
+            <h3>Stop Receiving All Push Notifications</h3>
+            <p>To turn off push notifications, please check the Arcus notification settings in the operating system settings of your mobile phone and/or tablet device.</p>
+          </div>
+        </div>
+      </div>
+    </arcus-accordion-panel-body>
+  </arcus-accordion-panel>
+
+  <arcus-accordion-panel action="delete-account" {active}="isPanelActive('delete-account')">
+    <arcus-accordion-panel-heading>
+      <h2>Delete My Arcus Account</h2>
+    </arcus-accordion-panel-heading>
+    <arcus-accordion-panel-body>
+      <div class="accordion-panel-content">
+        <div class="accordion-panel-copy">
+          <h3>Warning</h3>
+          {{#if person['web:person:isOwner']}}
+            <p>Deleting this account will erase your Arcus account, email address, and personal hub information from the Arcus Hub and the Arcus servers.</p>
+          {{else}}
+            <p>Deleting this Arcus account will erase your email address and personal information from the Arcus server.</p>
+          {{/if}}
+        </div>
+      </div>
+      <div class="accordion-panel-action">
+        <div class="accordion-buttons">
+          <button class="btn-delete" ($click)="deleteAccount()">Delete</button>
+        </div>
+      </div>
+    </arcus-accordion-panel-body>
+  </arcus-accordion-panel>
+
+</arcus-accordion>

@@ -1,0 +1,96 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  arcus-pairing-remove-automatic {
+    margin-top: 20px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="switchState('removing')">Removing</button>
+  <button ($click)="switchState('removed')">Removed</button>
+
+  <arcus-pairing-remove-automatic
+      {pairing-device}="pairingDevice"
+      {removal-steps}="removalSteps"
+      {^title}="pairingTitle"
+      {product}="product"
+      {(removing)}="removing"
+      {on-pair-removed-device}="@onPairRemovedDevice"
+    />
+</script>
+<script src="/node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/remove/automatic.component';
+  import 'i2web/components/pairing/remove/manual.component';
+  import ProductData from 'i2web/models/fixtures/data/product.json';
+
+  const appScope = new CanMap({});
+  const scope = new CanMap({
+    product: ProductData[0],
+    removing: true,
+    removalSteps: [{
+      "externalApps": null,
+      "id": "pair/remove0",
+      "info": "This should only take a moment.",
+      "instructions": null,
+      "linkText": null,
+      "linkUrl": null,
+      "order": 0,
+      "title": "Removing Device"
+    }],
+    pairingDevice: {
+      'pairdev:pairingState': 'MISPAIRED',
+      'pairdev:pairingPhase': 'FAILED',
+      'pairdev:deviceAddress': undefined,
+      Remove() {
+        return Promise.resolve(
+           {
+            "mode": "CLOUD",
+            "steps": [ {
+              "externalApps": null,
+              "id": "pair/remove0",
+              "info": "This should only take a moment.",
+              "instructions": null,
+              "linkText": null,
+              "linkUrl": null,
+              "order": 0,
+              "title": "Removing Device"
+            } ]
+          }
+        );
+      },
+    },
+    switchState(type) {
+      if (type === 'removing')
+      {
+        this.attr('removing', true);
+      } else {
+        this.attr('removing', false);
+      }
+    }
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

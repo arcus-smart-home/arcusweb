@@ -1,0 +1,189 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-assign-buttons">
+  <template>
+    <can-import from="i2web/components/device/configurators/assign-button.component" />
+    {{#unless forPairingCustomization}}
+      <div class="configurator-header">
+        <h4 class="config-title">{{configTitle}}</h4>
+      </div>
+    {{/unless}}
+    {{#unless hasMultipleButtons}}
+      {{#if firstButton}}
+        <arcus-device-configurator-assign-button
+          {device}="device"
+          {button}="firstButton"
+          {on-button-assigned}="@onButtonAssigned"
+        />
+      {{/if}}
+    {{else}}
+      <can-import from="i2web/components/accordion/" />
+      <arcus-accordion>
+        {{#each buttons}}
+          <arcus-accordion-panel>
+            <arcus-accordion-panel-heading>
+              <div class="complex-label">
+                <i class="{{getButtonIconClass(.['name'])}} fob-button-icon"></i>
+                <div>
+                  <h5>{{getButtonLabel(name)}}</h5>
+                  <small>{{ruleHint}}</small>
+                </div>
+              </div>
+            </arcus-accordion-panel-heading>
+            <arcus-accordion-panel-body>
+              <arcus-device-configurator-assign-button
+                {device}="device"
+                {button}="name"
+                {^rule-template-hint}="ruleHint"
+                {on-button-assigned}="@onButtonAssigned"
+              />
+            </arcus-accordion-panel-body>
+          </arcus-accordion-panel>
+        {{/each}}
+      </arcus-accordion>
+    {{/unless}}
+  </template>
+  <script type="helpers">
+    import _upperFirst from 'lodash/upperFirst';
+
+    export default {
+      /**
+       * @function getButtonIconClass
+       * @param {String} buttonName string
+       * @parent i2web/components/device/configurators/
+       * @description Returns icon for the button selector heading
+       * @return String
+       */
+      getButtonIconClass(buttonName) {
+        switch (buttonName) {
+          case 'home': return 'icon-platform-keyfob-home';
+          case 'away': return 'icon-platform-keyfob-away';
+          case 'a': return 'icon-platform-keyfob-a';
+          case 'b': return 'icon-platform-keyfob-b';
+          case 'circle': return 'icon-platform-keyfob-circle';
+          case 'diamond': return 'icon-platform-keyfob-diamond';
+          case 'square': return 'icon-platform-keyfob-square';
+          case 'hexagon': return 'icon-platform-keyfob-hexagon';
+          default: return '';
+        }
+      },
+      /**
+       * @function getButtonLabel
+       * @param {String} buttonName string
+       * @parent i2web/components/device/configurators/
+       * @description Returns display string for button selector heading
+       * @return String
+       */
+      getButtonLabel(buttonName) {
+        return buttonName === 'button' ? '' : _upperFirst(buttonName);
+      },
+    };
+  </script>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import CanList from 'can-list';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import _map from 'lodash/map';
+
+    const PRODUCT_RULE_TEMPLATE_PREFIX = {
+      // 4 button keyfobs v3
+      '4fcccc': ['away', 'home', 'a', 'b'],
+      // 4 button keyfobs v2
+      '4fccbb': ['circle', 'diamond', 'square', 'hexagon'],
+      // 2 button keyfobs
+      486390: ['away', 'home'],
+      bbf1cf: ['button'],
+      bca135: ['button'],
+    };
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {CanList} buttons
+         * @parent i2web/components/device/configurators/
+         * @description List of buttons that can be assigned rules for the device
+         */
+        buttons: {
+          get() {
+            const productId = this.attr('device.dev:productId');
+
+            if (productId && PRODUCT_RULE_TEMPLATE_PREFIX[productId]) {
+              const buttons = _map(PRODUCT_RULE_TEMPLATE_PREFIX[productId], (b) => {
+                return new CanMap({ name: b, ruleHint: '' });
+              });
+              return new CanList(buttons);
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Device} configTitle
+         * @parent i2web/components/device/configurators/
+         * @description Title for configuration panel
+         */
+        configTitle: {
+          get() {
+            return `Button Assignment${this.attr('hasMultipleButtons') ? 's' : ''}`;
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/
+         * @description Device whose buttons are being assigned
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {string} firstButton
+         * @parent i2web/components/device/configurators/
+         * @description First button in the list of buttons
+         */
+        firstButton: {
+          get() {
+            const buttons = this.attr('buttons');
+            return buttons ? buttons[0] : undefined;
+          },
+        },
+        /**
+         * @property {htmlboolean} forPairingCustomization
+         * @parent i2web/components/device/configurators/
+         * @description Attribute that indicates if the component is being used during pairing customization
+         * which impacts whether or not the 'Button Assignments' header will be shown
+         */
+        forPairingCustomization: {
+          type: 'htmlbool',
+          value: false,
+        },
+        /**
+         * @property {Boolean} hasMultipleButtons
+         * @parent i2web/components/device/configurators/
+         * @description Indicates if the device has more than one button to configure
+         */
+        hasMultipleButtons: {
+          get() {
+            if (this.attr('buttons')) {
+              return this.attr('buttons').length > 1;
+            }
+            return false;
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

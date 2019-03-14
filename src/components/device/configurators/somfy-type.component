@@ -1,0 +1,87 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-somfy-type">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">Choose A Type</h4>
+    </div>
+    <div>
+      <arcus-generic-selector {things}="types" {is-selected}="@isType" {select-option}="@typeChanged" />
+    </div>
+  </template>
+  <script type="view-model">
+    import CanList from 'can-list';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import SomfyV1Capability from 'i2web/models/capability/Somfyv1';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/devices/configurators/somfy-type
+         * @description The somfy blind we are configuring
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {CanList} types
+         * @parent i2web/components/devices/configurators/somfy-type
+         * @description The available configurations for the 'type' property
+         */
+        types: {
+          value() {
+            return new CanList([{
+              name: 'Tilt',
+              value: SomfyV1Capability.TYPE_BLIND,
+            }, {
+              name: 'Raise/Lower',
+              value: SomfyV1Capability.TYPE_SHADE,
+            }]);
+          },
+        },
+      },
+      /**
+       * @function {Boolean} isType
+       * @parent i2web/components/devices/configurators/somfy-type
+       * @param {String} type The type we are checking, if true, render this
+       * option selected
+       * @description Is this type currently set on the device, if so, display
+       * that to the User
+       */
+      isType(type) {
+        return this.attr('device.somfyv1:type') === type.value;
+      },
+      /**
+       * @function typeChanged
+       * @parent i2web/components/devices/configurators/somfy-type
+       * @param {String} type The type we are going to set the type property to
+       * @description Update the type property on the device with a new type
+       */
+      typeChanged(type) {
+        const device = this.attr('device');
+        device.attr('somfyv1:type', type.value);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,79 @@
+/**
+* @stylesheet sub-panel.less Sub Panel
+* @parent styles.baseline-elements
+*
+* @description
+* This is a drop-down panel that is intended to be paired with the Panel List Item component. 
+*
+* @demo ./src/styles/demos/sub-panel.html
+*
+**/
+.sub-panel {
+  &.hidden {
+    .close-panel {
+      opacity: 0;
+      visibility: hidden;
+      transition: none;
+    }
+    .panel-animation-wrapper {
+      max-height: 0;
+    }
+  }
+  .close-panel {
+    background-color: @body-bg;
+    display: flex;
+    margin-left: auto;
+    margin-bottom: (@gutter * 1.5) - 25px; //25px from the triangle height 
+    align-items: center;
+    justify-content: center;
+    height: @gutter * 2;
+    border-left: @border;
+    opacity: 1;
+    visibility: visible;
+    transition: visibility .5s linear, opacity .5s linear;
+    .breakpoint(lg-down, {
+      border-left: none;
+      margin-bottom: @gutter/2;
+    });
+    button {
+      margin-bottom: 0;
+    }
+  }
+  .panel-animation-wrapper {
+    max-height: 640px; //this needs to be hardcoded for animation :\ 
+    transition: max-height .5s ease-in;
+    overflow-y: hidden;
+    .breakpoint(xs, {
+      max-height: 680px;
+    });
+  }
+  .sub-panel-content {
+    background-color: @pigeon;
+    padding: @gutter/2 @gutter/2 @gutter;
+
+    .breakpoint(md, {
+      padding: @gutter/2 @gutter @gutter*2;
+    });
+  }
+  .sub-panel-title {
+    font-size: @font-size-h2;
+  }
+  .sub-panel-prompt {
+    .font-medium;
+    color: @coot;
+  }
+  .triangle {
+    display: block;
+    position: relative;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 25px solid @pigeon;
+    left: 73%;
+    .breakpoint(lg-down, {
+      left: 48%;
+      transform: translateX(-50%);
+    });
+  }
+}

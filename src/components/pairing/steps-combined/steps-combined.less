@@ -1,0 +1,33 @@
+arcus-pairing-steps-combined {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: @gutter;
+  .breakpoint(sm, {
+    max-width: 480px;
+  });
+
+  .header-content, .footer-content {
+    .font-medium-italic;
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    width: 100%; // Needed for IE11
+  }
+  .box-gray-radius {
+    flex-direction: row;
+    .breakpoint(sm, {
+      width: @box-md;
+    });
+    .row-left-area {
+      flex-basis: unset;
+      display: flex;
+      align-items: baseline;
+    }
+    .row-right-area {
+      flex-direction: row;
+    }
+  }
+}

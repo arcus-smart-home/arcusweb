@@ -1,0 +1,194 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/pairing/customize/contact-test/contact-test.component" />
+<can-import from="i2web/components/pairing/customize/contact-type/contact-type.component" />
+<can-import from="i2web/components/pairing/customize/favorite/favorite.component" />
+<can-import from="i2web/components/pairing/customize/info/info.component" />
+<can-import from="i2web/components/pairing/customize/irrigation-zone/irrigation-zone.component" />
+<can-import from="i2web/components/pairing/customize/multi-button-assignment/multi-button-assignment.component" />
+<can-import from="i2web/components/pairing/customize/name/name.component" />
+<can-import from="i2web/components/pairing/customize/ota-upgrade/ota-upgrade.component" />
+<can-import from="i2web/components/pairing/customize/presence-assignment/presence-assignment.component" />
+<can-import from="i2web/components/pairing/customize/promon-alarm/promon-alarm.component" />
+<can-import from="i2web/components/pairing/customize/room/room.component" />
+<can-import from="i2web/components/pairing/customize/rule/" />
+<can-import from="i2web/components/pairing/customize/schedule/"/>
+<can-import from="i2web/components/pairing/customize/security-mode/security-mode.component" />
+<can-import from="i2web/components/pairing/customize/state-county-select/state-county-select.component" />
+<can-import from="i2web/components/pairing/customize/water-heater/water-heater.component" />
+<can-import from="i2web/components/pairing/customize/weather-radio-station/" />
+
+{{#if device}}
+  {{#if stepLayout}}
+    <div class="customization-steps-container {{stepLayout.orientation}}">
+      {{#each stepLayout.steps}}
+        {{#each getStepByAction(., ../stepLayout.steps)}}
+          {{#switch action}}
+            {{#case 'NAME'}}
+              <arcus-pairing-customize-name
+                {(thing)}="device"
+                {customization-step}="."
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+                {{#if isHub}}hub{{else}}device{{/if}}
+              />
+            {{/case}}
+            {{#case 'FAVORITE'}}
+              <arcus-pairing-customize-favorite
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'SCHEDULE'}}
+              <arcus-pairing-customize-schedule
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'RULES'}}
+              <arcus-pairing-customize-rule
+                {customization-step}="."
+                {(device)}="device"
+                {templates}="rules"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'CONTACT_TYPE'}}
+              <arcus-pairing-customize-contact-type
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'CONTACT_TEST'}}
+              <arcus-pairing-customize-contact-test
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+              />
+            {{/case}}
+            {{#case 'PRESENCE_ASSIGNMENT'}}
+              <arcus-pairing-customize-presence-assignment
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'MULTI_BUTTON_ASSIGNMENT'}}
+              <arcus-pairing-customize-multi-button-assignment
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'SECURITY_MODE'}}
+              <arcus-pairing-customize-security-mode
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'PROMON_ALARM'}}
+              <arcus-pairing-customize-promon-alarm
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+              />
+            {{/case}}
+            {{#case 'STATE_COUNTY_SELECT'}}
+              <arcus-pairing-customize-state-county-select
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+                {disable-next-button}="@disableNextButton"
+                {skip-step}="@skipStep"
+              />
+            {{/case}}
+            {{#case 'WEATHER_RADIO_STATION'}}
+              <arcus-pairing-customize-weather-radio-station
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+                {disable-next-button}="@disableNextButton"
+              />
+            {{/case}}
+            {{#case 'INFO'}}
+              <arcus-pairing-customize-info
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+              />
+            {{/case}}
+            {{#case 'OTA_UPGRADE'}}
+              <arcus-pairing-customize-ota-upgrade
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+              />
+            {{/case}}
+            {{#case 'ROOM'}}
+              <arcus-pairing-customize-room
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'WATER_HEATER'}}
+              <arcus-pairing-customize-water-heater
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'IRRIGATION_ZONE'}}
+              <arcus-pairing-customize-irrigation-zone
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+            {{#case 'MULTI_IRRIGATION_ZONE'}}
+              <arcus-pairing-customize-irrigation-zone
+                {customization-step}="."
+                {(device)}="device"
+                {^title}="../../title"
+                {when-complete}="@customizationCompleted"
+              />
+            {{/case}}
+          {{/switch}}
+        {{/each}}
+      {{/each}}
+    </div>
+    <div class="customization-container">
+      <button class="btn {{#if isNextDisabled}}disabled{{/if}}" ($click)="next()">Next</button>
+    </div>
+  {{/if}}
+{{/if}}

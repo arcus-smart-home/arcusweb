@@ -1,0 +1,21 @@
+@import "lights-switches/lights-switches.less";
+
+.subsystem-status {
+  .on-count {
+    font-size: @font-size-large;
+  }
+  .count-context {
+    color: @grouse;
+    margin-left: 5px;
+  }
+}
+
+arcus-subsystem-status-doors-locks {
+  display: inline-flex;
+  margin-left: auto;
+  .breakpoint(sm-down, {
+    .total-count {
+      margin-top: 0;
+    }
+  });
+}

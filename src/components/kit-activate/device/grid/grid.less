@@ -1,0 +1,25 @@
+.animated-hub {
+  @base-circle-diameter: 120px;
+  display: block;
+  width: 180px;
+  height: 180px;
+  .animated {
+    animation: expand-fadeout 2s infinite ease-out;
+  }
+  @keyframes expand-fadeout {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255,255,255,.5),
+      0 0 0 0 rgba(60, 16, 83, .7),
+      0 0 0 0 rgba(60, 16, 83, .6),
+      0 0 0 0 rgba(60, 16, 83, .5),
+      0 0 0 0 rgba(60, 16, 83, .4);
+    }
+    100% {
+      box-shadow: 0 0 @base-circle-diameter*25 0 rgba(255,255,255,.5),
+      0 0 0 @base-circle-diameter*.05 rgba(60, 16, 83, 0),
+      0 0 0 @base-circle-diameter*.1 rgba(60, 16, 83, 0),
+      0 0 0 @base-circle-diameter*.2 rgba(60, 16, 83, 0),
+      0 0 0 @base-circle-diameter*.3 rgba(60, 16, 83, 0);
+    }
+  }
+}

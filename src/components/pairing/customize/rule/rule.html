@@ -1,0 +1,67 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" class="demo">
+  <arcus-pairing-customize-rule {customization-step}="customizationStep" />
+
+  <arcus-side-panel class="is-right" {(content)}="content"  />
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/rule/';
+  import 'i2web/components/side-panel/';
+  import 'i2web/components/rules/edit-panel/';
+  import DeviceData from 'i2web/models/fixtures/data/device/garage_doors.json';
+  import RulesTemplatesData from 'i2web/models/fixtures/data/rule/templates.json';
+  import Device from 'i2web/models/device';
+
+  const steps = [{
+    "action": "RULE",
+    "description": ["rules are a simple way to automate the control of devices based on things like temperature, presence, and/or the action of another device."],
+    "header": null,
+    "title": "",
+    "id": "customize/rules",
+    "rules": ['61da3b', 'c774bb', '7d8qe4']
+  }]
+
+  const ruleTemplates = RulesTemplatesData['3d496bfc-1098-493e-afd4-7f56c12dbef6'].ruleTemplates;
+  const appScope = new CanMap({
+    ruleTemplates,
+  });
+  let scope = new CanMap({
+    thing: (new Device(DeviceData[0])),
+    customizationStep: steps[0],
+    content: {},
+  });
+
+
+
+  let appState;
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  }).then(({appState}) => {
+    appState.bind('rightPanelContent', (ev, val) => {
+      scope.attr('content', val.attr());
+    });
+  });
+</script>

@@ -1,0 +1,111 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/form/confirm-field/" />
+<can-import from="i2web/components/form/edit-address/" />
+<can-import from="src/components/mailing-address.component"/>
+<can-import from="i2web/components/support-number.component" />
+
+<div class="step {{activeStepClass}}">
+  <arcus-context-bar>
+    <h2>Professional Monitoring Signup: Review Your Information</h2>
+  </arcus-context-bar>
+  <div class="container">
+    <div class="main-content">
+      <h2>Summary</h2>
+      <p>You're almost done. Before you finish, please review and confirm the information below is correct.
+        When you're ready, click "{{nextButtonLabel}}" at the bottom of the page and Arcus will contact you to verify
+        your phone number is accurate. Please make sure your phone is nearby.</p>
+
+      <hr />
+      <div class="row">
+        {{#unless hideAlerts}}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <h3>Monitoring</h3>
+            <ul class="alerts">
+              {{#each promonitoringSettings['promon:alerts']}}
+                <li>
+                  {{name}}
+                  {{#if isSelected}}<span class="pro-badge">Pro</span>{{/if}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/unless}}
+        {{#if place}}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <h3>Residential Address</h3>
+            <arcus-mailing-address {line1}="place['place:streetAddress1']"
+              {line2}="place['place:streetAddress2']"
+              {city}="place['place:city']"
+              {state}="place['place:state']"
+              {zip}="place['place:zipCode']"
+              {zip-plus4}="place['place:zipPlus4']" />
+            {{#unless hideEditAddress}}
+              <button class="btn-primary" ($click)="editAddress()">Edit Address</button>
+            {{/unless}}
+          </div>
+        {{else}}
+          <div class="loader"></div>
+        {{/if}}
+        {{#if person}}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <h3>Confirm Your Phone Number</h3>
+            <arcus-form-confirm-field {(model)}="person" field="person:mobileNumber" placeholder="(555) 555-5555" attributes="key-mask='(999) 999-9999' type='tel'" />
+            {{#unless validPhoneNumber}}
+              <p class="phone-response error"><i class="icon-app-add icon-error"></i> Invalid Phone Number.</p>
+            {{/unless}}
+          </div>
+        {{else}}
+          <div class="loader"></div>
+        {{/if}}
+      </div>
+      <hr />
+      <h2>Confirm Your Arcus PIN Code</h2>
+      <p>During account creation, you created an Arcus PIN Code. In the event of an alarm, the Monitoring Station will need to verify your PIN Code.</p>
+      <div class="row input-spacing">
+        <div class="col-xs">
+          <form ($submit)="preventSubmit(%event)">
+            {{textInput('pinCode', 'Enter 4-Digit Pin Code', type='tel' attributes='key-mask="9999"')}}
+            {{#if pinCode['length']}}
+              {{#if verifying}}
+                <div class="pin-response">
+                  <div class="loader"></div><span class="sr-only">Verifying...</span>
+                </div>
+              {{else}}
+                {{#if pinCodeConfirmed}}
+                  <p class="pin-response success"><i class="icon-app-check icon-success"></i>PIN Code Confirmed</p>
+                {{else}}
+                  <p class="pin-response error"><i class="icon-app-add icon-error"></i>Invalid PIN Code. Try Again.</p>
+                {{/if}}
+              {{/if}}
+            {{/if}}
+          </form>
+        </div>
+      </div>
+      <button class="btn-primary" type="button" ($click)="changePinCode(%event)">Forgot Pin Code</button>
+      <hr />
+      <h3>Note</h3>
+      <p>By clicking "{{nextButtonLabel}}" I agree to the <a href="https://www.arcus.com/terms-of-service/" target="_blank">Terms of Service</a>
+        and authorize Arcus to charge the payment method on file.</p>
+      {{#if formError}}
+        <p class="error">{{formError}}</p>
+        <p class="error">Please try again. If the issue persists, please call the Arcus Support Team at <arcus-support-number use-link="true" />.</p>
+      {{/if}}
+    </div>
+  </div>
+</div>

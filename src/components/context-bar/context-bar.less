@@ -1,0 +1,80 @@
+arcus-context-bar {
+  display: block;
+  .breakpoint(md, {
+    height: 68px; //holds height in the flow for the fixed content
+  });
+  .context-bar {
+    width: 100%;
+    z-index: @zindex-modal-background - 11;
+    border-bottom: @border;
+    .breakpoint(md, {
+      position: fixed;
+      height: 68px; //for IE11
+    });
+    a:hover {
+      text-decoration: none;
+    }
+    &.care {
+      background-color: @honeycreeper;
+    }
+    &.fire {
+      background-color: @fire;
+    }
+    &.police {
+      background-color: @police;
+    }
+    &.water {
+      background-color: @water;
+    }
+    &.panic {
+      background-color: @panic;
+    }
+    &.critical-notice {
+      background-color: @cardinal;
+    }
+    &.pending-invitation {
+      background-color: @parakeet;
+      &.clickable:hover {
+       text-decoration: underline;
+       color: @crane;
+      }
+    }
+    &.fire, &.police, &.water, &.panic, &.care, &.critical-notice, &.pending-invitation {
+      .breakpoint(md-down, {
+        display: flex;
+      });
+      border-top: 1px solid @heron;
+      h2, i {
+        color: @crane;
+      }
+      .error-badge, .warning-badge {
+        border: 1px solid @crane;
+      }
+    }
+    i {
+      font-size: 23px;
+    }
+    .error-badge, .warning-badge {
+      .large-badge;
+      .breakpoint(sm-down, {
+        margin: @gutter/4 0;
+        display: block;
+      });
+      &.push-preferences {
+        margin-left: @gutter/2;
+      }
+      &:hover {
+        color: @crane;
+      }
+    }
+    &.clickable:hover {
+      cursor: pointer;
+    }
+  }
+  .pending-invitation {
+    cursor: pointer;
+    i, a {
+      color: @crane;
+    }
+  }
+}

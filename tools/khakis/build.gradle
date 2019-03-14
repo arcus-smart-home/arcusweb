@@ -1,0 +1,138 @@
+
+def dockerGroup = "eyeris"
+def dockerVersion = "${version_major}.${version_minor}.${version_patch}-${repo.head().abbreviatedId}";
+
+def servers = [
+      [ 'id': "ui",  'name': "ui-server",  'port': 8096 ],
+]
+
+buildscript {
+}
+
+task clean(type: Task) {
+}
+
+servers.each() { server ->
+  task "clean-${server.id}"(type: Delete) {
+    delete "${server.name}/build"
+  }
+
+  clean.dependsOn << "clean-${server.id}"
+}
+
+// copy tasks are completely different, don't genericize
+task "copyDist-ui"(type: Copy) {
+  dependsOn "clean-ui", ":compileJs"
+  from "${rootDir}"
+  include "build/dist/**", "build/src/**", "build/production.html"
+  into "ui-server/build/html"
+}
+
+task startService(type: Task) {
+}
+
+servers.each { server ->
+  task "startService-${server.id}"(type: Exec) {
+    dependsOn "stopService-${server.id}", "distDocker-${server.id}"
+
+    List<String> cLine = new ArrayList<String>()
+    cLine.add('docker');
+    cLine.add('run');
+    cLine.add('-d')
+    cLine.add("--name=\"${server.name}.eyeris\"")
+    cLine.add("-e")
+    cLine.add("ARCUS_HTTP_URI=https://dev-bc2.irisbylowes.com/")
+    cLine.add("-e")
+    cLine.add("ARCUS_REDIRECT_URI=http://dev-aka.irisbylowes.com/")
+    cLine.add("-e")
+    cLine.add("ARCUS_WS_URI=wss://dev-bc2.irisbylowes.com/")
+    cLine.add("-e")
+    cLine.add("ARCUS_ENABLE_MY_LOWES=0")
+    cLine.add('-p')
+    cLine.add("${server.port}:${server.port}")
+    cLine.add("${dockerGroup}/${server.name}:${dockerVersion}")
+
+    commandLine cLine
+  }
+
+  startService.dependsOn << "startService-${server.id}"
+}
+
+task stopService(type: Task) {
+}
+
+servers.each { server ->
+  task "stopService-${server.id}"(type: Exec) {
+    // don't fail if it isn't running
+    ignoreExitValue true
+
+    def List<String> cLine = new ArrayList<String>()
+    cLine.add('docker');
+    cLine.add('rm');
+    cLine.add('-f');
+    cLine.add("${server.name}.eyeris")
+
+    commandLine cLine
+  }
+
+  stopService.dependsOn << "stopService-${server.id}"
+}
+
+task distDocker(type: Task) {
+}
+
+servers.each { server ->
+  task "distDocker-${server.id}"(type: Exec) {
+    dependsOn "copyDist-${server.id}"
+
+    def List<String> cLine = new ArrayList<String>()
+    cLine.add('docker');
+    cLine.add('build');
+    cLine.add('-t')
+    cLine.add("${dockerGroup}/${server.name}:${dockerVersion}")
+    cLine.add("${server.name}")
+
+    commandLine cLine
+  }
+
+  distDocker.dependsOn << "distDocker-${server.id}"
+}
+
+task runDocker(type: Task) {
+   dependsOn 'runDocker-ui'
+}
+
+servers.each { server ->
+  task "runDocker-${server.id}"(type: Exec) {
+    dependsOn "stopService-${server.id}", "distDocker-${server.id}"
+
+    def List<String> cLine = new ArrayList<String>()
+    cLine.add('docker');
+    cLine.add('run');
+    cLine.add("--name=\"${server.name}.eyeris\"")
+    cLine.add("--name=\"${server.name}.eyeris\"")
+    cLine.add("-e")
+    cLine.add("ARCUS_HTTP_URI=https://dev-bc2.irisbylowes.com/")
+    cLine.add("-e")
+    cLine.add("ARCUS_REDIRECT_URI=http://dev-aka.irisbylowes.com/")
+    cLine.add("-e")
+    cLine.add("ARCUS_WS_URI=wss://dev-bc2.irisbylowes.com/")
+    cLine.add('-p')
+    cLine.add("${server.port}:${server.port}")
+    cLine.add("${dockerGroup}/${server.name}:${dockerVersion}")
+
+    commandLine cLine
+  }
+}
+
+task publishDocker(type: Task) {
+}
+
+servers.each { server ->
+  task "publishDocker-${server.id}"(type: Exec) {
+    dependsOn "distDocker-${server.id}"
+    commandLine 'bin/publish.sh', '-v', "${dockerVersion}", "${server.name}"
+  }
+
+  publishDocker.dependsOn << "publishDocker-${server.id}"
+}

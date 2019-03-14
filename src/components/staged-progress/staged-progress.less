@@ -1,0 +1,52 @@
+arcus-staged-progress {
+  display: flex;
+  justify-content: center;
+  .progress-stage {
+    background-color: @pigeon;
+    border: 1px solid @pigeon;
+    padding: @gutter/4;
+    min-width: 65px;
+    text-align: center;
+    margin-right: @gutter/15;
+    &:first-of-type {
+      border-radius: @border-radius 0 0 @border-radius;
+    }
+    &:not(:first-of-type) {
+      margin-left: -1px;
+    }
+    &:last-of-type {
+      margin-right: 0;
+      border-radius: 0 @border-radius @border-radius 0;
+    }
+    &.is-started {
+      border: none;
+      background-color: @parakeet;
+      [class^="icon-"], .stage-name {
+        color: @crane;
+      }
+    }
+  }
+  .stage-name {
+    font-size: 9px;
+    line-height: 1;
+  }
+  [class^="icon-"] {
+    display: block;
+    font-size: 90%;
+    color: @grouse;
+    height: 20px;
+  }
+  .icon-app-add {
+    font-weight: bold;
+    transform: rotate3d(0, 0, 1, 45deg);
+  }
+  .icon-app-more-1 {
+    font-size: 75%;
+    border-radius: 100%;
+    border: 1px solid @crane;
+    width: 22px;
+    height: 22px;
+    line-height: 1.7;
+    margin: -4px auto 0;
+  }
+}

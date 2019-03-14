@@ -1,0 +1,55 @@
+arcus-scenes-device-configurator {
+  display: block;
+  width: 100%;
+  arcus-scenes-device-configurator {
+    padding-left: @gutter;
+    &.switch-value-configurator {
+      border-top: @border;
+      padding-top: @gutter/2;
+      .configurator-header {
+        border-top: none; //moving this up a few parents for indentation
+        padding-top: 0;
+      }
+    }
+  }
+  .radio-device-configurator {
+    border-top: @border;
+    padding-top: @gutter/2;
+    border-bottom: @border;
+    margin-bottom: @gutter/2;
+  }
+  .switch-value {
+    display: flex;
+    padding-bottom: @gutter/2;
+    p {
+      .font-regular;
+      font-size: @font-size-large;
+      color: @swift;
+      text-transform: capitalize;
+    }
+    arcus-control-switch {
+      margin-left: auto;
+    }
+  }
+  arcus-spinner {
+    display: block;
+    &.temperature,
+    &.duration {
+      padding-bottom: @gutter/2;
+    }
+    &.duration {
+      sup {
+        top: 0;
+      }
+    }
+  }
+  .unknown-statement {
+    margin-bottom: @gutter/2;
+  }
+  arcus-thermostat {
+    .switch-value {
+      border-bottom: @border;
+      margin-bottom: @gutter;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+arcus-subsystem-care-status-incident-list {
+  .arcus-event-list;
+  display: block;
+  padding-top: @gutter/2;
+  padding-bottom: @gutter;
+  height: 100%;
+  width: 100%;
+  .breakpoint(md, {
+    position: absolute;
+  });
+  h2 {
+    padding-bottom: @gutter/2;
+    border-bottom: @border;
+  }
+  .events {
+    height: 100%;
+    overflow-y: scroll;
+    .breakpoint(md, {
+      padding-bottom: 120px;
+    });
+    .recent-activity {
+      margin: @gutter/2 auto;
+      text-align: center;
+    }
+  }
+}

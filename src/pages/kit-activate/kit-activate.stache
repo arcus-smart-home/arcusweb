@@ -1,0 +1,91 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/kit-activate/device/grid/" />
+<can-import from="i2web/components/kit-activate/device/incomplete.component" />
+<can-import from="i2web/components/pairing/customize/device/" />
+<can-import from="i2web/helpers/global" />
+
+<div class="step-container">
+  <div class="step-header">
+    <header class="app-header">
+      <a class="logo-link" ($click)="routeToDashboard()">
+        <img class="arcus-logo" src="/src/images/logo.svg" alt="Arcus Logo">
+      </a>
+      <a class="exit-pairing-link" ($click)="confirmExit()">
+        Go to Dashboard
+      </a>
+    </header>
+    {{#if currentIncident}}
+      <div class="alarm-banner">
+        <h2>
+          <i class="icon-platform-security-1"></i>
+          Security Alarm
+        </h2>
+      </div>
+    {{/if}}
+    <div class="pairing-title">
+      <h2 class="font-medium">{{pairingTitle}}</h2>
+    </div>
+  </div>
+  <div class="step-wrapper">
+    {{#if pairingDevice}}
+      <arcus-pairing-customize-device
+        {customization-steps}="customizationSteps"
+        {pairing-device}="pairingDevice"
+        {is-hub}="isHub"
+        {(is-finished-customization)}="isFinishedCustomization"
+        {^title}="pairingTitle"
+      />
+    {{else}}
+      {{#if isKitComplete}}
+        <div class="step-subtitle">
+          <p>You've successfully completed kit setup! Next, go to the Dashboard to see them in action.</p>
+        </div>
+      {{else}}
+        <div class="step-subtitle">
+          <p>Follow the steps below to activate and customize your devices. It’s best to activate one at a time. Activation may take a few minutes.</p>
+          <a class="tutorial" href="{{redirectToUrl('y_kit_tutorial')}}" target="_blank">
+            <i class="icon-app-play-w-circle"/> Watch Tutorial Video
+          </a>
+        </div>
+      {{/if}}
+      <arcus-kit-activate-device-grid
+        {hub}="hub"
+        {kit-devices}="kitDevices"
+        {is-kit-complete}="isKitComplete"
+        {(pairing-device)}="pairingDevice"
+        {pairing-devices}="pairingDevices"
+        {subsystem}="subsystem"
+      />
+    {{/if}}
+  </div>
+  <div class="step-footer">
+    <hr/>
+    <p><a href="{{redirectToUrl('s_hub_kitting_help')}}" target="_blank">
+      Need Help?
+    </a></p>
+  </div>
+  {{#if showExitPrompt}}
+    <arcus-kit-activate-device-incomplete
+      {unactivated-device-count}="unactivatedDeviceCount"
+      {uncustomized-device-count}="uncustomizedDeviceCount"
+      {on-finish}="@continueKitSetup"
+      {on-postpone}="@routeToDashboard"
+    />
+  {{/if}}
+</div>
+

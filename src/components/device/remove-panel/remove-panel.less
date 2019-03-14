@@ -1,0 +1,21 @@
+arcus-device-remove-panel {
+  .box-gray-radius {
+    margin-left: @gutter*-.5;
+    .breakpoint(sm, {
+      margin-left: @gutter/10;
+    });
+    margin-right: 0;
+    &:first-of-type {
+      margin-top: @gutter;
+    }
+  }
+  h5 {
+    margin-top: @gutter;
+  }
+  .loader-container {
+    width: @box-mobile;
+    .breakpoint(sm, {
+      width: @box-sm;
+    });
+  }
+}

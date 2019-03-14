@@ -1,0 +1,50 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache/helpers/route" />
+<can-import from="i2web/helpers/route" />
+<can-import from="i2web/components/invite/accept/" />
+
+<div class="row context-bar {{backgroundClass}} {{#if onClick}}clickable{{/if}}"
+  id="alerting-{{id}}"
+  {{#if onClick}}($click)="{{onClick}}"{{/if}}>
+  {{#if text}}
+    <h2>
+      <i class="{{icon}}"></i>
+      {{text}}
+    </h2>
+  {{else}}
+    <content></content>
+  {{/if}}
+  <div class="badges">
+    {{#if hubCellularConnected}}
+      <a href="{{redirectToUrl('s_cellular_backup')}}" target="_blank">
+        <span class="warning-badge {{#if onDashboard}}push-preferences{{/if}}">
+          <i class="icon-platform-warning-2"></i>
+          Cellular Backup In Use
+        </span>
+      </a>
+    {{/if}}
+    {{#if hubOffline}}
+      <a href="{{redirectToUrl('s_hub')}}" target="_blank">
+        <span class="error-badge {{#if onDashboard}}push-preferences{{/if}}">
+          <i class="icon-platform-warning-2"></i>
+          {{hubOfflineText}}
+        </span>
+      </a>
+    {{/if}}
+  </div>
+</div>

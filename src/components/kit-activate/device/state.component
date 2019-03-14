@@ -1,0 +1,240 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-kit-activate-device-state">
+  <view>
+    <div class="device-wrapper">
+      <div class="circle {{#if inactive}}disabled{{/if}}">
+        <div class="device-image {{#if active}}check-position{{/if}}">
+          <img src="{{productImageURL}}" />
+        </div>
+        {{#if active}}
+          <div class="check">
+            <i class="icon-app-check"></i>
+          </div>
+        {{/if}}
+      </div>
+      {{#if inactive}}
+        <p>
+          <span class="disabled-text">{{product['product:shortName']}}</span>
+          <br />
+          <em>{{activateInstructions}}</em>
+        </p>
+      {{else}}
+        <p>
+          {{#if errored}}
+            <span class="disabled-text">{{product['product:shortName']}}</span>
+          {{else}}
+            {{device['dev:name']}}
+          {{/if}}
+          {{#if customizable}}
+            <br />
+            <a ($click)="onCustomize()">Customize</a>
+          {{/if}}
+          {{#if mispaired}}
+            <br />
+            <span class="warning-text">
+              <a href="{{redirectToUrl('s_hub_kitting_help')}}" target="_blank">
+                Improperly Paired
+              </a>
+            </span>
+          {{/if}}
+          {{#if missing}}
+            <br />
+            <span class="warning-text">
+              <a href="{{redirectToUrl('s_hub_kitting_help')}}" target="_blank">
+                Error
+              </a>
+            </span>
+          {{/if}}
+        </p>
+      {{/if}}
+    </div>
+  </view>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import PairingDeviceCaps from 'i2web/models/capability/PairingDevice';
+    import PairingDevice from 'i2web/models/pairing-device';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {String} activateInstructions
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description How the device is to be activated
+         */
+        activateInstructions: {
+          get() {
+            return this.attr('product.product:batteryPrimSize')
+              ? 'Pull the tab' : 'Plug it in';
+          },
+        },
+        /**
+         * @property {Boolean} active
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The kit device is active and customized
+         */
+        active: {
+          type: 'boolean',
+          get() {
+            return this.attr('state') === 'active';
+          },
+        },
+        /**
+         * @property {Boolean} customizable
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The kit device is active but not customized
+         */
+        customizable: {
+          type: 'boolean',
+          get() {
+            return this.attr('state') === 'customizable';
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The active device associated with the kit information
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} errored
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The state of the component is missing or mispaired
+         */
+        errored: {
+          get() {
+            const state = this.attr('state');
+            return state === 'missing' || state === 'mispaired';
+          },
+        },
+        /**
+         * @property {Boolean} inactive
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The kit device has not been activated
+         */
+        inactive: {
+          type: 'boolean',
+          get() {
+            return this.attr('state') === 'inactive';
+          },
+        },
+        /**
+         * @property {Boolean} mispaired
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The pairing device for the kit information is mispaired
+         */
+        mispaired: {
+          type: 'boolean',
+          get() {
+            return this.attr('state') === 'mispaired';
+          },
+        },
+        /**
+         * @property {Boolean} missing
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The device was paired but is now missing
+         */
+        missing: {
+          type: 'boolean',
+          get() {
+            return this.attr('state') === 'missing';
+          },
+        },
+        /**
+         * @property {PairingDevice} pairingDevice
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The pairing device associated with the kit information
+         */
+        pairingDevice: {
+          Type: PairingDevice,
+        },
+        /**
+         * @property {CanMap} product
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The product associated with the kit information
+         */
+        product: {
+          Type: CanMap,
+        },
+        /**
+         * @property {String} productImageURL
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The URL used to request the product image
+         */
+        productImageURL: {
+          get() {
+            if (!this.attr('product')) return '';
+
+            const baseURL = AppState().attr('session.secureStaticResourceBaseUrl');
+            const screen = this.attr('product.product:screen');
+            const state = this.attr('inactive') ? 'unactivated' : 'activated';
+            if (this.attr('mispaired') || this.attr('missing')) {
+              return `${baseURL}/o/dtypes/mispaired/type_small-ios-3x.png`;
+            }
+            return `${baseURL}/o/dtypes/${screen.toLowerCase()}/${state}_small-ios-3x.png`;
+          },
+        },
+        /**
+         * @property {String} state
+         * @parent i2web/components/kit-activate/device/state.component
+         * @description The state of the kit device state component
+         */
+        state: {
+          get() {
+            const pairdev = this.attr('pairingDevice');
+            const device = this.attr('device');
+            const state = pairdev && pairdev.attr('pairdev:pairingState');
+
+            // Activated & Customized
+            //    Pairdev-Possibly (pairdev:pairingState===PAIRED and pairdev:customizations!=empty) / Device-Y
+            // Activated & Uncustomized
+            //    Pairdev-Y (pairdev:pairingState===PAIRED and pairdev:customizations === empty set) / Device-Y
+            // Mispaired
+            //    Pairdev-Y (pairdev:pairingState===MISPAIRED) / Device-Y (with Fallback Driver)
+            if (device) {
+              if (pairdev) {
+                const isCustomized = pairdev.attr('pairdev:customizations.length') > 0;
+                switch (state) {
+                  case PairingDeviceCaps.PAIRINGSTATE_MISPAIRED:
+                  case PairingDeviceCaps.PAIRINGSTATE_MISCONFIGURED:
+                    return 'mispaired';
+                  default:
+                    return isCustomized ? 'active' : 'customizable';
+                }
+              }
+              return 'active';
+            }
+
+            // Unactivated
+            //    Pairdev-Y(pairdev:pairingState===PAIRING) / Device-N
+            // Missing
+            //    Pairdev-N / Device-N
+            return pairdev && state === PairingDeviceCaps.PAIRINGSTATE_PAIRING ? 'inactive' : 'missing';
+          },
+        },
+      },
+      onCustomize() {
+        this.customizePairingDevice(this.attr('pairingDevice'));
+      },
+    });
+  </script>
+</can-component>

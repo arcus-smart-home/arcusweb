@@ -1,0 +1,28 @@
+arcus-pro-monitoring-step-additional-information {
+  .input-wrapper:not(:first-of-type) {
+    padding-top: 0;
+  }
+}
+arcus-promonitoring-additional-info {
+  .occupants-panel {
+    display: flex;
+    padding-top: @gutter;
+    .breakpoint(sm-down, {
+      justify-content: space-between;
+    });
+    .occupants-panel-item {
+      padding-left: @gutter;
+      padding-right: @gutter;
+      .breakpoint(sm-down, {
+        padding-left: 0;
+        padding-right: 0;
+      });
+      .occupants {
+        .font-regular;
+        display: block;
+        font-size: @font-size-h3;
+        margin-top: @gutter/2;
+      }
+    }
+  }
+}

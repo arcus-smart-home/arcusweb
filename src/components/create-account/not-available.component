@@ -1,0 +1,135 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-create-account-not-available">
+  <view>
+    <div class="modal-container">
+      <div class="modal-content">
+        <h1>Professional Monitoring Not Available</h1>
+        {{#unless reason}}
+          <p>
+            Professional Monitoring is not available in the zip code that you provided.
+            Check to make sure your zip code was entered in correctly. If you
+            <strong><em>have</em></strong> entered it correctly, please return to the plans
+            page and select from the plans available in your zip code.
+          </p>
+        {{else}}
+          <p>{{reasonText}}</p>
+          <p>
+            Check to make sure your address was entered in correctly. If you
+            <strong><em>have</em></strong> entered it correctly, please return to the plans
+            page and select from the plans available for your address.
+          </p>
+        {{/unless}}
+        <button class="btn-primary not-available" ($click)="confirmLocation(%event)">
+          Re-enter {{#unless reason}}ZIP Code{{else}}Address{{/unless}}
+        </button>
+        <br />
+        <button class="btn-primary not-available" ($click)="selectPlan(%event)">
+          Back to Plans
+        </button>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </view>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Array} completedStages
+         * @parent i2web/components/create-account/not-available
+         * @description A collection of the completed stages
+         */
+        completedStages: {
+          Type: Array,
+        },
+         /**
+         * @property {boolean} noMonitoringAvailable
+         * @parent i2web/components/create-account/not-available
+         * @description Whether to inform the User they have entered a zip code that is not
+         * supported by pro-monitoring
+         */
+        noMonitoringAvailable: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {boolean} reason
+         * @parent i2web/components/create-account/not-available
+         * @description The reason pro-monitoring is unavailable
+         */
+        reason: {
+          type: 'string',
+        },
+        /**
+         * @property {boolean} reasonText
+         * @parent i2web/components/create-account/not-available
+         * @description The human-readable reason pro-monitoring is unavailable
+         */
+        reasonText: {
+          get() {
+            switch (this.attr('reason')) {
+              case 'promonitoring.address.invalid':
+                return 'This address cannot be verified. Please update your address and try again.';
+              case 'promonitoring.address.unsupported':
+                return 'Please confirm this address is a residential property.';
+              case 'promonitoring.address.unserviceable':
+                return 'There are no registered agencies who will dispatch emergency responders to this address through the Professional Monitoring system.';
+              default:
+                return 'Professional Monitoring is not currently offered at this address.';
+            }
+          },
+        },
+      },
+      /**
+       * @function {boolean} confirmLocation
+       * @parent i2web/components/create-account/not-available
+       * @description Hide the modal so that User can validate their address/zip-code
+       */
+      confirmLocation(ev) {
+        ev.preventDefault();
+        this.attr('monitoringAvailable', 'FULL');
+        this.recordProgress(undefined, {
+          monitoringAvailable: 'FULL',
+        });
+        this.attr('noMonitoringAvailable', false);
+        if (this.attr('reason')) {
+          this.restartWizard();
+          this.next();
+        }
+      },
+      /**
+       * @function {boolean} selectPlan
+       * @parent i2web/components/create-account/not-available
+       * @description Hide the modal and remove the plan stages, restart the wizard, so
+       * the User can re-select a plan
+       */
+      selectPlan(ev) {
+        ev.preventDefault();
+        this.attr('monitoringAvailable', 'NONE');
+        this.recordProgress(undefined, {
+          monitoringAvailable: 'NONE',
+        });
+        this.undoProgress('web:plan');
+        this.attr('noMonitoringAvailable', false);
+        this.restartWizard();
+        this.next();
+      },
+    });
+  </script>
+</can-component>

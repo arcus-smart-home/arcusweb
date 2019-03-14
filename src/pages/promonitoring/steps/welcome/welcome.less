@@ -1,0 +1,48 @@
+arcus-pro-monitoring-step-welcome {
+  [class^="btn"] {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: @gutter/2;
+  }
+  .required-for-insurance {
+    .font-demibold;
+    color: @grouse;
+    font-size: @font-size-small;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .notifications {
+    margin: @gutter 0;
+  }
+  .offline-info {
+    margin-top: @gutter*.75;
+  }
+  .offline-listing {
+    display: flex;
+    flex-direction: column;
+    margin-top: @gutter/2;
+    .offline-listing-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: @gutter - (@gutter/4);
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .offline-listing-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-right: @gutter/2;
+        width: @gutter*1.5;
+        height: @gutter*1.5;
+        border: 1px solid @crane;
+        border-radius: 100%;
+        i {
+          font-size: @gutter - (@gutter/4);
+        }
+      }
+    }
+  }
+}

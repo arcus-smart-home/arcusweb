@@ -1,0 +1,87 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/subsystem/care/activity/" />
+<can-import from="i2web/components/subsystem/care/behaviors/" />
+<can-import from="i2web/components/subsystem/care/settings/" />
+<can-import from="i2web/components/subsystem/care/status/" />
+<can-import from="i2web/components/shop-button.component" />
+<can-import from="i2web/components/upgrade-now.component" />
+<can-import from="i2web/helpers/global" />
+
+<arcus-context-bar>
+  <h2>
+    <i class="icon-app-care-heart-2"></i>
+    <span class="place-name">{{place['place:name']}}</span> Care
+  </h2>
+</arcus-context-bar>
+<div class="care-navigation">
+  <div class="segment-btn">
+    <button class="btn-primary {{#if careDisplayedIs('status')}}active{{/if}}"
+        ($click)="changeCareDisplay('status')">
+      Status
+    </button>
+    <button class="btn-primary {{#if careDisplayedIs('activity')}}active{{/if}}"
+        ($click)="changeCareDisplay('activity')">
+      Activity
+    </button>
+    <button class="btn-primary {{#if careDisplayedIs('behaviors')}}active{{/if}}"
+        ($click)="changeCareDisplay('behaviors')">
+      Behaviors Library
+    </button>
+    <button class="btn-primary {{#if careDisplayedIs('settings')}}active{{/if}}"
+        ($click)="changeCareDisplay('settings')">
+      More
+    </button>
+  </div>
+</div>
+<hr/>
+{{#if subsystem.available}}
+  {{#switch activeDisplay}}
+    {{#case 'status'}}
+      <arcus-subsystem-care-status {subsystem}="subsystem" {behavior-templates}="behaviorTemplates" />
+    {{/case}}
+    {{#case 'behaviors'}}
+      <arcus-subsystem-care-behaviors {subsystem}="subsystem" {behavior-templates}="behaviorTemplates" />
+    {{/case}}
+    {{#case 'activity'}}
+      <arcus-subsystem-care-activity {subsystem}="subsystem" />
+    {{/case}}
+    {{#case 'settings'}}
+      <arcus-subsystem-care-settings {place}="place" {subsystem}="subsystem" />
+    {{/case}}
+  {{/switch}}
+{{else}}
+  <div class="no-devices">
+    <div class="left-wrapper">
+      <h3>Let Loved Ones Age in Place</h3>
+      <p>Care service will trigger an alarm when help is needed or when daily routines change unexpectedly.</p>
+      {{#unless isPremiumPlace}}
+        <small>Premium is required to access the Care service.</small>
+      {{/unless}}
+    </div>
+    <div class="right-wrapper">
+      {{#unless isPremiumPlace}}
+        <arcus-upgrade-now />
+      {{else}}
+        <arcus-shop-button href="{{redirectToUrl('p_care')}}" expanded>
+          Shop Devices
+        </arcus-shop-button>
+      {{/unless}}
+    </div>
+  </div>
+{{/if}}

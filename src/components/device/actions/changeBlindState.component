@@ -1,0 +1,127 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-changeBlindState">
+  <template>
+    <div class="content">
+      <button
+        class="btn-run"
+        ($click)="changeState('open')"
+        {{#unless allowOpenAndClose}}disabled{{/unless}}
+      >
+        {{openButtonLabel}}
+      </button>
+      <button
+        class="btn-run"
+        ($click)="changeState('close')"
+        {{#unless allowOpenAndClose}}disabled{{/unless}}
+      >
+        {{closeButtonLabel}}
+      </button>
+      <button class="btn-run" ($click)="changeState('favorite')">Favorite</button>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Error from 'i2web/plugins/errors';
+    import SomfyV1Capability from 'i2web/models/capability/Somfyv1';
+
+
+    const BLIND_ACTIONS = {
+      open: 'GoToOpen',
+      close: 'GoToClosed',
+      favorite: 'GoToFavorite',
+    };
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {String} actionTimeoutId
+         * @parent i2web/components/device/actions/changeBlindState
+         * @description Timeout to disable open/close buttons after CTA button
+         * clicked
+         */
+        actionTimeoutId: {
+          value: '',
+        },
+        /**
+         * @property {Boolean}
+         * @parent i2web/components/device/actions/changeBlindState
+         * @description Whether to allow the user to open/close the blind
+         */
+        allowOpenAndClose: {
+          get() {
+            return !this.attr('actionTimeoutId');
+          },
+        },
+        /**
+         * @property {String} closeButtonLabel
+         * @parent i2web/components/device/actions/changeBlindState
+         * @description Button label for the Close button
+         */
+        closeButtonLabel: {
+          get() {
+            const type = this.attr('device.somfyv1:type');
+            return (type === SomfyV1Capability.TYPE_BLIND) ? 'Close' : 'Down';
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/actions/changeBlindState
+         * @description The device these actions control
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} openButtonLabel
+         * @parent i2web/components/device/actions/changeBlindState
+         * @description Button label for the Open button
+         */
+        openButtonLabel: {
+          get() {
+            const type = this.attr('device.somfyv1:type');
+            return (type === SomfyV1Capability.TYPE_BLIND) ? 'Open' : 'Up';
+          },
+        },
+      },
+      /**
+       * @function changeState
+       * @param {String} action
+       * @description Change the blind state
+       */
+      changeState(action) {
+        const fiveSeconds = 5000;
+
+        // clear any existing timeout
+        const timeout = this.attr('actionTimeoutId');
+        if (timeout) clearTimeout(timeout);
+
+        this.attr(
+          'actionTimeoutId',
+          setTimeout(() => {
+            this.attr('actionTimeoutId', '');
+          }, fiveSeconds),
+        );
+
+        this.attr('device')[BLIND_ACTIONS[action]]()
+          .catch(Error.log);
+      },
+    });
+  </script>
+</can-component>

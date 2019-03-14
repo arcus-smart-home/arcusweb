@@ -1,0 +1,145 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-duration">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+
+    <h3>Select a Duration</h3>
+    <hr/>
+    <arcus-generic-selector
+      {is-selected}="@isSelected"
+      name-key="label"
+      {(selected-thing)}="selectedDuration"
+      {things}="values"
+    />
+    <hr/>
+    <div class="button-group">
+      <button ($click)="doneButtonClicked()" class="btn">Done</button>
+    </div>
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import CanList from 'can-list';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import { formatDuration } from 'i2web/helpers/global';
+    import CareBehavior from 'i2web/models/care-behavior';
+    import Moment from 'moment';
+
+    export default CanMap.extend({
+      define: {
+        /**
+        * @property {CareBehavior} behavior
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The associated careBehavior being edited
+        */
+        behavior: {
+          Type: CareBehavior,
+        },
+        /**
+        * @property {Function} doneButtonClicked
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The function to be called when the DONE button is clicked
+        */
+        doneButtonClicked: {
+          Type: Function,
+        },
+        /**
+        * @property {Object} selectedDuration
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description selects the selected radio button or chooses a default
+        * based on durationSecs.
+        */
+        selectedDuration: {
+          get(setVal) {
+            let selected;
+            if (setVal) {
+              selected = setVal;
+            } else {
+              const values = this.attr('values');
+              const durationSecs = this.attr('behavior.durationSecs');
+              selected = Array.from(values).find((value) => {
+                return value.value === durationSecs;
+              });
+            }
+            return selected;
+          },
+        },
+        /**
+        * @property {Object} template
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The template associated with the careBehavior being edited
+        */
+        template: {
+          type: '*',
+        },
+        /**
+        * @property {Array} units
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description Units for the list of values
+        */
+        units: {
+          get() {
+            return this.attr('template.fields.duration.unit');
+          },
+        },
+        /**
+        * @property {Array} values
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description Presented as options
+        */
+        values: {
+          get() {
+            const units = this.attr('units');
+            const values = this.attr('template.fields.duration.value').map((v) => {
+              return new CanMap({
+                label: formatDuration(parseInt(v, 10), units),
+                value: this.durationToSeconds(v),
+              });
+            });
+            return new CanList(values);
+          },
+        },
+      },
+      /**
+        * @function durationToSeconds
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description Converts a value from the template's units to seconds units
+        */
+      durationToSeconds(value) {
+        const units = _.lowerCase(this.attr('template.fields.duration.unit') || 'seconds');
+        return Moment.duration(parseInt(value, 10), units).asSeconds();
+      },
+      /**
+       * @function isSelected
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel
+       * Used for the default choice selection.
+       * @return Boolean
+       */
+      isSelected(duration) {
+        return duration.attr('value') === this.attr('selectedDuration.value');
+      },
+    });
+  </script>
+  <events>
+    export default {
+      '{viewModel} selectedDuration': function(vm, ev, val) {
+        vm.attr('behavior.durationSecs', val.value);
+      }
+    }
+  </events>
+</can-component>

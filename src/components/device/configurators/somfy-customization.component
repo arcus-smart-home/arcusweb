@@ -1,0 +1,76 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-somfy-customization">
+  <template>
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">
+        Configure Open/Up Position
+      </h4>
+    </div>
+    <ol>
+      <li>
+        Open the blind completely.
+      </li>
+      <li>
+        Simultaneously press and hold the up and down button on the remote until the shade jogs.
+      </li>
+      <li>
+        Adjust the blind to the desired Open/Up position.
+      </li>
+      <li>
+        Press and hold 'MY' on the remote until the shade jogs.
+      </li>
+    </ol>
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">
+        Configure Closed/Down Position
+      </h4>
+    </div>
+    <ol>
+      <li>
+        Close the blind completely.
+      </li>
+      <li>
+        Simultaneously press and hold the up and down button on the remote until the shade jogs.
+      </li>
+      <li>
+        Adjust the blind to the desired Closed/Down position.
+      </li>
+      <li>
+        Press and hold 'MY' on the remote until the shade jogs.
+      </li>
+    </ol>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/devices/configurators/somfy-customization
+         * @description The somfy blind we are customizing
+         */
+        device: {
+          Type: Device,
+        },
+      },
+    });
+  </script>
+</can-component>

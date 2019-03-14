@@ -1,0 +1,72 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/schedule/edit-panel/day-carousel/event-state.component" />
+
+<div class="day-carousel">
+  {{#if showDayHeader}}
+    <div class="day-header">
+      <i class="icon-app-chevron prev-chevron chevron-btn {{#if event}}disabled{{/if}}" ($click)="prev()"></i>
+      <div class="carousel-container">
+        <ul class="carousel {{#if event}}disabled{{/if}}">
+          <li>{{weekdayDisplayed}}</li>
+        </ul>
+      </div>
+      <i class="icon-app-chevron next-chevron chevron-btn {{#if event}}disabled{{/if}}" ($click)="next()"></i>
+    </div>
+  {{/if}}
+  <ul class="list-events">
+    {{#each dayCommands as command}}
+      <li class="event {{^eq command event}}{{#if event}} disabled{{/if}}{{/eq}}" ($click)="editEvent(command)">
+        <div class="event-info">
+          <p class="event-time">
+            {{#if absoluteTimeMode(command)}}
+              {{timeA(command.time)}}
+            {{else}}
+              {{{relativeTimeOf(command)}}}
+            {{/if}}
+          </p>
+          <p class="small event-repeat">
+            {{#if irrigationEvent(command)}}
+              {{irrigationZoneListText(command)}}
+            {{else}}
+              Repeat on {{daysDisplay(command.days)}}
+            {{/if}}
+          </p>
+        </div>
+        <arcus-schedule-edit-panel-day-carousel-event-state {command}="command" />
+        <i class="icon-app-chevron chevron-btn{{#if isActive(command)}} active{{else}}{{#if event}} disabled{{/if}}{{/if}}"></i>
+      </li>
+    {{/each}}
+    {{#if hasNewEvent}}
+      <li class="event">
+        <div class="event-info">
+          <p class="small event-repeat">New Event</p>
+        </div>
+        <arcus-schedule-edit-panel-day-carousel-event-state {command}="command" />
+        <i class="icon-app-chevron chevron-btn active"></i>
+      </li>
+    {{else}}
+      {{^if dayCommands.length}}
+        <li class="event none-scheduled">
+          <div class="event-info">
+            <p class="small event-repeat">No Events Scheduled</p>
+          </div>
+        </li>
+      {{/if}}
+    {{/if}}
+  </ul>
+</div>

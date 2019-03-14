@@ -1,0 +1,94 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/create-account/welcome/download-mobile.component" />
+<can-import from="i2web/components/support-number.component" />
+
+{{#if activationAttempts}}
+  {{#if showSupportNumber}}
+    <h1>Uh oh</h1>
+  {{else}}
+    <h1>Oops</h1>
+  {{/if}}
+  <p class="instructions">
+    There was a problem activating your account.
+  </p>
+{{else}}
+  {{#if monitored}}
+    <h1>Welcome to Professional Monitoring!</h1>
+  {{else}}
+    <h1>Home Smart Home. Welcome to Arcus!</h1>
+  {{/if}}
+  <p class="instructions">
+    {{#if invited}}
+      You now have access to {{place['place:name']}} and can manage things like devices, people, and alarms.
+    {{else}}
+      {{#if subpage}}
+        Next Step: Return to the Arcus Mobile App to Pair your devices.
+      {{else}}
+        Now that you have created an account, let's get your devices set up!
+      {{/if}}
+    {{/if}}
+  </p>
+{{/if}}
+<div class="welcome-container">
+  {{#if activationAttempts}}
+    {{#if showSupportNumber}}
+      <p class="instructions instructions-strong">
+        Please call the Arcus Support Team at <arcus-support-number use-link="true" />.
+      </p>
+    {{else}}
+      <button class="btn-primary" type="button" ($click)="retryActivation">
+        Retry
+      </button>
+    {{/if}}
+  {{else}}
+    <arcus-animated-check checked="" icon="">
+      <div class="success-base success-anim">
+        <i class="icon-app-check"></i>
+      </div>
+    </arcus-animated-check>
+    {{#if fromMobile}}
+      <button class="btn-primary" type="button" ($click)="launchAppAndReRoute()">
+        {{buttonText}}
+      </button>
+    {{else}}
+      {{#unless fromInvite}}
+        <button class="btn-primary" ($click)="routeToHubPairing()">
+          Let's Get Started
+        </button>
+        <p>OR</p>
+      {{/unless}}
+      <p>
+        {{#if fromInvite}}
+          <button class="btn-primary" ($click)="routeToDashboard()">
+            Go To Dashboard
+          </button>
+        {{else}}
+          <a ($click)="routeToDashboard()">
+            Take me to the Dashboard
+          </a>
+        {{/if}}
+      </p>
+    {{/if}}
+  {{/if}}
+</div>
+{{#unless activationAttempts}}
+  {{#unless subpage}}
+    <arcus-create-account-welcome-download-mobile {android-launch-url}="androidLaunchURL" {ios-launch-url}="iosLaunchURL" />
+  {{/unless}}
+{{/unless}}

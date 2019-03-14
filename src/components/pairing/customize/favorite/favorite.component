@@ -1,0 +1,99 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-favorite">
+  <template>
+    <can-import from="i2web/components/favorite/"/>
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <h5>Select heart to add or remove.</h5>
+      <arcus-favorite {thing}="device" {display-property}="'dev:name'" />
+
+      <p class="notes">
+        {{info}}
+      </p>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import Device from 'i2web/models/device';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/favorite
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/favorite
+         * @description Device model that will be available for customization
+         */
+        device: { Type: Device },
+        /**
+         * @property {String} info
+         * @parent i2web/components/pairing/customize/favorite
+         * @description Info field from the customization step, to be displayed at the
+         * inside bottom of the box-gray-radius
+         */
+        info: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.info ? step.info : 'Favoriting a device makes it easily accessible from the Dashboard of both the Arcus Mobile app and Arcus Web Portal.';
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/favorite
+         * @description Title field from the customization step, to be displayed
+         * inside the box-gray-radius, at the top.
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Add Your Device to Favorites';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/favorite
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Customize Device';
+          },
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.thing} isFavorite': function thingChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('FAVORITE');
+        }
+      },
+    };
+  </script>
+</can-component>

@@ -1,0 +1,54 @@
+arcus-page-devices {
+  display: flex;
+  flex-direction: column;
+  
+  arcus-device-panel:last-child > div.panel-list-container {
+    border-bottom: 0;
+  }
+  
+  arcus-hub-panel {
+    .panel-list-container {
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+  
+  arcus-zwave-tools {
+    arcus-accordion-panel {
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+  
+  arcus-hub-panel + arcus-device-list {
+    border-top: @border;
+  }
+
+  .subview-selector {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid @heron;
+    padding: @gutter;
+    > *:first-child {
+      flex-grow: 1;
+    }
+    button {
+      margin: 0;
+    }
+    .segment-btn {
+      button {
+        white-space: nowrap;
+      }
+    }
+    .breakpoint(sm-down, {
+      flex-direction: column;
+      .segment-btn > button {
+        width: 100%;
+        margin-bottom: @gutter/2;
+      }
+    });
+  }
+  
+}

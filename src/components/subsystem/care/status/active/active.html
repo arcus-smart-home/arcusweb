@@ -1,0 +1,86 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  arcus-subsystem-care-status-active {
+    margin-top: 60px;
+    margin-left: 60px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="noBehaviors()">No Behaviors</button>
+  <button ($click)="allActive()">All Active</button>
+  <button ($click)="someActive()">Some Active</button>
+  <button ($click)="noActive()">No Active</button>
+  <arcus-subsystem-care-status-active {subsystem}="subsystem" />
+</script>
+<script src="../../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanList from 'can-list';
+  import CanMap from 'can-map';
+  import Subsystem from 'i2web/models/subsystem';
+  import SubsystemData from 'i2web/models/fixtures/data/subsystem.json';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/subsystem/care/status/active/';
+
+  const subsystems = SubsystemData['3d496bfc-1098-493e-afd4-7f56c12dbef6'].subsystems;
+  const CareSubsystem = new Subsystem(subsystems.find(s => s['base:caps'].includes('subcare')));
+
+  let app;
+
+  let active = new CanList([
+    "fe113441-d6f7-4a07-8f0e-d89b75aa502e",
+    "eb003210-1c51-41fe-9a53-19c4eeb2c097",
+    "9d306c5c-0485-4ede-835b-3b8f76014281",
+    "c12b9c43-99a1-4b78-a3f5-5e31f49c0e25"
+  ]);
+  let all = new CanList([
+    "fe113441-d6f7-4a07-8f0e-d89b75aa502e",
+    "eb003210-1c51-41fe-9a53-19c4eeb2c097",
+    "9d306c5c-0485-4ede-835b-3b8f76014281",
+    "c12b9c43-99a1-4b78-a3f5-5e31f49c0e25",
+    "fa4ee2c8-bdef-49f6-8e90-7cf8fbfb1064",
+    "60a72239-0c95-4884-9928-07ebd27f35f3",
+    "2f4e108b-fcff-498e-ac94-409e731c548a"
+  ]);
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: {
+      subsystem: CareSubsystem,
+      noBehaviors() {
+        this.attr('subsystem.subcare:activeBehaviors').replace([]);
+        this.attr('subsystem.subcare:behaviors').replace([]);
+      },
+      allActive() {
+        this.attr('subsystem.subcare:activeBehaviors').replace(all);
+        this.attr('subsystem.subcare:behaviors').replace(all);
+      },
+      someActive() {
+        this.attr('subsystem.subcare:activeBehaviors').replace(active);
+        this.attr('subsystem.subcare:behaviors').replace(all);
+      },
+      noActive() {
+        this.attr('subsystem.subcare:activeBehaviors').replace([]);
+        this.attr('subsystem.subcare:behaviors').replace(all);
+      },
+    },
+    appScope: { },
+  }).then(({ appState }) => {
+    app = appState;
+  });
+</script>

@@ -1,0 +1,79 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-pairing-connect-device
+    {show-searching}="showSearching"
+    {form}="formValues"
+    {on-customize}="@onCustomize"
+    {on-remove}="@onRemove"
+    {on-try-again}="@onTryAgain"
+    {product}="product"
+    {subsystem}="subsystem"
+    {(is-finished-registration)}="isFinishedRegistration"
+    {^help-required}="helpRequired"
+    {pairing-devices}="pairingDevices"
+    {^pairing-device}="pairingDevice"
+    {^title}="pairingTitle"
+  />
+</script>
+<script src="/node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/connect/device/';
+  import Device from 'i2web/models/device';
+  import DeviceData from 'i2web/models/fixtures/data/device/garage_doors.json';
+  import PairingSubsystemCaps from 'i2web/models/capability/PairingSubsystem';
+
+  const devices = [{
+    'pairdev:pairingState': 'PAIRING',
+    'pairdev:pairingPhase': 'JOIN',
+    'pairdev:deviceAddress': undefined
+  },{
+    'pairdev:pairingState': 'PAIRING',
+    'pairdev:pairingPhase': 'JOIN',
+    'pairdev:deviceAddress': undefined
+  }];
+
+  const scope = new CanMap({
+    device: (new Device(DeviceData[0])),
+    pairingDevices: devices,
+    showSearching: true,
+    pairingDevice: {
+      'pairdev:pairingState': 'PAIRING',
+      'pairdev:pairingPhase': 'JOIN',
+      'pairdev:deviceAddress': undefined,
+      Dismiss() {
+        return Promise.resolve();
+      },
+    },
+    subsystem: {
+      'subpairing:pairingMode': PairingSubsystemCaps.PAIRINGMODE_HUB,
+      'subpairing:searchIdle': false,
+      'Search': function() {},
+    },
+  });
+  const appScope = new CanMap({});
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

@@ -1,0 +1,145 @@
+{{!-- 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--}}
+
+{{#typeof "service"}}
+{{#if ../methods.length}}
+import Bridge from 'i2web/cornea/bridge';
+
+{{/if}}
+{{#if ../events.length}}
+import Cornea from 'i2web/cornea/';
+
+{{/if}}
+/**
+ * @module {Object} i2web/models/{{../metadata.name}} {{../metadata.name}}
+ * @parent app.models.services
+ {{#if ../metadata.description}}
+ *
+ * {{trim ../metadata.description}}
+ {{/if}}
+ */
+export default {
+{{#each ../events}}
+  /**
+   * @function on{{name}}
+   *
+   {{#if description}}
+   * {{trim this/description}}
+   *
+   {{/if}}
+   * @param {Function} callback Function to be executed upon recieving the event
+   */
+  on{{name}}(callback) {
+    Cornea.on('{{../../metadata.namespace}} {{../../metadata.namespace}}:{{name}}', callback);
+  },
+{{/each}}
+{{#each ../methods}}
+  /**
+   * @function {{name}}
+   *
+   {{#if description}}
+   * {{trim this/description}}
+   *
+   {{/if}}
+   {{#each parameters}}
+   * @param {{{type type}}} {{#if optional}}[{{name}}]{{else}}{{name}}{{/if}}{{#if description}} {{trim description}}{{/if}}
+   {{/each}}
+   * @return {Promise}
+   */
+  {{name}}({{parameters this/parameters}}) {
+    {{#isRESTful this}}
+      return Bridge.restfulRequest('{{../../../metadata.namespace}}:{{../name}}', 'SERV:{{../../../metadata.namespace}}:', { {{parametersTrailComma ../parameters}} });
+    {{else}}
+      return Bridge.request('{{../../../metadata.namespace}}:{{../name}}', 'SERV:{{../../../metadata.namespace}}:', { {{parametersTrailComma ../parameters}} });
+    {{/isRESTful}}
+  },
+{{/each}}
+};
+{{/typeof}}
+
+{{#typeof "capability"}}
+{{#if ../methods.length}}
+import Bridge from 'i2web/cornea/bridge';
+
+{{/if}}
+{{#if ../events.length}}
+import Cornea from 'i2web/cornea/';
+
+{{/if}}
+/**
+ * @module {Object} i2web/models/{{../metadata.name}} {{../metadata.name}}
+ * @parent app.models.capabilities
+{{#if ../metadata.description}}
+ *
+ * {{trim ../metadata.description}}
+{{/if}}
+ */
+export default {
+  writeableAttributes: [
+  {{#each ../writeable}}
+    /**
+     * @property {{{type type}}} {{../../metadata.namespace}}\:{{name}}
+     *
+     {{#if description}}
+     * {{trim this/description}}
+     *
+     {{/if}}
+     */
+    '{{../../metadata.namespace}}:{{name}}',
+  {{/each}}
+  ],
+  methods: {
+  {{#each ../methods}}
+    /**
+     * @function {{name}}
+     *
+     {{#if description}}
+     * {{trim this/description}}
+     *
+     {{/if}}
+     {{#each parameters}}
+     * @param {{{type type}}} {{#if optional}}[{{name}}]{{else}}{{name}}{{/if}}{{#if description}} {{trim description}}{{/if}}
+     {{/each}}
+     * @return {Promise}
+     */
+    {{name}}({{parameters this/parameters}}) {
+      {{#isRESTful this}}
+        return Bridge.restfulRequest('{{../../../metadata.namespace}}:{{../name}}', this.GetDestination(), { {{parametersTrailComma ../parameters}} });
+      {{else}}
+        return Bridge.request('{{../../../metadata.namespace}}:{{../name}}', this.GetDestination(), { {{parametersTrailComma ../parameters}} });
+      {{/isRESTful}}
+    },
+  {{/each}}
+  },
+  events: {
+  {{#each ../events}}
+    /**
+     * @function on{{name}}
+     *
+     {{#if description}}
+     * {{trim this/description}}
+     *
+     {{/if}}
+     * @param {Function} callback Function to be executed upon recieving the event
+     */
+    on{{name}}(callback) {
+      Cornea.on('{{../../metadata.namespace}} {{../../metadata.namespace}}:{{name}}', callback);
+    },
+  {{/each}}
+  },
+  {{{enumerations}}}
+};
+{{/typeof}}

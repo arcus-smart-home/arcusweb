@@ -1,0 +1,75 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/form/change-pin/" />
+<can-import from="src/components/mailing-address.component"/>
+
+{{#eq activeDisplay 'invites'}}
+  <span class="left-panel-buttons">
+    {{close-button type="cancel"}}
+  </span>
+{{/eq}}
+<div class="panel-content">
+  {{#switch activeDisplay}}
+    {{#case 'invites'}}
+      {{#if formError}}
+        <p class="form-error">{{formError}}</p>
+      {{/if}}
+      <h3>Invitation</h3>
+      <hr />
+      {{#unless invitations.length}}
+        <p>You have no pending invitations.</p>
+      {{/unless}}
+      {{#each invitations}}
+        <div class="invitation-container">
+          <div class="left">
+            <div class="invitation-wrapper">
+              <i class="icon-platform-home-2 icon avatar"></i>
+              <div class="invitation-copy">
+                <h4>{{placeName}}</h4>
+                <arcus-mailing-address {line1}="streetAddress1"
+                                      {line2}="streetAddress2"
+                                      {city}="city"
+                                      {state}="stateProv"
+                                      {zip}="zipCode" />
+              </div>
+            </div>
+            <div>
+              <p class="invited-by">Invited by {{invitorFirstName}} {{invitorLastName}}</p>
+            </div>
+          </div>
+          <div class="invitation-actions">
+            <div class="button-group">
+              <button class="btn" ($click)="acceptInvitation(.)">Accept</button>
+              <button class="btn-cancel" ($click)="declineInvitation(.)">Decline</button>
+            </div>
+          </div>
+        </div>
+        <hr />
+      {{/each}}
+    {{/case}}
+    {{#case 'pin'}}
+      <arcus-form-change-pin
+        header="Invitation"
+        subheader="Create a PIN Code"
+        description="This PIN Code will only be used for this place and will be used to disarm the alarm, unlock locks, and more."
+        {(person)}="person"
+        {place-id}="newPlaceId"
+        {on-save}="@onSavePin"
+        hide-cancel-button />
+    {{/case}}
+  {{/switch}}
+</div>

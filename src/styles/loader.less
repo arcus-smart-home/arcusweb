@@ -1,0 +1,106 @@
+/**
+* @stylesheet loader.less Loader
+* @parent styles.baseline-elements
+*
+* @description
+* Based off a simple spinning animation from [Luke Haas](http://projects.lukehaas.me/css-loaders/). The colors are set with mixin arguments, the two defaults are displayed below along with a variation for standard buttons.
+*
+* If you'd like to divert from these defaults, simply give the loader on that component/page the details with the `.loader-colors` mixin. The available color arguments are:
+ - `@color` (the main color of the spinner, and
+ - `@bg` (the color of the center mask to make it look like a torus).
+*
+* Example mixin-usage to get a red spinner on a pink background:
+* ```
+  .sample-component {
+    .loader {
+      .loader-colors(@color:@cardinal, @bg: pink);
+    }
+  }
+* ```
+*
+* **Bonus note:**
+* > Wrap the `.loader` div in a `.loader-wrapper` div to pair with centered text for additional loading information.
+*
+* @demo ./src/styles/demos/loader.html 1000px
+*
+**/
+
+.loader-colors(@color: @peacock, @bg: @body-bg) {
+  background: @color;
+  background: linear-gradient(to right, @color 10%, fade(@color, 0) 42%);
+  &:before {
+    background: @color;
+  }
+  &:after {
+    background: @bg;
+  }
+}
+
+.loader {
+  .loader-colors;
+  margin: 40px auto;
+  text-indent: -9999em;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  position: relative;
+  animation: load-spinner 1.4s infinite linear;
+  transform: translateZ(0);
+  opacity: .6;
+  overflow: hidden;
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:before {
+    width: 50%;
+    height: 50%;
+    border-radius: 100% 0 0 0;
+  }
+  &:after {
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    margin: auto;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.gray-loader {
+  .loader;
+  .loader-colors(@color: @crane, @bg: @pigeon);
+  opacity: 1;
+}
+
+.dark-loader {
+  .loader;
+  .loader-colors(@color: @crane, @bg: @raven);
+  opacity: 1;
+}
+
+.loader-wrapper {
+  text-align: center;
+}
+
+[class^='btn'] {
+  .loader {
+    .loader-colors(@color: @crane, @bg:@link-color);
+    display: inline-block;
+    margin: 0 5px -4px 0;
+    width: 17px;
+    height: 17px;
+    opacity: .8;
+  }
+}
+
+[class^='btn-delete'],
+[class^='btn-error'],
+[class^='btn-cancel'] {
+  .loader {
+    .loader-colors(@color: @crane, @bg:@cardinal);
+  }
+}

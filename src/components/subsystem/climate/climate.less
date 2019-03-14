@@ -1,0 +1,91 @@
+@import 'settings/settings.less';
+@import './card/card.less';
+
+arcus-subsystem-climate {
+  display: block;
+  .climate-navigation {
+    margin: @gutter/2 @gutter/2 0;
+    .breakpoint(md, {
+      flex-direction: row;
+      margin: @gutter;
+    });
+    .segment-btn {
+      [class^="btn"] {
+        margin-bottom: 0;
+        .breakpoint(md-down, {
+          margin-bottom: @gutter/2;
+        });
+      }
+    }
+  }
+  hr {
+    margin-bottom: 0px;
+    .breakpoint(md-down, {
+      margin-top: 0;
+    });
+  }
+  .climate-temperature {
+    .temperature-device {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: @border;
+      padding: @gutter/2;
+      .breakpoint(md, {
+        padding: @gutter;
+      });
+      &:last-of-type {
+        border-bottom: none;
+      }
+      .device-name {
+        color: @swift;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        flex-wrap: nowrap;
+        .icon {
+          flex-shrink: 0;
+          font-size: 30px;
+          display: inline-block;
+          width: 40px;
+          text-align: center;
+          margin-right: @gutter/3;
+          &.icon-app-cloud-2 {
+            transform: scale(1.2);
+          }
+        }
+        h3 {
+          display: inline-block;
+          margin-bottom: 0;
+          margin-top: 0;
+        }
+      }
+      .device-badges {
+        padding-left: @gutter/3;
+      }
+      .climate-device-detail {
+        .font-regular;
+        font-size: @font-size-h3;
+        &:last-of-type {
+          padding-left: @gutter/3;
+        }
+        .value {
+          margin-right: -3px;
+        }
+        .value-unit {
+          font-size: 60%;
+        }
+      }
+    }
+  }
+}
+arcus-subsystem-climate-no-devices {
+  .panel-list-container {
+    border-bottom: 0;
+  }
+  .breakpoint(md-down, {
+    .panel-secondary-combined {
+      margin: @gutter 0 @gutter/2 0;
+    }
+  });
+}

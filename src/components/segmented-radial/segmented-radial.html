@@ -1,0 +1,110 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-segmented-radial {is-off}="isOff" {text}="text">
+    {{#each segments}}
+      <arcus-segmented-radial-segment {state}="./state" {(color)}="./color" />
+    {{/each}}
+  </arcus-segmented-radial>
+  <br />
+  <input type="text" {($value)}="text" /> Text
+  <br />
+  <input type="checkbox" {($checked)}="isOff" /> Turn off?
+  <br />
+  <h2>Add new segment:</h2>
+  <p>
+    <select {($value)}="newSegment.state">
+      <option value="ready">Ready</option>
+      <option value="alarming">Alarming</option>
+      <option value="offline">Offline</option>
+    </select>
+      <input type="text" {($value)}="./color" />
+    <button ($click)="addSegment()">Add</button>
+  </p>
+  {{#each segments}}
+    <p>
+      <select {($value)}="./state">
+        <option value="ready">Ready</option>
+        <option value="alarming">Alarming</option>
+        <option value="offline">Offline</option>
+      </select>
+      <input type="text" {($value)}="./color" />
+      <button ($click)="removeSegment(.)">X</button>
+    </p>
+  {{/each}}
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import canMap from 'can-map';
+  import canList from 'can-list';
+  import canViewModel from 'can-view-model';
+  window.canViewModel = canViewModel;
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/segmented-radial/';
+
+  const segments = new canList([{
+    state: 'alarming',
+  }, {
+    state: 'offline',
+  }, {
+    state: 'ready',
+  }, {
+    state: 'ready',
+  }, {
+    state: 'ready',
+  }, {
+    state: 'ready',
+  }]);
+  const VM = canMap.extend({
+    define: {
+      newSegment: {
+        Type: canMap,
+        value: {
+          state: 'ready',
+        },
+      },
+      isOff: {
+        type: 'boolean',
+      },
+      text: {
+        value: '',
+      },
+    },
+    segments,
+    addSegment() {
+      const clone = Object.assign({}, this.attr('newSegment').attr());
+      this.attr('segments').push(clone);
+      this.attr('newSegment').attr({
+        state: 'ready',
+      }, true);
+    },
+    removeSegment(segment) {
+      const segs = this.attr('segments');
+      segs.splice(segs.indexOf(segment), 1);
+    },
+  });
+
+  const scope = new VM({});
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-html',
+    scope,
+    appScope: {},
+  });
+</script>

@@ -1,0 +1,148 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-name">
+  <template>
+    <can-import from="i2web/components/form/confirm-field/"/>
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <arcus-form-confirm-field
+          {(model)}="thing"
+          field="{{nameProperty}}"
+          field-description="Device Name"
+          placeholder="Device Name"
+          attributes="character-count='48'" />
+      <p class="notes">
+        {{info}}
+      </p>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/name
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {htmlbool} device
+         * @parent i2web/components/pairing/customize/name
+         * @description Whether it is a Device that we are customizing
+         */
+        device: {
+          type: 'htmlbool',
+        },
+        /**
+         * @property {htmlbool} hub
+         * @parent i2web/components/pairing/customize/name
+         * @description Whether it is a Hub that we are customizing
+         */
+        hub: {
+          type: 'htmlbool',
+        },
+        /**
+         * @property {String} info
+         * @parent i2web/components/pairing/customize/name
+         * @description Info field from the customization step, to be displayed at the
+         * inside bottom of the box-gray-radius.
+         */
+        info: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.info
+            ? step.info
+            : 'We recommend using simple, identifying language that is easily recognized by voice assistants.';
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/name
+         * @description Title field from the customization step, to be displayed at the
+         * inside bottom of the box-gray-radius.
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : `Give Your ${this.attr('typeText')} a Name`;
+          },
+        },
+        /**
+         * @property {String} nameProperty
+         * @parent i2web/components/pairing/customize/name
+         * @description The property used to access the name on 'thing'
+         */
+        nameProperty: {
+          get() {
+            return `${(this.attr('device')) ? 'dev' : 'hub'}:name`;
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/name
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Customize Device';
+          },
+        },
+        /**
+         * @property {String} typeText
+         * @parent i2web/components/pairing/customize/name
+         * @description The text representation of the type being customized
+         */
+        typeText: {
+          get() {
+            return (this.attr('device')) ? 'Device' : 'Hub';
+          },
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    import $ from 'jquery';
+
+    export default {
+      inserted() {
+        setTimeout(() => {
+          $(this.element).find('.panel-content').toggleClass('input-border');
+        }, 0);
+      },
+      '{element} input focus': function focusInput(element) {
+        $(this.element).find('.panel-content').toggleClass('input-border');
+        element.select();
+      },
+      '{element} input blur': function blurInput() {
+        $(this.element).find('.panel-content').toggleClass('input-border');
+      },
+      '{element} input change': function nameChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('NAME');
+        }
+      },
+    };
+  </script>
+</can-component>

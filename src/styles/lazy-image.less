@@ -1,0 +1,33 @@
+arcus-lazy-image,
+.lazy-image {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  width: 290px;
+  height: 218px;
+  .breakpoint(md, {
+    width: 320px;
+    height: 240px;
+  });
+  &.background-loading {
+    display: inline;
+  }
+  img {
+    display: block;
+    width: 100%;
+    align-self: center;
+  }
+  .placeholder {
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    p {
+      color: @crane;
+      padding-left: @gutter/3;
+      padding-right: @gutter/3;
+    }
+  }
+}

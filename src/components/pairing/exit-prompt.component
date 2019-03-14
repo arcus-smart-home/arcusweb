@@ -1,0 +1,117 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-exit-prompt">
+  <template>
+    <div class="modal-container">
+      <div class="modal-content">
+        <h3>
+          {{headerText}}
+        </h3>
+        <hr>
+        <span>
+          {{bodyText}}
+        </span>
+        <div class="buttons">
+          <button class="btn {{exitClasses}}" ($click)="onResumePairing()">
+            Resume
+          </button>
+          <button class="btn-cancel {{exitClasses}}" ($click)="exit()">
+            Exit
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {String} bodyText
+         * @parent i2web/components/pairing/exit-prompt
+         * @description The text to the inform the User the purpose of this modal
+         */
+        bodyText: {
+          get() {
+            return (this.attr('hasUnpairedDevices'))
+              ? 'You\'ll continue seeing the device(s) each time you pair a new one unless you resume and resolve the issues.'
+              : 'You can customize at any time. Default settings will be applied if you exit now.';
+          },
+        },
+        /**
+         * @property {String} exitClasses
+         * @parent i2web/components/pairing/exit-prompt
+         * @description The classes to add to the buttons when the User is exiting pairing
+         */
+        exitClasses: {
+          get() {
+            return (this.attr('exitInProgress')) ? 'active disabled' : '';
+          },
+        },
+        /**
+         * @property {String} exitInProgress
+         * @parent i2web/components/pairing/exit-prompt
+         * @description Whether the User has confirmed that they wish to exit pairing
+         */
+        exitInProgress: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {String} headerText
+         * @parent i2web/components/pairing/exit-prompt
+         * @description The Header text for the modal
+         */
+        headerText: {
+          get() {
+            return (this.attr('hasUnpairedDevices'))
+              ? 'Looks like you have at least one device requiring attention. Are you sure you want to exit now?'
+              : 'Looks like you\'re almost done customizing your devices. Are you sure you want to exit now?';
+          },
+        },
+        /**
+         * @property {Function} onConfirmExitPairing
+         * @parent i2web/components/pairing/exit-prompt
+         * @description The function to be called when the User has confirmed they wish to exit
+         */
+        onConfirmExitPairing: {
+          Type: Function,
+        },
+        /**
+         * @property {Function} onResumePairing
+         * @parent i2web/components/pairing/exit-prompt
+         * @description The function to be called when the User decides to continue pairing
+         */
+        onResumePairing: {
+          Type: Function,
+        },
+      },
+      /**
+       * @function exit
+       * @parent i2web/components/pairing/exit-prompt
+       * @description Function called when the User confirms their desire to exit pairing
+       */
+      exit() {
+        this.attr('exitInProgress', true);
+        this.onConfirmExitPairing();
+      },
+    });
+  </script>
+</can-component>

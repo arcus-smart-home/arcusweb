@@ -1,0 +1,65 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/form-fields" />
+
+{{#with currentStep}}
+  <img class="{{imageClass}}" src="{{currentStepIllustrationURL}}" ($load)="imageFound" ($error)="imageNotFound"/>
+
+  <a class="tutorial" href="{{../tutorialVideo}}" target="_blank">
+    {{#if ../tutorialVideo}}
+      <i class="icon-app-play-w-circle" /><span class="copy">Watch Tutorial Video</span>
+    {{/if}}
+  </a>
+
+  <div class="info">
+    {{info}}
+  </div>
+
+  <div class="box-gray-radius darken-bg step-box">
+    <div class="row-left-area">
+      <span class="step-count">{{order}}</span>
+      <div>
+          <p>{{instructions[0]}}</p>
+      </div>
+    </div>
+  </div>
+{{/with}}
+
+{{#if isFormShown}}
+  <div class="form">
+    {{#each config.form}}
+      {{#is type 'HIDDEN'}}
+        <input type="hidden" name="{{name}}" value="{{value}}" />
+      {{else}}
+        {{#with form}}
+          {{textInput(name, label, attributes=formAttrs[name])}}
+        {{/with}}
+      {{/is}}
+    {{/each}}
+  </div>
+{{/if}}
+
+{{#if currentStepHasLink}}
+  <a href="{{stepLinkUrl}}" class="instructions-link" target="_blank">
+    {{currentStep.linkText}}
+  </a>
+{{/if}}
+
+<div class="buttons">
+  <button class="btn" ($click)="goPrevious()">Back</button>
+  <button class="btn" ($click)="goNext()">Next</button>
+</div>

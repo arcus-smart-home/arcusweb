@@ -1,0 +1,143 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="src/components/mailing-address.component"/>
+<can-import from="i2web/components/form/confirm-field/"/>
+<can-import from="i2web/components/settings/people/edit-contact-info/"/>
+<can-import from="i2web/components/settings/places/promonitoring-info/" />
+<div class="row panel-list-container">
+  <div class="panel-primary-wrapper">
+    <div class="col-xs-12 col-md panel-information">
+      <div class="place-avatar">
+        <img src="/src/images/default-home.jpg">
+      </div>
+      <div class="place-address">
+        {{#if place['web:userOwnsPlace']}}
+          <arcus-form-confirm-field
+              {(model)}="place"
+              field="place:name"
+              field-description="Place Name"
+              placeholder="Place Name"
+              notify-on-save="true"
+              attributes="character-count='254'">
+            {{place['place:name']}}{{#if place.isPromon}} <span class="pro-badge">Pro</span>{{/if}}
+          </arcus-form-confirm-field>
+        {{else}}
+          <h3>{{place['place:name']}}{{#if place.isPromon}} <span class="pro-badge">Pro</span>{{/if}}</h3>
+        {{/if}}
+        <arcus-mailing-address {line1}="place['place:streetAddress1']"
+          {line2}="place['place:streetAddress2']"
+          {city}="place['place:city']"
+          {state}="place['place:state']"
+          {zip}="place['place:zipCode']" />
+      </div>
+    </div>
+  </div>
+  <div class="panel-secondary-wrapper">
+    <div class="col-md panel-secondary-combined">
+      {{#if place['web:userOwnsPlace']}}
+        <button class="btn" ($click)="editPlace">
+          Edit
+        </button>
+      {{else}}
+        {{#if allowRemoveAccess}}
+          <button class="btn-cancel" ($click)="removeAccess">
+            Remove My Access
+          </button>
+        {{else}}
+          <div class="panel-error">
+            <p class="error">Access to your last place cannot be removed. To delete your Arcus account,
+              go to the Settings page and <a href="/settings/profile/delete-account">Delete</a> your account.</p>
+          </div>
+        {{/if}}
+      {{/if}}
+      {{#if place.isPromon}}
+        <button class="btn" ($click)="showPromonInfo">
+          Pro Monitoring Info
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  {{#if placeHasPeople}}
+    {{#each people}}
+      <hr />
+      <div class="row nested-panel-list">
+        <div class="panel-primary-wrapper">
+          <div class="col-xs-12 col-md panel-information">
+            <i class="icon-app-user-1 avatar"></i>
+            <div class="person-address">
+              <h3>{{['person:name']}}</h3>
+              {{#if ['person:email']}}<p class="email">{{['person:email']}}</p>{{/if}}
+              {{#if ['person:mobileNumber']}} <p>{{format-phone-number(['person:mobileNumber'])}}</p>{{/if}}
+              <small>
+                {{#switch getPlaceRole(place['base:id'])}}
+                  {{#case 'OWNER'}}
+                    Account Owner
+                  {{/case}}
+                  {{#case 'FULL_ACCESS'}}
+                    Full Access
+                  {{/case}}
+                  {{#case 'HOBBIT'}}
+                    Partial Access
+                  {{/case}}
+                {{/switch}}
+              </small>
+            </div>
+          </div>
+        </div>
+        {{#if canEditPerson(.)}}
+          <div class="row panel-secondary-wrapper">
+            <div class="col-md panel-secondary-combined">
+              <button class="btn" ($click)="editPerson(.)">
+                Edit
+              </button>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+    {{#each invitees}}
+      <hr />
+      <div class="row nested-panel-list">
+        <div class="panel-primary-wrapper">
+          <div class="col-xs-12 col-md panel-information">
+            <i class="icon-app-envelope-2 invitation"></i>
+            <div class="person-address">
+              <h3>{{['inviteeFirstName']}} {{['inviteeLastName']}}</h3>
+              <small>Invitation Sent</small>
+            </div>
+          </div>
+        </div>
+        <div class="row panel-secondary-wrapper">
+          <div class="col-md panel-secondary-combined">
+            <button class="btn-cancel" ($click)="cancelInvitation(.)">
+              Cancel Invitation
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  {{else}}
+    <hr />
+    <div class="empty-people">
+      {{#if place['web:userOwnsPlace']}}
+        <p>You have not added any people to this Place yet.</p>
+      {{else}}
+        <p>You are the only guest at this Place.</p>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

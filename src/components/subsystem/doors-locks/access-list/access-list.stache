@@ -1,0 +1,94 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/accordion/panel/" />
+<can-import from="i2web/components/shop-button.component" />
+
+{{#if allDevices.length}}
+
+<div class="notification-container">
+  <h2>Lock Access List</h2>
+  <p>When you add someone to your access list, they can use their unique PIN to open your keypad lock.</p>
+</div>
+
+<hr />
+
+<arcus-accordion {on-panel-activation}="@selectedDevice">
+  {{#each allDevices}}
+  <arcus-accordion-panel device={device['base:address']} {active}="isPanelActive(device)">
+    <arcus-accordion-panel-heading>
+      <h3><i class="icon-platform-lock-2 icon"></i> {{device.name}}</h3>
+    </arcus-accordion-panel-heading>
+    <arcus-accordion-panel-body>
+      <ul class="notification-list">
+        {{#each authorized}}
+        <li class="radio-wrapper enabled-person">
+          <div class="buttons move-person"></div>
+          <label for="checkbox-regular" class="complex-label" ($click)="toggleFlag(device, ., %event)">
+            {{#eq state 'PENDING'}}
+            <div class="loader">Loading...</div>
+            <span class="name">{{person.attr('person:name')}}<br/><small>The lock is currently updating PIN(s) which may take a few minutes.</small></span>
+            {{else}}
+            <i class="icon-app-user-1 avatar"></i>
+            <span class="name">{{person.attr('person:name')}}</span>
+            {{/eq}}
+          </label>
+          <input class="radio-checkbox" type="checkbox" id="checkbox-regular" checked>
+          <div class="check"></div>
+        </li>
+        {{/each}}
+        <li class="context-bar">
+          <h3>Add More People To Your Access List</h3>
+        </li>
+        {{#each unauthorized}}
+          <li class="radio-wrapper enabled-person">
+            <div class="buttons move-person"></div>
+            <label for="checkbox-regular" class="complex-label" ($click)="toggleFlag(device, ., %event)">
+              <i class="icon-app-user-1 avatar"></i>
+              <span class="name">{{person.attr('person:name')}}</span>
+            </label>
+            <input class="radio-checkbox" type="checkbox" id="checkbox-regular">
+            <div class="check"></div>
+          </li>
+        {{/each}}
+        <li class="radio-wrapper add-person" ($click)="addPerson">
+          <label for="checkbox-regular" class="complex-label">
+            <i class="icon-app-user-3 avatar"></i>
+            <span class="name">Don't see the Person you are looking for? <br>
+            <small>Click the '+' sign to add a new person to your Access List</small></span>
+          </label>
+          <div class="add"></div>
+        </li>
+      </ul>
+    </arcus-accordion-panel-body>
+  </arcus-accordion-panel>
+  {{/each}}
+</arcus-accordion>
+{{ else }}
+  <div class="no-devices">
+    <div class="left-wrapper">
+      <h3>Know Who Has Access to Your Home</h3>
+      <p>Manage the People who can lock and unlock your doors using PIN codes.</p>
+    </div>
+    <div class="right-wrapper">
+      <arcus-shop-button href="{{redirectToUrl('p_doors')}}" expanded>
+        Shop Devices
+      </arcus-shop-button>
+    </div>
+  </div>
+{{/endif}}

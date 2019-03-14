@@ -1,0 +1,134 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  arcus-pairing-customize-completed-hub,
+  arcus-pairing-customize-completed-device {
+    margin-top: 100px;
+  }
+  .toggle {
+    margin-top: 10px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="switchCompleted('HUBv2')">Hub v2</button>
+  <button ($click)="switchCompleted('HUBv3')">Hub v3</button>
+  <button ($click)="switchCompleted('DEVICE')">Device</button>
+  {{#unless showHub}}
+    <br />
+    <button class="toggle" ($click)="togglePairingDevices()">Toggle Pairing Devices</button>
+  {{else}}
+    <br />
+    <button class="toggle" ($click)="toggleKitInfo()">Toggle Kit Info</button>
+  {{/unless}}
+  {{#unless reloading}}
+    {{#if showHub}}
+      <arcus-pairing-customize-completed-hub
+        {product}="product"
+        {kit-info}="kitInfo"
+        {subsystem}="pairingSubsystem"
+      />
+    {{else}}
+      <arcus-pairing-customize-completed-device
+        {device}="device"
+        {pairing-device}="pairingDevice"
+        {pairing-devices}="pairingDevices"
+        {subsystem}="pairingSubsystem"
+      />
+    {{/if}}
+  {{/unless}}
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/completed/device.component';
+  import 'i2web/components/pairing/customize/completed/hub.component';
+  import Device from 'i2web/models/device';
+  import Subsystem from 'i2web/models/subsystem';
+  import PairingSubsystemData from 'i2web/models/fixtures/data/subsystem.json';
+  import DeviceData from 'i2web/models/fixtures/data/device/lights.json';
+
+  const PairingSubsystem =
+    new Subsystem(PairingSubsystemData["3d496bfc-1098-493e-afd4-7f56c12dbef6"].subsystems[13]);
+
+  const devices = [{
+    'pairdev:pairingState': 'PAIRING',
+    'pairdev:pairingPhase': 'JOIN',
+    'pairdev:deviceAddress': undefined
+  },{
+    'pairdev:pairingState': 'PAIRING',
+    'pairdev:pairingPhase': 'JOIN',
+    'pairdev:deviceAddress': undefined
+  }];
+
+  const products = [{
+    'base:id': 'dee000',
+  }, {
+    'base:id': 'dee001',
+  }];
+
+  const scope = new CanMap({
+    device: new Device(DeviceData[0]),
+    kitInfo: [],
+    pairingDevice: {
+      'pairdev:pairingState': 'PAIRING',
+      'pairdev:pairingPhase': 'JOIN',
+      'pairdev:deviceAddress': undefined,
+      Dismiss() {
+        return Promise.resolve();
+      },
+    },
+    pairingDevices: [],
+    product: products[0],
+    showHub: true,
+    pairingSubsystem: PairingSubsystem,
+    toggleKitInfo() {
+      if (this.attr('kitInfo.length')) {
+        this.attr('kitInfo', []);
+      } else {
+        this.attr('kitInfo', [{}]);
+      }
+    },
+    togglePairingDevices() {
+      const count = this.attr('pairingDevices.length');
+      if (count) {
+        this.attr('pairingDevices', []);
+      } else {
+        this.attr('pairingDevices', devices);
+      }
+    },
+    switchCompleted(type) {
+      this.attr('reloading', true);
+      if (type === 'HUBv2') {
+        this.attr('product', products[0]);
+      }
+      if (type === 'HUBv3') {
+        this.attr('product', products[1]);
+      }
+      this.attr('showHub', type.includes('HUB'));
+      this.attr('reloading', false);
+    },
+  });
+  const appScope = new CanMap({});
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

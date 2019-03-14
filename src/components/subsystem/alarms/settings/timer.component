@@ -1,0 +1,129 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-settings-timer">
+  <template>
+    <can-import from="i2web/components/spinner/" />
+    <div class="timer-spinners large-spinner">
+      <arcus-spinner
+          {formatter}="@formatMinutes"
+          {(value)}="formattedMinutes"
+          min="0"
+          {(max)}="maxMinutes"
+          cycle="true" />
+      <arcus-spinner
+          {formatter}="@formatSeconds"
+          {(value)}="formattedSeconds"
+          min="0"
+          {(max)}="maxSeconds"
+          cycle="true" />
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import 'i2web/helpers/global';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {number} seconds
+         * @parent i2web/components/subsystem/alarms/settings/timer
+         * @description Number of seconds to set the timer to
+         */
+        seconds: {
+          type: 'number',
+        },
+        /**
+         * @property {number} maxMinutes
+         * @parent i2web/components/subsystem/alarms/settings/timer
+         * @description The maximum number of minutes we can set the timer to. If the seconds are 0,
+         * this should be 10, otherwise 9 to allow for 9:55, but not 10:55
+         */
+        maxMinutes: {
+          get() {
+            const formattedSeconds = this.attr('formattedSeconds');
+            return formattedSeconds === 0 ? 10 : 9;
+          },
+        },
+        /**
+         * @property {number} maxSeconds
+         * @parent i2web/components/subsystem/alarms/settings/timer
+         * @description The maximum number of seconds we can set the timer to. If the minutes are 10,
+         * this should be 0, otherwise 59 to allow for 9:59, but not 10:59
+         */
+        maxSeconds: {
+          get() {
+            const formattedMinutes = this.attr('formattedMinutes');
+            return formattedMinutes === 10 ? 0 : 59;
+          },
+        },
+        /**
+         * @property {number} formattedMinutes
+         * @parent i2web/components/subsystem/alarms/settings/timer
+         * @description The number of minutes in the total amount of seconds
+         */
+        formattedMinutes: {
+          type: 'number',
+          set(formattedMinutes) {
+            const formattedSeconds = this.attr('formattedSeconds');
+            this.attr('seconds', formattedSeconds + (formattedMinutes * 60));
+            return formattedMinutes;
+          },
+          get() {
+            const seconds = this.attr('seconds');
+            return Math.floor(seconds / 60);
+          },
+        },
+        /**
+         * @property {number} formattedMinutes
+         * @parent i2web/components/subsystem/alarms/settings/timer
+         * @description The number of seconds, minus minutes in the total number of seconds
+         */
+        formattedSeconds: {
+          type: 'number',
+          set(formattedSeconds) {
+            const formattedMinutes = this.attr('formattedMinutes');
+            this.attr('seconds', formattedSeconds + (formattedMinutes * 60));
+            return formattedSeconds;
+          },
+          get() {
+            const seconds = this.attr('seconds');
+            return seconds % 60;
+          },
+        },
+      },
+      /**
+       * @function formatMinutes
+       * @parent i2web/components/subsystem/alarms/settings/timer
+       * @param {Number} minutes = 0 Seconds to format
+       * @description Formats a given number of minutes into `X <span class="value-unit">Min</span>` format
+       */
+      formatMinutes(minutes = 0) {
+        return `${minutes}<span class="value-unit">Min</span>`;
+      },
+      /**
+       * @function formatSeconds
+       * @parent i2web/components/subsystem/alarms/settings/timer
+       * @param {Number} seconds = 0 Seconds to format
+       * @description Formats a given number of seconds into `XX <span class="value-unit">Sec</span>` format
+       */
+      formatSeconds(seconds = 0) {
+        return `${seconds < 10 ? `0${seconds}` : seconds}<span class="value-unit">Sec</span>`;
+      },
+    });
+  </script>
+</can-component>

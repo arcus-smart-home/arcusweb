@@ -1,0 +1,156 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-promon-alarm">
+  <template>
+    <can-import from="i2web/helpers/global" />
+    <div class="box-gray-radius">
+      <span class="pro-badge">PRO</span>
+      <h4>{{subtitle}}</h4>
+      <hr>
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <hr>
+      <div class="devices-triggered">
+        {{#each alarms}}
+          {{#switch .}}
+            {{#case 'SECURITY'}}
+              <h4><i class="icon-platform-security-1"></i> Security</h4>
+            {{/case}}
+            {{#case 'SMOKE'}}
+              <h4><i class="icon-platform-smoke-2"></i> Smoke</h4>
+            {{/case}}
+            {{#case 'CO'}}
+              <h4><i class="icon-platform-co-smoke-2"></i> Carbon Monoxide</h4>
+            {{/case}}
+            {{#case 'PANIC'}}
+              <h4><i class="icon-platform-security-1"></i> Panic</h4>
+            {{/case}}
+          {{/switch}}
+        {{/each}}
+      </div>
+      <p>
+        {{#if linkUrl}}
+          <a href="{{linkUrl}}" target="_blank">{{linkText}}</a>
+        {{else}}
+          <a href="{{redirectToUrl('s_promonitoring')}}" target="_blank">{{linkText}}</a>
+        {{/if}}
+      </p>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import Device from 'i2web/models/device';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Array} alarms
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Newly available alarms field from the customization step, to be displayed as a list
+         */
+        alarms: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.choices && step.choices.length > 0) {
+              return step.choices;
+            }
+            return [];
+          },
+        },
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Array} description
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Description field from the customization step, to be displayed in paragraphs
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return ['You have paired a device that will unlock a new professionally monitored alarm. It is automatically included at no additional cost.', 'The authorities may come to your home if one of the following Alarms are triggered:'];
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Device model relevant to the customization
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} linkText
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Link text field from the customization step, to be displayed at the bottom
+         * of the box-gray-radius
+         */
+        linkText: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.linkText ? step.linkText : 'What to expect with Professional Monitoring';
+          },
+        },
+        /**
+         * @property {String} linkUrl
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Link Url field from the customization step, to be linked with the text at the bottom
+         * of the box-gray-radius
+         */
+        linkUrl: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step ? step.linkUrl : undefined;
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius, at the top of the box
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Professional Monitoring';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/promon-alarm
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Attention';
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

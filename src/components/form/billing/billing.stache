@@ -1,0 +1,90 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/form/select.component" />
+<can-import from="semantic-ui-dropdown-canjs"/>
+
+<form ($submit)="save" autocomplete="off" {{#if saving}}disabled{{/if}}>
+  <button type="submit" class="btn{{#unless hasChanges}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+    {{#if saving}}
+      <div class="loader"></div> Saving
+    {{else}}
+      Save
+    {{/if}}
+  </button>
+  {{close-button type="cancel"}}
+  {{#if formError}}
+    <p class="form-error">{{formError}}</p>
+  {{/if}}
+  <div class="panel-content">
+    <h3>Edit Billing</h3>
+    {{textInput('formAccount.account:billingFirstName', 'First Name')}}
+    {{textInput('formAccount.account:billingLastName', 'Last Name')}}
+    {{textInput('cardNumber', previousCardFieldLabel, attributes='autocomplete="cc-number" key-mask="9999-9999-9999-9999-9999"')}}
+    {{textInput('cvv', 'CVV / Security code', attributes='autocomplete="cc-csc" key-mask="9999"')}}
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        {{#selectInput('month', 'Expiration Month', attributes='autocomplete="cc-exp-month"' allowSearch=true placeholder='Month')}}
+          <option value="01">01-January</option>
+          <option value="02">02-February</option>
+          <option value="03">03-March</option>
+          <option value="04">04-April</option>
+          <option value="05">05-May</option>
+          <option value="06">06-June</option>
+          <option value="07">07-July</option>
+          <option value="08">08-August</option>
+          <option value="09">09-September</option>
+          <option value="10">10-October</option>
+          <option value="11">11-November</option>
+          <option value="12">12-December</option>
+        {{/selectInput}}
+      </div>
+      <div class="col-xs-12 col-sm-offset-1 col-sm-5">
+        {{#selectInput('year', 'Expiration Year', attributes='autocomplete="cc-exp-year"' allowSearch=true placeholder='Year')}}
+          {{#each expirationYearOptions}}
+            <option value="{{.}}">{{.}}</option>
+          {{/each}}
+        {{/selectInput}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="radio-wrapper">
+        <label for="same-as-home" class="no-text-transform">Same as Home Address</label>
+        <input class="radio-checkbox" type="checkbox" id="same-as-home" {($checked)}="sameAsHome">
+        <div class="check"></div>
+      </div>
+    </div>
+    {{textInput('formAccount.account:billingStreet1', 'Address 1')}}
+    {{textInput('formAccount.account:billingStreet2', 'Address 2')}}
+    {{textInput('formAccount.account:billingCity', 'City')}}
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <arcus-form-select
+          label="State"
+          {options}="billingStates"
+          placeholder="State"
+          {(value)}="formAccount['account:billingState']"
+        />
+      </div>
+      <div class="col-xs-12 col-sm-offset-1 col-sm-5 inline-with-dropdown">
+        {{textInput('formAccount.account:billingZip', 'Zip Code', attributes='pattern="\d*" maxlength="5"')}}
+      </div>
+    </div>
+  </div>
+  <div hidden>
+    <input type="submit"/>
+  </div>
+</form>

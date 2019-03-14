@@ -1,0 +1,189 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-color">
+  <template>
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-color">Color</h4>
+      <span class="config-value">
+        <span class="value-unit">R</span>
+        <span>{{color.0}}</span>
+        <span class="value-unit">G</span>
+        <span>{{color.1}}</span>
+        <span class="value-unit">B</span>
+        <span>{{color.2}}</span>
+      </span>
+    </div>
+    <div class="range-wrapper hue-control">
+      {{#isIE}}
+      <input type="range"
+        {{#unless isColorMode}}disabled{{/unless}}
+        {($value)}="hue"
+        ($change)="colorChanged(%event)"
+        min="0"
+        max="360"
+        step="1"
+        aria-valuenow="{{hue}}"
+        aria-valuemin="0"
+        aria-valuemax="360"/>
+      {{else}}
+      <input type="range"
+        {{#unless isColorMode}}disabled{{/unless}}
+        {($value)}="hue"
+        ($input)="colorChanged(%event)"
+        min="0"
+        max="360"
+        step="1"
+        aria-valuenow="{{hue}}"
+        aria-valuemin="0"
+        aria-valuemax="360"/>
+      {{/isIE}}
+      <label>Hue</label>
+    </div>
+    <div class="range-wrapper intensity-control">
+      {{#isIE}}
+      <input type="range"
+        {{#unless isColorMode}}disabled{{/unless}}
+        {($value)}="saturation"
+        ($change)="colorChanged(%event)"
+        min="0"
+        max="100"
+        step="1"
+        aria-valuenow="{{saturation}}"
+        aria-valuemin="0"
+        aria-valuemax="100"/>
+      {{else}}
+      <input type="range"
+        {{#unless isColorMode}}disabled{{/unless}}
+        {($value)}="saturation"
+        ($input)="colorChanged(%event)"
+        min="0"
+        max="100"
+        step="1"
+        aria-valuenow="{{saturation}}"
+        aria-valuemin="0"
+        aria-valuemax="100"/>
+      {{/isIE}}
+      <label>Intensity</label>
+    </div>
+    <style>
+      .intensity-control input[type="range"]::-webkit-slider-runnable-track {
+        background: linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"]:focus::-webkit-slider-runnable-track {
+        background: linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"]::-moz-range-track {
+        background: linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"]::-ms-track {
+        background: linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"][disabled]::-webkit-slider-runnable-track {
+        background: rgba(245, 245, 245, .9), linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"][disabled]::-moz-range-track {
+        background: rgba(245, 245, 245, .9), linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+      .intensity-control input[type="range"][disabled]::-ms-track {
+        background: rgba(245, 245, 245, .9), linear-gradient(to right, {{fromColor}} 0%, {{toColor}} 100%);
+      }
+    </style>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import colorConvert from 'color-convert';
+    import Errors from 'i2web/plugins/errors';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        fromColor: {
+          get() {
+            const from = colorConvert.hsv.hex(this.attr('device.color:hue'), 0, 75);
+            return `#${from}`;
+          },
+        },
+        toColor: {
+          get() {
+            const to = colorConvert.hsv.hex(this.attr('device.color:hue'), 100, 75);
+            return `#${to}`;
+          },
+        },
+        isColorMode: {
+          get() {
+            return this.attr('device.light:colormode') === 'COLOR';
+          },
+        },
+        saveTimeoutId: {},
+        color: {
+          get() {
+            const hue = this.attr('hue');
+            const saturation = this.attr('saturation');
+
+            return colorConvert.hsv.rgb(hue, saturation, 100);
+          },
+        },
+        hue: {
+          get() {
+            return this.attr('device.color:hue');
+          },
+          set(newVal) {
+            this.attr('device.color:hue', newVal);
+
+            return newVal;
+          },
+        },
+        saturation: {
+          get() {
+            return this.attr('device.color:saturation');
+          },
+          set(newVal) {
+            this.attr('device.color:saturation', newVal);
+
+            return newVal;
+          },
+        },
+      },
+      colorChanged(event) {
+        const clearTimeoutId = this.attr('saveTimeoutId');
+        if (event.target.parentElement.className.indexOf('hue-control') > -1) {
+          this.attr('hue', +event.target.value);
+        } else {
+          this.attr('saturation', +event.target.value);
+        }
+        this.attr('saveTimeoutId', setTimeout(() => {
+          if (event.target.parentElement.className.indexOf('hue-control') > -1) {
+            this.attr('device.color:hue', +event.target.value);
+          } else {
+            this.attr('device.color:saturation', +event.target.value);
+          }
+          this.attr('device').save().then(() => {
+            this.removeAttr('saveTimeoutId');
+          }).catch((e) => {
+            this.removeAttr('saveTimeoutId');
+            Errors.log(e, true);
+          });
+        }, 50));
+        clearTimeout(clearTimeoutId);
+      },
+    });
+  </script>
+</can-component>

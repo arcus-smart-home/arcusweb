@@ -1,0 +1,65 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-water-softener-recharge-time">
+  <template>
+    <h4>Set Recharge Time</h4>
+    <p>The device will only recharge when it needs to, so this likely occurs periodically and not every day. The recharge is required to restore your water softener's capacity to produce soft water. This should ideally be done at a time when you're not likely to be using any water.</p>
+    <can-import from="i2web/components/schedule/time/" />
+    <arcus-time {(time)}="rechargeStartTime" edit-minutes={false} />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+    import _ from 'lodash';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        rechargeStartTime: {
+          get() {
+            const startTime = this.attr('device.watersoftener:rechargeStartTime');
+            return `${startTime}:00`;
+          },
+          set(formattedVal) {
+            const [, hour] = /(\d{1,2}):(\d)(\d)/gi.exec(formattedVal).map(a => parseInt(a, 10));
+            const device = this.attr('device');
+            device.attr('watersoftener:rechargeStartTime', hour);
+            return formattedVal;
+          },
+        },
+      },
+      init() {
+        this.saveDevice = _.debounce(() => {
+          this.attr('device').save()
+            .catch(e => Errors.log(e, true));
+        }, 1000);
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} watersoftener:rechargeStartTime': function rechargeStartTimeChanged() {
+        // save device whenever rechargeStartTime is changed
+        this.viewModel.saveDevice();
+      },
+    };
+  </script>
+</can-component>

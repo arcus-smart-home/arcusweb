@@ -1,0 +1,91 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <style>
+    .box-gray-radius {
+      width: 90vw;
+      margin:30px auto;
+      max-width: 660px;
+    }
+  </style>
+  <button ($click)="zoneCount(1)">1 Zone</button>
+  <button ($click)="zoneCount(12)">12 Zone</button>
+  <div class="pairing-title" style="text-align:center;margin-top:15px">{{title}}</div>
+  <div class="box-gray-radius">
+    <arcus-pairing-customize-irrigation-zone {customization-step}="step" {device}="device" {^title}="title"/>
+  </div>
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'semantic-ui-dropdown-canjs';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/irrigation-zone/irrigation-zone.component';
+  import 'i2web/helpers/form-fields';
+  import Device from 'i2web/models/device';
+  import DeviceData from 'i2web/models/fixtures/data/device/irrigation_controllers.json';
+
+  const steps = [{
+    "action": "IRRIGATION_ZONE",
+    "addedAlarms": null,
+    "description": [],
+    "header": null,
+    "id": "pair/pair1",
+    "info": null,
+    "linkText": null,
+    "linkUrl": null,
+    "order": null,
+    "rules": null,
+    "title": null
+  }, {
+    "action": "MULTI_IRRIGATION_ZONE",
+    "addedAlarms": null,
+    "description": [],
+    "header": null,
+    "id": "pair/pair1",
+    "info": null,
+    "linkText": null,
+    "linkUrl": null,
+    "order": null,
+    "rules": null,
+    "title": null
+  }];
+  const session = new CanMap({});
+
+  const title = "Page Title";
+
+  const scope = new CanMap({
+    device: (new Device(DeviceData[0])),
+    step: steps[0],
+    title,
+    zoneCount(count) {
+      const device = (count === 1) ? 0 : 1;
+      this.attr('step', steps[device]);
+      this.attr('device', new Device(DeviceData[device]));
+    },
+  });
+  const appScope = new CanMap({
+    session,
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

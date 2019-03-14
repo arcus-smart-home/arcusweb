@@ -1,0 +1,87 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-errors-oauth">
+  <template>
+    <h3>Attention</h3>
+    <p>
+      {{#if accountUnauthed}}
+        Access to control {{vendor}} devices with Arcus has been revoked or removed from within your
+        {{vendor}} account.
+      {{else}}
+        This device has been removed from within your {{vendor}} account.
+      {{/if}}
+      To resolve, first ensure the device is connected to your {{vendor}} account,
+      then re-pair by clicking the '+' button in the upper right corner of the navigation bar.
+    </p>
+    <p>To remove the device from Arcus , click the ellipses ( <sub><i class="icon-app-more-2" aria-hidden="true"></i></sub> ) icon for the
+      device and choose REMOVE DEVICE on the More panel.
+    </p>
+    <hr/>
+    <a href="{{redirectToUrl(supportLinkKey)}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {boolean} accountUnauthed
+         * @parent i2web/components/device/errors
+         *
+         * Indicates if the OAuth account authorization has been revoked
+         */
+        accountUnauthed: {
+          get() {
+            return this.attr('device.erroredState.action') === 'UNAUTHED';
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/errors
+         *
+         * Device for which we are currently showing errors
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} supportLinkKey
+         * @parent i2web/components/device/errors
+         *
+         * Support button link key string for the device
+         */
+        supportLinkKey: {
+          get() {
+            return this.attr('device.web:dev:supportLinkKey');
+          },
+        },
+        /**
+         * @property {String} vendor
+         * @parent i2web/components/device/errors
+         *
+         * Vendor string for the device
+         */
+        vendor: {
+          type: 'string',
+          value: '',
+        },
+      },
+    });
+  </script>
+</can-component>

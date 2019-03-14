@@ -1,0 +1,10 @@
+[
+  {
+    "id": "customization/name",
+    "order": 1,
+    "action": "NAME",
+    "title": "Give Your Hub a Name",
+    "info": "We recommend using simple, identifying language that is easily recognized by voice assistants.",
+    "header" : "Customize Arcus Smart Hub"
+  }
+]

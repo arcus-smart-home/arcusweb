@@ -1,0 +1,150 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#eq selector.type "GROUP"}}
+  {{#eq selector.value.length 2}}
+    <can-import from="i2web/components/control-switch/" />
+    <div class="switch-value">
+      <p>{{switch-description(sceneDevice.values[selector.name], sceneDevice.device)}}</p>
+      <arcus-control-switch {is-on}="equal(~sceneDevice.values[selector.name], selector.value.0.0)" {toggle}="@toggleSwitchOnOff" />
+    </div>
+    {{#each selector.value as option}}
+      {{#eq sceneDevice.values[selector.name] option.0}}
+        <ul class="switch-value-list">
+        {{#each option.1}}
+          <li><arcus-scenes-device-configurator {selector}="." {(scene-device)}="sceneDevice" class="switch-value-configurator" /></li>
+        {{/each}}
+        </ul>
+      {{/eq}}
+    {{/each}}
+  {{else}}
+    {{#each selector.value as option}}
+      <div class="radio-wrapper">
+        <input type="radio" id="{{sceneDevice.deviceAddress}}-{{selector.name}}-{{option.0}}" name="{{sceneDevice.deviceAddress}}-{{selector.name}}" {($checked)}="equal(~sceneDevice.values[selector.name], option.0)" />
+        <label for="{{sceneDevice.deviceAddress}}-{{selector.name}}-{{option.0}}" ($click)="sceneDevice.toggleGroupValues(selector, option.0)">{{option.0}}</label>
+        <div class="check"></div>
+      </div>
+      {{#eq sceneDevice.values[selector.name] option.0}}
+        <ul>
+        {{#each option.1}}
+          <li><arcus-scenes-device-configurator {selector}="." {(scene-device)}="sceneDevice" class="radio-device-configurator" /></li>
+        {{/each}}
+        </ul>
+      {{/eq}}
+    {{/each}}
+  {{/eq}}
+{{else}}
+  {{#switch selector.type}}
+    {{#case 'BOOLEAN'}}
+      <ul>
+        <li class="radio-wrapper">
+          <input type="radio" id="{{sceneDevice.deviceAddress}}-{{selector.name}}-true" name="{{sceneDevice.deviceAddress}}-{{selector.name}}" {($checked)}="equal(~sceneDevice.values[selector.name], true)">
+          <label for="{{sceneDevice.deviceAddress}}-{{selector.name}}-true">Yes</label>
+          <div class="check"></div>
+        </li>
+        <li class="radio-wrapper">
+          <input type="radio" id="{{sceneDevice.deviceAddress}}-{{selector.name}}-false" name="{{sceneDevice.deviceAddress}}-{{selector.name}}" {($checked)}="equal(~sceneDevice.values[selector.name], false)">
+          <label for="{{sceneDevice.deviceAddress}}-{{selector.name}}-false">No</label>
+          <div class="check"></div>
+        </li>
+      </ul>
+    {{/case}}
+    {{#case 'LIST'}}
+      <ul>
+      {{#each selector.value as option}}
+        <li class="radio-wrapper">
+          <input type="radio" id="{{sceneDevice.deviceAddress}}-{{selector.name}}-{{option.1}}" name="{{sceneDevice.deviceAddress}}-{{selector.name}}" {($checked)}="equal(~sceneDevice.values[selector.name], option.1)" />
+          <label for="{{sceneDevice.deviceAddress}}-{{selector.name}}-{{option.1}}">{{capitalize(option.0)}}</label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+      </ul>
+    {{/case}}
+    {{#case 'RANGE'}}
+      <arcus-spinner
+        {(value)}="sceneDevice.values[selector.name]"
+        {min}="selector.min"
+        {max}="selector.max"
+        {step}="selector.step"
+      />
+    {{/case}}
+    {{#case 'PERCENT'}}
+    <div class="configurator">
+      <div class="configurator-header">
+        <h4 class="config-title">{{percentage-description(selector.name)}}</h4> <span class="config-value">{{sceneDevice.values[selector.name]}}<span class="value-unit">%</span></span>
+      </div>
+    </div>
+      <div class="range-wrapper brightness-control">
+        {{#isIE}}
+        <input type="range"
+          {$value}="sceneDevice.values[selector.name]"
+          ($change)="percentageChanged(%event, selector.name)"
+          min="{{percentage-min(selector.name)}}"
+          max="100"
+          step="{{percentage-step(selector.name)}}"
+          aria-valuenow="{{sceneDevice.values[selector.name]}}"
+          aria-valuemin="{{percentage-min(selector.name)}}"
+          aria-valuemax="100"/>
+        {{else}}
+        <input type="range"
+          {$value}="sceneDevice.values[selector.name]"
+          ($input)="percentageChanged(%event, selector.name)"
+          min="{{percentage-min(selector.name)}}"
+          max="100"
+          step="{{percentage-step(selector.name)}}"
+          aria-valuenow="{{sceneDevice.values[selector.name]}}"
+          aria-valuemin="{{percentage-min(selector.name)}}"
+          aria-valuemax="100"/>
+        {{/isIE}}
+      </div>
+    {{/case}}
+    {{#case 'DURATION'}}
+      <div class="spinner-wrapper large-spinner">
+        <arcus-spinner class="duration"
+          {formatter}="@durationFormatter"
+          {(value)}="sceneDevice.values[selector.name]"
+          {min}="selector.min"
+          {max}="selector.max"
+          {step}="selector.step"
+        />
+      </div>
+    {{/case}}
+    {{#case 'TEMPERATURE'}}
+      <div class="spinner-wrapper large-spinner">
+        <arcus-spinner class="temperature"
+          {formatter}="@temperatureFormatter"
+          {(value)}="FtoC(~sceneDevice.values[selector.name])"
+          {min}="FtoC(~selector.min)"
+          {max}="FtoC(~selector.max)"
+        />
+      </div>
+    {{/case}}
+    {{#case 'THERMOSTAT'}}
+      <arcus-thermostat
+        {device}="sceneDevice.device"
+        {(schedule-enabled)}="sceneDevice.values[selector.name]['scheduleEnabled']"
+        {(heat-setpoint)}="FtoC(~sceneDevice.values[selector.name]['heatSetPoint'])"
+        {(cool-setpoint)}="FtoC(~sceneDevice.values[selector.name]['coolSetPoint'])"
+        {(mode)}="sceneDevice.values[selector.name]['mode']"
+        {min-setpoint}="FtoC(~thermostatMinSetPoint)"
+        {max-setpoint}="FtoC(~thermostatMaxSetPoint)"
+        {auto-supported}="autoSupported" />
+    {{/case}}
+    {{#default}}
+      <p class="unknown-statement">Unknown device type ({{selector.type}})</p>
+    {{/default}}
+  {{/switch}}
+{{/eq}}

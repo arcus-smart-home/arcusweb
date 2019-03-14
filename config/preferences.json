@@ -1,0 +1,49 @@
+{
+  "hideTutorials": false,
+  "dashboardCards": [
+    {
+      "serviceName": "FAVORITES",
+      "hideCard": false
+    },
+    {
+      "serviceName": "HISTORY",
+      "hideCard": false
+    },
+    {
+      "serviceName": "LIGHTS_N_SWITCHES",
+      "hideCard": false
+    },
+    {
+      "serviceName": "ALARMS",
+      "hideCard": false
+    },
+    {
+      "serviceName": "CLIMATE",
+      "hideCard": false
+    },
+    {
+      "serviceName": "DOORS_N_LOCKS",
+      "hideCard": false
+    },
+    {
+      "serviceName": "CAMERAS",
+      "hideCard": false
+    },
+    {
+      "serviceName": "CARE",
+      "hideCard": false
+    },
+    {
+      "serviceName": "HOME_N_FAMILY",
+      "hideCard": false
+    },
+    {
+      "serviceName": "LAWN_N_GARDEN",
+      "hideCard": false
+    },
+    {
+      "serviceName": "WATER",
+      "hideCard": false
+    }
+  ]
+}

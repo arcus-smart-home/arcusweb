@@ -1,0 +1,27 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-test-coverage">
+  <template>
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-test-coverage">Test Your Coverage</h4>
+    </div>
+    <div>
+      <p>While the pendant can communicate with the hub from up to 130ft. away, results may vary based on the layout of your home. Press the button at the furthermost areas of the home.</p>
+      <p>The device is out of range when you do not receive a notification for each button press. Consider adding Smart Plugs, which serve as range extenders, to increase coverage.</p>
+    </div>
+  </template>
+</can-component>

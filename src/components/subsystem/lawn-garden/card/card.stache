@@ -1,0 +1,89 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/shop-button.component" />
+
+<div class="subsystem-card-title">
+  <h3>
+    <a
+      data-analytics="dashboard.{{subsystem.analyticsTag}}"
+      href="{{ routeUrl(page='services' subpage=subsystem.slug action='status' }}"
+    >
+      {{{iconOf(subsystem)}}} {{subsystem.displayName}}
+    </a>
+  </h3>
+  <a
+    data-analytics="dashboard.{{subsystem.analyticsTag}}"
+    href="{{routeUrl(page="services" subpage=subsystem.slug)}}"
+    class="subsystem-chevron"
+  >
+    <i class="icon-app-chevron"></i>
+  </a>
+  <div class="total-count"><p>{{devices.length}} <span>Total</span></p></div>
+</div>
+{{#if devices.length}}
+  {{#if noDevicesWateringAndNoEventScheduled}}
+    <div class="subsystem-card-contents">
+      <div class="status-wrapper">
+        <div class="status-header">
+          <p class="zone-name">Set a custom schedule for your sprinkler or hose devices for optimal landscape watering.</p>
+        </div>
+      </div>
+      <div class="status-wrapper">
+        <div class="status-header">
+          <button
+            class="btn-primary"
+            ($click)="routeToStatusPage()"
+            data-analytics="dashboard.{{subsystem.analyticsTag}}"
+          >
+            View Lawn &amp; Garden Devices
+          </button>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="subsystem-card-contents">
+      <div class="status-wrapper">
+        <div class="status-header">
+          <h3>Watering</h3>
+          {{#if allDevicesOffline}}
+            <small class="error">Device(s) Offline</small>
+          {{else}}
+            {{#if zonesWatering.length}}
+              <p class="zone-name">{{zonesWateringInfo}}</p>
+            {{else}}
+              <p class="zone-name">No zones currently watering.</p>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="status-wrapper">
+        <div class="status-header">
+          <h3>Next Zone</h3>
+          {{#if allDevicesOffline}}
+            <small class="error">Device(s) Offline</small>
+          {{else}}
+            {{#if nextScheduledEvent}}
+              <p class="zone-name">{{nextScheduledEventInfo}}</p>
+            {{else}}
+              <p class="zone-name">No events scheduled.</p>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  {{/if}}
+{{/if}}

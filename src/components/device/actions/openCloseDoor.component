@@ -1,0 +1,124 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-open-close-door">
+  <template>
+    <div class="content" ($click)="contentClicked">
+      <button class="btn-run {{#if isTransitioning}}saving{{/if}}" ($click)="toggleDoor" {{#if isTransitioning}}disabled{{/if}}>
+        {{#if isTransitioning}}<div class="loader"></div>{{/if}} {{state}}
+      </button>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+    import MotorizedDoorCapability from 'i2web/models/capability/MotorizedDoor';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+
+        state: {
+          get() {
+            const doorState = this.attr('device.motdoor:doorstate');
+
+            switch (doorState) {
+              case MotorizedDoorCapability.DOORSTATE_CLOSED:
+                return 'Open';
+              case MotorizedDoorCapability.DOORSTATE_OPEN:
+                return 'Close';
+              case MotorizedDoorCapability.DOORSTATE_CLOSING:
+                return 'Closing';
+              case MotorizedDoorCapability.DOORSTATE_OPENING:
+                return 'Opening';
+              default:
+                return 'Open';
+            }
+          },
+        },
+
+        isTransitioning: {
+          type: 'boolean',
+          get() {
+            const doorState = this.attr('device.motdoor:doorstate');
+            return doorState === MotorizedDoorCapability.DOORSTATE_CLOSING || doorState === MotorizedDoorCapability.DOORSTATE_OPENING;
+          },
+        },
+
+        isClosed: {
+          type: 'boolean',
+          get() {
+            const doorState = this.attr('device.motdoor:doorstate');
+            return doorState === MotorizedDoorCapability.DOORSTATE_CLOSED || doorState === MotorizedDoorCapability.DOORSTATE_CLOSING;
+          },
+        },
+      },
+      /**
+       * @function contentClicked
+       * @description While the door is transitioning from open/close or vice versa, we do
+       * not want any click events on the disabled button to route the user to the devices page.
+       */
+      contentClicked(_, el, ev) {
+        if (this.attr('isTransitioning')) {
+          ev.stopPropagation();
+        }
+      },
+      /**
+       * @function toggleDoor
+       * @description Toggle the state of the door between open and closed
+       */
+      toggleDoor(_, el, ev) {
+        ev.stopPropagation();
+
+        const device = this.attr('device');
+        const isClosed = this.attr('isClosed');
+        const newDoorState = isClosed ? MotorizedDoorCapability.DOORSTATE_OPEN : MotorizedDoorCapability.DOORSTATE_CLOSED;
+
+        device.attr('motdoor:doorstate', newDoorState).save().catch(e => Errors.log(e));
+      },
+    });
+  </script>
+  <script type="events">
+    import MotorizedDoorCapability from 'i2web/models/capability/MotorizedDoor';
+    import Errors from 'i2web/plugins/errors';
+
+    // Amount of time we want to wait for the transition to finish
+    const TRANSITION_SECONDS = 120;
+
+    export default {
+      '{device} motdoor:doorstate': function onLockStateChange(device, ev, newVal, oldVal) {
+        // If the previous value is closed or open, we'll save it to potentially revert back to.
+        if (oldVal === MotorizedDoorCapability.DOORSTATE_CLOSED || oldVal === MotorizedDoorCapability.DOORSTATE_OPEN) {
+          this.viewModel.attr('previousLockstate', oldVal);
+        }
+        clearTimeout(this._lockstateTimeoutId);
+        // If we are in a closing or opening state, we want to set a timeout if the lock gets "stuck" in
+        // this state. If after a certain period of time the state doesn't change, we should revert back
+        // to the previous state
+        if (newVal === MotorizedDoorCapability.DOORSTATE_CLOSING || newVal === MotorizedDoorCapability.DOORSTATE_OPENING) {
+          this._lockstateTimeoutId = setTimeout(() => {
+            device.attr('motdoor:doorstate', this.viewModel.attr('previousLockstate')).save().catch(e => Errors.log(e));
+            this.viewModel.removeAttr('previousLockstate');
+          }, TRANSITION_SECONDS * 1000);
+        }
+      },
+    };
+  </script>
+</can-component>

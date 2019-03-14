@@ -1,0 +1,344 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-settings-profile-info">
+  <template>
+    <div class="profile-container">
+      <div class="profile-details">
+        <h3>Place Information</h3>
+        <div class="place-information">
+          <div>
+            <p class="font-demibold">Place Name</p>
+            <p class="font-demibold">Address</p>
+          </div>
+          <div>
+            <p>{{place['place:name']}}</p>
+            <p>{{place['place:streetAddress1']}}</p>
+            {{#if place['place:streetAddress2']}}
+              <p>{{place['place:streetAddress2']}}</p>
+            {{/if}}
+            <p>{{place['place:city']}}, {{place['place:state']}}, {{place['place:zipCode']}}</p>
+          </div>
+          {{#if person['web:person:isOwner']}}
+            <div>
+              <span>
+                <button ($click)="editPlace()" class="btn">
+                  Edit
+                </button>
+              </span>
+            </div>
+          {{/if}}
+        </div>
+        <h3>Contact Information</h3>
+        <div class="contact-information">
+          <div>
+            <p class="font-demibold">Name</p>
+            <p class="font-demibold">Phone</p>
+            <p class="font-demibold">Email</p>
+          </div>
+          <div>
+            <p>{{person['person:name']}}<p>
+            <p>{{person['person:mobileNumber']}}</p>
+            <p>{{person['person:email']}}</p>
+          </div>
+          <div>
+            <span>
+              <button ($click)="editContactInfo()" class="btn">
+                Edit
+              </button>
+            </span>
+          </div>
+        </div>
+        <p>
+          <a href="#" ($click)="changePassword()">
+            Change Password
+          </a>
+        </p>
+      </div>
+      <div class="profile-details">
+        <h3>Service Plan</h3>
+        <div class="service-plan">
+          <div>
+            <p class="font-demibold">Current Plan</p>
+            {{#if person['web:person:isOwner']}}
+              <p class="font-demibold">Plan Payment</p>
+            {{/if}}
+            {{#if serviceLevelDiscount}}
+              <p class="font-demibold">Discount</p>
+            {{/if}}
+            {{#if hasAddOns}}
+              <p class="font-demibold">Add-On</p>
+            {{/if}}
+          </div>
+          <div>
+            {{#if place.isPromon}}
+              <p><em class="pro-badge">Pro</em>{{annualLabel}}</p>
+            {{else}}
+              <p>{{serviceLevel}}{{annualLabel}}</p>
+            {{/if}}
+            {{#if person['web:person:isOwner']}}
+              <p>{{planCostText}}</p>
+            {{/if}}
+            {{#if hasAddOns}}
+              <p>Cellular Backup</p>
+            {{/if}}
+          </div>
+          {{#if person['web:person:isOwner']}}
+            <div>
+              <span>
+                <a href="{{routeUrl page='settings' subpage='service-plan'}}">
+                  <button class="btn">
+                    Edit
+                  </button>
+                </a>
+              </span>
+            </div>
+          {{/if}}
+        </div>
+        <h3>Billing</h3>
+        {{#if person['web:person:isOwner']}}
+          <div class="billing">
+            <div>
+              <p class="font-demibold">Payment Method</p>
+            </div>
+            <div>
+              <p>{{paymentMethodText}}</p>
+            </div>
+            <div>
+              <span>
+                <button class="btn" ($click)="editBilling()">
+                  Edit
+                </button>
+              </span>
+            </div>
+          </div>
+          <p>
+            <a href="#" ($click)="viewInvoices()">
+              View Invoices
+            </a>
+          </p>
+        {{else}}
+          <p class="owner-only">This information is only visible to the Account Owner.</p>
+        {{/if}}
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import { costOf } from 'i2web/helpers/global';
+    import Account from 'i2web/models/account';
+    import Invoice from 'i2web/models/invoice';
+    import Person from 'i2web/models/person';
+    import Place from 'i2web/models/place';
+    import ProMonitoringService from 'i2web/models/service/ProMonitoringService';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    import 'i2web/components/form/edit-address/';
+    import 'i2web/components/settings/profile/invoices.component';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Account} account
+         * @parent i2web/components/settings/profile/info.component
+         * @description The account associated with the place
+         */
+        account: {
+          Type: Account,
+        },
+        /**
+         * @property {String} annualLabel
+         * @parent i2web/components/settings/profile/info.component
+         * @description Will be non-blank if the current subscription plan associated with the place is annual
+         */
+        annualLabel: {
+          get() {
+            const plan = this.attr('place.place:serviceLevel');
+            const label = this.attr('serviceLevel');
+            return Place.isAnnualPlan(plan)
+            && label
+            && label.indexOf('Annual') === -1
+              ? ' Annual'
+              : '';
+          },
+        },
+        /**
+         * @property {Function} changePassword
+         * @parent i2web/components/settings/profile/info.component
+         * @description Displays the change password form in the side panel
+         */
+        changePassword: {
+          Type: Function,
+        },
+        /**
+         * @property {Function} editBilling
+         * @parent i2web/components/settings/profile/info.component
+         * @description Displays the billing form in the side panel
+         */
+        editBilling: {
+          Type: Function,
+        },
+        /**
+         * @property {Function} editContactInfo
+         * @parent i2web/components/settings/profile/info.component
+         * @description Displays the contact info form in the side panel
+         */
+        editContactInfo: {
+          Type: Function,
+        },
+        /**
+         * @property {Boolean} hasAddOns
+         * @parent i2web/components/settings/profile/info.component
+         * @description Does the place have any service addons?
+         */
+        hasAddOns: {
+          get() {
+            return !!this.attr('place.place:serviceAddons.length');
+          },
+        },
+        /**
+         * @property {Invoice.List} invoices
+         * @parent i2web/components/settings/profile/info.component
+         * @description A list of the account's invoices
+         */
+        invoices: {
+          get(__, resolve) {
+            if (this.attr('account') && this.attr('person') && this.attr('person.base:id') === this.attr('account.account:owner')) {
+              this.attr('account').ListInvoices().then(({ invoices }) => {
+                resolve(new Invoice.List(invoices));
+              }).catch((e) => {
+                resolve(new Invoice.List([]));
+                Errors.log(e);
+              });
+            }
+            return [];
+          },
+        },
+        /**
+         * @property {String} paymentMethodText
+         * @parent i2web/components/settings/profile/info.component
+         * @description Text describing the payment method on file
+         */
+        paymentMethodText: {
+          get() {
+            const account = this.attr('account');
+            if (account && account.attr('account:billingCCType')) {
+              const type = account.attr('account:billingCCType').toUpperCase();
+              return `${type} ****${account.attr('account:billingCCLast4')}`;
+            }
+            return 'No credit card on file';
+          },
+        },
+        /**
+         * @property {Person} person
+         * @parent i2web/components/settings/profile/info.component
+         * @description The current Person
+         */
+        person: {
+          Type: Person,
+        },
+        /**
+         * @property {Place} place
+         * @parent i2web/components/settings/profile/info.component
+         * @description The current Place
+         */
+        place: {
+          Type: Place,
+        },
+        /**
+         * @property {String} planCostText
+         * @parent i2web/components/settings/profile/info.component
+         * @description Text describing the cost of the service level
+         */
+        planCostText: {
+          get() {
+            const plan = this.attr('place.place:serviceLevel');
+            if (plan) {
+              const cost = (plan.includes('ANNUAL'))
+                ? costOf(plan, false, 'year')
+                : costOf(plan);
+              return (cost === 'Free') ? cost : `${cost} + tax`;
+            }
+            return '';
+          },
+        },
+        /**
+         * @property {ProMonitoringSettings} promonitoringSettings
+         * @parent i2web/components/settings/profile/info.component
+         * @description Promonitoring settings config for the current place
+         */
+        promonitoringSettings: {
+          get(__, setAttr) {
+            const place = this.attr('place');
+            ProMonitoringService.GetSettings(place.GetDestination()).then(({ settings }) => {
+              setAttr(settings);
+            }).catch(Errors.log);
+          },
+        },
+        /**
+         * @property {String} serviceLevel
+         * @parent i2web/components/settings/profile/info.component
+         * @description Text describing the service level
+         */
+        serviceLevel: {
+          type: 'string',
+        },
+        /**
+         * @property {string} serviceLevelDiscount
+         * @parent i2web/components/settings/profile/info.component
+         * @description Service level discount info
+         */
+        serviceLevelDiscount: {
+          get() {
+            return false;
+          },
+        },
+      },
+      /**
+       * @function editPlace
+       * @parent i2web/components/settings/profile/info.component
+       * @description Click handlers to open side panel and show edit place form
+       */
+      editPlace() {
+        const allowRemovePlace = this.attr('person.web:person:isOwner');
+        if (this.attr('place').attr('isPromon')) {
+          SidePanel.right('<arcus-form-edit-address {(promonitoring-settings)}="promonitoringSettings" {(place)}="place" {allow-remove-place}="allowRemovePlace" />', {
+            promonitoringSettings: this.compute('promonitoringSettings'),
+            place: this.compute('place'),
+            allowRemovePlace,
+          });
+        } else {
+          SidePanel.right(`<arcus-form-edit-address {(place)}="place" {allow-remove-place}="allowRemovePlace" />`, {
+            place: this.compute('place'),
+            allowRemovePlace,
+          });
+        }
+      },
+      /**
+       * @function viewInvoices
+       * @parent i2web/components/settings/profile/info.component
+       * @description Click handler to open SidePanel with a list of Invoices
+       */
+      viewInvoices() {
+        SidePanel.right(`<arcus-settings-profile-invoices {invoices}="invoices" />`, {
+          invoices: this.compute('invoices'),
+        });
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,125 @@
+arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+  @border-width: 9px;
+
+  display: inline-block;
+  margin-top: @gutter * 1.5;
+  width: 44%;
+  max-width: 180px;
+  position: relative;
+  border: @border-width solid @heron;
+  border-radius: 100%;
+  color: @heron;
+  transition: all .2s linear;
+
+  &:before {
+    //this makes the circles circular
+    content: '';
+    padding-top: 100%;
+    display: block;
+  }
+  div {
+    //this stuff keeps the square aspect ratio
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 100%;
+    &:before,
+    &:after {
+      //pipes
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: @border-width;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: @heron;
+      transition: height .2s linear, width .3s linear;
+      z-index: -100;
+    }
+    &:before {
+      right: 100%;
+    }
+    &:after {
+      left: 100%;
+    }
+  }
+
+  i, arcus-countdown {
+    display: block;
+    position: absolute;
+    font-size: 35px;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  arcus-countdown {
+    width: 100%;
+    sup {
+      font-size: 50%;
+      margin-left: -8px;
+      top: -0.7em;
+    }
+  }
+}
+
+//this controls the colors for alarm states
+.active-event() {
+  border-color: @alarm-color;
+  color: @alarm-color;
+  div:before {
+    background: linear-gradient(to right, @heron 30%, @alarm-color 80%);
+  }
+  div:after {
+    background: linear-gradient(to left, transparent 0%, @alarm-color 80%);
+  }
+}
+
+
+//this specifies which colors for which alarm states, based on the "alarm" attribute in the markup
+arcus-subsubsystem-alarms-incident-tracker-graphical {
+  &:not([class*="alert-type"]) {
+    .swiper-slide:last-of-type {
+      arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  &.alert-type-SECURITY {
+    @alarm-color: @police;
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+      &.active {
+        .active-event;
+      }
+    }
+  }
+  &.alert-type-SMOKE, &.alert-type-CO {
+    @alarm-color: @fire;
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+      &.active {
+        .active-event;
+      }
+    }
+  }
+  &.alert-type-WATER {
+    @alarm-color: @water;
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+      &.active {
+        .active-event;
+      }
+    }
+  }
+  &.alert-type-PANIC {
+    @alarm-color: @panic;
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+      &.active {
+        .active-event;
+      }
+    }
+  }
+}

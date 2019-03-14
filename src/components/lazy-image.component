@@ -1,0 +1,240 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-lazy-image">
+  <template>
+    <img src="{{_imgSrc}}" width="{{width}}" height="{{height}}"
+      ($error)="imageNotFound"
+      {{#unless _imgSrc}}style="display:none"{{/unless}} />
+    {{#unless _imgSrc}}
+      <content>Image Unavailable</content>
+    {{/unless}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import _ from 'lodash';
+    import $ from 'jquery';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {HTMLElement} element
+         * @parent i2web/components/lazy-image.component
+         * @description The root element
+         */
+        element: {
+          type: '*',
+        },
+        /**
+         * @property {string} imageUrl
+         * @parent i2web/components/lazy-image.component
+         * @description The URL for the image that will be eventually loaded
+         */
+        imageUrl: {
+          type: 'string',
+        },
+        /**
+         * @property {Promise} imageURLPromise
+         * @parent i2web/components/lazy-image.component
+         * @description A Promise that returns a URL for the image that will be eventually loaded
+         */
+        imageUrlPromise: {
+          type: '*',
+        },
+        /**
+         * @property {HTMLElement} imageElement
+         * @parent i2web/components/lazy-image.component
+         * @description The Image HTMLElement stored for easy access
+         */
+        imageElement: {
+          type: '*',
+        },
+        /**
+         * @property {string} _imgSrc
+         * @parent i2web/components/lazy-image.component
+         * @description String that is used to serve the image source, once it's in view
+         */
+        _imgSrc: {
+          type: 'string',
+        },
+        /**
+         * @property {string} height
+         * @parent i2web/components/lazy-image.component
+         * @description Image height
+         */
+        height: {
+          type: 'string',
+        },
+        /**
+         * @property {number} refreshEvery
+         * @parent i2web/components/lazy-image.component
+         * @description Refresh the image regularly every X ms
+         */
+        refreshEvery: {
+          type: 'number',
+        },
+        /**
+         * @property {Interval} refreshInterval
+         * @parent i2web/components/lazy-image.component
+         * @description The Interval used to refresh
+         */
+        refreshInterval: {
+          type: '*',
+        },
+        /**
+         * @property {string} width
+         * @parent i2web/components/lazy-image.component
+         * @description Image width
+         */
+        width: {
+          type: 'string',
+        },
+        /**
+         * @property {string} showing
+         * @parent i2web/components/lazy-image.component
+         * @description Whether to show item
+         */
+        showing: {
+          get(setVal) {
+            const el = this.attr('element');
+            if (typeof setVal !== 'undefined' && el) {
+              el.style.display = setVal ? '' : 'none';
+              this.displayImageInViewport();
+              return setVal;
+            }
+            return true;
+          },
+        },
+      },
+      init() {
+        // bind showing so it updates when needed
+        this.on('showing', function doNothing() {});
+      },
+      /**
+       * @function imageInViewport
+       * @return {boolean}
+       * @description Is the image (in this case, the lazy-image component) in the current viewport?
+       */
+      imageInViewport() {
+        const image = this.attr('element');
+        if (image && $(image).is(':visible')) {
+          const bounds = image.getBoundingClientRect();
+          const inBounds = bounds.top >= -200
+            && bounds.left >= 0
+            // Increased to +500, which extends to the row below, because when a recording is
+            // deleted and a recording moves up to fill in the vacant spot, it is not a resize,
+            // or scroll event therefore the preview image is not requested.
+            && bounds.bottom <= ((window.innerHeight || document.documentElement.clientHeight) + 500)
+            && bounds.right <= (window.innerWidth || document.documentElement.clientWidth);
+          return inBounds;
+        }
+        return false;
+      },
+      /**
+       * @function imageNotFound
+       * @description Error handler for the image (i.e. when it has trouble loading its source)
+       */
+      imageNotFound() {
+        this.removeAttr('_imgSrc');
+      },
+      /**
+       * @function displayImageInViewport
+       * @description Can we load our actual image source because it is in the viewport
+       */
+      displayImageInViewport() {
+        if (this.imageInViewport()) {
+          // unbind events since we've entered the viewport the first time
+          this.unbindEvents();
+
+          // set the actual image
+          if (this.attr('imageUrlFn')) {
+            this.attr('imageUrlFn')().then((image) => {
+              if (image) {
+                this.attr('_imgSrc', image);
+              }
+            }).catch();
+          } else {
+            // Construct image URL with a new Date timestamp to bust the browser cache
+            const imageURL = `${this.attr('imageUrl')}?ts=${+(new Date())}`;
+            this.attr('_imgSrc', imageURL);
+          }
+
+          // if we should be refreshing, and we haven't already set up the refresh method, do so now
+          if (!this.attr('refreshInterval') && this.attr('refreshEvery')) {
+            this.attr('refreshInterval', setInterval(() => {
+              this.displayImageInViewport();
+            }, this.attr('refreshEvery')));
+          }
+        }
+      },
+      /**
+       * @function bindEvents
+       * @description Bind the scroll, resize, and carousel slide changed events
+       */
+      bindEvents() {
+        const callbackFn = () => this.displayImageInViewport();
+        this.attr('scrollFunction', _.throttle(callbackFn, 100));
+        this.attr('resizeFunction', _.debounce(callbackFn, 100));
+        this.attr('slideChangedFunction', callbackFn);
+
+        window.addEventListener('scroll', this.attr('scrollFunction'));
+        window.addEventListener('resize', this.attr('resizeFunction'));
+        const carousel = $(this.attr('element')).closest('arcus-carousel');
+        if (carousel.length) {
+          carousel.on('slideChanged', this.attr('slideChangedFunction'));
+        }
+      },
+      /**
+       * @function unbindEvents
+       * @description Unbind the scroll, resize, and carousel slide changed events
+       */
+      unbindEvents() {
+        if (this.attr('scrollFunction')) window.removeEventListener('scroll', this.attr('scrollFunction'));
+        if (this.attr('resizeFunction')) window.removeEventListener('resize', this.attr('resizeFunction'));
+        const carousel = $(this.attr('element')).closest('arcus-carousel');
+        if (carousel.length) {
+          carousel.off('slideChanged', this.attr('slideChangedFunction'));
+        }
+      },
+    });
+  </script>
+  <script type="events">
+    import $ from 'jquery';
+
+    export default {
+      init() {
+        this.viewModel.attr('element', this.element);
+      },
+      inserted() {
+        this.viewModel.attr('imageElement', $(this.element).find('img').first()[0]);
+        this.viewModel.bindEvents();
+        this.viewModel.displayImageInViewport();
+      },
+      removed() {
+        this.viewModel.unbindEvents();
+        if (this.viewModel.attr('refreshInterval')) {
+          clearInterval(this.viewModel.attr('refreshInterval'));
+        }
+      },
+      // If the component element gets un-hidden, its height and width will change from zero
+      //   to the container size or set height/width, and trigger this handler.
+      ' attributes': function onAttributesChange() {
+        this.viewModel.displayImageInViewport();
+      },
+    };
+  </script>
+</can-component>

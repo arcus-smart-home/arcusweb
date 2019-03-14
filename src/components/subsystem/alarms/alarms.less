@@ -1,0 +1,44 @@
+@import 'incident-tracker/incident-tracker.less';
+@import 'notification-list/notification-list.less';
+@import 'devices/devices.less';
+@import 'settings/settings.less';
+@import 'status/status.less';
+@import 'card/card.less';
+
+arcus-subsystem-alarms {
+  display: flex;
+  flex-direction: column;
+  .alarms-navigation {
+    margin: @gutter/2;
+    .breakpoint(md, {
+      margin: @gutter;
+    });
+    button {
+      margin-bottom: 0;
+    }
+  }
+  hr {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+arcus-subsystem-alarms-bypass-confirm {
+  .device-list {
+    padding-top: 15px;
+    p {
+      color: @headings-color;
+    }
+    i {
+      display: inline-block;
+      margin-right: 5px;
+      font-size: @font-size-large;
+      width: 20px;
+      text-align: center;
+    }
+  }
+  .error {
+    font-style: italic;
+    color: @cardinal;
+  }
+}

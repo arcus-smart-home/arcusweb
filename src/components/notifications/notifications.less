@@ -1,0 +1,65 @@
+arcus-notifications {
+  cursor: pointer;
+  display: block;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: @zindex-modal-background;
+  .notification-container {
+    display: flex;
+    height: 68px;
+    align-items: center;
+    padding: @gutter/5 @gutter;
+    i {
+      color: @crane;
+      font-size: 130%;
+      margin-right: @gutter/3;
+    }
+    h3 {
+      .font-medium;
+      color: @crane;
+      margin-top: 0;
+      margin-bottom: 0;
+      text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    }
+    &.open {
+      .breakpoint(sm-down, {
+        min-height: 68px;
+        height: auto;
+      });
+      padding-top: @gutter/2;
+      padding-bottom: @gutter/2;
+      animation-name: slideDown;
+      animation-duration: 500ms;
+      animation-iteration-count: 1;
+      animation-timing-function: cubic-bezier(0.885, 0.225, 0.325, 0.905);
+    }
+    &.closing {
+      min-height: 68px;
+      padding-bottom: @gutter/2;
+      animation-name: slideUp;
+      animation-duration: 500ms;
+      animation-iteration-count: 1;
+      animation-timing-function: cubic-bezier(0.885, 0.225, 0.325, 0.905);
+    }
+    &.closed {
+      height: 0;
+      overflow: hidden;
+    }
+    &-info {
+      background: @swift;
+    }
+    &-success {
+      background: @parakeet;
+    }
+    &-warning {
+      background: @canary;
+      h3, i {
+        color: @swift;
+      }
+    }
+    &-error {
+      background: @cardinal;
+    }
+  }
+}

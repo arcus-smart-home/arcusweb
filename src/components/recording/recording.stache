@@ -1,0 +1,109 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/lazy-image.component" />
+<can-import from="i2web/components/subsystem/cameras/pin-clip/pin-clip" />
+
+<div id="wrapper-{{recording['base:id']}}" class="video-wrapper {{#if isFullscreen}}is-fullscreen{{/if}}">
+  <div class="recording-thumbnail">
+    {{#if confirmDelete}}
+      <div class="confirm-delete">
+        <p class="error">Are you sure?</p>
+        <p class="error font-italic">This cannot be undone.</p>
+        <div>
+          <button class="btn-delete" ($click)="deleteRecording">Yes</button>
+          <button class="btn" ($click)="toggleConfirmDelete">Cancel</button>
+        </div>
+      </div>
+    {{/if}}
+    {{#if confirmUnpinning}}
+      <div class="confirm-delete">
+        <p class="error">Unpinning will permanently delete the video. Unpin?</p>
+        <div>
+          <button class="btn" ($click)="cancelUnpinExpiredClip()">No</button>
+          <button class="btn-delete" ($click)="confirmUnpinExpiredClip()">Yes</button>
+        </div>
+        <p><small>Download before unpinning to keep a permanent copy.</small></p>
+      </div>
+    {{/if}}
+    {{#if contentNotFound}}
+      {{! lazy image tag here only for consistent layout }}
+      <arcus-lazy-image>
+        <div class="placeholder">
+          <p>Please download clip to play it</p>
+        </div>
+      </arcus-lazy-image>
+    {{else}}
+      <arcus-lazy-image id="preview-{{recording['base:id']}}"
+        {image-url-fn}="@acquireStream" {showing}="not(~isFullscreen)">
+        <div class="placeholder">
+          <p>Preview Unavailable</p>
+        </div>
+      </arcus-lazy-image>
+      <video id="video-{{recording['base:id']}}" {{#unless isPlaying}}style="display:none"{{/unless}}
+        preload="none" src="{{stream.hls}}" controls="true">
+      </video>
+      {{#if canDisplayVideoControls}}
+        <div class="video-buttons">
+          {{#unless isPlaying}}
+            <button ($click)="playVideoFullscreen" class="play-shape-wrapper">
+              <div class="play-shape"></div>
+            </button>
+          {{else}}
+            <button ($click)="pauseVideo" class="play-shape-wrapper">
+              <div class="stop-shape"></div>
+            </button>
+          {{/unless}}
+        </div>
+      {{/if}}
+      {{#if isFullscreen}}
+        <div class="dark-loader-container">
+          <div class="dark-loader">Loading...</div>
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+<div class="recording-info">
+  <div class="recording-metadata">
+    <p class="camera-name">{{cameraName}}</p>
+    {{#if isRecording}}
+      <small>Recording in progress</small>
+    {{else}}
+      <small>{{displayDateTime}} {{duration}}<br />{{expirationDuration}}
+      </small>
+    {{/if}}
+  </div>
+  <div class="recording-options{{#isRecording}} disabled{{/isRecording}}">
+    {{#if canPinRecording}}
+      <arcus-subsystem-cameras-pin-clip
+        {clip}="recording"
+        {disabled}="isRecording"
+        {^@unpin-clip}="unpinExpiredClip"
+        {on-unpin-expired-clip}="@onUnpinExpiredClip"
+      />
+    {{/if}}
+    {{#unless isIOS()}}
+      <a class="download" ($click)="downloadRecording">
+        <i class="icon-app-download-2"><span class="sr-only">Download</span></i>
+      </a>
+    {{/unless}}
+    <a class="delete" ($click)="toggleConfirmDelete" {$disabled}="isRecording">
+      <i class="icon-app-trashcan-2"><span class="sr-only">Delete</span></i>
+    </a>
+  </div>
+</div>

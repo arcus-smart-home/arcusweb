@@ -1,0 +1,83 @@
+arcus-pairing-device-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .box-gray-radius{
+    min-height: 106px; // minimum height required for padding + try again & remove button
+    .breakpoint(sm, {
+      width: 510px;
+    });
+    padding-bottom: @gutter/2;
+    align-items: center;
+    flex-direction: row;
+    .row-left-area {
+      flex-grow: 0;
+      width: unset;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        width: 80px; // needed for IE11
+      }
+      margin-right: @gutter/2;
+    }
+    .row-right-area {
+      flex-direction: row;
+      flex-wrap: wrap;
+      .breakpoint(sm, {
+        flex-wrap: nowrap;
+      });
+      h4 {
+        text-align: left;
+        margin: 0;
+        word-wrap: break-word;
+      }
+    }
+    &.disabled {
+      background-color: @pigeon;
+    }
+    .sub-left-area {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+    .sub-right-area {
+      margin-left: @gutter/2;
+    }
+
+    button + button{
+      margin-top: @gutter/3;
+    }
+  }
+
+  .device-subtext {
+    .font-medium-italic;
+    display: flex;
+    align-items: center;
+    color: @coot;
+    .icon {
+      display: inline-block;
+      width: @font-size-base;
+      height: @font-size-base;
+      margin-right: .5em;
+      border-radius: 100%;
+      &.loading::before {
+        display:inline-block;
+        font-family: 'arcus-app-icons';
+        content: "\e963";
+        animation: load-spinner 2s infinite linear;
+        width: inherit;
+        height: inherit;
+        margin-right: @gutter/3.75;
+        transform-style: preserve-3d;
+        transform-origin: 50% 50%;
+      }
+      &.success {
+        background-color: @parakeet;
+      }
+      &.error {
+        background-color: @cardinal;
+      }
+    }
+  }
+}

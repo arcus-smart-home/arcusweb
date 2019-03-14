@@ -1,0 +1,28 @@
+arcus-icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  .icon-wrapper {
+    flex-shrink: 0;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border: 1px solid @swift;
+    border-radius: 5%;
+    margin: @gutter/2;
+    cursor: pointer;
+    &:hover, 
+    &.active {
+      background-color: @link-color;
+      color: @crane;
+      border-color: @link-color;
+    }
+  }
+	i {
+    font-size: 38px;
+    position: absolute;
+    color: inherit;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

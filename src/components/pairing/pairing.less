@@ -1,0 +1,109 @@
+@import "connect/connect.less";
+@import "customize/customize.less";
+@import "device-state/device-state.less";
+@import "help/help.less";
+@import "remove/remove.less";
+@import "steps/steps.less";
+@import "steps-combined/steps-combined.less";
+@import "reset/reset.less";
+@import "completion/completion.less";
+
+// Corrects issue with an <hr> tag inside a flexbox container that is set to `flex-direction: column;`
+// Fix description here: https://stackoverflow.com/questions/34365271/hr-inside-container-with-display-flex-become-corrupted
+hr {
+  align-self: stretch;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+arcus-pairing-exit-prompt,
+arcus-kit-activate-device-incomplete {
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    h4 {
+      .font-demibold;
+      margin-top: 0;
+    }
+    h3 {
+      .font-demibold;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    hr {
+      margin: @gutter/2 0;
+    }
+    span {
+      color: @coot;
+    }
+    .buttons {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      [class^="btn"] {
+        margin: @gutter*(2/3) 0 0 0;
+        &.disabled {
+          pointer-events: none;
+          .loader::after {
+            background-color: @heron;
+          }
+        }
+      }
+    }
+  }
+}
+
+arcus-pairing-devices-found {
+  .found-container {
+    .breakpoint(md-down, {
+      display: flex;
+      justify-content: center;
+      margin-top: @gutter;
+    });
+  }
+  .found-card {
+    .breakpoint(md, {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: @gutter/2;
+      margin-right: @gutter/2;
+    });
+    background-color: @dove;
+    border-radius: @border-radius;
+    box-shadow: 0 0 0 2px @pigeon, 0 2px 5px 0 rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  hr {
+    margin: 0;
+  }
+  p {
+    padding-top: @gutter/3;
+    padding-bottom: @gutter/5;
+    margin-right: @gutter/3;
+    margin-bottom: 0;
+    margin-left: @gutter/3;
+  }
+  .icon-circle {
+    background: @peacock;
+    border-radius: 100%;
+    padding: @gutter/6;
+    margin-right: @gutter/6;
+    color: white;
+    font-size: @font-size-smaller;
+  }
+  .button-container {
+    margin-top: @gutter/2;
+    margin-right: @gutter;
+    margin-bottom: @gutter/2;
+    margin-left: @gutter;
+  }
+  [class^='btn'], [class*=' btn'] {
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,165 @@
+arcus-settings-profile {
+  display: block;
+  .place-name {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  .invoice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+    a {
+      text-decoration: none;
+    }
+    &:hover,
+    &:active {
+      cursor: pointer;
+      i {
+        color: @link-color;
+      }
+    }
+    &.swiper-slide {
+      width: @gutter*4.5; //overriding specificity
+    }
+    i {
+      font-size: @gutter*1.5;
+      margin-bottom: @gutter/2;
+      color: @swift;
+    }
+    .invoice-date {
+      color: @swift;
+      padding-bottom: 0;
+    }
+  }
+
+  arcus-settings-profile-info {
+    display: block;
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      .breakpoint(lg, {
+        flex-direction: row;
+      });
+      h3 {
+        .font-demibold;
+        margin-top: 0;
+        margin-bottom: @gutter/1.5;
+      }
+    }
+    .profile-details {
+      border: @border;
+      border-radius: @border-radius;
+      background-color: @dove;
+      margin: 0 @gutter/2 @gutter/2 @gutter/2;
+      padding: @gutter @gutter @gutter/2 @gutter;
+      &:last-of-type {
+        margin-bottom: @gutter;
+      }
+      .breakpoint(lg, {
+        width: 50%;
+        margin: 0 @gutter @gutter @gutter;
+        &:last-of-type {
+          margin-left: 0;
+        }
+      });
+      p {
+        &.owner-only {
+          font-style: italic;
+        }
+      }
+    }
+    .place-information,
+    .contact-information,
+    .service-plan,
+    .billing {
+      display: flex;
+      flex-flow: row wrap;
+      p {
+        margin-bottom: @gutter/5;
+      }
+      div {
+        &:nth-child(1) {
+          width: 30%;
+          .breakpoint(sm-down, {
+            display: none;
+          });
+        }
+        &:nth-child(2) {
+          font-style: italic;
+          width: 45%;
+          .breakpoint(sm-down, {
+            width: 100%;
+          });
+        }
+        &:nth-child(3) {
+          .breakpoint(md-down, {
+            [class^="btn"] {
+              margin-top: @gutter/2;
+              margin-bottom: @gutter/2;
+            }
+          });
+          span {
+            .breakpoint(sm, {
+              border-left: @border;
+              padding-left: @gutter;
+            });
+          }
+        }
+        .pro-badge {
+          font-style: normal;
+          margin-left: 0;
+        }
+      }
+    }
+    .place-information,
+    .service-plan {
+      margin-bottom: @gutter/2;
+      .breakpoint(lg, {
+        margin-bottom: 0;
+        min-height: 145px;
+      });
+    }
+  }
+}
+
+arcus-accordion-panel-heading {
+  sub.tm {
+    bottom: 0;
+    font-size: 6px;
+    font-weight: bold;
+  }
+}
+
+arcus-settings-profile-invoices {
+  table {
+    width: 100%;
+    thead {
+      text-align: left;
+      th {
+        font-weight: normal;
+      }
+    }
+    tbody {
+      tr:nth-child(2n) {
+        background-color: @dove;
+      }
+      td {
+        padding-top: @gutter/3;
+        padding-bottom: @gutter/3;
+        &.invoice-number {
+          width: 40%;
+        }
+        &.date {
+          width: 58%
+        }
+        &.amount {
+          text-align: right;
+          padding-right: @gutter/2;
+        }
+      }
+    }
+  }
+}

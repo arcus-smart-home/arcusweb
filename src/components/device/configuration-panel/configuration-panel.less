@@ -1,0 +1,100 @@
+arcus-device-configuration-panel {
+  display: block;
+  arcus-accordion {
+    arcus-accordion-panel > li {
+      padding-left: 0;
+      arcus-accordion-panel-body {
+        padding-left: @gutter/2;
+        padding-top: @gutter/2;
+      }
+    }
+  }
+  .instructions {
+    margin-top: 10px;
+  }
+  arcus-device-icon {
+    .icon-app-state {
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+  arcus-device-configurator-camera-rotation {
+    display: flex;
+    flex-direction: row-reverse;
+    .configurator-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-left: @gutter;
+    }
+  }
+}
+arcus-device-configurator-color {
+  .config-value {
+    align-items: baseline;
+  }
+}
+
+.control-overview {
+  padding-top: @gutter/2;
+  display: flex;
+  align-items: center;
+
+  .icon-wrapper {
+    flex-grow: 0;
+    margin-right: @gutter/2;
+    padding-left: @gutter/6;
+  }
+}
+.configurators-wrapper {
+  padding-right: 5px; //shadow space because of y-scrolling
+  margin-top: @gutter;
+  margin-bottom: @gutter*2;
+}
+.configurator {
+  ul {
+    padding-left: 0;
+  }
+  .configurator-header, .configurator-footer {
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+    border-top: @border;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &.no-border {
+      border-top: none;
+    }
+  }
+  .configurator-footer {
+    display: block;
+  }
+  .config-title {
+    font-size: @font-size-h3;
+    font-weight: @headings-font-weight;
+    display: inline-flex;
+    text-transform: capitalize;
+    margin-bottom: 0;
+    padding-top: 5px;
+    + .config-control-switch {
+      margin-top: @gutter/2;
+    }
+  }
+  .config-value {
+    font-size: @font-size-h4;
+    display: inline-flex;
+    align-self: flex-end;
+  }
+  .value-unit {
+    color: @grouse;
+    font-size: (@font-size-h4 * .7px);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .range-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}

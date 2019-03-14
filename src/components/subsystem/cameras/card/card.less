@@ -1,0 +1,98 @@
+arcus-subsystem-card-cameras {
+  display: block;
+
+  .subsystem-card-title {
+    border-bottom: @inner-card-border;
+  }
+
+  .subsystem-card-contents {
+    display: flex;
+    flex-direction: column;
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+    padding-top: @gutter/2;
+    .breakpoint(lg, {
+      flex-direction: row;
+    });
+  }
+
+  .carousel-wrapper,
+  .video-storage {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  .carousel-wrapper {
+    flex-grow: 1;
+    min-width: 290px;
+    .no-cameras {
+      margin-top: @gutter/3;
+    }
+  }
+  arcus-carousel {
+    .swiper-container {
+      height: auto;
+    }
+    .swiper-wrapper {
+      margin-bottom: @gutter/2;
+    }
+    .swiper-slide {
+      text-align: center;
+      arcus-camera {
+        text-align: left;
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      background: transparent;
+    }
+    arcus-lazy-image {
+      flex: 1 0 auto;
+    }
+  }
+  .video-storage {
+    flex: 1 0 auto;
+    .breakpoint(md-down, {
+      padding: 0 @gutter;
+    });
+    .breakpoint(sm-down, {
+      padding: 0 @gutter/2;
+    });
+    .breakpoint(lg, {
+      flex: 1 0 40%;
+      border-left: @inner-card-border;
+      padding-left: @gutter;
+      padding-right: @gutter/2;
+      margin-top: @gutter/2;
+      margin-left: @gutter/2;
+      margin-bottom: @gutter;
+    });
+    h3 {
+      border-bottom: @inner-card-border;
+      padding-bottom: @gutter/2;
+      margin-bottom: @gutter/2;
+      .breakpoint(lg, {
+        margin-top: 0;
+      });
+      a,
+      a:visited {
+        color: @swift;
+        text-decoration: none;
+        &:hover,
+        &:active {
+          color: @link-color;
+        }
+      }
+    }
+    arcus-upgrade-now {
+      button {
+        margin-top: @gutter;
+      }
+    }
+    .service-level {
+      color: @swift;
+    }
+    button {
+      margin-top: @gutter/2;
+    }
+  }
+}

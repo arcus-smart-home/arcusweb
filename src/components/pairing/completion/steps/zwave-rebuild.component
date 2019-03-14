@@ -1,0 +1,80 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-completion-zwave-rebuild">
+  <template>
+    <can-import from="i2web/components/zwave-tools/rebuild/" />
+
+    {{#if showConfirmation}}
+      <h3>Are You Sure?</h3>
+      <hr>
+      <p>Your Z-Wave device may not work optimally until the Z-Wave network rebuild process is complete.</p>
+    {{else}}
+      <h3>Z-Wave Network Rebuild Recommended</h3>
+      <hr>
+      <p>One or more Z-Wave devices were paired. Z-Wave devices in your home link together to form a network. If devices are added, relocated, or removed, the network will need to be built.</p>
+      <p>Ensure that your devices are placed in their final installation location.</p>
+      <p>Choose 'Rebuild Now' when you have finished pairing all of your devices.</p>
+    {{/if}}
+
+    <button class="btn" ($click)="rebuild">
+      Rebuild Now
+    </button>
+    <button class="btn-cancel" ($click)="cancel">
+      Rebuild Later
+    </button>
+
+    <arcus-zwave-tools-rebuild {(show-modal)}="showRebuildModal" />
+  </template>
+  <view-model>
+    import CanMap from 'can-map';
+
+    export default CanMap.extend({
+      define: {
+        showConfirmation: {
+          type: 'boolean',
+          value: false,
+        },
+        showRebuildModal: {
+          type: 'boolean',
+          value: false,
+        },
+      },
+      rebuild() {
+        this.attr('showRebuildModal', true);
+      },
+      cancel() {
+        if (this.attr('showConfirmation')) {
+          this.dispatch('complete');
+        } else {
+          this.attr('showConfirmation', true);
+        }
+      }
+    });
+  </view-model>
+  <events>
+    export default {
+      '{viewModel} showRebuildModal': function(vm, ev, val) {
+        if (val === true) {
+          vm.dispatch('rebuildstart');
+        } else {
+          vm.dispatch('rebuildend');
+          vm.dispatch('complete');
+        }
+      }
+    }
+  </events>
+</can-component>

@@ -1,0 +1,107 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-icon">
+  <template>
+    <can-import from="i2web/components/schedule/edit-panel/" />
+    <can-import from="i2web/helpers/schedule" />
+
+    <a ($click)="editSchedule()">
+      <i class="{{scheduleIconOf(thing, selectedMode)}}" aria-hidden="true"></i>
+      <span class="sr-only">Toggle Schedule</span>
+    </a>
+  </template>
+  <script type="view-model">
+    import Analytics from 'i2web/plugins/analytics';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Scheduler from 'i2web/models/scheduler';
+    import SchedulerService from 'i2web/models/service/SchedulerService';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import schedulersFor from './device-schedulers';
+    import schedulersForIrrigation from './irrigation-schedulers';
+
+    const ANALYTICS_TAGS = {
+      dev: 'devices.schedule.edit',
+      rule: 'rules.schedule.edit',
+      scene: 'scenes.schedule.edit',
+    };
+
+    export default canMap.extend({
+      define: {
+        scheduler: {
+          Type: Scheduler,
+          get(currentVal, setVal) {
+            const schedulers = schedulersFor(this.attr('thing'));
+            if (schedulers.attr('length') > 0) {
+              return schedulers[0];
+            }
+            if (this.attr('thing') && this.attr('thing.dev:devtypehint') === 'Irrigation') {
+              const mode = this.attr('selectedMode') || 'weekly';
+              const irrigationSchedulers =
+                schedulersForIrrigation(this.attr('thing'), mode);
+              return irrigationSchedulers[0];
+            }
+            // if there is no existing schedule, create a new one
+            if (this.attr('thing')) {
+              SchedulerService.GetScheduler(this.attr('thing').attr('base:address')).then(({ scheduler }) => {
+                setVal(scheduler);
+              }).catch((e) => {
+                setVal(undefined);
+                Errors.log(e, true);
+              });
+            }
+            return undefined;
+          },
+        },
+        thing: {
+          type: '*',
+        },
+      },
+      /**
+       * @function editSchedule
+       * Edit the schedule of a particular scene
+       */
+      editSchedule() {
+        this.tagIconClick();
+        SidePanel.right(
+          `<arcus-schedule-edit-panel
+            {thing}="thing"
+            {scheduler}="scheduler"
+            {selectedMode}="selectedMode"
+          />`,
+          {
+            scheduler: this.compute('scheduler'),
+            thing: this.compute('thing'),
+            selectedMode: this.compute('selectedMode'),
+          },
+        );
+      },
+      /**
+       * @function tagIconClick
+       * Add analytics tagging to the icon click
+       */
+      tagIconClick() {
+        const type = this.attr('thing.base:type');
+        const tagName = ANALYTICS_TAGS[type];
+        if (tagName) {
+          Analytics.tag(tagName);
+        }
+      },
+    });
+  </script>
+</can-component>

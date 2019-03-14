@@ -1,0 +1,36 @@
+@import 'generic/generic.less';
+@import 'security/security.less';
+@import 'edit-participation/edit-participation.less';
+
+.device-row {
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-top: @gutter/2;
+  margin-bottom: @gutter/2;
+  .breakpoint(md-down, {
+    padding-left: 0;
+  });
+  .panel-icon {
+    font-size: @font-size-larger;
+    padding-right: @gutter/2;
+    width: @gutter*1.2;
+    text-align: center;
+  }
+  .device-name {
+      margin-bottom: 0;
+      line-height: 1.3;
+    }
+  .device-activity {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    small {
+      margin-right: @gutter/2;
+    }
+  }
+  .offline {
+    color: @cardinal;
+  }
+}

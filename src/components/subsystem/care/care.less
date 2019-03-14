@@ -1,0 +1,57 @@
+@import './activity/activity.less';
+@import './behaviors/behaviors.less';
+@import './card/card.less';
+@import './behaviors/edit-panel/edit-panel.less';
+@import './settings/settings.less';
+@import './status/status.less';
+
+arcus-subsystem-care {
+  display: block;
+  .care-navigation {
+    display: flex;
+    flex-direction: column;
+    margin: @gutter/2 @gutter/2 0;
+    .breakpoint(md, {
+      flex-direction: row;
+      margin: @gutter @gutter 0;
+    });
+    .segment-btn {
+      .breakpoint(sm-down, {
+        flex-direction: column;
+      });
+      [class^="btn"] {
+        margin-bottom: 0;
+        .breakpoint(md-down, {
+          margin-bottom: @gutter/2;
+        });
+        .breakpoint(sm-down, {
+          border-radius: @border-radius;
+        });
+        &:first-of-type {
+          .breakpoint(sm-down, {
+            border-radius: @border-radius;
+          });
+        }
+        &:last-of-type {
+          .breakpoint(sm-down, {
+            border-radius: @border-radius;
+          });
+        }
+      }
+    }
+  }
+  hr {
+    margin-bottom: 0px;
+    .breakpoint(md-down, {
+      margin-top: 0;
+    });
+  }
+  .no-devices {
+    .left-wrapper {
+      padding-top: @gutter/2;
+      p:last-of-type {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}

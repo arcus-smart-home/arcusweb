@@ -1,0 +1,54 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  arcus-pairing-customize-name {
+    margin-top: 20px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="switchType('hub')">Hub</button>
+  <button ($click)="switchType('device')">Device</button>
+
+  <arcus-pairing-customize-name {thing}="device" {{type}} />
+</script>
+<script src="/node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/name/name.component';
+  import HubData from 'i2web/models/fixtures/data/device/hub.json';
+  import DeviceData from 'i2web/models/fixtures/data/device/garage_doors.json';
+
+  const appScope = new CanMap({});
+  const scope = new CanMap({
+    type: 'hub',
+    device: HubData[0],
+    switchType(type) {
+      if (type === 'hub') this.attr('device', HubData[0]);
+      if (type === 'device') this.attr('device', DeviceData[0]);
+      this.attr('type', type);
+    }
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

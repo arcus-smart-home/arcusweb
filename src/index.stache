@@ -1,0 +1,339 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<html>
+  <head>
+    <title>{{title}}</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <!--for favicon and app icons -->
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  <body>
+    <can-import from="flexboxgrid/dist/flexboxgrid.min.css!"/>
+    <can-import from="i2web/app.less!"/>
+    <can-import from="i2web/events"/>
+    <can-import from="i2web/app" export-as="viewModel"/>
+    <can-import from="i2web/helpers/"/>
+
+  {{#unless authenticating}}
+    <can-import from="i2web/components/notifications/"/>
+    <arcus-notifications {(events)}="./notifications" />
+
+    {{#unless session}}
+      {{#switch page}}
+        {{#case "create-account"}}
+          <can-import from="i2web/pages/create-account/">
+            {{#if isPending}}
+              <div class="loader">Loading...</div>
+            {{else}}
+              <arcus-page-create-account {subpage}="subpage" />
+            {{/if}}
+          </can-import>
+        {{/case}}
+        {{#case "invite"}}
+          <can-import from="i2web/pages/invite/">
+            {{#if isPending}}
+              <div class="loader">Loading...</div>
+            {{else}}
+              <arcus-page-invite {subpage}="subpage" />
+            {{/if}}
+          </can-import>
+        {{/case}}
+        {{#case "login"}}
+          <can-import from="i2web/pages/login/">
+            {{#if isPending}}
+              <div class="loader">Loading...</div>
+            {{else}}
+                <arcus-page-login {log-in-user}="@login" {email-address}="email" />
+            {{/if}}
+          </can-import>
+        {{/case}}
+      {{/switch}}
+    {{else}}
+      {{#if renderHeaderFooter(page)}}
+        <can-import from="i2web/components/header/"/>
+        <arcus-header {account}="account" {person}="person" {(place-id)}="placeId" />
+        <div class="app-content">
+      {{/if}}
+      {{#if ready}}
+        {{#switch page}}
+
+          {{#case "home"}}
+            <can-import from="i2web/pages/home/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-home
+                  {from-email-link}="fromEmailLink"
+                  {person}="person"
+                  {place}="place"
+                  {(place-id)}="placeId"
+                  {preferences}="preferences"
+                  {subsystems}="subsystems"
+                  {(devices)}="devices"
+                  {(scenes)}="scenes"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "history"}}
+            <can-import from="i2web/pages/history/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-history
+                  {place}="place"
+                  {(devices)}="devices"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "scenes"}}
+            <can-import from="i2web/pages/scenes/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-scenes
+                  {account}="account"
+                  {person}="person"
+                  {place}="place"
+                  {(scenes)}="scenes"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "rules"}}
+            <can-import from="i2web/pages/rules/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-rules
+                  {account}="account"
+                  {person}="person"
+                  {place}="place"
+                  {(rules)}="rules"
+                  {templates}="ruleTemplates"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "devices"}}
+            <can-import from="i2web/pages/devices/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-devices
+                  {(hub)}="hub"
+                  {(devices)}="devices"
+                  {place}="place"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "settings"}}
+            {{#is subpage "service-plan"}}
+              <can-import from="i2web/pages/settings/service-plan/">
+                {{#if isPending}}
+                  <div class="loader">Loading...</div>
+                {{else}}
+                  <arcus-page-settings-service-plan
+                    {(account)}="account"
+                    {(person)}="person"
+                    {(place)}="place"
+                  />
+                {{/if}}
+              </can-import>
+            {{else}}
+              <can-import from="i2web/pages/settings/">
+                {{#if isPending}}
+                  <div class="loader">Loading...</div>
+                {{else}}
+                  <arcus-page-settings
+                    {account}="account"
+                    {(person)}="person"
+                    {(place)}="place"
+                    {places}="places"
+                  />
+                {{/if}}
+              </can-import>
+            {{/is}}
+          {{/case}}
+
+          {{#case "services"}}
+            <can-import from="i2web/pages/services/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-services
+                  {place-id}="placeId"
+                  {(place)}="place"
+                  {subsystems}="subsystems"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "promonitoring"}}
+            <can-import from="i2web/pages/promonitoring/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-promonitoring
+                  {account}="account"
+                  {(place)}="place"
+                  {(person)}="person"
+                  {(devices)}="devices"
+                  {(people)}="people"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "create-account"}}
+            <can-import from="i2web/pages/create-account/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-create-account
+                  {(account)}="account"
+                  {(person)}="person"
+                  {(place)}="place"
+                  {session}="session"
+                  {subpage}="subpage"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "pairing"}}
+            <can-import from="i2web/pages/pairing/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-pairing
+                  {care-alarm-state}="careAlarmState"
+                  {current-incident}="currentIncident"
+                  {place}="place"
+                  {product}="pairingProduct" />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "hub-setup"}}
+            <can-import from="i2web/pages/hub-setup/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-hub-setup
+                  {place}="place"
+                  {select-pairing-product}="@selectPairingProduct"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "product-catalog"}}
+            <can-import from="i2web/pages/product-catalog/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-product-catalog
+                  {care-alarm-state}="careAlarmState"
+                  {current-incident}="currentIncident"
+                  {hub}="hub"
+                  {place}="place"
+                  {select-pairing-product}="@selectPairingProduct"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "kit-activate"}}
+            <can-import from="i2web/pages/kit-activate/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-pages-kit-activate
+                  {current-incident}="currentIncident"
+                  {hub}="hub"
+                  {product}="pairingProduct"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "invite"}}
+            <can-import from="i2web/pages/invite/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-invite
+                  {account}="account"
+                  {person}="person"
+                  {place}="place"
+                  {session}="session"
+                  {subpage}="subpage"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#case "preferences"}}
+            <can-import from="i2web/pages/preferences/">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-preferences
+                  {preferences}="preferences"
+                />
+              {{/if}}
+            </can-import>
+          {{/case}}
+
+          {{#default}}
+            <can-import from="i2web/pages/404.component">
+              {{#if isPending}}
+                <div class="loader">Loading...</div>
+              {{else}}
+                <arcus-page-404 />
+              {{/if}}
+            </can-import>
+          {{/default}}
+        {{/switch}}
+      {{else}}
+        <div class="loader">Loading...</div>
+      {{/if}}
+        </div>
+        <can-import from="i2web/components/side-panel/" />
+        <arcus-side-panel class="is-left" {(content)}="./leftPanelContent" />
+        <arcus-side-panel class="is-right" {(content)}="./rightPanelContent" />
+
+        <can-import from="i2web/components/place-access.component" />
+        <arcus-place-access
+          {(invitation)}="acceptedInvitation"
+          {person}="person"
+        />
+    {{/unless}}
+  {{else}}
+    <div class="loader">Loading...</div>
+  {{/unless}}
+  </body>
+</html>

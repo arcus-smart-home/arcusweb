@@ -1,0 +1,83 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="loader-wrapper {{^disableControls}}hidden{{/disableControls}}">
+  <div class="loader"></div>
+  {{#if isHoneywellTCC}}<p>Waiting on Honeywell</p>{{/if}}
+</div>
+
+<div class="{{#disableControls}}hidden{{/disableControls}}">
+  {{!-- slider insertion point --}}
+  {{#is mode ThermostatCapability.HVACMODE_OFF}}{{#else}}
+    <div class="slider">
+      <div class="current-temp-connect {{currentTemperatureConnectionClass}}"></div>
+      <div class="current-temp">
+        <div class="tooltip">{{currentTemperatureTooltipText}}</div>
+      </div>
+      {{#if locked}}
+        <div class="low temp-lock"></div>
+        <div class="high temp-lock"></div>
+      {{/if}}
+    </div>
+  {{/is}}
+
+  {{!-- auto mode controls --}}
+  {{#is mode ThermostatCapability.HVACMODE_AUTO}}
+      <div class="controls col-xs-12 col-md">
+        <button class="btn-increment minus {{#disableDecrementButton}}disabled{{/disableDecrementButton}}"
+                ($click)="adjustTemperature(%element)">
+          —
+        </button>
+        <button class="btn-value low"
+                ($click)="activateHandleFromTemp(%element)">
+          {{heatSetTemperature}}°
+        </button>
+        <span class="mid-text">to</span>
+        <button class="btn-value high"
+                ($click)="activateHandleFromTemp(%element)">
+          {{coolSetTemperature}}°
+        </button>
+        <button class="btn-increment {{#disableIncrementButton}}disabled{{/disableIncrementButton}}"
+                ($click)="adjustTemperature(%element)">
+          +
+        </button>
+      </div>
+  {{/is}}
+
+  {{!-- heat and cool mode controls --}}
+  {{#if singleHandleMode}}
+      <div class="controls col-xs-12 col-md single-handle">
+        <button class="btn-increment minus {{#disableDecrementButton}}disabled{{/disableDecrementButton}}"
+                ($click)="adjustTemperature(%element)">
+          —
+        </button>
+    <span class="mid-text">
+      {{#is mode ThermostatCapability.HVACMODE_COOL}}{{coolSetTemperature}}°{{/is}}
+      {{#is mode ThermostatCapability.HVACMODE_HEAT}}{{heatSetTemperature}}°{{/is}}
+    </span>
+        <button class="btn-increment {{#disableIncrementButton}}disabled{{/disableIncrementButton}}"
+                ($click)="adjustTemperature(%element)">
+          +
+        </button>
+      </div>
+  {{/if}}
+
+  {{!-- render when available width is low --}}
+  <can-import from="i2web/components/device/actions/changeTemperature.component" />
+  <div class="width-backup">
+    <arcus-device-action-changeTemperature {device}="device" {prevent-save}="true" />
+  </div>
+</div>

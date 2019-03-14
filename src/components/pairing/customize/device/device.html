@@ -1,0 +1,84 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-pairing-customize-device
+    {device}="device"
+    {isHub}="isHub"
+    {^title}="pairingTitle"
+    {customization-steps}="customizationSteps"
+    {^is-finished-customization}="isFinishedCustomization"
+  />
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/device/';
+
+  import HubData from 'i2web/models/fixtures/data/device/hub.json';
+
+  const customizationSteps = [
+    {
+      "id": "customization/name",
+      "order": 1,
+      "action": "NAME",
+      "title": "Give Your Device a Name",
+      "header": "Customize Device",
+      "info": "We recommend using simple, identifying language that is easily recognized by voice assistants."
+    },
+    {
+      "id": "customization/favorite",
+      "order": 2,
+      "action": "FAVORITE",
+      "title": "Add Your Device to Favorites",
+      "header": "Customize Device",
+      "info": "Favoriting a device makes it easily accessible from the Dashboard of both the Arcus Mobile app and Arcus Web Portal."
+    },
+    {
+      "id": "customization/schedule",
+      "order": 2,
+      "action": "SCHEDULE",
+      "title": "Modify Schedule",
+      "header": "Advanced Automation",
+      "info": "Modify schedule description"
+    },
+    {
+      "id": "customization/rules",
+      "order": 2,
+      "action": "RULES",
+      "title": "Modify rules",
+      "header": "Advanced Automation",
+      "info": "Modify rules description"
+    }
+  ];
+
+  const pairingTitle = "Page Title";
+  const scope = new CanMap({
+    device: HubData[0],
+    isHub: false,  // toggle this to test between hub and device customizations
+    customizationSteps: customizationSteps,
+    pairingTitle,
+  });
+  const appScope = new CanMap({});
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

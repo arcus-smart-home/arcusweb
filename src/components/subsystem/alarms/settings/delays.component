@@ -1,0 +1,178 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-settings-delays">
+  <template>
+    <can-import from="i2web/components/accordion/" />
+    <can-import from="i2web/components/accordion/panel/" />
+    <can-import from="i2web/components/spinner/" />
+    <can-import from="i2web/components/subsystem/alarms/settings/timer.component" />
+    <form ($submit)="saveSettings" autocomplete="off" {{#if saving}}disabled{{/if}}>
+      <button type="submit" class="btn-save {{#if saving}}saving{{/if}}" {{#unless settingsChanged}}disabled{{/unless}}>
+        {{#if saving}}
+          <div class="loader"></div> Saving
+        {{else}}
+          Save
+        {{/if}}
+      </button>
+      {{close-button type="cancel"}}
+      <div class="panel-content">
+        <arcus-accordion>
+          <arcus-accordion-panel>
+            <arcus-accordion-panel-heading>
+              <h2>
+                On - Exit Delay <br/>
+                <small>Time needed to exit before the alarm arms.</small>
+              </h2>
+            </arcus-accordion-panel-heading>
+            <arcus-accordion-panel-body>
+              <arcus-subsystem-alarms-settings-timer {(seconds)}="clonedSubsystem['subsecuritymode:exitDelaySec:ON']" />
+            </arcus-accordion-panel-body>
+          </arcus-accordion-panel>
+          <arcus-accordion-panel>
+            <arcus-accordion-panel-heading>
+              <h2>
+                On - Entrance Delay <br/>
+                <small>Time needed to disarm after entering home.</small>
+              </h2>
+            </arcus-accordion-panel-heading>
+            <arcus-accordion-panel-body>
+              <arcus-subsystem-alarms-settings-timer {(seconds)}="clonedSubsystem['subsecuritymode:entranceDelaySec:ON']" />
+            </arcus-accordion-panel-body>
+          </arcus-accordion-panel>
+          <arcus-accordion-panel>
+            <arcus-accordion-panel-heading>
+              <h2>
+                Partial - Exit Delay <br/>
+                <small>Time needed to exit before the alarm arms.</small>
+              </h2>
+            </arcus-accordion-panel-heading>
+            <arcus-accordion-panel-body>
+              <arcus-subsystem-alarms-settings-timer {(seconds)}="clonedSubsystem['subsecuritymode:exitDelaySec:PARTIAL']" />
+            </arcus-accordion-panel-body>
+          </arcus-accordion-panel>
+          <arcus-accordion-panel>
+            <arcus-accordion-panel-heading>
+              <h2>
+                Partial - Entrance Delay <br/>
+                <small>Time needed to disarm after entering home.</small>
+              </h2>
+            </arcus-accordion-panel-heading>
+            <arcus-accordion-panel-body>
+              <arcus-subsystem-alarms-settings-timer {(seconds)}="clonedSubsystem['subsecuritymode:entranceDelaySec:PARTIAL']" />
+            </arcus-accordion-panel-body>
+          </arcus-accordion-panel>
+        </arcus-accordion>
+      </div>
+    </form>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canDev from 'can-util/js/dev/';
+    import 'can-map-define';
+    import Subsystem from 'i2web/models/subsystem';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import Errors from 'i2web/plugins/errors';
+    import 'i2web/helpers/global';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Subsystem} clonedSubsystem
+         * @parent i2web/components/subsystem/alarms/settings/delays
+         * @description The a clone of the security subsystem
+         */
+        clonedSubsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {Boolean} settingsChanged
+         * @parent i2web/components/subsystem/alarms/settings/delays
+         * @description Only enable the save button when the one or more of the settings have
+         * changed.
+         */
+        settingsChanged: {
+          get() {
+            return [
+              'subsecuritymode:exitDelaySec:ON',
+              'subsecuritymode:entranceDelaySec:ON',
+              'subsecuritymode:exitDelaySec:PARTIAL',
+              'subsecuritymode:entranceDelaySec:PARTIAL',
+            ].map((p) => {
+              return this.attr(`clonedSubsystem.${p}`) !== this.attr(`subsystem.${p}`);
+            }).reduce((all, current) => {
+              return all || current;
+            });
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/subsystem/alarms/settings/delays
+         * @description The security subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+          set(subsystem) {
+            if (!subsystem.hasCapability('subsecuritymode')) {
+              canDev.warn(`Subsystem does not have subsecuritymode capability - perhaps subsystem instantiated incorrectly?`);
+            }
+
+            this.attr('clonedSubsystem', subsystem.clone());
+            return subsystem;
+          },
+        },
+      },
+      saving: false,
+      /**
+       * @function saveSettings
+       * @parent i2web/components/subsystem/alarms/settings/delays
+       * @param {canMap} vm
+       * @param {Element} el
+       * @param {Event} ev
+       * @description Event handler for saving the settings on the subsystem
+       */
+      saveSettings(vm, el, ev) {
+        ev.preventDefault();
+        this.attr('saving', true);
+        this.attr('clonedSubsystem').save().then(() => {
+          this.attr('saving', false);
+          SidePanel.close();
+        }).catch((e) => {
+          this.attr('saving', false);
+          Errors.log(e);
+        });
+      },
+    });
+  </script>
+  <script type="events">
+    import Analytics from 'i2web/plugins/analytics';
+
+    export default {
+      '{clonedSubsystem} subsecuritymode:entranceDelaySec:ON': function graceEntrance() {
+        Analytics.tag('alarms.settings.grace.on.entrance');
+      },
+      '{clonedSubsystem} subsecuritymode:entranceDelaySec:PARTIAL': function partialEntrance() {
+        Analytics.tag('alarms.settings.grace.partial.entrance');
+      },
+      '{clonedSubsystem} subsecuritymode:exitDelaySec:ON': function graceExit() {
+        Analytics.tag('alarms.settings.grace.on.exit');
+      },
+      '{clonedSubsystem} subsecuritymode:exitDelaySec:PARTIAL': function partialExit() {
+        Analytics.tag('alarms.settings.grace.partial.exit');
+      },
+    };
+  </script>
+</can-component>

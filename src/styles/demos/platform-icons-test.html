@@ -1,0 +1,2847 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  .icon-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .icon-grid {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 20px 0;
+  }
+
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 0 0;
+  }
+
+  .font-size-base {
+    font-size: 16px;
+  }
+
+  .font-size-larger {
+    font-size: 22px;
+  }
+
+  .font-size-large {
+    font-size: 18px;
+  }
+
+  .font-size-small {
+    font-size: 14px;
+  }
+
+  .font-size-smaller {
+    font-size: 11px;
+  }
+
+  .font-size-h1 {
+    font-size: 30px;
+  }
+
+  .font-size-h2 {
+    font-size: 23px;
+  }
+
+  .font-size-h3 {
+    font-size: 20px;
+  }
+
+  .font-size-h4 {
+    font-size: 18px;
+  }
+
+  .font-size-h6 {
+    font-size: 15px;
+  }
+
+  [class^='font-size-'] {
+    margin-left: 20px;
+  }
+
+  .icon-circle {
+    box-shadow: 0 0 0 1px #000000;
+    background-color: #FFFFFF;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #000000;
+  }
+
+  .icon-app-state {
+    box-shadow: 0 0 0 1px #000000;
+    background-color: #FFFFFF;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #000000;
+    margin-right: 20px;
+  }
+
+  code {
+    display: block;
+  }
+
+  /* from icon-sizing.less */
+
+  .icon-circle .icon-platform-carep-1 {
+    font-size: 38px;
+  }
+
+  .icon-circle .icon-platform-outlet-1,
+  .icon-circle .icon-platform-outlet-2,
+  .icon-circle .icon-platform-tilt-1,
+  .icon-circle .icon-platform-tilt-2,
+  .icon-circle .icon-platform-garage-bridge-1,
+  .icon-circle .icon-platform-garage-bridge-2,
+  .icon-circle .icon-platform-button-1,
+  .icon-circle .icon-platform-button-2,
+  .icon-circle .icon-platform-sprinkler-1,
+  .icon-circle .icon-platform-sprinkler-2 {
+    font-size: 30px;
+  }
+
+  .clip-overflow {
+    overflow: hidden;
+  }
+
+  .clip-overflow .icon-platform-water-1 {
+    transform: scale(2.5);
+  }
+
+  .clip-overflow .icon-platform-waterflow-2 {
+    transform: translateX(-60%) scale(2.5);
+  }
+
+  .clip-overflow .icon-platform-waterflow-1 {
+    transform: translateY(30%) scale(2.5);
+  }
+</style>
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css!" />
+  <can-import from="i2web/styles/global-styles.less!" />
+  <can-import from="i2web/styles/demos/icon-styles.less!" />
+<div class="icon-group">
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-nest-leaf"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-nest-leaf"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-nest-leaf"></i>
+      <i class="font-size-h3 icon-platform-nest-leaf"></i>
+      <i class="font-size-h4 icon-platform-nest-leaf"></i>
+      <i class="font-size-h6 icon-platform-nest-leaf"></i>
+      <i class="font-size-smaller icon-platform-nest-leaf"></i>
+      <i class="font-size-small icon-platform-nest-leaf"></i>
+      <i class="font-size-base icon-platform-nest-leaf"></i>
+      <i class="font-size-large icon-platform-nest-leaf"></i>
+      <i class="font-size-larger icon-platform-nest-leaf"></i>
+    </div>
+    <code>.icon-platform-nest-leaf</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hub-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hub-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hub-1"></i>
+      <i class="font-size-h3 icon-platform-hub-1"></i>
+      <i class="font-size-h4 icon-platform-hub-1"></i>
+      <i class="font-size-h6 icon-platform-hub-1"></i>
+      <i class="font-size-smaller icon-platform-hub-1"></i>
+      <i class="font-size-small icon-platform-hub-1"></i>
+      <i class="font-size-base icon-platform-hub-1"></i>
+      <i class="font-size-large icon-platform-hub-1"></i>
+      <i class="font-size-larger icon-platform-hub-1"></i>
+    </div>
+    <code>.icon-platform-hub-1</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hub-v3-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hub-v3-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hub-v3-2"></i>
+      <i class="font-size-h3 icon-platform-hub-v3-2"></i>
+      <i class="font-size-h4 icon-platform-hub-v3-2"></i>
+      <i class="font-size-h6 icon-platform-hub-v3-2"></i>
+      <i class="font-size-smaller icon-platform-hub-v3-2"></i>
+      <i class="font-size-small icon-platform-hub-v3-2"></i>
+      <i class="font-size-base icon-platform-hub-v3-2"></i>
+      <i class="font-size-large icon-platform-hub-v3-2"></i>
+      <i class="font-size-larger icon-platform-hub-v3-2"></i>
+    </div>
+    <code>.icon-platform-hub-v3-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-contact-sensor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-contact-sensor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-small icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-base icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-large icon-platform-gs-contact-sensor-2"></i>
+      <i class="font-size-larger icon-platform-gs-contact-sensor-2"></i>
+    </div>
+    <code>.icon-platform-gs-contact-sensor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-opencontact-sensor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-opencontact-sensor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-small icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-base icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-large icon-platform-gs-opencontact-sensor-2"></i>
+      <i class="font-size-larger icon-platform-gs-opencontact-sensor-2"></i>
+    </div>
+    <code>.icon-platform-gs-opencontact-sensor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-keypad-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-keypad-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-keypad-2"></i>
+      <i class="font-size-h3 icon-platform-gs-keypad-2"></i>
+      <i class="font-size-h4 icon-platform-gs-keypad-2"></i>
+      <i class="font-size-h6 icon-platform-gs-keypad-2"></i>
+      <i class="font-size-smaller icon-platform-gs-keypad-2"></i>
+      <i class="font-size-small icon-platform-gs-keypad-2"></i>
+      <i class="font-size-base icon-platform-gs-keypad-2"></i>
+      <i class="font-size-large icon-platform-gs-keypad-2"></i>
+      <i class="font-size-larger icon-platform-gs-keypad-2"></i>
+    </div>
+    <code>.icon-platform-gs-keypad-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-small icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-base icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-large icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <i class="font-size-larger icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+    </div>
+    <code>.icon-platform-gs-wifi-smart-plug-indoor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-motion-sensor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-motion-sensor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-small icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-base icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-large icon-platform-gs-motion-sensor-2"></i>
+      <i class="font-size-larger icon-platform-gs-motion-sensor-2"></i>
+    </div>
+    <code>.icon-platform-gs-motion-sensor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-openmotion-sensor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-openmotion-sensor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-small icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-base icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-large icon-platform-gs-openmotion-sensor-2"></i>
+      <i class="font-size-larger icon-platform-gs-openmotion-sensor-2"></i>
+    </div>
+    <code>.icon-platform-gs-openmotion-sensor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-h3 icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-h4 icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-h6 icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-smaller icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-small icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-base icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-large icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <i class="font-size-larger icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+    </div>
+    <code>.icon-platform-gs-wifi-smart-plug-outdoor-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-gs-zigbee-smart-plug-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-gs-zigbee-smart-plug-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-h3 icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-h4 icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-h6 icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-smaller icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-small icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-base icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-large icon-platform-gs-zigbee-smart-plug-2"></i>
+      <i class="font-size-larger icon-platform-gs-zigbee-smart-plug-2"></i>
+    </div>
+    <code>.icon-platform-gs-zigbee-smart-plug-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-swann-camera-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-swann-camera-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-swann-camera-2"></i>
+      <i class="font-size-h3 icon-platform-swann-camera-2"></i>
+      <i class="font-size-h4 icon-platform-swann-camera-2"></i>
+      <i class="font-size-h6 icon-platform-swann-camera-2"></i>
+      <i class="font-size-smaller icon-platform-swann-camera-2"></i>
+      <i class="font-size-small icon-platform-swann-camera-2"></i>
+      <i class="font-size-base icon-platform-swann-camera-2"></i>
+      <i class="font-size-large icon-platform-swann-camera-2"></i>
+      <i class="font-size-larger icon-platform-swann-camera-2"></i>
+    </div>
+    <code>.icon-platform-swann-camera-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-swann-wifi-smart-switch-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-swann-wifi-smart-switch-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-h3 icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-h4 icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-h6 icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-smaller icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-small icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-base icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-large icon-platform-swann-wifi-smart-switch-2"></i>
+      <i class="font-size-larger icon-platform-swann-wifi-smart-switch-2"></i>
+    </div>
+    <code>.icon-platform-swann-wifi-smart-switch-2</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hub-offline-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hub-offline-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hub-offline-1"></i>
+      <i class="font-size-h3 icon-platform-hub-offline-1"></i>
+      <i class="font-size-h4 icon-platform-hub-offline-1"></i>
+      <i class="font-size-h6 icon-platform-hub-offline-1"></i>
+      <i class="font-size-smaller icon-platform-hub-offline-1"></i>
+      <i class="font-size-small icon-platform-hub-offline-1"></i>
+      <i class="font-size-base icon-platform-hub-offline-1"></i>
+      <i class="font-size-large icon-platform-hub-offline-1"></i>
+      <i class="font-size-larger icon-platform-hub-offline-1"></i>
+    </div>
+    <code>.icon-platform-hub-offline-1</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-warning-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-warning-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-warning-1"></i>
+      <i class="font-size-h3 icon-platform-warning-1"></i>
+      <i class="font-size-h4 icon-platform-warning-1"></i>
+      <i class="font-size-h6 icon-platform-warning-1"></i>
+      <i class="font-size-smaller icon-platform-warning-1"></i>
+      <i class="font-size-small icon-platform-warning-1"></i>
+      <i class="font-size-base icon-platform-warning-1"></i>
+      <i class="font-size-large icon-platform-warning-1"></i>
+      <i class="font-size-larger icon-platform-warning-1"></i>
+    </div>
+    <code>.icon-platform-warning-1</code>
+  </div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-warning-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-warning-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-warning-2"></i>
+      <i class="font-size-h3 icon-platform-warning-2"></i>
+      <i class="font-size-h4 icon-platform-warning-2"></i>
+      <i class="font-size-h6 icon-platform-warning-2"></i>
+      <i class="font-size-smaller icon-platform-warning-2"></i>
+      <i class="font-size-small icon-platform-warning-2"></i>
+      <i class="font-size-base icon-platform-warning-2"></i>
+      <i class="font-size-large icon-platform-warning-2"></i>
+      <i class="font-size-larger icon-platform-warning-2"></i>
+    </div>
+    <code>.icon-platform-warning-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-light-switch-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-light-switch-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-light-switch-1"></i>
+      <i class="font-size-h3 icon-platform-light-switch-1"></i>
+      <i class="font-size-h4 icon-platform-light-switch-1"></i>
+      <i class="font-size-h6 icon-platform-light-switch-1"></i>
+      <i class="font-size-smaller icon-platform-light-switch-1"></i>
+      <i class="font-size-small icon-platform-light-switch-1"></i>
+      <i class="font-size-base icon-platform-light-switch-1"></i>
+      <i class="font-size-large icon-platform-light-switch-1"></i>
+      <i class="font-size-larger icon-platform-light-switch-1"></i>
+    </div>
+    <code>.icon-platform-light-switch-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-light-switch-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-light-switch-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-light-switch-2"></i>
+      <i class="font-size-h3 icon-platform-light-switch-2"></i>
+      <i class="font-size-h4 icon-platform-light-switch-2"></i>
+      <i class="font-size-h6 icon-platform-light-switch-2"></i>
+      <i class="font-size-smaller icon-platform-light-switch-2"></i>
+      <i class="font-size-small icon-platform-light-switch-2"></i>
+      <i class="font-size-base icon-platform-light-switch-2"></i>
+      <i class="font-size-large icon-platform-light-switch-2"></i>
+      <i class="font-size-larger icon-platform-light-switch-2"></i>
+    </div>
+    <code>.icon-platform-light-switch-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-dimmer-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-dimmer-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-dimmer-1"></i>
+      <i class="font-size-h3 icon-platform-dimmer-1"></i>
+      <i class="font-size-h4 icon-platform-dimmer-1"></i>
+      <i class="font-size-h6 icon-platform-dimmer-1"></i>
+      <i class="font-size-smaller icon-platform-dimmer-1"></i>
+      <i class="font-size-small icon-platform-dimmer-1"></i>
+      <i class="font-size-base icon-platform-dimmer-1"></i>
+      <i class="font-size-large icon-platform-dimmer-1"></i>
+      <i class="font-size-larger icon-platform-dimmer-1"></i>
+    </div>
+    <code>.icon-platform-dimmer-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-dimmer-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-dimmer-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-dimmer-2"></i>
+      <i class="font-size-h3 icon-platform-dimmer-2"></i>
+      <i class="font-size-h4 icon-platform-dimmer-2"></i>
+      <i class="font-size-h6 icon-platform-dimmer-2"></i>
+      <i class="font-size-smaller icon-platform-dimmer-2"></i>
+      <i class="font-size-small icon-platform-dimmer-2"></i>
+      <i class="font-size-base icon-platform-dimmer-2"></i>
+      <i class="font-size-large icon-platform-dimmer-2"></i>
+      <i class="font-size-larger icon-platform-dimmer-2"></i>
+    </div>
+    <code>.icon-platform-dimmer-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-light-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-light-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-light-1"></i>
+      <i class="font-size-h3 icon-platform-light-1"></i>
+      <i class="font-size-h4 icon-platform-light-1"></i>
+      <i class="font-size-h6 icon-platform-light-1"></i>
+      <i class="font-size-smaller icon-platform-light-1"></i>
+      <i class="font-size-small icon-platform-light-1"></i>
+      <i class="font-size-base icon-platform-light-1"></i>
+      <i class="font-size-large icon-platform-light-1"></i>
+      <i class="font-size-larger icon-platform-light-1"></i>
+    </div>
+    <code>.icon-platform-light-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-light-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-light-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-light-2"></i>
+      <i class="font-size-h3 icon-platform-light-2"></i>
+      <i class="font-size-h4 icon-platform-light-2"></i>
+      <i class="font-size-h6 icon-platform-light-2"></i>
+      <i class="font-size-smaller icon-platform-light-2"></i>
+      <i class="font-size-small icon-platform-light-2"></i>
+      <i class="font-size-base icon-platform-light-2"></i>
+      <i class="font-size-large icon-platform-light-2"></i>
+      <i class="font-size-larger icon-platform-light-2"></i>
+    </div>
+    <code>.icon-platform-light-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-walloutlet-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-walloutlet-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-walloutlet-1"></i>
+      <i class="font-size-h3 icon-platform-walloutlet-1"></i>
+      <i class="font-size-h4 icon-platform-walloutlet-1"></i>
+      <i class="font-size-h6 icon-platform-walloutlet-1"></i>
+      <i class="font-size-smaller icon-platform-walloutlet-1"></i>
+      <i class="font-size-small icon-platform-walloutlet-1"></i>
+      <i class="font-size-base icon-platform-walloutlet-1"></i>
+      <i class="font-size-large icon-platform-walloutlet-1"></i>
+      <i class="font-size-larger icon-platform-walloutlet-1"></i>
+    </div>
+    <code>.icon-platform-walloutlet-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-walloutlet-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-walloutlet-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-walloutlet-2"></i>
+      <i class="font-size-h3 icon-platform-walloutlet-2"></i>
+      <i class="font-size-h4 icon-platform-walloutlet-2"></i>
+      <i class="font-size-h6 icon-platform-walloutlet-2"></i>
+      <i class="font-size-smaller icon-platform-walloutlet-2"></i>
+      <i class="font-size-small icon-platform-walloutlet-2"></i>
+      <i class="font-size-base icon-platform-walloutlet-2"></i>
+      <i class="font-size-large icon-platform-walloutlet-2"></i>
+      <i class="font-size-larger icon-platform-walloutlet-2"></i>
+    </div>
+    <code>.icon-platform-walloutlet-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-outlet-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-outlet-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-outlet-1"></i>
+      <i class="font-size-h3 icon-platform-outlet-1"></i>
+      <i class="font-size-h4 icon-platform-outlet-1"></i>
+      <i class="font-size-h6 icon-platform-outlet-1"></i>
+      <i class="font-size-smaller icon-platform-outlet-1"></i>
+      <i class="font-size-small icon-platform-outlet-1"></i>
+      <i class="font-size-base icon-platform-outlet-1"></i>
+      <i class="font-size-large icon-platform-outlet-1"></i>
+      <i class="font-size-larger icon-platform-outlet-1"></i>
+    </div>
+    <code>.icon-platform-outlet-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-outlet-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-outlet-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-outlet-2"></i>
+      <i class="font-size-h3 icon-platform-outlet-2"></i>
+      <i class="font-size-h4 icon-platform-outlet-2"></i>
+      <i class="font-size-h6 icon-platform-outlet-2"></i>
+      <i class="font-size-smaller icon-platform-outlet-2"></i>
+      <i class="font-size-small icon-platform-outlet-2"></i>
+      <i class="font-size-base icon-platform-outlet-2"></i>
+      <i class="font-size-large icon-platform-outlet-2"></i>
+      <i class="font-size-larger icon-platform-outlet-2"></i>
+    </div>
+    <code>.icon-platform-outlet-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-button-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-button-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-button-1"></i>
+      <i class="font-size-h3 icon-platform-button-1"></i>
+      <i class="font-size-h4 icon-platform-button-1"></i>
+      <i class="font-size-h6 icon-platform-button-1"></i>
+      <i class="font-size-smaller icon-platform-button-1"></i>
+      <i class="font-size-small icon-platform-button-1"></i>
+      <i class="font-size-base icon-platform-button-1"></i>
+      <i class="font-size-large icon-platform-button-1"></i>
+      <i class="font-size-larger icon-platform-button-1"></i>
+    </div>
+    <code>.icon-platform-button-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-button-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-button-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-button-2"></i>
+      <i class="font-size-h3 icon-platform-button-2"></i>
+      <i class="font-size-h4 icon-platform-button-2"></i>
+      <i class="font-size-h6 icon-platform-button-2"></i>
+      <i class="font-size-smaller icon-platform-button-2"></i>
+      <i class="font-size-small icon-platform-button-2"></i>
+      <i class="font-size-base icon-platform-button-2"></i>
+      <i class="font-size-large icon-platform-button-2"></i>
+      <i class="font-size-larger icon-platform-button-2"></i>
+    </div>
+    <code>.icon-platform-button-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-symbolpad-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-symbolpad-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-symbolpad-1"></i>
+      <i class="font-size-h3 icon-platform-symbolpad-1"></i>
+      <i class="font-size-h4 icon-platform-symbolpad-1"></i>
+      <i class="font-size-h6 icon-platform-symbolpad-1"></i>
+      <i class="font-size-smaller icon-platform-symbolpad-1"></i>
+      <i class="font-size-small icon-platform-symbolpad-1"></i>
+      <i class="font-size-base icon-platform-symbolpad-1"></i>
+      <i class="font-size-large icon-platform-symbolpad-1"></i>
+      <i class="font-size-larger icon-platform-symbolpad-1"></i>
+    </div>
+    <code>.icon-platform-symbolpad-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-symbolpad-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-symbolpad-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-symbolpad-2"></i>
+      <i class="font-size-h3 icon-platform-symbolpad-2"></i>
+      <i class="font-size-h4 icon-platform-symbolpad-2"></i>
+      <i class="font-size-h6 icon-platform-symbolpad-2"></i>
+      <i class="font-size-smaller icon-platform-symbolpad-2"></i>
+      <i class="font-size-small icon-platform-symbolpad-2"></i>
+      <i class="font-size-base icon-platform-symbolpad-2"></i>
+      <i class="font-size-large icon-platform-symbolpad-2"></i>
+      <i class="font-size-larger icon-platform-symbolpad-2"></i>
+    </div>
+    <code>.icon-platform-symbolpad-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keypad-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keypad-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keypad-1"></i>
+      <i class="font-size-h3 icon-platform-keypad-1"></i>
+      <i class="font-size-h4 icon-platform-keypad-1"></i>
+      <i class="font-size-h6 icon-platform-keypad-1"></i>
+      <i class="font-size-smaller icon-platform-keypad-1"></i>
+      <i class="font-size-small icon-platform-keypad-1"></i>
+      <i class="font-size-base icon-platform-keypad-1"></i>
+      <i class="font-size-large icon-platform-keypad-1"></i>
+      <i class="font-size-larger icon-platform-keypad-1"></i>
+    </div>
+    <code>.icon-platform-keypad-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keypad-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keypad-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keypad-2"></i>
+      <i class="font-size-h3 icon-platform-keypad-2"></i>
+      <i class="font-size-h4 icon-platform-keypad-2"></i>
+      <i class="font-size-h6 icon-platform-keypad-2"></i>
+      <i class="font-size-smaller icon-platform-keypad-2"></i>
+      <i class="font-size-small icon-platform-keypad-2"></i>
+      <i class="font-size-base icon-platform-keypad-2"></i>
+      <i class="font-size-large icon-platform-keypad-2"></i>
+      <i class="font-size-larger icon-platform-keypad-2"></i>
+    </div>
+    <code>.icon-platform-keypad-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-1"></i>
+      <i class="font-size-h3 icon-platform-keyfob-1"></i>
+      <i class="font-size-h4 icon-platform-keyfob-1"></i>
+      <i class="font-size-h6 icon-platform-keyfob-1"></i>
+      <i class="font-size-smaller icon-platform-keyfob-1"></i>
+      <i class="font-size-small icon-platform-keyfob-1"></i>
+      <i class="font-size-base icon-platform-keyfob-1"></i>
+      <i class="font-size-large icon-platform-keyfob-1"></i>
+      <i class="font-size-larger icon-platform-keyfob-1"></i>
+    </div>
+    <code>.icon-platform-keyfob-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-2"></i>
+      <i class="font-size-h3 icon-platform-keyfob-2"></i>
+      <i class="font-size-h4 icon-platform-keyfob-2"></i>
+      <i class="font-size-h6 icon-platform-keyfob-2"></i>
+      <i class="font-size-smaller icon-platform-keyfob-2"></i>
+      <i class="font-size-small icon-platform-keyfob-2"></i>
+      <i class="font-size-base icon-platform-keyfob-2"></i>
+      <i class="font-size-large icon-platform-keyfob-2"></i>
+      <i class="font-size-larger icon-platform-keyfob-2"></i>
+    </div>
+    <code>.icon-platform-keyfob-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-numberpad-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-numberpad-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-numberpad-1"></i>
+      <i class="font-size-h3 icon-platform-numberpad-1"></i>
+      <i class="font-size-h4 icon-platform-numberpad-1"></i>
+      <i class="font-size-h6 icon-platform-numberpad-1"></i>
+      <i class="font-size-smaller icon-platform-numberpad-1"></i>
+      <i class="font-size-small icon-platform-numberpad-1"></i>
+      <i class="font-size-base icon-platform-numberpad-1"></i>
+      <i class="font-size-large icon-platform-numberpad-1"></i>
+      <i class="font-size-larger icon-platform-numberpad-1"></i>
+    </div>
+    <code>.icon-platform-numberpad-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-numberpad-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-numberpad-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-numberpad-2"></i>
+      <i class="font-size-h3 icon-platform-numberpad-2"></i>
+      <i class="font-size-h4 icon-platform-numberpad-2"></i>
+      <i class="font-size-h6 icon-platform-numberpad-2"></i>
+      <i class="font-size-smaller icon-platform-numberpad-2"></i>
+      <i class="font-size-small icon-platform-numberpad-2"></i>
+      <i class="font-size-base icon-platform-numberpad-2"></i>
+      <i class="font-size-large icon-platform-numberpad-2"></i>
+      <i class="font-size-larger icon-platform-numberpad-2"></i>
+    </div>
+    <code>.icon-platform-numberpad-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-co-smoke-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-co-smoke-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-co-smoke-1"></i>
+      <i class="font-size-h3 icon-platform-co-smoke-1"></i>
+      <i class="font-size-h4 icon-platform-co-smoke-1"></i>
+      <i class="font-size-h6 icon-platform-co-smoke-1"></i>
+      <i class="font-size-smaller icon-platform-co-smoke-1"></i>
+      <i class="font-size-small icon-platform-co-smoke-1"></i>
+      <i class="font-size-base icon-platform-co-smoke-1"></i>
+      <i class="font-size-large icon-platform-co-smoke-1"></i>
+      <i class="font-size-larger icon-platform-co-smoke-1"></i>
+    </div>
+    <code>.icon-platform-co-smoke-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-co-smoke-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-co-smoke-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-co-smoke-2"></i>
+      <i class="font-size-h3 icon-platform-co-smoke-2"></i>
+      <i class="font-size-h4 icon-platform-co-smoke-2"></i>
+      <i class="font-size-h6 icon-platform-co-smoke-2"></i>
+      <i class="font-size-smaller icon-platform-co-smoke-2"></i>
+      <i class="font-size-small icon-platform-co-smoke-2"></i>
+      <i class="font-size-base icon-platform-co-smoke-2"></i>
+      <i class="font-size-large icon-platform-co-smoke-2"></i>
+      <i class="font-size-larger icon-platform-co-smoke-2"></i>
+    </div>
+    <code>.icon-platform-co-smoke-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-smoke-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-smoke-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-smoke-1"></i>
+      <i class="font-size-h3 icon-platform-smoke-1"></i>
+      <i class="font-size-h4 icon-platform-smoke-1"></i>
+      <i class="font-size-h6 icon-platform-smoke-1"></i>
+      <i class="font-size-smaller icon-platform-smoke-1"></i>
+      <i class="font-size-small icon-platform-smoke-1"></i>
+      <i class="font-size-base icon-platform-smoke-1"></i>
+      <i class="font-size-large icon-platform-smoke-1"></i>
+      <i class="font-size-larger icon-platform-smoke-1"></i>
+    </div>
+    <code>.icon-platform-smoke-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-smoke-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-smoke-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-smoke-2"></i>
+      <i class="font-size-h3 icon-platform-smoke-2"></i>
+      <i class="font-size-h4 icon-platform-smoke-2"></i>
+      <i class="font-size-h6 icon-platform-smoke-2"></i>
+      <i class="font-size-smaller icon-platform-smoke-2"></i>
+      <i class="font-size-small icon-platform-smoke-2"></i>
+      <i class="font-size-base icon-platform-smoke-2"></i>
+      <i class="font-size-large icon-platform-smoke-2"></i>
+      <i class="font-size-larger icon-platform-smoke-2"></i>
+    </div>
+    <code>.icon-platform-smoke-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-leak-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-water-leak-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-leak-1"></i>
+      <i class="font-size-h3 icon-platform-water-leak-1"></i>
+      <i class="font-size-h4 icon-platform-water-leak-1"></i>
+      <i class="font-size-h6 icon-platform-water-leak-1"></i>
+      <i class="font-size-smaller icon-platform-water-leak-1"></i>
+      <i class="font-size-small icon-platform-water-leak-1"></i>
+      <i class="font-size-base icon-platform-water-leak-1"></i>
+      <i class="font-size-large icon-platform-water-leak-1"></i>
+      <i class="font-size-larger icon-platform-water-leak-1"></i>
+    </div>
+    <code>.icon-platform-water-leak-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-leak-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-water-leak-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-leak-2"></i>
+      <i class="font-size-h3 icon-platform-water-leak-2"></i>
+      <i class="font-size-h4 icon-platform-water-leak-2"></i>
+      <i class="font-size-h6 icon-platform-water-leak-2"></i>
+      <i class="font-size-smaller icon-platform-water-leak-2"></i>
+      <i class="font-size-small icon-platform-water-leak-2"></i>
+      <i class="font-size-base icon-platform-water-leak-2"></i>
+      <i class="font-size-large icon-platform-water-leak-2"></i>
+      <i class="font-size-larger icon-platform-water-leak-2"></i>
+    </div>
+    <code>.icon-platform-water-leak-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-security-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-security-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-security-1"></i>
+      <i class="font-size-h3 icon-platform-security-1"></i>
+      <i class="font-size-h4 icon-platform-security-1"></i>
+      <i class="font-size-h6 icon-platform-security-1"></i>
+      <i class="font-size-smaller icon-platform-security-1"></i>
+      <i class="font-size-small icon-platform-security-1"></i>
+      <i class="font-size-base icon-platform-security-1"></i>
+      <i class="font-size-large icon-platform-security-1"></i>
+      <i class="font-size-larger icon-platform-security-1"></i>
+    </div>
+    <code>.icon-platform-security-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-glass-break-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-glass-break-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-glass-break-2"></i>
+      <i class="font-size-h3 icon-platform-glass-break-2"></i>
+      <i class="font-size-h4 icon-platform-glass-break-2"></i>
+      <i class="font-size-h6 icon-platform-glass-break-2"></i>
+      <i class="font-size-smaller icon-platform-glass-break-2"></i>
+      <i class="font-size-small icon-platform-glass-break-2"></i>
+      <i class="font-size-base icon-platform-glass-break-2"></i>
+      <i class="font-size-large icon-platform-glass-break-2"></i>
+      <i class="font-size-larger icon-platform-glass-break-2"></i>
+    </div>
+    <code>.icon-platform-glass-break-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-siren-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-siren-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-siren-1"></i>
+      <i class="font-size-h3 icon-platform-siren-1"></i>
+      <i class="font-size-h4 icon-platform-siren-1"></i>
+      <i class="font-size-h6 icon-platform-siren-1"></i>
+      <i class="font-size-smaller icon-platform-siren-1"></i>
+      <i class="font-size-small icon-platform-siren-1"></i>
+      <i class="font-size-base icon-platform-siren-1"></i>
+      <i class="font-size-large icon-platform-siren-1"></i>
+      <i class="font-size-larger icon-platform-siren-1"></i>
+    </div>
+    <code>.icon-platform-siren-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-siren-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-siren-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-siren-2"></i>
+      <i class="font-size-h3 icon-platform-siren-2"></i>
+      <i class="font-size-h4 icon-platform-siren-2"></i>
+      <i class="font-size-h6 icon-platform-siren-2"></i>
+      <i class="font-size-smaller icon-platform-siren-2"></i>
+      <i class="font-size-small icon-platform-siren-2"></i>
+      <i class="font-size-base icon-platform-siren-2"></i>
+      <i class="font-size-large icon-platform-siren-2"></i>
+      <i class="font-size-larger icon-platform-siren-2"></i>
+    </div>
+    <code>.icon-platform-siren-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-tilt-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-tilt-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-tilt-1"></i>
+      <i class="font-size-h3 icon-platform-tilt-1"></i>
+      <i class="font-size-h4 icon-platform-tilt-1"></i>
+      <i class="font-size-h6 icon-platform-tilt-1"></i>
+      <i class="font-size-smaller icon-platform-tilt-1"></i>
+      <i class="font-size-small icon-platform-tilt-1"></i>
+      <i class="font-size-base icon-platform-tilt-1"></i>
+      <i class="font-size-large icon-platform-tilt-1"></i>
+      <i class="font-size-larger icon-platform-tilt-1"></i>
+    </div>
+    <code>.icon-platform-tilt-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-tilt-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-tilt-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-tilt-2"></i>
+      <i class="font-size-h3 icon-platform-tilt-2"></i>
+      <i class="font-size-h4 icon-platform-tilt-2"></i>
+      <i class="font-size-h6 icon-platform-tilt-2"></i>
+      <i class="font-size-smaller icon-platform-tilt-2"></i>
+      <i class="font-size-small icon-platform-tilt-2"></i>
+      <i class="font-size-base icon-platform-tilt-2"></i>
+      <i class="font-size-large icon-platform-tilt-2"></i>
+      <i class="font-size-larger icon-platform-tilt-2"></i>
+    </div>
+    <code>.icon-platform-tilt-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-co-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-co-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-co-1"></i>
+      <i class="font-size-h3 icon-platform-co-1"></i>
+      <i class="font-size-h4 icon-platform-co-1"></i>
+      <i class="font-size-h6 icon-platform-co-1"></i>
+      <i class="font-size-smaller icon-platform-co-1"></i>
+      <i class="font-size-small icon-platform-co-1"></i>
+      <i class="font-size-base icon-platform-co-1"></i>
+      <i class="font-size-large icon-platform-co-1"></i>
+      <i class="font-size-larger icon-platform-co-1"></i>
+    </div>
+    <code>.icon-platform-co-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-co-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-co-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-co-2"></i>
+      <i class="font-size-h3 icon-platform-co-2"></i>
+      <i class="font-size-h4 icon-platform-co-2"></i>
+      <i class="font-size-h6 icon-platform-co-2"></i>
+      <i class="font-size-smaller icon-platform-co-2"></i>
+      <i class="font-size-small icon-platform-co-2"></i>
+      <i class="font-size-base icon-platform-co-2"></i>
+      <i class="font-size-large icon-platform-co-2"></i>
+      <i class="font-size-larger icon-platform-co-2"></i>
+    </div>
+    <code>.icon-platform-co-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-flame-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-flame-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-flame-1"></i>
+      <i class="font-size-h3 icon-platform-flame-1"></i>
+      <i class="font-size-h4 icon-platform-flame-1"></i>
+      <i class="font-size-h6 icon-platform-flame-1"></i>
+      <i class="font-size-smaller icon-platform-flame-1"></i>
+      <i class="font-size-small icon-platform-flame-1"></i>
+      <i class="font-size-base icon-platform-flame-1"></i>
+      <i class="font-size-large icon-platform-flame-1"></i>
+      <i class="font-size-larger icon-platform-flame-1"></i>
+    </div>
+    <code>.icon-platform-flame-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-flame-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-flame-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-flame-2"></i>
+      <i class="font-size-h3 icon-platform-flame-2"></i>
+      <i class="font-size-h4 icon-platform-flame-2"></i>
+      <i class="font-size-h6 icon-platform-flame-2"></i>
+      <i class="font-size-smaller icon-platform-flame-2"></i>
+      <i class="font-size-small icon-platform-flame-2"></i>
+      <i class="font-size-base icon-platform-flame-2"></i>
+      <i class="font-size-large icon-platform-flame-2"></i>
+      <i class="font-size-larger icon-platform-flame-2"></i>
+    </div>
+    <code>.icon-platform-flame-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-vent-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-vent-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-vent-1"></i>
+      <i class="font-size-h3 icon-platform-vent-1"></i>
+      <i class="font-size-h4 icon-platform-vent-1"></i>
+      <i class="font-size-h6 icon-platform-vent-1"></i>
+      <i class="font-size-smaller icon-platform-vent-1"></i>
+      <i class="font-size-small icon-platform-vent-1"></i>
+      <i class="font-size-base icon-platform-vent-1"></i>
+      <i class="font-size-large icon-platform-vent-1"></i>
+      <i class="font-size-larger icon-platform-vent-1"></i>
+    </div>
+    <code>.icon-platform-vent-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-vent-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-vent-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-vent-2"></i>
+      <i class="font-size-h3 icon-platform-vent-2"></i>
+      <i class="font-size-h4 icon-platform-vent-2"></i>
+      <i class="font-size-h6 icon-platform-vent-2"></i>
+      <i class="font-size-smaller icon-platform-vent-2"></i>
+      <i class="font-size-small icon-platform-vent-2"></i>
+      <i class="font-size-base icon-platform-vent-2"></i>
+      <i class="font-size-large icon-platform-vent-2"></i>
+      <i class="font-size-larger icon-platform-vent-2"></i>
+    </div>
+    <code>.icon-platform-vent-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-fan-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-fan-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-fan-1"></i>
+      <i class="font-size-h3 icon-platform-fan-1"></i>
+      <i class="font-size-h4 icon-platform-fan-1"></i>
+      <i class="font-size-h6 icon-platform-fan-1"></i>
+      <i class="font-size-smaller icon-platform-fan-1"></i>
+      <i class="font-size-small icon-platform-fan-1"></i>
+      <i class="font-size-base icon-platform-fan-1"></i>
+      <i class="font-size-large icon-platform-fan-1"></i>
+      <i class="font-size-larger icon-platform-fan-1"></i>
+    </div>
+    <code>.icon-platform-fan-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-fan-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-fan-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-fan-2"></i>
+      <i class="font-size-h3 icon-platform-fan-2"></i>
+      <i class="font-size-h4 icon-platform-fan-2"></i>
+      <i class="font-size-h6 icon-platform-fan-2"></i>
+      <i class="font-size-smaller icon-platform-fan-2"></i>
+      <i class="font-size-small icon-platform-fan-2"></i>
+      <i class="font-size-base icon-platform-fan-2"></i>
+      <i class="font-size-large icon-platform-fan-2"></i>
+      <i class="font-size-larger icon-platform-fan-2"></i>
+    </div>
+    <code>.icon-platform-fan-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hinge-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hinge-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hinge-2"></i>
+      <i class="font-size-h3 icon-platform-hinge-2"></i>
+      <i class="font-size-h4 icon-platform-hinge-2"></i>
+      <i class="font-size-h6 icon-platform-hinge-2"></i>
+      <i class="font-size-smaller icon-platform-hinge-2"></i>
+      <i class="font-size-small icon-platform-hinge-2"></i>
+      <i class="font-size-base icon-platform-hinge-2"></i>
+      <i class="font-size-large icon-platform-hinge-2"></i>
+      <i class="font-size-larger icon-platform-hinge-2"></i>
+    </div>
+    <code>.icon-platform-hinge-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-opencontact-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-opencontact-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-opencontact-1"></i>
+      <i class="font-size-h3 icon-platform-opencontact-1"></i>
+      <i class="font-size-h4 icon-platform-opencontact-1"></i>
+      <i class="font-size-h6 icon-platform-opencontact-1"></i>
+      <i class="font-size-smaller icon-platform-opencontact-1"></i>
+      <i class="font-size-small icon-platform-opencontact-1"></i>
+      <i class="font-size-base icon-platform-opencontact-1"></i>
+      <i class="font-size-large icon-platform-opencontact-1"></i>
+      <i class="font-size-larger icon-platform-opencontact-1"></i>
+    </div>
+    <code>.icon-platform-opencontact-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-opencontact-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-opencontact-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-opencontact-2"></i>
+      <i class="font-size-h3 icon-platform-opencontact-2"></i>
+      <i class="font-size-h4 icon-platform-opencontact-2"></i>
+      <i class="font-size-h6 icon-platform-opencontact-2"></i>
+      <i class="font-size-smaller icon-platform-opencontact-2"></i>
+      <i class="font-size-small icon-platform-opencontact-2"></i>
+      <i class="font-size-base icon-platform-opencontact-2"></i>
+      <i class="font-size-large icon-platform-opencontact-2"></i>
+      <i class="font-size-larger icon-platform-opencontact-2"></i>
+    </div>
+    <code>.icon-platform-opencontact-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-contact-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-contact-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-contact-1"></i>
+      <i class="font-size-h3 icon-platform-contact-1"></i>
+      <i class="font-size-h4 icon-platform-contact-1"></i>
+      <i class="font-size-h6 icon-platform-contact-1"></i>
+      <i class="font-size-smaller icon-platform-contact-1"></i>
+      <i class="font-size-small icon-platform-contact-1"></i>
+      <i class="font-size-base icon-platform-contact-1"></i>
+      <i class="font-size-large icon-platform-contact-1"></i>
+      <i class="font-size-larger icon-platform-contact-1"></i>
+    </div>
+    <code>.icon-platform-contact-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-contact-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-contact-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-contact-2"></i>
+      <i class="font-size-h3 icon-platform-contact-2"></i>
+      <i class="font-size-h4 icon-platform-contact-2"></i>
+      <i class="font-size-h6 icon-platform-contact-2"></i>
+      <i class="font-size-smaller icon-platform-contact-2"></i>
+      <i class="font-size-small icon-platform-contact-2"></i>
+      <i class="font-size-base icon-platform-contact-2"></i>
+      <i class="font-size-large icon-platform-contact-2"></i>
+      <i class="font-size-larger icon-platform-contact-2"></i>
+    </div>
+    <code>.icon-platform-contact-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-lock-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-lock-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-lock-1"></i>
+      <i class="font-size-h3 icon-platform-lock-1"></i>
+      <i class="font-size-h4 icon-platform-lock-1"></i>
+      <i class="font-size-h6 icon-platform-lock-1"></i>
+      <i class="font-size-smaller icon-platform-lock-1"></i>
+      <i class="font-size-small icon-platform-lock-1"></i>
+      <i class="font-size-base icon-platform-lock-1"></i>
+      <i class="font-size-large icon-platform-lock-1"></i>
+      <i class="font-size-larger icon-platform-lock-1"></i>
+    </div>
+    <code>.icon-platform-lock-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-lock-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-lock-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-lock-2"></i>
+      <i class="font-size-h3 icon-platform-lock-2"></i>
+      <i class="font-size-h4 icon-platform-lock-2"></i>
+      <i class="font-size-h6 icon-platform-lock-2"></i>
+      <i class="font-size-smaller icon-platform-lock-2"></i>
+      <i class="font-size-small icon-platform-lock-2"></i>
+      <i class="font-size-base icon-platform-lock-2"></i>
+      <i class="font-size-large icon-platform-lock-2"></i>
+      <i class="font-size-larger icon-platform-lock-2"></i>
+    </div>
+    <code>.icon-platform-lock-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-unlock-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-unlock-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-unlock-1"></i>
+      <i class="font-size-h3 icon-platform-unlock-1"></i>
+      <i class="font-size-h4 icon-platform-unlock-1"></i>
+      <i class="font-size-h6 icon-platform-unlock-1"></i>
+      <i class="font-size-smaller icon-platform-unlock-1"></i>
+      <i class="font-size-small icon-platform-unlock-1"></i>
+      <i class="font-size-base icon-platform-unlock-1"></i>
+      <i class="font-size-large icon-platform-unlock-1"></i>
+      <i class="font-size-larger icon-platform-unlock-1"></i>
+    </div>
+    <code>.icon-platform-unlock-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-unlock-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-unlock-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-unlock-2"></i>
+      <i class="font-size-h3 icon-platform-unlock-2"></i>
+      <i class="font-size-h4 icon-platform-unlock-2"></i>
+      <i class="font-size-h6 icon-platform-unlock-2"></i>
+      <i class="font-size-smaller icon-platform-unlock-2"></i>
+      <i class="font-size-small icon-platform-unlock-2"></i>
+      <i class="font-size-base icon-platform-unlock-2"></i>
+      <i class="font-size-large icon-platform-unlock-2"></i>
+      <i class="font-size-larger icon-platform-unlock-2"></i>
+    </div>
+    <code>.icon-platform-unlock-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-garage-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-garage-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-garage-1"></i>
+      <i class="font-size-h3 icon-platform-garage-1"></i>
+      <i class="font-size-h4 icon-platform-garage-1"></i>
+      <i class="font-size-h6 icon-platform-garage-1"></i>
+      <i class="font-size-smaller icon-platform-garage-1"></i>
+      <i class="font-size-small icon-platform-garage-1"></i>
+      <i class="font-size-base icon-platform-garage-1"></i>
+      <i class="font-size-large icon-platform-garage-1"></i>
+      <i class="font-size-larger icon-platform-garage-1"></i>
+    </div>
+    <code>.icon-platform-garage-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-garage-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-garage-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-garage-2"></i>
+      <i class="font-size-h3 icon-platform-garage-2"></i>
+      <i class="font-size-h4 icon-platform-garage-2"></i>
+      <i class="font-size-h6 icon-platform-garage-2"></i>
+      <i class="font-size-smaller icon-platform-garage-2"></i>
+      <i class="font-size-small icon-platform-garage-2"></i>
+      <i class="font-size-base icon-platform-garage-2"></i>
+      <i class="font-size-large icon-platform-garage-2"></i>
+      <i class="font-size-larger icon-platform-garage-2"></i>
+    </div>
+    <code>.icon-platform-garage-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-garage-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-garage-3"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-garage-3"></i>
+      <i class="font-size-h3 icon-platform-garage-3"></i>
+      <i class="font-size-h4 icon-platform-garage-3"></i>
+      <i class="font-size-h6 icon-platform-garage-3"></i>
+      <i class="font-size-smaller icon-platform-garage-3"></i>
+      <i class="font-size-small icon-platform-garage-3"></i>
+      <i class="font-size-base icon-platform-garage-3"></i>
+      <i class="font-size-large icon-platform-garage-3"></i>
+      <i class="font-size-larger icon-platform-garage-3"></i>
+    </div>
+    <code>.icon-platform-garage-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-petdoor-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-petdoor-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-petdoor-1"></i>
+      <i class="font-size-h3 icon-platform-petdoor-1"></i>
+      <i class="font-size-h4 icon-platform-petdoor-1"></i>
+      <i class="font-size-h6 icon-platform-petdoor-1"></i>
+      <i class="font-size-smaller icon-platform-petdoor-1"></i>
+      <i class="font-size-small icon-platform-petdoor-1"></i>
+      <i class="font-size-base icon-platform-petdoor-1"></i>
+      <i class="font-size-large icon-platform-petdoor-1"></i>
+      <i class="font-size-larger icon-platform-petdoor-1"></i>
+    </div>
+    <code>.icon-platform-petdoor-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-hexagon"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-hexagon"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-h3 icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-h4 icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-h6 icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-smaller icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-small icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-base icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-large icon-platform-keyfob-hexagon"></i>
+      <i class="font-size-larger icon-platform-keyfob-hexagon"></i>
+    </div>
+    <code>.icon-platform-keyfob-hexagon</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-square"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-square"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-square"></i>
+      <i class="font-size-h3 icon-platform-keyfob-square"></i>
+      <i class="font-size-h4 icon-platform-keyfob-square"></i>
+      <i class="font-size-h6 icon-platform-keyfob-square"></i>
+      <i class="font-size-smaller icon-platform-keyfob-square"></i>
+      <i class="font-size-small icon-platform-keyfob-square"></i>
+      <i class="font-size-base icon-platform-keyfob-square"></i>
+      <i class="font-size-large icon-platform-keyfob-square"></i>
+      <i class="font-size-larger icon-platform-keyfob-square"></i>
+    </div>
+    <code>.icon-platform-keyfob-square</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-diamond"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-diamond"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-diamond"></i>
+      <i class="font-size-h3 icon-platform-keyfob-diamond"></i>
+      <i class="font-size-h4 icon-platform-keyfob-diamond"></i>
+      <i class="font-size-h6 icon-platform-keyfob-diamond"></i>
+      <i class="font-size-smaller icon-platform-keyfob-diamond"></i>
+      <i class="font-size-small icon-platform-keyfob-diamond"></i>
+      <i class="font-size-base icon-platform-keyfob-diamond"></i>
+      <i class="font-size-large icon-platform-keyfob-diamond"></i>
+      <i class="font-size-larger icon-platform-keyfob-diamond"></i>
+    </div>
+    <code>.icon-platform-keyfob-diamond</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-circle"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-circle"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-circle"></i>
+      <i class="font-size-h3 icon-platform-keyfob-circle"></i>
+      <i class="font-size-h4 icon-platform-keyfob-circle"></i>
+      <i class="font-size-h6 icon-platform-keyfob-circle"></i>
+      <i class="font-size-smaller icon-platform-keyfob-circle"></i>
+      <i class="font-size-small icon-platform-keyfob-circle"></i>
+      <i class="font-size-base icon-platform-keyfob-circle"></i>
+      <i class="font-size-large icon-platform-keyfob-circle"></i>
+      <i class="font-size-larger icon-platform-keyfob-circle"></i>
+    </div>
+    <code>.icon-platform-keyfob-circle</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-away"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-away"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-away"></i>
+      <i class="font-size-h3 icon-platform-keyfob-away"></i>
+      <i class="font-size-h4 icon-platform-keyfob-away"></i>
+      <i class="font-size-h6 icon-platform-keyfob-away"></i>
+      <i class="font-size-smaller icon-platform-keyfob-away"></i>
+      <i class="font-size-small icon-platform-keyfob-away"></i>
+      <i class="font-size-base icon-platform-keyfob-away"></i>
+      <i class="font-size-large icon-platform-keyfob-away"></i>
+      <i class="font-size-larger icon-platform-keyfob-away"></i>
+    </div>
+    <code>.icon-platform-keyfob-away</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-home"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-home"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-home"></i>
+      <i class="font-size-h3 icon-platform-keyfob-home"></i>
+      <i class="font-size-h4 icon-platform-keyfob-home"></i>
+      <i class="font-size-h6 icon-platform-keyfob-home"></i>
+      <i class="font-size-smaller icon-platform-keyfob-home"></i>
+      <i class="font-size-small icon-platform-keyfob-home"></i>
+      <i class="font-size-base icon-platform-keyfob-home"></i>
+      <i class="font-size-large icon-platform-keyfob-home"></i>
+      <i class="font-size-larger icon-platform-keyfob-home"></i>
+    </div>
+    <code>.icon-platform-keyfob-home</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-a"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-a"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-a"></i>
+      <i class="font-size-h3 icon-platform-keyfob-a"></i>
+      <i class="font-size-h4 icon-platform-keyfob-a"></i>
+      <i class="font-size-h6 icon-platform-keyfob-a"></i>
+      <i class="font-size-smaller icon-platform-keyfob-a"></i>
+      <i class="font-size-small icon-platform-keyfob-a"></i>
+      <i class="font-size-base icon-platform-keyfob-a"></i>
+      <i class="font-size-large icon-platform-keyfob-a"></i>
+      <i class="font-size-larger icon-platform-keyfob-a"></i>
+    </div>
+    <code>.icon-platform-keyfob-a</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-keyfob-b"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-keyfob-b"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-keyfob-b"></i>
+      <i class="font-size-h3 icon-platform-keyfob-b"></i>
+      <i class="font-size-h4 icon-platform-keyfob-b"></i>
+      <i class="font-size-h6 icon-platform-keyfob-b"></i>
+      <i class="font-size-smaller icon-platform-keyfob-b"></i>
+      <i class="font-size-small icon-platform-keyfob-b"></i>
+      <i class="font-size-base icon-platform-keyfob-b"></i>
+      <i class="font-size-large icon-platform-keyfob-b"></i>
+      <i class="font-size-larger icon-platform-keyfob-b"></i>
+    </div>
+    <code>.icon-platform-keyfob-b</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-care-pendant-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-care-pendant-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-care-pendant-1"></i>
+      <i class="font-size-h3 icon-platform-care-pendant-1"></i>
+      <i class="font-size-h4 icon-platform-care-pendant-1"></i>
+      <i class="font-size-h6 icon-platform-care-pendant-1"></i>
+      <i class="font-size-smaller icon-platform-care-pendant-1"></i>
+      <i class="font-size-small icon-platform-care-pendant-1"></i>
+      <i class="font-size-base icon-platform-care-pendant-1"></i>
+      <i class="font-size-large icon-platform-care-pendant-1"></i>
+      <i class="font-size-larger icon-platform-care-pendant-1"></i>
+    </div>
+    <code>.icon-platform-care-pendant-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-care-pendant-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-care-pendant-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-care-pendant-2"></i>
+      <i class="font-size-h3 icon-platform-care-pendant-2"></i>
+      <i class="font-size-h4 icon-platform-care-pendant-2"></i>
+      <i class="font-size-h6 icon-platform-care-pendant-2"></i>
+      <i class="font-size-smaller icon-platform-care-pendant-2"></i>
+      <i class="font-size-small icon-platform-care-pendant-2"></i>
+      <i class="font-size-base icon-platform-care-pendant-2"></i>
+      <i class="font-size-large icon-platform-care-pendant-2"></i>
+      <i class="font-size-larger icon-platform-care-pendant-2"></i>
+    </div>
+    <code>.icon-platform-care-pendant-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-care-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-care-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-care-1"></i>
+      <i class="font-size-h3 icon-platform-care-1"></i>
+      <i class="font-size-h4 icon-platform-care-1"></i>
+      <i class="font-size-h6 icon-platform-care-1"></i>
+      <i class="font-size-smaller icon-platform-care-1"></i>
+      <i class="font-size-small icon-platform-care-1"></i>
+      <i class="font-size-base icon-platform-care-1"></i>
+      <i class="font-size-large icon-platform-care-1"></i>
+      <i class="font-size-larger icon-platform-care-1"></i>
+    </div>
+    <code>.icon-platform-care-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-care-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-care-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-care-2"></i>
+      <i class="font-size-h3 icon-platform-care-2"></i>
+      <i class="font-size-h4 icon-platform-care-2"></i>
+      <i class="font-size-h6 icon-platform-care-2"></i>
+      <i class="font-size-smaller icon-platform-care-2"></i>
+      <i class="font-size-small icon-platform-care-2"></i>
+      <i class="font-size-base icon-platform-care-2"></i>
+      <i class="font-size-large icon-platform-care-2"></i>
+      <i class="font-size-larger icon-platform-care-2"></i>
+    </div>
+    <code>.icon-platform-care-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-carep-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-carep-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-carep-1"></i>
+      <i class="font-size-h3 icon-platform-carep-1"></i>
+      <i class="font-size-h4 icon-platform-carep-1"></i>
+      <i class="font-size-h6 icon-platform-carep-1"></i>
+      <i class="font-size-smaller icon-platform-carep-1"></i>
+      <i class="font-size-small icon-platform-carep-1"></i>
+      <i class="font-size-base icon-platform-carep-1"></i>
+      <i class="font-size-large icon-platform-carep-1"></i>
+      <i class="font-size-larger icon-platform-carep-1"></i>
+    </div>
+    <code>.icon-platform-carep-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-home-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-home-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-home-1"></i>
+      <i class="font-size-h3 icon-platform-home-1"></i>
+      <i class="font-size-h4 icon-platform-home-1"></i>
+      <i class="font-size-h6 icon-platform-home-1"></i>
+      <i class="font-size-smaller icon-platform-home-1"></i>
+      <i class="font-size-small icon-platform-home-1"></i>
+      <i class="font-size-base icon-platform-home-1"></i>
+      <i class="font-size-large icon-platform-home-1"></i>
+      <i class="font-size-larger icon-platform-home-1"></i>
+    </div>
+    <code>.icon-platform-home-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-home-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-home-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-home-2"></i>
+      <i class="font-size-h3 icon-platform-home-2"></i>
+      <i class="font-size-h4 icon-platform-home-2"></i>
+      <i class="font-size-h6 icon-platform-home-2"></i>
+      <i class="font-size-smaller icon-platform-home-2"></i>
+      <i class="font-size-small icon-platform-home-2"></i>
+      <i class="font-size-base icon-platform-home-2"></i>
+      <i class="font-size-large icon-platform-home-2"></i>
+      <i class="font-size-larger icon-platform-home-2"></i>
+    </div>
+    <code>.icon-platform-home-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-home-energy"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-home-energy"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-home-energy"></i>
+      <i class="font-size-h3 icon-platform-home-energy"></i>
+      <i class="font-size-h4 icon-platform-home-energy"></i>
+      <i class="font-size-h6 icon-platform-home-energy"></i>
+      <i class="font-size-smaller icon-platform-home-energy"></i>
+      <i class="font-size-small icon-platform-home-energy"></i>
+      <i class="font-size-base icon-platform-home-energy"></i>
+      <i class="font-size-large icon-platform-home-energy"></i>
+      <i class="font-size-larger icon-platform-home-energy"></i>
+    </div>
+    <code>.icon-platform-home-energy</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-voice-assistant"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-voice-assistant"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-voice-assistant"></i>
+      <i class="font-size-h3 icon-platform-voice-assistant"></i>
+      <i class="font-size-h4 icon-platform-voice-assistant"></i>
+      <i class="font-size-h6 icon-platform-voice-assistant"></i>
+      <i class="font-size-smaller icon-platform-voice-assistant"></i>
+      <i class="font-size-small icon-platform-voice-assistant"></i>
+      <i class="font-size-base icon-platform-voice-assistant"></i>
+      <i class="font-size-large icon-platform-voice-assistant"></i>
+      <i class="font-size-larger icon-platform-voice-assistant"></i>
+    </div>
+    <code>.icon-platform-voice-assistant</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-range-extender-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-range-extender-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-range-extender-1"></i>
+      <i class="font-size-h3 icon-platform-range-extender-1"></i>
+      <i class="font-size-h4 icon-platform-range-extender-1"></i>
+      <i class="font-size-h6 icon-platform-range-extender-1"></i>
+      <i class="font-size-smaller icon-platform-range-extender-1"></i>
+      <i class="font-size-small icon-platform-range-extender-1"></i>
+      <i class="font-size-base icon-platform-range-extender-1"></i>
+      <i class="font-size-large icon-platform-range-extender-1"></i>
+      <i class="font-size-larger icon-platform-range-extender-1"></i>
+    </div>
+    <code>.icon-platform-range-extender-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-range-extender-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-range-extender-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-range-extender-2"></i>
+      <i class="font-size-h3 icon-platform-range-extender-2"></i>
+      <i class="font-size-h4 icon-platform-range-extender-2"></i>
+      <i class="font-size-h6 icon-platform-range-extender-2"></i>
+      <i class="font-size-smaller icon-platform-range-extender-2"></i>
+      <i class="font-size-small icon-platform-range-extender-2"></i>
+      <i class="font-size-base icon-platform-range-extender-2"></i>
+      <i class="font-size-large icon-platform-range-extender-2"></i>
+      <i class="font-size-larger icon-platform-range-extender-2"></i>
+    </div>
+    <code>.icon-platform-range-extender-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-garage-bridge-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-garage-bridge-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-garage-bridge-1"></i>
+      <i class="font-size-h3 icon-platform-garage-bridge-1"></i>
+      <i class="font-size-h4 icon-platform-garage-bridge-1"></i>
+      <i class="font-size-h6 icon-platform-garage-bridge-1"></i>
+      <i class="font-size-smaller icon-platform-garage-bridge-1"></i>
+      <i class="font-size-small icon-platform-garage-bridge-1"></i>
+      <i class="font-size-base icon-platform-garage-bridge-1"></i>
+      <i class="font-size-large icon-platform-garage-bridge-1"></i>
+      <i class="font-size-larger icon-platform-garage-bridge-1"></i>
+    </div>
+    <code>.icon-platform-garage-bridge-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-garage-bridge-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-garage-bridge-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-garage-bridge-2"></i>
+      <i class="font-size-h3 icon-platform-garage-bridge-2"></i>
+      <i class="font-size-h4 icon-platform-garage-bridge-2"></i>
+      <i class="font-size-h6 icon-platform-garage-bridge-2"></i>
+      <i class="font-size-smaller icon-platform-garage-bridge-2"></i>
+      <i class="font-size-small icon-platform-garage-bridge-2"></i>
+      <i class="font-size-base icon-platform-garage-bridge-2"></i>
+      <i class="font-size-large icon-platform-garage-bridge-2"></i>
+      <i class="font-size-larger icon-platform-garage-bridge-2"></i>
+    </div>
+    <code>.icon-platform-garage-bridge-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-speaker-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-speaker-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-speaker-1"></i>
+      <i class="font-size-h3 icon-platform-speaker-1"></i>
+      <i class="font-size-h4 icon-platform-speaker-1"></i>
+      <i class="font-size-h6 icon-platform-speaker-1"></i>
+      <i class="font-size-smaller icon-platform-speaker-1"></i>
+      <i class="font-size-small icon-platform-speaker-1"></i>
+      <i class="font-size-base icon-platform-speaker-1"></i>
+      <i class="font-size-large icon-platform-speaker-1"></i>
+      <i class="font-size-larger icon-platform-speaker-1"></i>
+    </div>
+    <code>.icon-platform-speaker-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-remote-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-remote-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-remote-1"></i>
+      <i class="font-size-h3 icon-platform-remote-1"></i>
+      <i class="font-size-h4 icon-platform-remote-1"></i>
+      <i class="font-size-h6 icon-platform-remote-1"></i>
+      <i class="font-size-smaller icon-platform-remote-1"></i>
+      <i class="font-size-small icon-platform-remote-1"></i>
+      <i class="font-size-base icon-platform-remote-1"></i>
+      <i class="font-size-large icon-platform-remote-1"></i>
+      <i class="font-size-larger icon-platform-remote-1"></i>
+    </div>
+    <code>.icon-platform-remote-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-remote-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-remote-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-remote-2"></i>
+      <i class="font-size-h3 icon-platform-remote-2"></i>
+      <i class="font-size-h4 icon-platform-remote-2"></i>
+      <i class="font-size-h6 icon-platform-remote-2"></i>
+      <i class="font-size-smaller icon-platform-remote-2"></i>
+      <i class="font-size-small icon-platform-remote-2"></i>
+      <i class="font-size-base icon-platform-remote-2"></i>
+      <i class="font-size-large icon-platform-remote-2"></i>
+      <i class="font-size-larger icon-platform-remote-2"></i>
+    </div>
+    <code>.icon-platform-remote-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-router-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-router-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-router-1"></i>
+      <i class="font-size-h3 icon-platform-router-1"></i>
+      <i class="font-size-h4 icon-platform-router-1"></i>
+      <i class="font-size-h6 icon-platform-router-1"></i>
+      <i class="font-size-smaller icon-platform-router-1"></i>
+      <i class="font-size-small icon-platform-router-1"></i>
+      <i class="font-size-base icon-platform-router-1"></i>
+      <i class="font-size-large icon-platform-router-1"></i>
+      <i class="font-size-larger icon-platform-router-1"></i>
+    </div>
+    <code>.icon-platform-router-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-router-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-router-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-router-2"></i>
+      <i class="font-size-h3 icon-platform-router-2"></i>
+      <i class="font-size-h4 icon-platform-router-2"></i>
+      <i class="font-size-h6 icon-platform-router-2"></i>
+      <i class="font-size-smaller icon-platform-router-2"></i>
+      <i class="font-size-small icon-platform-router-2"></i>
+      <i class="font-size-base icon-platform-router-2"></i>
+      <i class="font-size-large icon-platform-router-2"></i>
+      <i class="font-size-larger icon-platform-router-2"></i>
+    </div>
+    <code>.icon-platform-router-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-signal-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-signal-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-signal-1"></i>
+      <i class="font-size-h3 icon-platform-signal-1"></i>
+      <i class="font-size-h4 icon-platform-signal-1"></i>
+      <i class="font-size-h6 icon-platform-signal-1"></i>
+      <i class="font-size-smaller icon-platform-signal-1"></i>
+      <i class="font-size-small icon-platform-signal-1"></i>
+      <i class="font-size-base icon-platform-signal-1"></i>
+      <i class="font-size-large icon-platform-signal-1"></i>
+      <i class="font-size-larger icon-platform-signal-1"></i>
+    </div>
+    <code>.icon-platform-signal-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-fridge-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-fridge-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-fridge-1"></i>
+      <i class="font-size-h3 icon-platform-fridge-1"></i>
+      <i class="font-size-h4 icon-platform-fridge-1"></i>
+      <i class="font-size-h6 icon-platform-fridge-1"></i>
+      <i class="font-size-smaller icon-platform-fridge-1"></i>
+      <i class="font-size-small icon-platform-fridge-1"></i>
+      <i class="font-size-base icon-platform-fridge-1"></i>
+      <i class="font-size-large icon-platform-fridge-1"></i>
+      <i class="font-size-larger icon-platform-fridge-1"></i>
+    </div>
+    <code>.icon-platform-fridge-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-fridge-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-fridge-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-fridge-2"></i>
+      <i class="font-size-h3 icon-platform-fridge-2"></i>
+      <i class="font-size-h4 icon-platform-fridge-2"></i>
+      <i class="font-size-h6 icon-platform-fridge-2"></i>
+      <i class="font-size-smaller icon-platform-fridge-2"></i>
+      <i class="font-size-small icon-platform-fridge-2"></i>
+      <i class="font-size-base icon-platform-fridge-2"></i>
+      <i class="font-size-large icon-platform-fridge-2"></i>
+      <i class="font-size-larger icon-platform-fridge-2"></i>
+    </div>
+    <code>.icon-platform-fridge-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-blinds-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-blinds-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-blinds-1"></i>
+      <i class="font-size-h3 icon-platform-blinds-1"></i>
+      <i class="font-size-h4 icon-platform-blinds-1"></i>
+      <i class="font-size-h6 icon-platform-blinds-1"></i>
+      <i class="font-size-smaller icon-platform-blinds-1"></i>
+      <i class="font-size-small icon-platform-blinds-1"></i>
+      <i class="font-size-base icon-platform-blinds-1"></i>
+      <i class="font-size-large icon-platform-blinds-1"></i>
+      <i class="font-size-larger icon-platform-blinds-1"></i>
+    </div>
+    <code>.icon-platform-blinds-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-pair-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-pair-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-pair-1"></i>
+      <i class="font-size-h3 icon-platform-pair-1"></i>
+      <i class="font-size-h4 icon-platform-pair-1"></i>
+      <i class="font-size-h6 icon-platform-pair-1"></i>
+      <i class="font-size-smaller icon-platform-pair-1"></i>
+      <i class="font-size-small icon-platform-pair-1"></i>
+      <i class="font-size-base icon-platform-pair-1"></i>
+      <i class="font-size-large icon-platform-pair-1"></i>
+      <i class="font-size-larger icon-platform-pair-1"></i>
+    </div>
+    <code>.icon-platform-pair-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-pair-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-pair-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-pair-2"></i>
+      <i class="font-size-h3 icon-platform-pair-2"></i>
+      <i class="font-size-h4 icon-platform-pair-2"></i>
+      <i class="font-size-h6 icon-platform-pair-2"></i>
+      <i class="font-size-smaller icon-platform-pair-2"></i>
+      <i class="font-size-small icon-platform-pair-2"></i>
+      <i class="font-size-base icon-platform-pair-2"></i>
+      <i class="font-size-large icon-platform-pair-2"></i>
+      <i class="font-size-larger icon-platform-pair-2"></i>
+    </div>
+    <code>.icon-platform-pair-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-camera-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-camera-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-camera-1"></i>
+      <i class="font-size-h3 icon-platform-camera-1"></i>
+      <i class="font-size-h4 icon-platform-camera-1"></i>
+      <i class="font-size-h6 icon-platform-camera-1"></i>
+      <i class="font-size-smaller icon-platform-camera-1"></i>
+      <i class="font-size-small icon-platform-camera-1"></i>
+      <i class="font-size-base icon-platform-camera-1"></i>
+      <i class="font-size-large icon-platform-camera-1"></i>
+      <i class="font-size-larger icon-platform-camera-1"></i>
+    </div>
+    <code>.icon-platform-camera-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-camera-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-camera-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-camera-2"></i>
+      <i class="font-size-h3 icon-platform-camera-2"></i>
+      <i class="font-size-h4 icon-platform-camera-2"></i>
+      <i class="font-size-h6 icon-platform-camera-2"></i>
+      <i class="font-size-smaller icon-platform-camera-2"></i>
+      <i class="font-size-small icon-platform-camera-2"></i>
+      <i class="font-size-base icon-platform-camera-2"></i>
+      <i class="font-size-large icon-platform-camera-2"></i>
+      <i class="font-size-larger icon-platform-camera-2"></i>
+    </div>
+    <code>.icon-platform-camera-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-camera-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-camera-3"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-camera-3"></i>
+      <i class="font-size-h3 icon-platform-camera-3"></i>
+      <i class="font-size-h4 icon-platform-camera-3"></i>
+      <i class="font-size-h6 icon-platform-camera-3"></i>
+      <i class="font-size-smaller icon-platform-camera-3"></i>
+      <i class="font-size-small icon-platform-camera-3"></i>
+      <i class="font-size-base icon-platform-camera-3"></i>
+      <i class="font-size-large icon-platform-camera-3"></i>
+      <i class="font-size-larger icon-platform-camera-3"></i>
+    </div>
+    <code>.icon-platform-camera-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-irrigation-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-irrigation-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-irrigation-1"></i>
+      <i class="font-size-h3 icon-platform-irrigation-1"></i>
+      <i class="font-size-h4 icon-platform-irrigation-1"></i>
+      <i class="font-size-h6 icon-platform-irrigation-1"></i>
+      <i class="font-size-smaller icon-platform-irrigation-1"></i>
+      <i class="font-size-small icon-platform-irrigation-1"></i>
+      <i class="font-size-base icon-platform-irrigation-1"></i>
+      <i class="font-size-large icon-platform-irrigation-1"></i>
+      <i class="font-size-larger icon-platform-irrigation-1"></i>
+    </div>
+    <code>.icon-platform-irrigation-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-irrigation-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-irrigation-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-irrigation-2"></i>
+      <i class="font-size-h3 icon-platform-irrigation-2"></i>
+      <i class="font-size-h4 icon-platform-irrigation-2"></i>
+      <i class="font-size-h6 icon-platform-irrigation-2"></i>
+      <i class="font-size-smaller icon-platform-irrigation-2"></i>
+      <i class="font-size-small icon-platform-irrigation-2"></i>
+      <i class="font-size-base icon-platform-irrigation-2"></i>
+      <i class="font-size-large icon-platform-irrigation-2"></i>
+      <i class="font-size-larger icon-platform-irrigation-2"></i>
+    </div>
+    <code>.icon-platform-irrigation-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-sprinkler-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-sprinkler-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-sprinkler-1"></i>
+      <i class="font-size-h3 icon-platform-sprinkler-1"></i>
+      <i class="font-size-h4 icon-platform-sprinkler-1"></i>
+      <i class="font-size-h6 icon-platform-sprinkler-1"></i>
+      <i class="font-size-smaller icon-platform-sprinkler-1"></i>
+      <i class="font-size-small icon-platform-sprinkler-1"></i>
+      <i class="font-size-base icon-platform-sprinkler-1"></i>
+      <i class="font-size-large icon-platform-sprinkler-1"></i>
+      <i class="font-size-larger icon-platform-sprinkler-1"></i>
+    </div>
+    <code>.icon-platform-sprinkler-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-sprinkler-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-sprinkler-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-sprinkler-2"></i>
+      <i class="font-size-h3 icon-platform-sprinkler-2"></i>
+      <i class="font-size-h4 icon-platform-sprinkler-2"></i>
+      <i class="font-size-h6 icon-platform-sprinkler-2"></i>
+      <i class="font-size-smaller icon-platform-sprinkler-2"></i>
+      <i class="font-size-small icon-platform-sprinkler-2"></i>
+      <i class="font-size-base icon-platform-sprinkler-2"></i>
+      <i class="font-size-large icon-platform-sprinkler-2"></i>
+      <i class="font-size-larger icon-platform-sprinkler-2"></i>
+    </div>
+    <code>.icon-platform-sprinkler-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hoseend-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hoseend-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hoseend-1"></i>
+      <i class="font-size-h3 icon-platform-hoseend-1"></i>
+      <i class="font-size-h4 icon-platform-hoseend-1"></i>
+      <i class="font-size-h6 icon-platform-hoseend-1"></i>
+      <i class="font-size-smaller icon-platform-hoseend-1"></i>
+      <i class="font-size-small icon-platform-hoseend-1"></i>
+      <i class="font-size-base icon-platform-hoseend-1"></i>
+      <i class="font-size-large icon-platform-hoseend-1"></i>
+      <i class="font-size-larger icon-platform-hoseend-1"></i>
+    </div>
+    <code>.icon-platform-hoseend-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hoseend-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hoseend-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hoseend-2"></i>
+      <i class="font-size-h3 icon-platform-hoseend-2"></i>
+      <i class="font-size-h4 icon-platform-hoseend-2"></i>
+      <i class="font-size-h6 icon-platform-hoseend-2"></i>
+      <i class="font-size-smaller icon-platform-hoseend-2"></i>
+      <i class="font-size-small icon-platform-hoseend-2"></i>
+      <i class="font-size-base icon-platform-hoseend-2"></i>
+      <i class="font-size-large icon-platform-hoseend-2"></i>
+      <i class="font-size-larger icon-platform-hoseend-2"></i>
+    </div>
+    <code>.icon-platform-hoseend-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hoseend-timer-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hoseend-timer-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-h3 icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-h4 icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-h6 icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-smaller icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-small icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-base icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-large icon-platform-hoseend-timer-1"></i>
+      <i class="font-size-larger icon-platform-hoseend-timer-1"></i>
+    </div>
+    <code>.icon-platform-hoseend-timer-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-hoseend-timer-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-hoseend-timer-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-h3 icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-h4 icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-h6 icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-smaller icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-small icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-base icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-large icon-platform-hoseend-timer-2"></i>
+      <i class="font-size-larger icon-platform-hoseend-timer-2"></i>
+    </div>
+    <code>.icon-platform-hoseend-timer-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-drain-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-drain-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-drain-1"></i>
+      <i class="font-size-h3 icon-platform-drain-1"></i>
+      <i class="font-size-h4 icon-platform-drain-1"></i>
+      <i class="font-size-h6 icon-platform-drain-1"></i>
+      <i class="font-size-smaller icon-platform-drain-1"></i>
+      <i class="font-size-small icon-platform-drain-1"></i>
+      <i class="font-size-base icon-platform-drain-1"></i>
+      <i class="font-size-large icon-platform-drain-1"></i>
+      <i class="font-size-larger icon-platform-drain-1"></i>
+    </div>
+    <code>.icon-platform-drain-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-drain-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-drain-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-drain-2"></i>
+      <i class="font-size-h3 icon-platform-drain-2"></i>
+      <i class="font-size-h4 icon-platform-drain-2"></i>
+      <i class="font-size-h6 icon-platform-drain-2"></i>
+      <i class="font-size-smaller icon-platform-drain-2"></i>
+      <i class="font-size-small icon-platform-drain-2"></i>
+      <i class="font-size-base icon-platform-drain-2"></i>
+      <i class="font-size-large icon-platform-drain-2"></i>
+      <i class="font-size-larger icon-platform-drain-2"></i>
+    </div>
+    <code>.icon-platform-drain-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-leak-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-leak-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-leak-1"></i>
+      <i class="font-size-h3 icon-platform-leak-1"></i>
+      <i class="font-size-h4 icon-platform-leak-1"></i>
+      <i class="font-size-h6 icon-platform-leak-1"></i>
+      <i class="font-size-smaller icon-platform-leak-1"></i>
+      <i class="font-size-small icon-platform-leak-1"></i>
+      <i class="font-size-base icon-platform-leak-1"></i>
+      <i class="font-size-large icon-platform-leak-1"></i>
+      <i class="font-size-larger icon-platform-leak-1"></i>
+    </div>
+    <code>.icon-platform-leak-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-leak-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-leak-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-leak-2"></i>
+      <i class="font-size-h3 icon-platform-leak-2"></i>
+      <i class="font-size-h4 icon-platform-leak-2"></i>
+      <i class="font-size-h6 icon-platform-leak-2"></i>
+      <i class="font-size-smaller icon-platform-leak-2"></i>
+      <i class="font-size-small icon-platform-leak-2"></i>
+      <i class="font-size-base icon-platform-leak-2"></i>
+      <i class="font-size-large icon-platform-leak-2"></i>
+      <i class="font-size-larger icon-platform-leak-2"></i>
+    </div>
+    <code>.icon-platform-leak-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-softener-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-softener-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-softener-1"></i>
+      <i class="font-size-h3 icon-platform-softener-1"></i>
+      <i class="font-size-h4 icon-platform-softener-1"></i>
+      <i class="font-size-h6 icon-platform-softener-1"></i>
+      <i class="font-size-smaller icon-platform-softener-1"></i>
+      <i class="font-size-small icon-platform-softener-1"></i>
+      <i class="font-size-base icon-platform-softener-1"></i>
+      <i class="font-size-large icon-platform-softener-1"></i>
+      <i class="font-size-larger icon-platform-softener-1"></i>
+    </div>
+    <code>.icon-platform-softener-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-softener-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-softener-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-softener-2"></i>
+      <i class="font-size-h3 icon-platform-softener-2"></i>
+      <i class="font-size-h4 icon-platform-softener-2"></i>
+      <i class="font-size-h6 icon-platform-softener-2"></i>
+      <i class="font-size-smaller icon-platform-softener-2"></i>
+      <i class="font-size-small icon-platform-softener-2"></i>
+      <i class="font-size-base icon-platform-softener-2"></i>
+      <i class="font-size-large icon-platform-softener-2"></i>
+      <i class="font-size-larger icon-platform-softener-2"></i>
+    </div>
+    <code>.icon-platform-softener-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-waterheater-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-waterheater-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-waterheater-1"></i>
+      <i class="font-size-h3 icon-platform-waterheater-1"></i>
+      <i class="font-size-h4 icon-platform-waterheater-1"></i>
+      <i class="font-size-h6 icon-platform-waterheater-1"></i>
+      <i class="font-size-smaller icon-platform-waterheater-1"></i>
+      <i class="font-size-small icon-platform-waterheater-1"></i>
+      <i class="font-size-base icon-platform-waterheater-1"></i>
+      <i class="font-size-large icon-platform-waterheater-1"></i>
+      <i class="font-size-larger icon-platform-waterheater-1"></i>
+    </div>
+    <code>.icon-platform-waterheater-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-waterheater-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-waterheater-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-waterheater-2"></i>
+      <i class="font-size-h3 icon-platform-waterheater-2"></i>
+      <i class="font-size-h4 icon-platform-waterheater-2"></i>
+      <i class="font-size-h6 icon-platform-waterheater-2"></i>
+      <i class="font-size-smaller icon-platform-waterheater-2"></i>
+      <i class="font-size-small icon-platform-waterheater-2"></i>
+      <i class="font-size-base icon-platform-waterheater-2"></i>
+      <i class="font-size-large icon-platform-waterheater-2"></i>
+      <i class="font-size-larger icon-platform-waterheater-2"></i>
+    </div>
+    <code>.icon-platform-waterheater-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-1"></i>
+      </div>
+      <div class="icon-circle clip-overflow">
+        <i class="icon-platform-water-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-1"></i>
+      <i class="font-size-h3 icon-platform-water-1"></i>
+      <i class="font-size-h4 icon-platform-water-1"></i>
+      <i class="font-size-h6 icon-platform-water-1"></i>
+      <i class="font-size-smaller icon-platform-water-1"></i>
+      <i class="font-size-small icon-platform-water-1"></i>
+      <i class="font-size-base icon-platform-water-1"></i>
+      <i class="font-size-large icon-platform-water-1"></i>
+      <i class="font-size-larger icon-platform-water-1"></i>
+    </div>
+    <code>.icon-platform-water-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-waterflow-1"></i>
+      </div>
+      <div class="icon-circle clip-overflow">
+        <i class="icon-platform-waterflow-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-waterflow-1"></i>
+      <i class="font-size-h3 icon-platform-waterflow-1"></i>
+      <i class="font-size-h4 icon-platform-waterflow-1"></i>
+      <i class="font-size-h6 icon-platform-waterflow-1"></i>
+      <i class="font-size-smaller icon-platform-waterflow-1"></i>
+      <i class="font-size-small icon-platform-waterflow-1"></i>
+      <i class="font-size-base icon-platform-waterflow-1"></i>
+      <i class="font-size-large icon-platform-waterflow-1"></i>
+      <i class="font-size-larger icon-platform-waterflow-1"></i>
+    </div>
+    <code>.icon-platform-waterflow-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-waterflow-2"></i>
+      </div>
+      <div class="icon-circle clip-overflow">
+        <i class="icon-platform-waterflow-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-waterflow-2"></i>
+      <i class="font-size-h3 icon-platform-waterflow-2"></i>
+      <i class="font-size-h4 icon-platform-waterflow-2"></i>
+      <i class="font-size-h6 icon-platform-waterflow-2"></i>
+      <i class="font-size-smaller icon-platform-waterflow-2"></i>
+      <i class="font-size-small icon-platform-waterflow-2"></i>
+      <i class="font-size-base icon-platform-waterflow-2"></i>
+      <i class="font-size-large icon-platform-waterflow-2"></i>
+      <i class="font-size-larger icon-platform-waterflow-2"></i>
+    </div>
+    <code>.icon-platform-waterflow-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-valve-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-water-valve-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-valve-1"></i>
+      <i class="font-size-h3 icon-platform-water-valve-1"></i>
+      <i class="font-size-h4 icon-platform-water-valve-1"></i>
+      <i class="font-size-h6 icon-platform-water-valve-1"></i>
+      <i class="font-size-smaller icon-platform-water-valve-1"></i>
+      <i class="font-size-small icon-platform-water-valve-1"></i>
+      <i class="font-size-base icon-platform-water-valve-1"></i>
+      <i class="font-size-large icon-platform-water-valve-1"></i>
+      <i class="font-size-larger icon-platform-water-valve-1"></i>
+    </div>
+    <code>.icon-platform-water-valve-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-valve-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-water-valve-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-valve-1"></i>
+      <i class="font-size-h3 icon-platform-water-valve-1"></i>
+      <i class="font-size-h4 icon-platform-water-valve-1"></i>
+      <i class="font-size-h6 icon-platform-water-valve-1"></i>
+      <i class="font-size-smaller icon-platform-water-valve-1"></i>
+      <i class="font-size-small icon-platform-water-valve-1"></i>
+      <i class="font-size-base icon-platform-water-valve-1"></i>
+      <i class="font-size-large icon-platform-water-valve-1"></i>
+      <i class="font-size-larger icon-platform-water-valve-1"></i>
+    </div>
+    <code>.icon-platform-water-valve-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-water-valve-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-water-valve-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-water-valve-2"></i>
+      <i class="font-size-h3 icon-platform-water-valve-2"></i>
+      <i class="font-size-h4 icon-platform-water-valve-2"></i>
+      <i class="font-size-h6 icon-platform-water-valve-2"></i>
+      <i class="font-size-smaller icon-platform-water-valve-2"></i>
+      <i class="font-size-small icon-platform-water-valve-2"></i>
+      <i class="font-size-base icon-platform-water-valve-2"></i>
+      <i class="font-size-large icon-platform-water-valve-2"></i>
+      <i class="font-size-larger icon-platform-water-valve-2"></i>
+    </div>
+    <code>.icon-platform-water-valve-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-unknown-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-unknown-1"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-unknown-1"></i>
+      <i class="font-size-h3 icon-platform-unknown-1"></i>
+      <i class="font-size-h4 icon-platform-unknown-1"></i>
+      <i class="font-size-h6 icon-platform-unknown-1"></i>
+      <i class="font-size-smaller icon-platform-unknown-1"></i>
+      <i class="font-size-small icon-platform-unknown-1"></i>
+      <i class="font-size-base icon-platform-unknown-1"></i>
+      <i class="font-size-large icon-platform-unknown-1"></i>
+      <i class="font-size-larger icon-platform-unknown-1"></i>
+    </div>
+    <code>.icon-platform-unknown-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-platform-unknown-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-platform-unknown-2"></i>
+      </div>
+      <i class="font-size-h2 icon-platform-unknown-2"></i>
+      <i class="font-size-h3 icon-platform-unknown-2"></i>
+      <i class="font-size-h4 icon-platform-unknown-2"></i>
+      <i class="font-size-h6 icon-platform-unknown-2"></i>
+      <i class="font-size-smaller icon-platform-unknown-2"></i>
+      <i class="font-size-small icon-platform-unknown-2"></i>
+      <i class="font-size-base icon-platform-unknown-2"></i>
+      <i class="font-size-large icon-platform-unknown-2"></i>
+      <i class="font-size-larger icon-platform-unknown-2"></i>
+    </div>
+    <code>.icon-platform-unknown-2</code>
+  </div>
+</div>
+  <div id="window_resizer_tooltip_wrapper" data-pos-y="bottom" data-pos-x="right"></div>
+
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender"></script>

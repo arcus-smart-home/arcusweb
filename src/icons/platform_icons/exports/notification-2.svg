@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>notification-2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notification-2" fill="#000000">
+            <path d="M34.7303925,33 L39.993278,33 C42.2070888,33 44,31.2072328 44,28.9957423 L44,5.0042577 C44,2.78902751 42.2061295,1 39.993278,1 L5.00672201,1 C2.79291122,1 1,2.79276724 1,5.0042577 L1,28.9957423 C1,31.2109725 2.79387055,33 5.00672201,33 L23.0235596,33 L24.0470753,33 L24.0470753,42.0010986 L32.9133719,33 L34.7303925,33 Z M33.4682922,34 L39.9906145,34 C42.768443,34 45,31.7620738 45,29.0014519 L45,4.99854806 C45,2.23083496 42.7572217,0 39.9906145,0 L5.0093855,0 C2.231557,0 0,2.2379262 0,4.99854806 L0,29.0014519 C0,31.769165 2.24277828,34 5.0093855,34 L23.0471191,34 L23.0471191,44.5 L33.4682922,34 Z" id="Combined-Shape"></path>
+            <rect id="Rectangle-18" x="8" y="22" width="15.0471191" height="1"></rect>
+            <rect id="Rectangle-18" x="8" y="15.5" width="30" height="1"></rect>
+            <rect id="Rectangle-18" x="8" y="9" width="30" height="1"></rect>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,129 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-state-county-select">
+  <template>
+    <can-import from="i2web/components/device/configurators/noaa-location/" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr/>
+      <arcus-device-configurator-noaa-location {device}="device" for-pairing-customization {on-location-changed}="@onLocationChanged" />
+      <div class="skipWeatherRadio" ($click)="skipWeatherRadioSetup">
+        Skip Weather Radio Setup
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {*} disableNextButton
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Accept a disableNextButton method as an optional parameter for the component;
+         * invoke this method when the county (and therefore, noaa location) is not valid
+         */
+        disableNextButton: {
+          type: '*',
+        },
+        /**
+         * @property {*} skipStep
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Accept a skipStep method as an optional parameter for the component;
+         * invoke this method when the user chooses to skip weather station setup
+         */
+        skipStep: {
+          type: '*',
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Select a county and state for the Weather Radio';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Choose Your County';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/state-county-select
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the location is changed
+         */
+        whenComplete: {
+          type: '*',
+        },
+      },
+      /**
+       * @function onLocationChanged
+       * @parent i2web/components/pairing/customize/state-county-select
+       * @param {Boolean} valid indicates if location is valid
+       * Called when a different state and county location are selected
+       */
+      onLocationChanged(valid) {
+        if (this.attr('disableNextButton')) {
+          this.attr('disableNextButton')(!valid);
+        }
+        if (valid && this.attr('whenComplete')) {
+          this.attr('whenComplete')('STATE_COUNTY_SELECT');
+        }
+      },
+      /**
+       * @function skipWeatherRadioSetup
+       * @description Skip over the weather radio step.
+       */
+      skipWeatherRadioSetup() {
+        if (this.attr('skipStep')) {
+          this.attr('skipStep')('WEATHER_RADIO_STATION');
+        }
+      },
+    });
+  </script>
+</can-component>

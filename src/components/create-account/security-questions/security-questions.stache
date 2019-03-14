@@ -1,0 +1,48 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/form-fields" />
+<can-import from="i2web/components/staged-progress/" />
+<can-import from="i2web/components/create-account/security-questions/question/" />
+
+{{#unless invited}}
+  <arcus-staged-progress build-profile in-progress />
+{{/unless}}
+
+<h1>Security Questions</h1>
+<p>
+  For identity verification, select and answer a minimum of one question. To enhance the
+  security on your account, you may add up to three.
+</p>
+<button type="button" class="btn add-question"
+  ($click)="addQuestion()"
+  {{#if disableAddQuestion}}disabled{{/if}}>
+  Add Question
+</button>
+<div class="stage-fields">
+  {{#if allQuestions}}
+    {{#userQuestions}}
+      <arcus-create-account-security-questions-question
+        {all-questions}="allQuestions"
+        {selected-questions}="userQuestions"
+        {(question)}=".['selectedQuestionId']"
+        {(answer)}=".['answer']"
+        {remove-question}="@removeQuestion(%index)"
+        {disable-remove-question}="disableRemoveQuestion"
+      />
+    {{/userQuestions}}
+  {{/if}}
+</div>

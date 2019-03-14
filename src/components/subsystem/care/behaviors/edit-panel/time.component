@@ -1,0 +1,89 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-time">
+  <template>
+    <h3>Set a Curfew Time</h3>
+    <hr />
+    <arcus-time {(time)}="curfewTime"  />
+    <div class="button-group">
+      <button ($click)="doneButtonClicked()" class="btn">Done</button>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import CareBehavior from 'i2web/models/care-behavior';
+    import Place from 'i2web/models/place';
+    import { formatConvertedTime } from 'i2web/helpers/behavior';
+    import tz from 'jstz';
+
+    export default canMap.extend({
+      define: {
+        /**
+        * @property {CareBehavior} behavior
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The associated careBehavior being edited
+        */
+        behavior: {
+          Type: CareBehavior,
+        },
+        /**
+        * @property {String} curfewTime
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The curfewTime attribute associated with the time spinner control
+        */
+        curfewTime: {
+          get() {
+            const curfewTime = this.attr('behavior.presenceRequiredTime') || '21:00:00';
+            return formatConvertedTime(curfewTime, this.attr('place.place:tzId'), tz.determine().name(), 'HH:mm:ss');
+          },
+          set(formattedVal) {
+            // Store selected value in behavior.presenceRequiredTime as 24hr time HH:MM:SS using time zone of current place
+            const newTime = formatConvertedTime(formattedVal, tz.determine().name(), this.attr('place.place:tzId'), 'HH:mm:ss');
+            const behavior = this.attr('behavior');
+            behavior.attr('presenceRequiredTime', newTime);
+            return formattedVal;
+          },
+        },
+        /**
+        * @property {Function} doneButtonClicked
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The function to be called when the DONE button is clicked
+        */
+        doneButtonClicked: {
+          Type: Function,
+        },
+        /**
+        * @property {Place} place
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description Where the displayed care information is configured
+        */
+        place: {
+          Type: Place,
+        },
+        /**
+        * @property {Object} template
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel
+        * @description The template associated with the careBehavior being edited
+        */
+        template: {
+          type: '*',
+        },
+      },
+    });
+  </script>
+</can-component>

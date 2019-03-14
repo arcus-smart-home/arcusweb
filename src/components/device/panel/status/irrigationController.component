@@ -1,0 +1,272 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-panel-status-irrigationController">
+  <template>
+    <can-import from="i2web/components/countdown/" />
+    <arcus-countdown style="display:none;"
+      {^@cancel}="cancelCountdown"
+      {formatter}="@formatTimeLeft"
+      {^text}="wateringTimeLeft"
+      {to}="wateringStopTime"
+    />
+    {{{irrigationStatusText}}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import moment from 'moment';
+    import 'can-map-define';
+    import { irrigationScheduleStatus } from 'i2web/components/schedule/irrigation-schedulers';
+    import Device from 'i2web/models/device';
+    import IrrigationControllerCapability from 'i2web/models/capability/IrrigationController';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} controllerState
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description The state of the irrigation controller
+         */
+        controllerState: {
+          get() {
+            return this.attr('device').attr('irrcont:controllerState');
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description The device we are displaying status for
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} isWatering
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description Is the irrigation controller currently watering
+         */
+        isWatering: {
+          get() {
+            return this.attr('device').attr('irrcont:controllerState')
+              === IrrigationControllerCapability.CONTROLLERSTATE_WATERING;
+          },
+        },
+        /**
+         * @property {Subsystem} lawnGarden
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description Helper property for quick access to the LawnsNGarden subsystem
+         */
+        lawnGarden: {
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            return subsystems && subsystems.findByName('sublawnngarden');
+          },
+        },
+        /**
+         * @property {Object} scheduleStatus
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description Helper property to get the scheduleStatus object
+         */
+        scheduleStatus: {
+          get() {
+            return irrigationScheduleStatus(this.attr('device'));
+          },
+        },
+        /**
+         * @property {String} scheduleText
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description If we are not watering, and we are scheduled, what do we display
+         */
+        scheduleText: {
+          get() {
+            if (this.attr('lawnGarden')) {
+              const scheduled = this.attr('scheduleStatus');
+              const event = scheduled.attr('nextEvent.startTime');
+              if (event) {
+                if (this.attr('isWatering')) {
+                  const zone = this.zoneName(scheduled.attr('nextEvent.zone'));
+                  return `${zone}, ${this.formatDayTime(event)}`;
+                }
+                return this.formatDayTime(event);
+              }
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} skippedUntilText
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description If we have rain delay what do we display
+         */
+        skippedUntilText: {
+          get() {
+            const duration = this.attr('device.irrcont:rainDelayDuration');
+            const delayUntil =
+              this.attr('device.irrcont:rainDelayStart') + (duration * 60 * 1000);
+            return this.formatDayTime(delayUntil);
+          },
+        },
+        /**
+         * @property {String} irrigationStatusText
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description Text describing the status of the irrigation device
+         */
+        irrigationStatusText: {
+          get() {
+            const scheduleText = this.attr('scheduleText');
+            if (this.isDeviceWatering()) {
+              const zoneName = this.attr('wateringZoneName');
+              const timeLeft = this.attr('wateringTimeLeft');
+              return scheduleText
+                ? `${zoneName}: ${timeLeft}<br/>Next: ${scheduleText}`
+                : `${zoneName}: ${timeLeft}`;
+            }
+            if (this.attr('scheduleStatus.enabled')) {
+              if (this.isDeviceDelayedByRain()) {
+                return `Skipped Until: ${this.attr('skippedUntilText')}`;
+              }
+              if (scheduleText) {
+                return `Next Event: ${scheduleText}`;
+              }
+            }
+            return 'Schedule is off';
+          },
+        },
+        /**
+         * @property {Number} wateringStopTime
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description When the watering of this device is supposed to stop
+         */
+        wateringStopTime: {
+          get() {
+            if (this.attr('lawnGarden')) {
+              const watering = this.attr('zoneWatering');
+              if (watering) {
+                const { duration, startTime } = watering;
+                return (duration * 60 * 1000) + startTime;
+              }
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Object} wateringZoneName
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description The name of the zone being watered
+         */
+        wateringZoneName: {
+          get() {
+            const zone = this.attr('zoneWatering');
+            if (zone) {
+              return this.zoneName(zone.zone);
+            }
+            return '';
+          },
+        },
+        /**
+         * @property {Object} zoneWatering
+         * @parent i2web/components/device/panel/status/irrigationController
+         * @description Helper property to get the zoneWatering object
+         */
+        zoneWatering: {
+          get() {
+            const lawnGarden = this.attr('lawnGarden');
+            if (lawnGarden) {
+              lawnGarden.attr('sublawnngarden:zonesWatering');
+              return lawnGarden
+                .attr('sublawnngarden:zonesWatering')
+                .attr(this.attr('device.base:address'));
+            }
+            return undefined;
+          },
+        },
+      },
+      IrrigationControllerCapability,
+      /**
+       * @function {Boolean} isDeviceWatering
+       * @parent i2web/components/device/panel/status/irrigationController
+       * @description Whether the device is in watering state
+       */
+      isDeviceWatering() {
+        const state = this.attr('controllerState');
+        return state === IrrigationControllerCapability.CONTROLLERSTATE_WATERING;
+      },
+      /**
+       * @function {Boolean} isDeviceDelayedByRain
+       * @parent i2web/components/device/panel/status/irrigationController
+       * @description Whether the device is in rain delay state
+       */
+      isDeviceDelayedByRain() {
+        const state = this.attr('controllerState');
+        return state === IrrigationControllerCapability.CONTROLLERSTATE_RAIN_DELAY;
+      },
+      /**
+       * @function {String} formatTimeLeft
+       * @parent i2web/components/device/panel/status/irrigationController
+       * @param {Number} seconds The number of milliseconds to format
+       * @description Covert and stringify a number of seconds into minutes and hours
+       */
+      formatTimeLeft(seconds) {
+        if (seconds < 60) {
+          return `1 min Remaining`;
+        }
+        const remaining = Math.ceil(seconds / 60);
+        if (remaining < 60) {
+          return `${Math.round(remaining)} min Remaining`;
+        }
+        const parts = [];
+        const minutes = Math.round(remaining % 60);
+        const hours = Math.floor(remaining / 60);
+        if (hours > 0) { parts.push(`${hours} hr`); }
+        if (minutes > 0) { parts.push(`${minutes} min`); }
+        return `${parts.join(' ')} Remaining`;
+      },
+      /**
+       * @function {String} formatDayTime
+       * @parent i2web/components/device/panel/status/irrigationController
+       * @param {Number} seconds The number of milliseconds to format
+       * @description Format milliseconds into date/time taking into account
+       * same day, and tomorrow.
+       */
+      formatDayTime(seconds) {
+        const tomorrow = moment().add(1, 'day');
+        const when = moment(seconds);
+        if (when.isSame(new Date(), 'day')) {
+          return when.format('[Today] h:mm A');
+        }
+        if (when.isSame(tomorrow, 'day')) {
+          return when.format('[Tomorrow] h:mm A');
+        }
+        return when.format('ddd h:mm A');
+      },
+      /**
+       * @function {String} zoneName
+       * @parent i2web/components/device/panel/status/irrigationController
+       * @param {String} zone The zone number (z1 - z12)
+       * @description Return the name of the zone. If the name is not defined
+       * return the zone number.
+       */
+      zoneName(zone) {
+        if (zone) {
+          const zoneName = this.attr(`device.irr:zonename:${zone}`);
+          return zoneName || `Zone ${zone.slice(1)}`;
+        }
+        return '';
+      },
+    });
+  </script>
+</can-component>

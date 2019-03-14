@@ -1,0 +1,27 @@
+{
+  "hub": {
+    "base:address": "SERV:LWF-4381:hub",
+    "base:caps": ["hubdebug", "hubconn", "hubzwave", "hubadv", "hubvol", "hubbackup", "hubsounds", "hub", "hubchime", "hubpow", "hub4g", "hubmetric", "hubsercomm", "hubnet", "hubzigbee"],
+    "base:id": "LWF-4381",
+    "base:images": {},
+    "base:tags": [],
+    "base:type": "hub",
+    "hub:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+    "hub:id": "LWF-4381",
+    "hub:model": "IH200",
+    "hub:name": "My Hub",
+    "hub:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+    "hub:registrationState": "REGISTERED",
+    "hub:state": "NORMAL",
+    "hub:vendor": "ARCUS",
+    "hubadv:agentver": "1.14.10+83d08c9",
+    "hubadv:bootloaderVer": "2.0.2.016",
+    "hubadv:hardwarever": "3",
+    "hubadv:lastDeviceAddRemove": "a523e360-581c-11e6-a12c-7f341e2a9bf8",
+    "hubadv:lastReset": "900952a0-a522-11e6-82bc-254e2c430e04",
+    "hubadv:mac": "00:16:A2:01:D1:DA",
+    "hubadv:mfgInfo": "ARCUS",
+    "hubadv:osver": "2.0.2.016",
+    "hubadv:serialNum": "1"
+  }
+}

@@ -1,0 +1,67 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/schedule/icon.component" />
+
+<hr />
+<h3>Choose a Mode</h3>
+<hr />
+<div class="radio-buttons">
+  <ul>
+    {{#each selectableModes}}
+      <li class="radio-wrapper">
+        {{#eq name 'MANUAL'}}
+          <span class="no-schedule">No Schedule</span>
+        {{else}}
+          <arcus-schedule-icon {thing}="../device" {selected-mode}="name" />
+        {{/eq}}
+        <input
+          type="radio"
+          id="{{name}}"
+          value="{{name}}"
+          name="scheduleMode"
+          ($click)="selectScheduleMode(name)"
+          {{#eq ../selectedScheduleMode name}}checked{{/eq}}
+        >
+        <label for="{{name}}">{{toTitleCase(name)}}</label>
+        <div class="check"></div>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+<hr />
+{{#if unselectableModes.length}}
+  <p class="add-events-message">Add at least one scheduling event to enable the following mode(s).</p>
+  <hr>
+  <div class="radio-buttons">
+    <ul>
+      {{#each unselectableModes}}
+        <li class="radio-wrapper no-events">
+          <arcus-schedule-icon {thing}="../device" {selected-mode}="name" />
+          <input
+            type="radio"
+            id="{{name}}"
+            value="{{name}}"
+            ($click)="abortSelection(%event)"
+          >
+          <label for="{{name}}">{{toTitleCase(name)}}</label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <hr>
+{{/if}}

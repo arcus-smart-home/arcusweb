@@ -1,0 +1,279 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-completed-hub">
+  <template>
+    <can-import from="i2web/components/animated/check.component"/>
+    {{#unless hasConfiguredSSID}}
+      <arcus-animated-check {checked}="checked" icon="{{hubIcon}}" />
+      <p>
+        <strong>Your Hub was setup successfully.</strong>
+        {{#if isWiFiCapable}}
+          <br />
+          <br />
+          <span class="subheader">
+            To stay connected to the internet without an Ethernet cable, consider
+            <a href="#" ($click)="configureWiFi()">
+              connecting the Hub to your Wi-Fi network
+            </a>
+            .
+          </span>
+        {{/if}}
+      </p>
+    {{else}}
+      <div class="circle">
+        <div class="wifi-icon check-position">
+          <i class="icon-app-wi-fi-4"></i>
+        </div>
+        <div class="check"><i class="icon-app-check"></i></div>
+      </div>
+      <p>
+        <strong>Current Connection: </strong> <em>{{currentConnection}}</em>
+        <br />
+        <strong>Wi-Fi Network: </strong> <em>{{connectedSSID}}</em>
+      </p>
+      {{#if configuredNotConnected}}
+        <p class="font-demibold error">
+          <i class="icon-platform-warning-2"></i>
+          To complete Wi-Fi setup, please unplug your Ethernet cable.
+        </p>
+      {{/if}}
+    {{/unless}}
+    <p>
+      {{{textCopy}}}
+    </p>
+    {{#if kitInfo.length}}
+      <button class="btn" ($click)="activateDevices()">Next</button>
+    {{else}}
+      <button class="btn" ($click)="pairDevice()">Next</button>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import canRoute from 'can-route';
+    import config from 'i2web/config';
+    import Hub from 'i2web/models/hub';
+    import HubNetwork from 'i2web/models/capability/HubNetwork';
+    import HubWiFi from 'i2web/models/capability/HubWiFi';
+    import Subsystem from 'i2web/models/subsystem';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    import 'i2web/components/hub/configuration-panel/';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Boolean} checked
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description A flag that is changed to show the "checked" symbol
+         */
+        checked: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {Boolean} configuredNotConnected
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description WiFi is configured but still connected to Ethernet
+         */
+        configuredNotConnected: {
+          get() {
+            return this.attr('hasConfiguredSSID')
+              && !this.attr('pairingDevice.isConnectedWiFi');
+          },
+        },
+        /**
+         * @property {String} connectedSSID
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The SSID the Hub has configured
+         */
+        connectedSSID: {
+          get() {
+            const hub = this.attr('pairingDevice');
+            return hub && hub.attr('hubwifi:wifiSsid');
+          },
+        },
+        /**
+         * @property {String} currentConnection
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The type of connection used by the Hub
+         */
+        currentConnection: {
+          get() {
+            const hub = this.attr('pairingDevice');
+            switch (hub && hub.attr('hubnet:type')) {
+              case HubNetwork.TYPE_ETH:
+                return 'Ethernet';
+              case HubNetwork.TYPE_3G:
+                return '3G';
+              case HubNetwork.TYPE_WIFI:
+                return 'Wi-Fi';
+              default:
+                return '';
+            }
+          },
+        },
+        /**
+         * @property {Boolean} hasConfiguredSSID
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description Does the Hub currently have an SSID configured (whether connected
+         * to WiFi or not)
+         */
+        hasConfiguredSSID: {
+          get() {
+            const hub = this.attr('pairingDevice');
+            const protocols = [
+              HubWiFi.WIFISECURITY_NONE,
+              HubWiFi.WIFISECURITY_WEP,
+              HubWiFi.WIFISECURITY_WPA_PSK,
+              HubWiFi.WIFISECURITY_WPA2_PSK,
+              HubWiFi.WIFISECURITY_WPA_ENTERPRISE,
+              HubWiFi.WIFISECURITY_WPA2_ENTERPRISE,
+            ];
+            return hub
+              && !!hub.attr('hubwifi:wifiSsid')
+              && protocols.includes(hub.attr('hubwifi:wifiSecurity'));
+          },
+        },
+        /**
+         * @property {String} hubIcon
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The icon to display depending on the version of the Hub
+         */
+        hubIcon: {
+          get() {
+            return this.attr('product.base:id') === 'dee000'
+              ? 'icon-platform-hub-1'
+              : 'icon-platform-hub-v3-2';
+          },
+        },
+        /**
+         * @property {Boolean} isWiFiCapable
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description Does this Hub support WiFi
+         */
+        isWiFiCapable: {
+          get() {
+            const enableScan = !!parseInt(config.enableHubWifiScan, 10);
+            return enableScan && this.attr('pairingDevice').hasCapability('hubwifi');
+          },
+        },
+        /**
+         * @property {Array<Object>} kitInfo
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description Any kit information for the newly paired hub
+         */
+        kitInfo: {
+          get(lastSetVal, setValue) {
+            if (lastSetVal) return lastSetVal;
+
+            this.attr('subsystem').GetKitInformation()
+              .then(({ kitInfo }) => setValue(kitInfo))
+              .catch(Errors.log);
+            return undefined;
+          },
+        },
+        /**
+         * @property {Hub} pairingDevice
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The recently paired Hub
+         */
+        pairingDevice: {
+          Type: Hub,
+        },
+        /**
+         * @property {Object} product
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description Product used to differentiate between v2 and v3 Hubs
+         */
+        product: {
+          Type: CanMap,
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The pairing subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {String} textCopy
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The textCopy to be shown
+         */
+        textCopy: {
+          get() {
+            const kitInfo = this.attr('kitInfo');
+            return kitInfo && kitInfo.length
+              ? 'Next, let\'s activate the rest of the devices in your kit!'
+              : 'Next, start adding devices to your system.<br/>Ready, set, add!';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/completed/hub
+         * @description The title to be shown on the pairing page
+         */
+        title: {
+          get() {
+            return (this.attr('hasConfiguredSSID')) ? 'Wi-Fi Setup' : 'Hooray!';
+          },
+        },
+      },
+      /**
+       * @function activateDevices
+       * @parent i2web/components/pairing/customize/completed/hub
+       * @description Change the route allowing the User to pair their kit devices
+       */
+      activateDevices() {
+        this.attr('subsystem').DismissAll();
+        canRoute.attr({ page: 'kit-activate', subpage: undefined, action: undefined });
+      },
+      /**
+       * @function configureWiFi
+       * @parent i2web/components/pairing/customize/completed/hub
+       * @description Open the SidePanel for the User to configure the Hub
+       */
+      configureWiFi() {
+        SidePanel.right('<arcus-hub-configuration-panel {hub}="hub" {is-pairing}="isPairing"/>', {
+          hub: this.compute('pairingDevice'),
+          isPairing: true,
+        });
+      },
+      /**
+       * @function pairDevice
+       * @parent i2web/components/pairing/customize/completed/hub
+       * @description Change the route allowing the User to pair a device
+       */
+      pairDevice() {
+        this.attr('subsystem').DismissAll();
+        canRoute.attr({ page: 'product-catalog', subpage: 'brands', action: undefined });
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      inserted() {
+        setTimeout(() => {
+          this.viewModel.attr('checked', true);
+        }, 500);
+      },
+    };
+  </script>
+</can-component>

@@ -1,0 +1,156 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-lock-unlock">
+  <template>
+    <div class="content" ($click)="contentClicked">
+      <button class="btn-run {{#if isTransitioning}}saving{{/if}}" ($click)="toggleLock" {{#if isTransitioning}}disabled{{/if}}>
+        {{#if isTransitioning}}
+        <div class="loader"></div>
+        {{/if}}
+        {{state}}
+      </button>
+      {{#if device['doorlock:supportsBuzzIn']}}
+        <button class="btn-run" ($click)="buzzIn" {{#unless allowBuzzIn}}disabled{{/unless}}>
+          Buzz-In
+        </button>
+      {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+    import DoorLockCapability from 'i2web/models/capability/DoorLock';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        state: {
+          get() {
+            const lockState = this.attr('device.doorlock:lockstate');
+
+            // If device reports that it's jammed, always try to unlock
+            if (this.attr('isJammed')) return 'Unlock';
+
+            switch (lockState) {
+              case DoorLockCapability.LOCKSTATE_LOCKED:
+                return 'Unlock';
+              case DoorLockCapability.LOCKSTATE_UNLOCKED:
+                return 'Lock';
+              case DoorLockCapability.LOCKSTATE_LOCKING:
+                return 'Locking';
+              case DoorLockCapability.LOCKSTATE_UNLOCKING:
+                return 'Unlocking';
+              default:
+                return 'Lock';
+            }
+          },
+        },
+        isJammed: {
+          get() {
+            return this.attr('device.warnings') && this.attr('device.warnings').hasOwnProperty('WARN_JAM');
+          },
+        },
+        isTransitioning: {
+          type: 'boolean',
+          get() {
+            // We want to ensure that the User can interact with the Lock if it is jammed.
+            if (this.attr('isJammed')) return false;
+            const lockState = this.attr('device.doorlock:lockstate');
+            return lockState === DoorLockCapability.LOCKSTATE_UNLOCKING || lockState === DoorLockCapability.LOCKSTATE_LOCKING;
+          },
+        },
+        allowBuzzIn: {
+          type: 'boolean',
+          get() {
+            const lockState = this.attr('device.doorlock:lockstate');
+            return lockState === DoorLockCapability.LOCKSTATE_LOCKED;
+          },
+        },
+        isLocked: {
+          type: 'boolean',
+          get() {
+            const lockState = this.attr('device.doorlock:lockstate');
+            return lockState === DoorLockCapability.LOCKSTATE_LOCKED || lockState === DoorLockCapability.LOCKSTATE_LOCKING;
+          },
+        },
+      },
+      /**
+       * @function contentClicked
+       * @description While the lock is transitioning from locked/unlocked or vice versa, we do
+       * not want any click events on the disabled button to route the user to the devices page.
+       */
+      contentClicked(_, el, ev) {
+        if (this.attr('isTransitioning')) {
+          ev.stopPropagation();
+        }
+      },
+      /**
+       * @function toggleLock
+       * @description Toggle the state of the lock between locked and unlocked.
+       */
+      toggleLock(_, el, ev) {
+        ev.stopPropagation();
+
+        const device = this.attr('device');
+
+        // If device reports that it's jammed, always try to unlock
+        const isLocked = this.attr('isLocked') || this.attr('isJammed');
+        const newLockState = isLocked ? DoorLockCapability.LOCKSTATE_UNLOCKED : DoorLockCapability.LOCKSTATE_LOCKED;
+        device.attr('doorlock:lockstate', newLockState).save().then(() => {
+          el.classList.remove('hover');
+        }).catch(e => Errors.log(e));
+      },
+      /**
+       * @function buzzIn
+       * @description Buzz-in the User
+       */
+      buzzIn() {
+        this.attr('device').BuzzIn().catch(e => Errors.log(e));
+      },
+    });
+  </script>
+  <script type="events">
+    import DoorLockCapability from 'i2web/models/capability/DoorLock';
+    import Errors from 'i2web/plugins/errors';
+
+    // Amount of time we want to wait for the transition to finish
+    const TRANSITION_SECONDS = 30;
+
+    export default {
+      '{device} doorlock:lockstate': function onLockStateChange(device, ev, newVal, oldVal) {
+        // If the previous value is locked or unlocked, we'll save it to potentially revert back to.
+        if (oldVal === DoorLockCapability.LOCKSTATE_LOCKED || oldVal === DoorLockCapability.LOCKSTATE_UNLOCKED) {
+          this.viewModel.attr('previousLockstate', oldVal);
+        }
+        clearTimeout(this._lockstateTimeoutId);
+        // If we are in a locking or unlocking state, we want to set a timeout if the lock gets "stuck" in
+        // this state. If after a certain period of time the state doesn't change, we should revert back
+        // to the previous state
+        if (newVal === DoorLockCapability.LOCKSTATE_LOCKING || newVal === DoorLockCapability.LOCKSTATE_UNLOCKING) {
+          this._lockstateTimeoutId = setTimeout(() => {
+            device.attr('doorlock:lockstate', this.viewModel.attr('previousLockstate')).save().catch(e => Errors.log(e));
+            this.viewModel.removeAttr('previousLockstate');
+          }, TRANSITION_SECONDS * 1000);
+        }
+      },
+    };
+  </script>
+</can-component>

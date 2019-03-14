@@ -1,0 +1,132 @@
+{
+  "dee000": {
+    "form": [{
+      "type": "TEXT",
+      "name": "hub-id",
+      "label": "Hub ID",
+      "value": ""
+    }],
+    "mode": "HUB",
+    "steps": [{
+      "description": null,
+      "id": "pair/pair1",
+      "info": "",
+      "instructions": [ "Remove the battery cover, insert the included backup batteries, then reattach the cover." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 1,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair2",
+      "info": "",
+      "instructions": [ "Plug one end of the supplied ethernet cable into your router." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 2,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair3",
+      "info": "",
+      "instructions": [ "Plug the other end into the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 3,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair4",
+      "info": "",
+      "instructions": [ "Insert the supplied power cable into the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 4,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair5",
+      "info": "",
+      "instructions": [ "Plug the power cable into a power outlet." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 5,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair6",
+      "info": "",
+      "instructions": [ "Enter the Hub ID found on the bottom of the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 6,
+      "title": null
+    }],
+    "video": "y_v2_hub_tutorial"
+  },
+  "dee001": {
+    "form": [{
+      "type": "TEXT",
+      "name": "hub-id",
+      "label": "Hub ID",
+      "value": ""
+    }],
+    "mode": "HUB",
+    "steps": [{
+      "description": null,
+      "id": "pair/pair1",
+      "info": "",
+      "instructions": [ "Insert the power cable into the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 1,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair2",
+      "info": "",
+      "instructions": [ "Plug the power cord into an outlet." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 2,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair3",
+      "info": "",
+      "instructions": [ "The Hub's light ring will rotate purple during boot up. After you hear the welcome message, the Hub will start rotating blue." ],
+      "linkText": "Light ring not rotating blue?",
+      "linkUrl": "s_hub_purple_ring",
+      "order": 3,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair4",
+      "info": "",
+      "instructions": [ "Plug one end of the supplied ethernet cable into your router." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 4,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair5",
+      "info": "",
+      "instructions": [ "Plug the other end into the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 5,
+      "title": null
+    }, {
+      "description": null,
+      "id": "pair/pair6",
+      "info": "",
+      "instructions": [ "Enter the Hub ID found on the bottom of the Hub." ],
+      "linkText": null,
+      "linkUrl": null,
+      "order": 6,
+      "title": null
+    }],
+    "video": "y_v3_hub_tutorial"
+  }
+}

@@ -1,0 +1,69 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache-converters" />
+
+<div class="configurator-header">
+  <h4 class="config-title">Emergency Weather Station</h4>
+</div>
+{{#if stations.length}}
+  <div>
+    <small>Select the play button to determine which radio station is the clearest. You’ll hear the radio playing through Halo.</small>
+  </div>
+  <ul class="option-list">
+    {{#each stations as station}}
+      <li class="radio-wrapper" ($click)="setStation(station)">
+        {{^eq station.id playingStation}}
+          <button ($click)="startPlaying(.)" class="start-playing">
+            <div class="play-wrapper">
+              <div class="play-shape"></div>
+            </div>
+          </button>
+        {{else}}
+          <button ($click)="stopPlaying()" class="stop-playing">
+            <div class="stop-wrapper">
+              <div class="stop-shape"></div>
+            </div>
+          </button>
+        {{/eq}}
+        <input type="radio" id="option-{{station.id}}" name="station"
+          {($checked)}="equal(~device['noaa:stationselected'], station.id)">
+        <label for="option-{{station.id}}" class="complex-label">
+          <div class="radio-station">Station {{station.id}}</div>
+          <small>{{station.freq}}</small>
+        </label>
+        <div class="check centered-checkbox"></div>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  {{#unless initialScan}}
+    <p>
+      Weak Radio Signal
+      <br />
+      <small>There are no weather radio stations within range of this device. Resolve by ensuring
+        the device is connected to AC power and that your location is covered by the
+        <a href={{redirectToUrl('noaa_maps')}} target="_blank">NOAA Weather Radio Coverage</a> map.</small>
+    </p>
+  {{/unless}}
+  <button class="btn {{#if scanning}} disabled saving{{/if}}" ($click)="scanStations">
+    {{#if scanning}}
+      <div class="loader"></div> Scanning
+    {{else}}
+      {{#if initialScan}}Scan for Stations{{else}}Rescan{{/if}}
+    {{/if}}
+  </button>
+{{/if}}

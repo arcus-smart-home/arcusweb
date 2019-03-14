@@ -1,0 +1,308 @@
+/**
+* @stylesheet buttons.less Buttons
+* @parent styles.baseline-elements
+*
+* @description
+* Buttons are set up with default styling, and a mixin to allow a wide-range of color changes. Simply give any button you want default-styled a `.btn` class and voilá.
+*
+* If you'd like to divert from the default (like on the login page), simply give the buttons on that component/page the details with the `.button-colors` mixin. The available color arguments are:
+ - `@bg`,
+ - `@color` (text-color),
+ - `@border`, and
+ - `@hover`.
+*
+* Example mixin-usage to get a red border, red text, and darker reds on hover styled button:
+* ```
+  .btn-cancel {
+    .button-colors(@color:@cardinal, @border:@cardinal);
+  }
+* ```
+*
+* - If you'd like to divert from the default and not for a cancel button (like on the login page), simply give the buttons on that component/page the details with the `.button-colors` mixin. The available color arguments are: `@bg`, `@color` (text-color), `@border`, and `@hover`.
+*
+* - If you've got additional styles (like alignment, or font changes) but want to retain most of the default styles, simply make sure your button class starts with `btn`. Examples: `btn-alternate`, `btn-list-item`, `btn-ryan-rocks`.
+*
+* @demo ./src/styles/demos/buttons.html
+*
+**/
+
+[class^="btn"] {
+  .font-demibold;
+  .button-colors;
+  position: relative;
+  border-radius: @border-radius;
+  border-width: 1px;
+  border-style: solid;
+  text-transform: uppercase;
+  padding: 6px @gutter/2;
+  margin-bottom: @gutter;
+  font-size: @font-size-smaller;
+  letter-spacing: 2px;
+  line-height: 1.4;
+  outline: none; // remove tap outline on webkit
+  user-select: none;
+  width: auto;
+  transition: border .1s linear, color .1s linear, background-color .1s linear;
+  .breakpoint(xs, {
+    margin-bottom: @gutter/2;
+  });
+  &:before {
+    position: absolute;
+    content: "";
+    top: 3px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover:before {
+    top: 6px;
+    left: 0;
+  }
+  &.hover,
+  &:hover {
+    cursor: pointer;
+    text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: 0 2px 3px fade(@swift, 25);
+  }
+  &:focus {
+    transform: translateY(0px);
+  }
+  + [class^="btn"] {
+    margin-left: @gutter/2;
+  }
+  &:disabled,
+  &.disabled {
+    .button-colors(@bg: @pigeon, @color: @heron, @border: @heron, @hover: @heron);
+    opacity: .7;
+    cursor: default;
+    pointer-events: none;
+    &.hover,
+    &:hover {
+      background-color: @pigeon;
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    &.active {
+      color: @pigeon;
+    }
+  }
+  &.active.hover,
+  &.active:hover {
+    cursor: default;
+    transform: translateY(0);
+  }
+  &.saving {
+    .button-colors(@bg: @link-color, @color: @crane, @border: @link-color);
+    opacity: 1;
+    &.hover,
+    &:hover {
+      background-color: @link-color;
+    }
+  }
+}
+
+.button-colors(@bg: transparent, @color: @link-color, @border: @link-color, @hover: @crane) {
+  background-color: @bg;
+  color: @color;
+  border-color: @border;
+  &.hover,
+  &.active,
+  &:hover {
+    background-color: @color;
+    color: @hover;
+  }
+}
+
+.btn-primary-sclera {
+  .button-colors(@bg: @honeycreeper, @color: @pigeon, @border: @honeycreeper, @hover: @honeycreeper);
+}
+
+.btn-cancel, .btn-delete, .btn-error {
+  .button-colors(@bg: transparent, @color: @cardinal, @border: @cardinal);
+  &.saving {
+    .button-colors(@bg: @cardinal, @color: @crane, @border: @cardinal);
+  }
+}
+
+.btn-run {
+  .button-colors(@border: @crane);
+  box-shadow: 0 0 0 4px @pigeon;
+  border-radius: @border-radius/2;
+  &.hover,
+  &.active, 
+  &:hover {
+    .button-colors(@border: @peacock);
+    box-shadow: 0 0 0 4px @pigeon, 0 4px 6px fade(@swift, 50);
+  }
+}
+
+.btn-warning {
+  .button-colors(@bg: @canary, @color: @swift, @border: @swift);
+  &.hover,
+  &.active,
+  &:hover {
+    background-color: @canary;
+    color: @swift;
+  }
+}
+
+/**
+* @styles increment-buttons Increment Buttons
+* @parent buttons.less 4
+*
+* @description
+* Increment buttons are very similar to `chevron-btn`, except that they are accepting typed `+` and `&mdash;` characters instead of icon classes. They are still based off of the default `btn` class however, unlike `chevron-btn`.
+*
+* @iframe ./src/styles/demos/button-increment.html
+*
+**/
+.btn-increment {
+  flex-shrink: 0;
+  letter-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 100%;
+  line-height: 1;
+  font-size: @font-size-larger;
+  width: 38px;
+  height: 38px;
+  &.minus {
+    padding-bottom: 3px; //vertical centering
+  }
+}
+
+/**
+* @styles chevron-buttons Chevron Buttons
+* @parent buttons.less 3
+*
+* @description
+* Except for the accordion, with special open/closed animations, you can use the class `chevron-btn` on chevron icon tags to get the button-y look of standard buttons.
+```
+<i class="icon-app-chevron chevron-btn"></i>
+```
+*
+* @iframe ./src/styles/demos/chevron-button.html
+*
+**/
+//the iframe should be a demo and the code block can be deleted, but two demos per page is current broken
+.chevron-btn {
+  .button-colors(@border: transparent);
+  transition: all 0.1s linear;
+  transform: rotate(-90deg) translateX(0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  &:before {
+    transform: rotate(0deg) translateY(2px);
+  }
+  &:hover {
+    transform: rotate(-90deg) translateX(3px);
+    cursor: pointer;
+    box-shadow: -2px 0 3px fade(@swift, 25);
+    background-color: @link-color;
+    color: @crane;
+  }
+}
+
+/**
+* @styles segment-buttons Segmented Buttons
+* @parent buttons.less 2
+*
+* @description
+* Buttons grouped together into one apparent bar. Primarily used for sub-navigation
+```
+<div class="segment-btn">
+    <button class="btn active">My Rules</button>
+    <button class="btn">Add A Rule</button>
+</div>
+```
+*
+* @iframe ./src/styles/demos/segmented-buttons.html
+*
+**/
+//the iframe should be a demo and the code block can be deleted, but two demos per page is current broken
+.segment-btn {
+  display: flex;
+  [class^="btn"] {
+    border-radius: 0;
+    &:first-of-type {
+      border-radius: @border-radius 0 0 @border-radius;
+    }
+    &:last-of-type {
+      border-radius: 0 @border-radius @border-radius 0;
+    }
+    &+ [class^="btn"] {
+      margin-left: -1px; // -1px border width
+    }
+    &:hover {
+      transform: none;
+    }
+    i {
+      font-size: @font-size-base;
+      line-height: 1.4;
+      padding-left: @gutter/3;
+      padding-right: @gutter/3;
+      &+ i {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+arcus-shop-button:not([expanded]) {
+  [class^="btn"] {
+    display: block;
+    width: 32px;
+    height: 32px;
+    padding: 9px;
+  }
+}
+
+// Fixes hover and active states on mobile devices
+html.ios,
+html.android {
+  [class^="btn"] {
+    &:hover {
+      box-shadow: none !important;
+      background-color: transparent !important;
+      color: @link-color !important;
+      transform: translateY(0) !important;
+    }
+    &.active:hover {
+      box-shadow: none !important;
+      background-color: @link-color !important;
+      color: @crane !important;
+      transform: translateY(0) !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+      background-color: @crane !important;
+      color: @link-color !important;
+    }
+  }
+  .btn-cancel,
+  .btn-delete,
+  .btn-error {
+    &.active,
+    &:hover,
+    &:focus {
+      box-shadow: none !important;
+      background-color: @cardinal !important;
+      color: @crane !important;
+    }
+  }
+  .btn-warning {
+    &.active,
+    &:hover,
+    &:focus {
+      box-shadow: none !important;
+      background-color: @canary !important;
+      color: @swift !important;
+    }
+  }
+}

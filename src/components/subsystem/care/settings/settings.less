@@ -1,0 +1,50 @@
+arcus-subsystem-care-settings {
+  display: block;
+  h2 {
+    margin-top: 0;
+  }
+  .panel-list-container {
+    .breakpoint(md-down, {
+      padding: @gutter @gutter @gutter/2;
+    });
+    .panel-primary-wrapper {
+      .breakpoint(md, {
+        padding-right: @gutter;
+      });
+    }
+    .panel-secondary-wrapper {
+      .breakpoint(md-down, {
+        border-top: 0;
+      });
+    }
+  }
+
+  arcus-control-switch {
+    margin-left: @gutter;
+    .breakpoint(md-down, {
+      margin-left: 0;
+      margin-bottom: @gutter/2;
+    });
+  }
+  .notification-container {
+    margin: @gutter @gutter 0 @gutter;
+  }
+  .notification-list {
+    margin-bottom: @gutter/2;
+    .check, .radio-checkbox, .add {
+      align-self: center;
+    }
+    .enabled-person {
+      &:not(:first-of-type) {
+        justify-content: flex-end;
+      }
+    }
+    li {
+      &:last-of-type {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

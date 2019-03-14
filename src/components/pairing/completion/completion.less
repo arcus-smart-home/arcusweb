@@ -1,0 +1,31 @@
+arcus-pairing-completion-manager {
+  display: block;
+  .modal-wrapper.hidden {
+    visibility: hidden;
+  }
+}
+
+arcus-pairing-completion-zwave-rebuild {
+  h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  hr {
+    margin: @gutter/2 0;
+  }
+  [class^="btn"], [class^="btn"] + [class^="btn"] {
+    display: block;
+    margin-right: auto;
+    margin-bottom: 15px;
+    margin-left: auto;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  arcus-zwave-tools-rebuild {
+    visibility: visible;
+  }
+}

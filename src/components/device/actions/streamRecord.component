@@ -1,0 +1,131 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-stream-record">
+  <template>
+    <can-import from="i2web/components/camera/" />
+    {{#if componentReady}}
+      <arcus-camera {{#unless isFullScreen}} class="faux-hidden"{{/unless}}
+        no-preview
+        {camera}="device"
+        {^recording-enabled}="recordingEnabled"
+        {^allow-fullscreen}="allowFullscreen"
+        {^camera-state}="cameraState"
+        {^active-recording}="activeRecording"
+        {^is-fullscreen}="isFullScreen"
+        {^record-button-disabled}="recordButtonDisabled"
+        {^stream-record-disabled}="streamRecordDisabled"
+        {^@stream-or-record-video}="streamOrRecordVideo"
+        {^@stop-streaming}="stopStreaming"
+        {^@toggle-full-screen}="toggleFullScreen"
+      />
+      <div class="content">
+        <button class="btn-run" ($click)="streamOrRecordCamera('STREAM')" {{#unless allowFullscreen}}disabled{{/unless}} {{#if streamRecordDisabled}}disabled{{/if}}>Stream</button>
+        {{#if recordingEnabled}}
+          <button class="btn-run" ($click)="streamOrRecordCamera('RECORD')" {{#unless allowFullscreen}}disabled{{/unless}} {{#if recordButtonDisabled}}disabled{{/if}}>Record</button>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="loader"></div>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import AppState from 'i2web/plugins/get-app-state';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+        * @property {object} activeRecording
+        * @parent i2web/components/device/actions/streamRecord.component
+        * @description Exported from the camera component to ensure it is bound and its getter
+        * will get called
+        */
+        activeRecording: {
+          type: '*',
+        },
+        /**
+        * @property {object} cameraState
+        * @parent i2web/components/device/actions/streamRecord.component
+        * @description Exported from the camera component to ensure it is bound and its getter
+        * will get called, since this component does not display the statusText property
+        */
+        cameraState: {
+          type: '*',
+        },
+        /**
+        * @property {boolean} recordButtonDisabled
+        * @parent i2web/components/device/actions/streamRecord.component
+        * @description Exported from the camera component to ensure it is bound and its getter
+        * will get called
+        */
+        recordButtonDisabled: {
+          type: 'boolean',
+        },
+        /**
+        * @property {boolean} recordingEnabled
+        * @parent i2web/components/device/actions/streamRecord.component
+        * @description Exported from the camera component to ensure it is bound and its getter
+        * will get called
+        */
+        recordingEnabled: {
+          type: 'boolean',
+        },
+        componentReady: {
+          get() {
+            return this.attr('device') && this.attr('subsystem');
+          },
+        },
+        device: {
+          Type: Device,
+        },
+        isFullScreen: {
+          type: 'boolean',
+          set(isFullScreen) {
+            if (!isFullScreen && this.stopStreaming) {
+              this.stopStreaming();
+              // ITWO-13342 Ensure tapped button is no longer highlighted after exiting fullscreen
+              if (document.activeElement) document.activeElement.blur();
+            }
+            return isFullScreen;
+          },
+        },
+        subsystem: {
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            return subsystems && subsystems.findByName('subcameras');
+          },
+        },
+      },
+      streamOrRecordCamera(type) {
+        this.toggleFullScreen();
+        this.streamOrRecordVideo(type);
+      },
+    });
+  </script>
+  <script type="events">
+    import $ from 'jquery';
+    export default {
+      // Triggering fullscreen elsewhere prevents us from removing the hover class from
+      // buttons, so we gotta do it manually
+      'button click': function onButtonClick(el) {
+        $(el).removeClass('hover');
+      },
+    };
+  </script>
+</can-component>

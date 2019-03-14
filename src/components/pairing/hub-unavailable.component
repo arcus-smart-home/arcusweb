@@ -1,0 +1,47 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-hub-unavailable">
+  <template>
+    <div class="box-gray-radius">
+      <div class="hub-offline">
+        <a href="{{redirectToUrl('s_hub')}}" target="_blank">
+          <span class="error-badge">
+            <i class="icon-platform-warning-2"></i> Hub Offline
+          </span>
+        </a>
+        <br />
+        <p>
+          Your hub is currently Offline. Please try pairing again once your hub
+          connection has been restored.
+        </p>
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+
+    export default CanMap.extend({
+      define: {
+        title: {
+          type: 'string',
+          value: 'Attention',
+        },
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,52 @@
+arcus-create-account-welcome {
+  display: block;
+  .btn-primary {
+    margin-bottom: @gutter/2;
+  }
+  .instructions-strong {
+    .font-demibold
+  }
+  h3 {
+    margin-top: 0;
+    & + button.btn-primary {
+      margin-bottom: @gutter / 2
+    }
+  }
+  hr {
+    margin: @gutter/2 0 @gutter*(2/3);
+  }
+  .continue {
+    font-size: @font-size-small;
+    hr {
+      margin: @gutter*2 0 @gutter/2;
+    }
+  }
+  .welcome-container {
+    background-color: @dove;
+    border: @border;
+    border-radius: @border-radius;
+    margin-top: @gutter/2;
+    padding: @gutter;
+    .breakpoint(sm, {
+      width: 100%;
+    });
+    arcus-animated-check {
+      display: flex;
+      justify-content: center;
+      margin-bottom: @gutter;
+    }
+  }
+}
+
+.create-account-step arcus-create-account-welcome .instructions {
+  margin-bottom: 0;
+}
+.create-account-step arcus-create-account-welcome p {
+  margin: auto;
+}
+
+arcus-create-account-welcome-download-mobile {
+  .download-badges {
+    margin: @gutter;
+  }
+}

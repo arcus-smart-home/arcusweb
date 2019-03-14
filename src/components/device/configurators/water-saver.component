@@ -1,0 +1,80 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-water-saver">
+  <template>
+    <can-import from="i2web/components/tooltip/" />
+    <can-import from="i2web/components/spinner/" />
+    <hr/>
+    <div class="content-component-wrapper">
+      <div class="header input-wrapper wider-wrapper">
+        <div class="head-tooltip-wrap">
+          <h4 class="config-title">Water Saver</h4>
+          <div class="tooltip-wrapper">
+            <button class="btn-small tooltip-trigger" type="button"><i>i</i></button>
+            <arcus-tooltip anchor="top right" bounding-parent=".configurators-wrapper">
+              Tip: If every event in the schedule is set to 10 min per zone during the summer, you may want to set Water Saver to 50% in the fall, which will reduce the watering time to 5 min per zone.
+            </arcus-tooltip>
+          </div>
+        </div>
+          <p>Save water and money by reducing your watering time by a percentage for the entire schedule.</p>
+      </div>
+      <div class="input-wrapper">
+        <arcus-spinner {formatter}="@formatter"
+                {(value)}="device['irrcont:budget']"
+                min="0"
+                max="100"
+                step="10" />
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/water-saver
+         * @description The irrigation device whose water saver setting is being modified
+         */
+        device: {
+          Type: Device,
+        },
+      },
+      init() {
+        this.saveDevice = _.debounce(() => {
+          this.attr('device').save()
+            .catch(e => Errors.log(e, true));
+        }, 1000);
+      },
+      formatter(val) {
+        return `${val.toFixed(0)}<span class="value-unit">%</span>`;
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} irrcont:budget': function valueUpdated() {
+        this.viewModel.saveDevice();
+      },
+    };
+  </script>
+</can-component>

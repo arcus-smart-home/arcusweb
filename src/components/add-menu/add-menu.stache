@@ -1,0 +1,41 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{close-button type="cancel"}}
+<div class="panel-content">
+  {{#if menuItems}}
+    <ul>
+      {{#each menuItems}}
+        <li class="menu-item">
+          <a {{#if allowInteractionWith(.)}}($click)="executeClickAction(.)" data-analytics="dashboard.add.{{type}}" class="clickable"{{/if}}>
+            <div class="name">
+              <i class="{{icon}} icon"></i>
+              <h5>
+                <span class="heading">{{heading}}</span>
+                {{#unless available}}
+                  <span class="caption">(Available on the Mobile App)</span>
+                {{/unless}}
+                <small class="subheading">{{subheading}}</small>
+              </h5>
+            </div>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class="loader">Loading...</div>
+  {{/if}}
+</div>

@@ -1,0 +1,47 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<form ($submit)="deleteDevices" {{#if saving}}disabled{{/if}}>
+  <button type="submit" class="btn{{#unless formValidates}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+    {{#if saving}}
+      <div class="loader"></div> Saving
+    {{else}}
+      Save
+    {{/if}}
+  </button>
+  {{close-button type="cancel"}}
+  {{#if formError}}
+    <p class="form-error">{{formError}}</p>
+  {{/if}}
+  <div class="panel-content">
+    <h2>Push Notifications</h2>
+    <p class="panel-description">Below are the devices that receive your push notifications. If you would like to no longer receive notifications to a device, select the minus sign next to that device.</p>
+    <p class="panel-context">Push notifications can only be sent to mobile devices and tablets.</p>
+    {{#if mobileDevices}}
+      <ul class="device-list">
+      {{#each mobileDevices}}
+        <li>
+          <span ($click)="removeFromList(., %element)" class="delete-device"></span>
+          <div class="device-info">
+            <p class="device-os">{{['mobiledevice:osType']}} {{['mobiledevice:osVersion']}}</p>
+            <p class="device-type">Device Type: {{['mobiledevice:deviceVendor']}} {{['mobiledevice:deviceModel']}}</p>
+          </div>
+        </li>
+      {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+</form>

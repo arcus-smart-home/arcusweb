@@ -1,0 +1,203 @@
+/**
+* @stylesheet box-gray.less Gray Boxes
+* @parent styles.baseline-elements
+*
+* @description
+* The gray-box class creates a unified style for content to be in rounded corner gray boxes.
+* ## Sizing ##
+* - Default sizing is set to `@box-mobile` (90vw)
+* - The general small breakpoint is set to `@box-sm` (480px)
+* - The widest size for is `@box-md` (660px). This can be added in the individual component if needed
+* ## Default Settings ##
+* - You should not need different padding or margins for the boxes.
+* - Text alignment is set to `center` for h4, h5, and p tags here.
+* - Flex alignment is set to `center` here.
+* - Flex-direction is set to `column` here.
+* - If you need different text-alignment, flex alignment (`align-items`), or flex-direction override the class in the component you need the changes.
+- The `row-` classes create a two-column layout, where the right row can nest the `sub-` classes to do a faux three column layout, but wrap for smaller devices. The demos below represent the base classes defined here. The Set a Schedule box does not wrap properly becuase its wrapping is defined within its component.
+* @demo ./src/styles/demos/box-gray.html
+*
+**/
+
+@box-mobile:  90vw;
+@box-sm:      480px;
+@box-md:      660px;
+
+.box-gray-radius {
+  border-radius: @border-radius;
+  box-shadow: 0 0 0 2px @heron;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: @gutter/2;
+  padding-right: @gutter;
+  padding-bottom: @gutter;
+  padding-left: @gutter;
+  margin-right:@gutter/2;
+  margin-left: @gutter/2;
+  // margin-bottom is applied when there are more than one box-gray-radius classes displayed after each other (see the class at the bottom of this file)
+  width: @box-mobile;
+  .breakpoint(sm, {
+    width: @box-sm;
+  });
+  &.thin {
+    box-shadow: 0 0 0 1px @heron;
+  }
+  &.darken-bg {
+    background-color: @pigeon;
+  }
+  &.step-box {
+    padding-bottom: @gutter/2; // BOTTOM PADDING IS 15px on STEPS
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    .breakpoint(sm-down, { // On mobile Steps go full width with no radius
+      width: 100vw;
+      border-radius: 0;
+      border-right: 0;
+      border-left: 0;
+      flex-wrap: wrap;
+    });
+  }
+  h4, h5 {
+    .font-medium;
+    text-align: center;
+    line-height: 1.5;
+    margin: 0 auto;
+    width: 100%; // Needed for IE11
+    & + hr {
+      margin-top: @gutter/2;
+      margin-bottom: @gutter/2;
+    }
+  }
+  h4 + h5 {
+    margin-top: @gutter/2;
+  }
+  p {
+    text-align: center;
+    width: 100%; // Needed for IE11
+    margin-bottom: 0;
+    & + a {
+      margin-top: @gutter/2;
+    }
+  }
+  hr {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+  }
+  // WHEN THERE ARE DEVICE NOTES
+  .notes {
+    .font-regular-italic;
+    text-align: left;
+  }
+  ul {
+    margin-bottom: 0;
+  }
+  .btn:first-of-type {
+    margin-top: 0;
+  }
+  .row-left-area {
+    margin-right: @gutter/2;
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-start;
+    width: 100%;
+    h4, p {
+      text-align: left;
+    }
+  }
+  .row-right-area {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+    align-self: center;
+    justify-content: flex-start;
+    .breakpoint(sm, {
+      width: unset;
+    });
+    .breakpoint(md, {
+      flex-grow: 1;
+      align-self: center;
+      justify-content: flex-end;
+    });
+    .sub-right-area {
+      margin-top: @gutter/2;
+      .breakpoint(sm, {
+        margin-top: 0;
+      });
+      &.with-button {
+        min-width: 180px;
+        align-items: flex-end;
+        border-left: @border;
+        align-self: flex-end;
+        .breakpoint(sm-down, {
+          width: 100%;
+          align-items: flex-start;
+          border-left: none;
+          padding-left: @gutter*1.5;
+        });
+      }
+    }
+  }
+  .sub-left-area {
+    flex-grow: 1;
+  }
+  .sub-right-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: @gutter/3;
+    .breakpoint(sm, {
+      align-items: flex-end;
+      margin-top: 0;
+    });
+  }
+  .btn {
+    margin: 0;
+    white-space: nowrap;
+    [class^="icon-"] {
+      font-size: 150%;
+      vertical-align: text-bottom;
+      margin-right: @gutter/10;
+    }
+  }
+  .btn-cancel {
+    margin: 0;
+    white-space: nowrap;
+    .breakpoint(sm, {
+      margin-left: @gutter/2;
+    });
+  }
+  .icon-circle {
+    box-shadow: 0 0 0 1px @raven;
+    background-color: @crane;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: @raven;
+  }
+}
+
+.box-gray-radius + .box-gray-radius {
+  margin-top: @gutter/2;
+}
+
+.step-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-radius: 100%;
+  margin-right: @gutter * (2/3);
+  color: @crane;
+  background-color: @peacock;
+}

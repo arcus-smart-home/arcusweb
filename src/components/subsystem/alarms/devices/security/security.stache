@@ -1,0 +1,103 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/subsystem/alarms/devices/edit-participation/" />
+<div class="left-panel-buttons">
+  {{close-button type="done" disabled=panelExpanded}}
+</div>
+<div class="panel-content">
+  <div class="panel-header">
+    <h3>Manage {{typeTitle}} Devices</h3>
+    <p class="instructions">View and manage which devices are participating in your {{typeTitle}} Alarm.</p>
+  </div>
+  <div class="content-container">
+    <div class="left-content">
+      {{#if isArmed}}
+        <div class="device-header">
+          <h4>Bypassed Devices
+            <span>{{bypassedDevices.length}}</span>
+          </h4>
+        </div>
+        {{#each bypassedDevices}}
+          <div class="device-row" ($click)="expandAndEdit(., %element)">
+            <i class="panel-icon {{iconOf(., 'class')}}"></i>
+            <p class="device-name">
+              {{name}}
+              <br/>
+              <small class="type">{{latestActivityFor(.)}}</small>
+            </p>
+          <div class="device-activity">
+            <small>{{{armedStatusFor(.)}}}</small>
+            <i class="icon-app-chevron chevron-btn"><span class="sr-only">Change State</span></i>
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+      <div class="device-header">
+        <h4>
+          On/Partial Devices
+          <span>{{onPartialDevices.length}}</span>
+        </h4>
+      </div>
+      {{#each onPartialDevices}}
+        <div class="device-row" ($click)="expandAndEdit(., %element)">
+          <i class="panel-icon {{iconOf(., 'class')}}"></i>
+          <p class="device-name">{{name}}<br />
+            {{#if isOffline}}
+              <small class="offline">Offline</small>
+            {{else}}
+            <small class="type">{{latestActivityFor(.)}}</small>
+            {{/if}}
+          </p>
+          <div class="device-activity">
+            <small>{{{armedStatusFor(.)}}}</small>
+            <i class="icon-app-chevron chevron-btn"><span class="sr-only">Change State</span></i>
+          </div>
+        </div>
+      {{/each}}
+      <div class="device-header">
+        <h4>
+          Not Participating Devices
+          <span>{{notParticipatingDevices.length}}</span>
+        </h4>
+      </div>
+      {{#each notParticipatingDevices}}
+        <div class="device-row" ($click)="expandAndEdit(., %element)">
+          <i class="panel-icon {{iconOf(., 'class')}}"></i>
+          <p class="device-name">
+            {{name}}<br />
+            {{#if isOffline}}
+              <small class="offline">Offline</small>
+            {{else}}
+            <small class="type">{{latestActivityFor(.)}}</small>
+            {{/if}}
+          </p>
+          <div class="device-activity">
+            <i class="icon-app-chevron chevron-btn"><span class="sr-only">Change State</span></i>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="right-content">
+      {{#if selectedDevice}}
+        <arcus-subsystems-alarms-devices-edit-participation
+          {(subsystem)}="securitySubsystem"
+          {(device)}="selectedDevice"
+          {on-close}="@collapseRightPanel" />
+      {{/if}}
+    </div>
+  </div>
+</div>

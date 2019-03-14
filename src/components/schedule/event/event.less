@@ -1,0 +1,137 @@
+arcus-schedule-event {
+  flex-shrink: 0;
+  .sub-instructions {
+    h4 {
+      span {
+        .font-demibold;
+      }
+    }
+  }
+  .select-state {
+    border-bottom: @border;
+    margin-bottom: @gutter;
+  }
+  .time-buttons {
+    text-align: center;
+    margin-top: @gutter;
+    justify-content: center;
+  }
+  .week-day-buttons {
+    text-align: center;
+    margin-bottom: @gutter;
+    margin-top: @gutter;
+    .btn {
+      .font-regular;
+      font-size: @font-size-large;
+      padding: 2px 0 0;
+      height: 40px;
+      width: 40px;
+      margin-right: @gutter/4;
+      letter-spacing: 0;
+      &.active {
+        cursor: pointer;
+        &:hover {
+          transform: translateY(-3px);
+        }
+      }
+    }
+    .form-error {
+      text-align: left;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+  }
+  .week-day-buttons {
+    width: 100%;
+    border-bottom: @border;
+    padding-bottom: @gutter;
+  }
+  .bottom-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    .breakpoint(lg, {
+      flex-wrap: nowrap;
+    });
+  }
+  .left-buttons,
+  .right-buttons {
+    display: inline-flex;
+    flex: 1 1 100%;
+    .breakpoint(lg, {
+      flex-basis: 50%;
+    });
+  }
+  .right-buttons {
+    .breakpoint(lg, {
+      justify-content: flex-end;
+    });
+    &.is-confirming {
+      flex-direction: column;
+    }
+    .form-error {
+      margin-bottom: @line-height/2;
+    }
+  }
+  arcus-schedule-device-configurators-light {
+    .switch-value {
+      display: flex;
+      h4 {
+        text-transform: capitalize;
+      }
+      arcus-control-switch {
+        margin-left: auto;
+      }
+    }
+    .configurator {
+      .configurator-header {
+        border-top: none;
+        padding-top: 0;
+      }
+    }
+  }
+
+  arcus-schedule-device-configurators-auto,
+  arcus-schedule-device-configurators-cool,
+  arcus-schedule-device-configurators-heat {
+    .range {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  arcus-schedule-device-configurators-doors-garagedoor,
+  arcus-schedule-device-configurators-watervalve {
+    .switch-value {
+      display: flex;
+      h4 {
+        text-transform: capitalize;
+      }
+      arcus-control-switch {
+        margin-left: auto;
+      }
+    }
+  }
+  arcus-schedule-device-configurators-doors-petdoor {
+    .petdoor-control {
+      justify-content: center;
+    }
+  }
+  arcus-schedule-device-configurators-climate-fan {
+    .fan-control {
+      justify-content: center;
+    }
+  }
+  arcus-schedule-device-configurators-climate-spaceheater {
+    .select-heat-state {
+      display: flex;
+      align-items: center;
+      h4 {
+        margin-right: auto;
+      }
+      small {
+        color: @heron;
+        margin-right: 10px;
+      }
+    }
+  }
+}

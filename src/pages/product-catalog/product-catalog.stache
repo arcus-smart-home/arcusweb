@@ -1,0 +1,113 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/catalog/search/" />
+<can-import from="i2web/components/catalog/brands/" />
+<can-import from="i2web/components/catalog/products/" />
+<can-import from="i2web/components/kit-activate/device/unpaired.component" />
+<can-import from="i2web/components/pairing/exit-prompt.component" />
+<can-import from="i2web/components/staged-progress/" />
+<can-import from="i2web/components/tooltip/" />
+
+<div class="step-container">
+  <div class="step-header">
+    <header class="app-header">
+      <a class="logo-link" ($click)="exitPairing()">
+        <img class="arcus-logo" src="/src/images/logo.svg" alt="Arcus Logo">
+      </a>
+      <a class="exit-pairing-link" ($click)="exitPairing()">
+        Go to Dashboard
+      </a>
+    </header>
+    <div class="staged-progress">
+      <arcus-staged-progress {stages}="stages" discover in-progress />
+    </div>
+    <div class="pairing-title">
+      <h2>{{{pageTitle}}}</h2>
+    </div>
+  </div>
+  <div class="content-column">
+    {{#unless selectedGroup}}
+      <arcus-catalog-search
+        {place}="place"
+        {^filter-mode}="filterMode"
+        {^selected-product}="selectedProduct"
+      />
+
+      <div class="detail-row">
+        <div class="product-count">
+          {{^eq 0 totalProductCount}}
+            {{totalProductCount}} Devices
+          {{/eq}}
+        </div>
+
+        {{#if hub}}
+          <div class="advanced-pairing">
+            <a ($click)="doAdvancedPairing()">Advanced User Pairing</a>
+          </div>
+          <button class="btn-small tooltip-trigger" type="button"><i>i</i></button>
+          <arcus-tooltip anchor="top-right">
+            Choose this option if you already know how to pair your device and do not need instructions.
+            The Hub will go into pairing mode immediately.
+          </arcus-tooltip>
+        {{/if}}
+      </div>
+      <arcus-catalog-brands
+        {place}="place"
+        {filter-mode}="filterMode"
+        {(selected-brand)}="selectedGroup"
+      />
+    {{else}}
+      <arcus-catalog-products
+        {place}="place"
+        {group-type}="currentSubpage"
+        {selected-group}="selectedGroup"
+        {filter-mode}="filterMode"
+        {^selected-product}="selectedProduct"
+        {^title}="pageTitle"
+      />
+      <div class="back-button">
+        <button class="btn" ($click)="clearSelectedGroup()">Back</button>
+      </div>
+    {{/unless}}
+  </div>
+  {{#if showKittingBackButton}}
+    <div class="back-button">
+      <button class="btn" ($click)="routeToHubPairing()">Back</button>
+    </div>
+  {{/if}}
+  {{#if dismissCompletionSteps.length}}
+    <arcus-pairing-completion-manager
+      {exit}="@onConfirmExitPairing"
+      {(steps)}="dismissCompletionSteps"
+    />
+  {{/if}}
+  {{#if showEntryPrompt}}
+    <arcus-kit-activate-device-unpaired
+      {mispaired-device-count}="mispairedDeviceCount"
+      {unactivated-device-count}="unactivatedDeviceCount"
+      {on-finish}="@onFinishActivation"
+      {on-postpone}="@onResumeCatalogBrowse"
+    />
+  {{/if}}
+  {{#if showExitPrompt}}
+    <arcus-pairing-exit-prompt
+      {has-unpaired-devices}="hasUnpairedDevices"
+      {on-confirm-exit-pairing}="@onConfirmExitPairing"
+      {on-resume-pairing}="@onResumePairing"
+    />
+  {{/if}}
+</div>

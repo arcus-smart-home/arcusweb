@@ -1,0 +1,51 @@
+arcus-settings-update-service-level {
+  display: block;
+  hr {
+    margin: @gutter/1.5 0;
+  }
+  .panel-content {
+    button {
+      margin-top: @gutter/2;
+    }
+  }
+
+  arcus-settings-update-service-level-upgrade {
+    hr {
+      margin: @gutter/1.5 0;
+    }
+    .plan-container {
+      display: flex;
+      margin-top: @gutter;
+      div {
+        width: 50%;
+        .upgrade-price {
+          color: @parakeet;
+        }
+        .sales-tax {
+          font-style: italic;
+          margin-bottom: 0;
+        }
+        &+ div {
+          text-align: right;
+        }
+      }
+    }
+  }
+  
+  arcus-settings-update-premium-to-basic,
+  arcus-settings-update-promon-to-basic,
+  arcus-settings-update-promon-to-premium {
+    hr {
+      margin: @gutter/1.5 0;
+    }
+    .font-demibold {
+      margin-bottom: @gutter/2;
+    }
+    ul {
+      padding-left: @gutter/1.5;
+      li {
+        margin-bottom: @gutter/4;
+      }
+    }
+  }
+}

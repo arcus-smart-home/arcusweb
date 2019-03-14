@@ -1,0 +1,87 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/shop-button.component" />
+{{#unless subsystems}}
+	<div class="loader">Loading...</div>
+{{else}}
+  <can-import from="i2web/helpers/attributes"/>
+  <can-import from="i2web/components/context-bar/" />
+  <can-import from="i2web/helpers/global"/>
+  <can-import from="i2web/helpers/subsystem" />
+  <can-import from="i2web/components/device/list/" />
+  <can-import from="i2web/components/subsystem/status/" />
+  <can-import from="i2web/components/subsystem/alarms/" />
+  <can-import from="i2web/components/subsystem/climate/" />
+  <can-import from="i2web/components/subsystem/cameras/" />
+  <can-import from="i2web/components/subsystem/care/" />
+  <can-import from="i2web/components/subsystem/doors-locks/" />
+  <can-import from="i2web/components/subsystem/home-family/" />
+  <can-import from="i2web/components/subsystem/lawn-garden/" />
+  {{#if isPending}}
+    <div class="loader">Loading...</div>
+  {{else}}
+    {{#if subsystem}}
+      {{#if subsystem.customComponent}}
+        {{subsystem-component(subsystem)}}
+      {{else}}
+        <arcus-context-bar>
+          <h2>
+            {{{iconOf(subsystem)}}}
+            <span class="place-name">{{place['place:name']}} {{subsystem.displayName}}</span>
+          </h2>
+          {{! ITWO-13126 Subsystem status removed from context bar }}
+        </arcus-context-bar>
+        {{#unless subsystem.allDevices.length}}
+          <div class="no-devices">
+            <div class="left-wrapper">
+              <p>You don't have any devices for this yet. Shop Now!</p>
+            </div>
+            <div class="right-wrapper">
+              <arcus-shop-button href="{{redirectToUrl(subsystem.productsLinkKey)}}" expanded>
+                Shop Devices
+              </arcus-shop-button>
+            </div>
+          </div>
+        {{else}}
+          <arcus-device-list {(devices)}="subsystem.allDevices" />
+        {{/unless}}
+      {{/if}}
+      {{#if subsystem.tutorialLinkKey}}
+        <hr class="tutorial-border" />
+        <div class="tutorials">
+          <h3>{{subsystem.displayName}} Tutorials</h3>
+          <ul>
+            <li>
+              <a href="{{redirectToUrl(subsystem.tutorialLinkKey)}}" target="_blank">
+                <i class="icon-app-page-2"></i>
+                Introduction to {{subsystem.displayName}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      {{/if}}
+    {{else}}
+      <can-import from="i2web/pages/404.component">
+        {{#if isPending}}
+          <div class="loader">Loading...</div>
+        {{else}}
+          <arcus-page-404 />
+        {{/if}}
+      </can-import>
+    {{/if}}
+  {{/if}}
+{{/unless}}

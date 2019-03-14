@@ -1,0 +1,181 @@
+arcus-recording {
+  display: inline-flex;
+  flex-direction: column;
+  padding-right: @gutter/4;
+  padding-left: @gutter/4;
+  margin-bottom: @gutter;
+  .breakpoint(md, {
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+  });
+  video {
+    display: block;
+  }
+  .is-fullscreen {
+    background-color: @swift;
+    height: 100%;
+    width: 100%;
+    flex: 0;
+    img, video, arcus-lazy-image {
+      height: 100%;
+      width: 100%;
+    }
+    video {
+      position: absolute;
+    }
+    .video-buttons {
+      background: @swift;
+      justify-content: space-between;
+      bottom: 0;
+      position: absolute;
+      padding: 0;
+      padding-top: @gutter/2;
+      padding-bottom: @gutter/2;
+      width: 100%;
+      button.play {
+        margin-left: @gutter/2;
+        margin-right: 0;
+        position: absolute;
+      }
+      button.full-screen {
+        margin-right: @gutter/2;
+        margin-left: 0;
+        position: absolute;
+        right: 0;
+      }
+      .progress-bar {
+        margin: initial;
+        flex: 1;
+        justify-content: center;
+      }
+      arcus-scrubber {
+        width: 50%;
+        margin: 0 @gutter;
+      }
+    }
+  }
+  .video-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: @raven;
+    #alttext-container {
+      border: none !important;
+    }
+  }
+  .recording-thumbnail {
+    position: relative;
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    background-color: @raven;
+    .video-buttons {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      z-index: @zindex-radio-button;
+      .play-shape-wrapper {
+        background-color: @swift;
+        border: 2px solid @crane;
+        border-radius: 100%;
+        width: 55px;
+        height: 55px;
+        .play-shape {
+          transform: translate3d(34%, 0, 0);
+        }
+        .stop-shape {
+          width: 50%;
+          height: 50%;
+          transform: translate3d(50%, 0, 0);
+        }
+      }
+    }
+    .dark-loader-container {
+      background-color: @raven;
+      display: flex;
+      width: 290px;
+      height: 218px;
+      align-items: center;
+      justify-content: center;
+      z-index: @zindex-radio-button;
+      .breakpoint(md, {
+        width: 320px;
+        height: 240px;
+      });
+      .dark-loader {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+  .confirm-delete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    background-color: @body-bg;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: @gutter/1.5;
+    top: 0;
+    bottom: 0;
+    border: @border;
+    p {
+      margin-bottom: 0;
+    }
+    button {
+      margin: @gutter/1.5 0;
+    }
+  }
+  .recording-info {
+    display: flex;
+    margin-top: 5px;
+  }
+  .recording-metadata {
+    display: inline-flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    max-width: 160px;
+    text-align: left;
+    .breakpoint(md, {
+      max-width: 188px;
+    });
+  }
+  .camera-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .recording-options {
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-top: 5px;
+    flex: 1 1 auto;
+    margin-left: auto;
+    &.disabled {
+      a, arcus-favorite-pin {
+        color: @grouse;
+        pointer-events: none;
+      }
+    }
+    a {
+      font-size: 24px;
+      padding-left: @gutter/3;
+      padding-right: @gutter/3;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  arcus-lazy-image .placeholder {
+    justify-content: flex-end;
+    p {
+      padding-bottom: @gutter/2;
+    }
+  }
+}

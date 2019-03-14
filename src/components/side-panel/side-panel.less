@@ -1,0 +1,164 @@
+/**
+* @stylesheet side-panel.less Side Panel
+* @parent styles.baseline-elements
+*
+* @description
+* A generic side panel can be opened with a button or link trigger and slide-in/out from the left or right side of the screen. Simply add a class indicating which you'd like. `class="is-left"` or `class="is-right"`
+*
+* The side panel comes with a backdrop. All other content is up to you. A "Done" button can be added using the `{{close-button}}` helper.
+*
+* @demo ./src/components/side-panel/side-panel.html
+*
+**/
+
+arcus-side-panel {
+  display: block;
+
+  &.is-left {
+    .panel-container {
+      left: 0;
+      padding-left: @gutter/2;
+      padding-right: @gutter/2;
+      .breakpoint(sm, {
+        padding-left: @gutter;
+        padding-right: @gutter;
+      });
+    }
+    .hidden {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+  &.is-right {
+    .panel-container {
+      right: 0;
+      padding-left: @gutter/2;
+      padding-right: 0;
+      .breakpoint(sm, {
+        padding-left: @gutter;
+        padding-right: @gutter/2;
+      });
+      .panel-header {
+        padding-right: @gutter/3;
+      }
+    }
+    .hidden {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+	.panel-container {
+    transition: transform 0.5s linear;
+    top: 0;
+    transform: translate3d(0, 0, 0);
+    position:fixed;
+    height: 100vh;
+    padding-top: @gutter;
+    width: 600px;
+    max-width: 100%;
+    z-index: @zindex-modal;
+    background-color: @body-bg;
+
+    .breakpoint(sm-down, {
+      padding-top: @gutter/2;
+      padding-left: @gutter/2;
+      padding-right: @gutter/2;
+    });
+    &.is-double {
+      width: 1200px;
+      transition: width 0.5s linear;
+      .right-content,
+      .left-content {
+        .breakpoint(md, {
+          padding-right: @gutter*(2/3);
+          margin-right: @gutter/6;
+          max-width: 50%;
+          flex: 1;
+        })
+      }
+      .right-panel-buttons {
+        .breakpoint(md-down, {
+          display: block;
+        });
+      }
+      .right-content {
+        display: flex;
+        .breakpoint(md, {
+          padding-left: @gutter;
+          border-left: @border;
+        });
+      }
+      .left-panel-buttons,
+      .left-content {
+        .breakpoint(md-down, {
+          display: none;
+        });
+      }
+    }
+    .left-content,
+    .right-content {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      flex-basis: 100%;
+      padding-top: @gutter/2;
+    }
+    .right-panel-buttons,
+    .right-content {
+      display: none;
+    }
+
+    h3, h4 {
+      color: @swift;
+    }
+    h3 {
+      &:first-of-type {
+        font-size: @font-size-h2;
+        margin-top: 0;
+      }
+    }
+  }
+  .panel-content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    height: 89vh;
+    padding-bottom: @gutter + 44px; // for iOS safari bottom tab bar
+  }
+  arcus-settings-places-promonitoring-info {
+    .panel-content {
+      padding-bottom: 0;
+    }
+  }
+  arcus-scenes-edit-panel,
+  arcus-schedule-edit-panel,
+  arcus-settings-people-add-person,
+  arcus-subsystem-alarms-devices-security {
+    .panel-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 0;
+      overflow-y: hidden;
+    }
+  }
+  .bottom-buttons {
+    flex-shrink: 0;
+    margin-bottom: @gutter*2; //for iOS
+  }
+  .panel-backdrop {
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: fade(@raven, 50%);
+    z-index: @zindex-modal-background;
+    &.hidden {
+      display: none;
+    }
+  }
+}
+//keeps the main site from scrolling while panels are open
+body.panel-open {
+  overflow: hidden;
+  position: absolute;
+}

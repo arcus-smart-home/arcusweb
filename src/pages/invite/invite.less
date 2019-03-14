@@ -1,0 +1,84 @@
+arcus-page-invite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-left: @gutter/2;
+  padding-right: @gutter/2;
+  margin-bottom: @gutter;
+  .container {
+    width: auto;
+    max-width: 49rem;
+    .breakpoint(md-down, {
+      width: 80%;
+    });
+  }
+  .step-info {
+    margin: @gutter auto;
+    p {
+      width: 65%;
+      margin-left: auto;
+      margin-right: auto;
+      .breakpoint(md-down, {
+        width: 80%;
+      });
+      .no-wrap {
+        white-space: nowrap;
+      }
+    }
+  }
+  .stage-fields {
+    width: 65%;
+    min-width: 250px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: @gutter/2;
+    .breakpoint(md-down, {
+      width: 80%;
+    });
+    .form-error {
+      text-align: left;
+      margin: @gutter/2 auto 0 auto;
+    }
+    .btn {
+      margin-top: @gutter/1.5;
+    }
+  }
+
+  arcus-create-account-pin,
+  arcus-create-account-login,
+  arcus-create-account-step-login .already-registered,
+  arcus-create-account-security-questions,
+  arcus-create-account-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  arcus-create-account-step-pin {
+    .stage-fields {
+      width: 65% !important;
+    }
+  }
+
+  arcus-create-account-welcome {
+    .welcome-container {
+      width: 100%;
+      border-radius: 0px;
+      border-left: none;
+      border-right: none;
+      position: fixed;
+      margin-top: 135px;
+      .breakpoint(sm-down, {
+        margin-top: 235px;
+      })
+    }
+  }
+
+  arcus-wizard .button-panel {
+    border-top: none;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,162 @@
+/**
+* @stylesheet breakpoints.less Breakpoints
+* @parent styles.other
+*
+* @description
+* Major layout-based breakpoint needs are included in the [Flexbox Grid](http://flexboxgrid.com/) system. It's a class-based, bootstrap-eqsue pattern documented on their website.
+*
+* In addition, breakpoints are set up in mixins for maximum flexibility in other kinds of changes with mobile-first in mind.
+*
+* The main mixin is simply `.breakpoint`, with an argument for size. The preset size options are in tables below. 
+* The first table shows the common arguments that will be used in most cases. 
+* The second table is for scenarios where you need to define a style for screens below the breakpoint (instead of above it).
+*
+* #### Main Breakpoint Arguments
+* <table>
+<tbody>
+  <tr>
+    <th>argument</th>
+    <td>xs</td>
+    <td>sm</td>
+    <td>md</td>
+    <td>lg</td>
+    <td>xl</td>
+  </tr>
+  <tr>
+    <th>px</th>
+    <td>max 480</td>
+    <td>min 640</td>
+    <td>min 768</td>
+    <td>min 1024</td>
+    <td>min 1400</td>
+  </tr>
+</tbody>
+</table>
+
+#### Secondary Breakpoint Arguments
+
+<table>
+<tbody>
+  <tr>
+    <th>argument</th>
+    <td>md-down</td>
+    <td>lg-down</td>
+    <td>xl-down</td>
+  </tr>
+  <tr>
+    <th>px</th>
+    <td>min 768</td>
+    <td>min 1024</td>
+    <td>min 1400</td>
+  </tr>
+</tbody>
+</table>
+*
+* ### Example usage:
+* ```
+ .class {
+  mobile-first: styles;
+
+  .breakpoint(sm, {
+    small-screen: and-up;
+  });
+  .breakpoint(sm-down, {
+    small-screen: and-down;
+  });
+  .breakpoint(lg, {
+    large-screen: and up;
+  });
+}
+* ```
+*
+* ## For really special and exceptional cases
+* For very special and rare cases where a pre-set breakpoint isn't sufficient, there is a custom breakpoint mixin for "up"/regular and down. This is a powerful tool for making a giant mess, so think carefully before using this one.
+*
+* ### Example usage:
+* ```
+  .class {
+    .breakpoint-custom(123px, {
+      style-rules: at this point and bigger;
+    });
+    .breakpoint-custom-down(123px, {
+      style-rules: for sizes smaller;
+    });
+  }
+* ```
+*
+**/
+
+.breakpoint(@screen; @rules) {
+  & when (@screen = xs){
+    @media screen and (max-width: 480px) {
+      @rules();
+    }
+  }
+  & when (@screen = sm){
+    @media screen and (min-width: 640px) {
+      @rules();
+    }
+  }
+  & when (@screen = sm-down){
+    @media not screen and (min-width: 640px) {
+      @rules();
+    }
+  }
+  & when (@screen = md){
+    @media screen and (min-width: 768px) {
+      @rules();
+    }
+  }
+  & when (@screen = md-down){
+    @media not screen and (min-width: 768px) {
+      @rules();
+    }
+  }
+  & when (@screen = lg){
+    @media screen and (min-width: 1024px) {
+      @rules();
+    }
+  }
+  & when (@screen = lg-down){
+    @media not screen and (min-width: 1024px) {
+      @rules();
+    }
+  }
+  & when (@screen = xl){
+    @media screen and (min-width: 1400px) {
+      @rules();
+    }
+  }
+  & when (@screen = xl-down){
+    @media not screen and (min-width: 1400px) {
+      @rules();
+    }
+  }
+  & when (@screen = print){
+    @media print {
+      @rules();
+    }
+  }
+}
+
+.breakpoint-custom(@width; @rules) {
+  @media screen and (min-width: @width) {
+    @rules();
+  }
+}
+.breakpoint-custom-down(@width; @rules) {
+  @media not screen and (min-width: @width) {
+    @rules();
+  }
+}
+
+
+// Usage 
+// .body {
+//     background-color: red; default to red background
+//     .breakpoint(xs, {
+//       background-color: purple; make background purple on x-small screens
+//     });
+// }
+
+

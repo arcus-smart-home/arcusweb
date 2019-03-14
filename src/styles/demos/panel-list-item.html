@@ -1,0 +1,100 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css!"/>
+  <can-import from="i2web/styles/global-styles.less!"/>
+
+    <div class="row panel-list-container {{#if device.isOffline}} offline{{/if}}" style="height: 150px;">
+      <div class="panel-primary-wrapper">
+        <div class="col-xs-12 col-md panel-information">
+          <h2>Panel Item Title</h2>
+          <h4>Panel Item Subtitle</h4>
+          <small>Small Tertiary Text</small>
+          
+        </div>
+        <ul class="col-xs-12 col-md panel-options">
+          <li>
+            <a>
+              <i class="icon-app-star-2" aria-hidden="true"></i>
+              <span class="sr-only">Option Icon!</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="icon-app-star-2" aria-hidden="true"></i>
+              <span class="sr-only">Option Icon!</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="icon-app-more-2" aria-hidden="true"></i>
+              <span class="sr-only">More</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="row panel-secondary-wrapper">
+        <div class="col-md panel-action">
+          <p>Panel Action<br/> <small>like a toggle</small></p>
+        </div>
+        <div class="col-md panel-status">
+          <p>Panel Status Info or Misc.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row panel-list-container offline">
+      <div class="panel-primary-wrapper">
+        <div class="col-xs-12 col-md panel-information">
+          <h2>Panel Item Title</h2>
+          <h4>Panel Item Subtitle</h4>
+          <small>Small Tertiary Text</small>
+        </div>
+        <ul class="col-xs-12 col-md panel-options">
+          <li>
+            <a>
+              <i class="icon-app-star-2" aria-hidden="true"></i>
+              <span class="sr-only">Option Icon!</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="icon-app-star-2" aria-hidden="true"></i>
+              <span class="sr-only">Option Icon!</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="icon-app-more-2" aria-hidden="true"></i>
+              <span class="sr-only">More</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="row panel-secondary-wrapper">
+        <div class="col-md panel-error">
+            <p>This is two columns, instead of three.</p>
+            <a href="https://www.arcus.com"><button class="btn">Get Support</button></a>
+        </div>
+      </div>
+    </div>
+
+</script>
+<script src="../../../node_modules/steal/steal.js"
+        main="can-view-autorender"></script>

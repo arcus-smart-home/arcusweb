@@ -1,0 +1,74 @@
+[
+  {
+    "templateId": "1",
+    "devices": [],
+    "enabled": true,
+    "name": "No Activity Detected",
+    "durationSecs": 1800,
+    "type": "INACTIVITY",
+    "timeWindows": []
+  },
+  {
+    "templateId": "2",
+    "devices": [],
+    "enabled": true,
+    "name": "Door Opened Unexpectedly",
+    "type": "OPEN",
+    "timeWindows": []
+  },
+  {
+    "templateId": "3",
+    "devices": [],
+    "enabled": true,
+    "name": "Door Left Open",
+    "durationSecs": 1800,
+    "type": "OPEN",
+    "timeWindows": []
+  },
+  {
+    "templateId": "4",
+    "devices": [],
+    "enabled": true,
+    "name": "Medicine Cabinet Reminder",
+    "durationSecs": 86400,
+    "type": "INACTIVITY",
+    "timeWindows": []
+  },
+  {
+    "templateId": "5",
+    "devices": [],
+    "enabled": true,
+    "name": "Eating Reminder",
+    "durationSecs": 86400,
+    "type": "INACTIVITY",
+    "timeWindows": []
+  },
+  {
+    "templateId": "6",
+    "devices": [],
+    "enabled": true,
+    "name": "Curfew",
+    "presenceRequiredTime": "21:00:00",
+    "type": "PRESENCE",
+    "timeWindows": []
+  },
+  {
+    "templateId": "7",
+    "devices": [],
+    "enabled": true,
+    "name": "Monitor Memory Habits",
+    "openCount": {},
+    "type": "OPEN_COUNT",
+    "timeWindows": []
+  },
+  {
+    "templateId": "8",
+    "devices": [],
+    "enabled": true,
+    "name": "Monitor Home Temperature",
+    "lowTemp": 18.3,
+    "highTemp": 20,
+    "type": "TEMPERATURE",
+    "timeWindows": []
+  }
+]

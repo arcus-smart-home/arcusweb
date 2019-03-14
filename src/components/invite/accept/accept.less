@@ -1,0 +1,64 @@
+arcus-invite-accept {
+  display: block;
+  .invitation-container {
+    display: flex;
+    flex-direction: column;
+    .breakpoint(sm, {
+      flex-direction: row;
+    });
+    .left {
+      width: 100%;
+      .breakpoint(sm, {
+        width: 60%;
+      });
+    }
+  }
+  .invitation-wrapper {
+    display: flex;
+    .breakpoint(md-down, {
+      margin-bottom: 0;
+    });
+    .avatar {
+      font-size: 48px;
+      width: 80px;
+      height: 80px;
+      margin-right: @gutter/1.5;
+    }
+    .invitation-copy {
+      padding-right: @gutter;
+      h4 {
+        .font-demibold;
+        margin: @gutter/5 0;
+      }
+    }
+  }
+  .invited-by {
+    font-style: italic;
+    margin-bottom: @gutter/2;
+    .breakpoint(sm, {
+      margin-bottom: 0;
+    });
+  }
+  .invitation-actions {
+    border: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+    .breakpoint(sm, {
+      width: 40%;
+      border-left: @border;
+      margin: @gutter/3 auto;
+      padding-left: @gutter;
+    });
+    .button-group {
+      button {
+        display: block;
+        margin: 0;
+        &:first-of-type {
+          margin-bottom: @gutter/2;
+        }
+      }
+    }
+  }
+}

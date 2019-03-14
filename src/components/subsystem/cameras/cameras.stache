@@ -1,0 +1,59 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/subsystem/cameras/status/" />
+<can-import from="i2web/components/subsystem/cameras/clips/" />
+<can-import from="i2web/components/subsystem/cameras/storage/" />
+
+{{#if subsystem}}
+  <arcus-context-bar>
+    <h2>
+      <i class="{{subsystem.icon.value}}"></i>
+      <span class="place-name">{{place['place:name']}}</span> Cameras
+    </h2>
+  </arcus-context-bar>
+  <div class="cameras-navigation">
+    <div class="segment-btn">
+      <button class="btn-primary {{#if cameraDisplayedIs('status')}}active{{/if}}"
+        ($click)="changeCameraDisplay('status')">
+        Cameras
+      </button>
+      <button class="btn-primary {{#if cameraDisplayedIs('clips')}}active{{/if}}"
+        ($click)="changeCameraDisplay('clips')">
+        Clips
+      </button>
+      <button class="btn-primary {{#if cameraDisplayedIs('storage')}}active{{/if}}"
+        ($click)="changeCameraDisplay('storage')">
+        More
+      </button>
+    </div>
+  </div>
+  <hr />
+  {{#switch activeDisplay}}
+    {{#case 'status'}}
+      <arcus-subsystem-cameras-status {place}="place" {subsystem}="subsystem" {camera-name-from-i-d}="@cameraNameFromID" />
+    {{/case}}
+    {{#case 'clips'}}
+      <arcus-subsystem-cameras-clips {place}="place" {subsystem}="subsystem" {camera-name-from-i-d}="@cameraNameFromID" />
+    {{/case}}
+    {{#case 'storage'}}
+      <arcus-subsystem-cameras-storage {place}="place" />
+    {{/case}}
+  {{/switch}}
+{{else}}
+  <div class="loader">Loading...</div>
+{{/if}}

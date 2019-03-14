@@ -1,0 +1,63 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-selector-with-image">
+  <template>
+    <ul class="option-list">
+      {{#each things}}
+        <li class="radio-wrapper" ($click)="selectOption(.)">
+          <input type="radio" id="person-{{%index}}" name="personname" {$checked}="isSelectedContext(.)">
+            <label for="person-{{%index}}" class="complex-label">
+              {{{iconOf(.)}}}
+              <span class="name">{{#if ['person:firstName']}}{{['person:firstName']}}{{else}}{{['dev:name']}}{{/if}}</span>
+            </label>
+          </input>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+    </ul>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canList from 'can-list';
+    import 'can-map-define';
+    import 'i2web/helpers/global';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canList<canMap>} things
+         * @parent i2web/components/selectors/person
+         * @description The list of people that will be displayed for the User to select
+         */
+        things: {
+          Type: canList,
+        },
+      },
+      /**
+       * @function isSelectedContext
+       * @param {Object} current The current option
+       * If there is not a rule, none should be selected by default. If there is a rule
+       * We should select the option that is equal to the context.
+       *
+       * @return {Boolean} Whether the current option is the selected option
+       */
+      isSelectedContext() {
+        return false;
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,28 @@
+/**
+* @styles font-faces.less Font Faces
+* @parent typography.less
+*
+* @description
+*
+* **Suggested Use:** To change the font of an element, simply use the classes indicated in the demo as a mixin on the parent element. Example:
+```
+  .example-element {
+    .font-demibold; //Makes the main element demi-bold weight
+
+    .child-element {
+      .font-regular; //Returns child element to regular/default
+    }
+  }
+```
+*
+* @demo ./src/styles/demos/fonts.html
+**/
+
+@font-face {
+  font-family: 'password';
+  src: url('../fonts/password.woff2') format('woff2'),
+      url('../fonts/password.woff') format('woff'),
+      url('../fonts/password.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,64 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#if subsystem}}
+  <div class="category-header">
+    <h3>Browse the Care Behaviors Library</h3>
+    <p>Care Behaviors help you monitor your loved ones' daily routines and can trigger a Care Alarm if those routines are disrupted.</p>
+  </div>
+  <div class="behaviors-container">
+    {{#if satisfiedTemplates.length}}
+      <div class="satisfied-divider">
+        <h3>Care Behaviors Recommended For You</h3>
+      </div>
+      <div id="satisfied-care-templates">
+        {{#each satisfiedTemplates}}
+          <div class="behavior-template selectable" ($click)="newBehaviorFrom(.)">
+            <i class="icon-app-add select-behavior selectable" title="choose this care behavior template"></i>
+            <div class="content">
+              <h3 class="panel-title">{{name}}</h3>
+              <small>{{description}}</small>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="empty-satisfied-list">
+        There are no connected devices to support Care behaviors.
+      </p>
+    {{/if}}
+  </div>
+  {{#if unsatisfiedTemplates.length}}
+    <div class="behaviors-container">
+      <div class="satisfied-divider">
+        <h3>More Behaviors (Additional Devices Required)</h3>
+      </div>
+      <div id="unsatisfied-care-templates">
+        {{#each unsatisfiedTemplates}}
+          <div class="behavior-template selectable" ($click)="showBehaviorExample(.)">
+            <i class="icon-app-add select-behavior" title="choose this care behavior template"></i>
+            <div class="content">
+              <h3 class="panel-title">{{name}}</h3>
+              <small>{{description}}</small>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+{{else}}
+  <div class="loader"></div>
+{{/if}}

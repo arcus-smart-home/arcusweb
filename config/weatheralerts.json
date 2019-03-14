@@ -1,0 +1,482 @@
+[
+  {
+    "description": "Avalanche Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "AVA"
+  },
+  {
+    "description": "Avalanche Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "AVW"
+  },
+  {
+    "description": "Blizzard Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "BZW"
+  },
+  {
+    "description": "Coastal Flood Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "CFA"
+  },
+  {
+    "description": "Coastal Flood Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "CFW"
+  },
+  {
+    "description": "Dust Storm Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "DSW"
+  },
+  {
+    "description": "Earthquake Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "EQW"
+  },
+  {
+    "description": "Flash Flood Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "FFA"
+  },
+  {
+    "description": "Flash Flood Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "FFS"
+  },
+  {
+    "description": "Flash Flood Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "FFW"
+  },
+  {
+    "description": "Flash Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "FLA"
+  },
+  {
+    "description": "Flood Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "FLS"
+  },
+  {
+    "description": "Flood Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "FLW"
+  },
+  {
+    "description": "Fire Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "FRW"
+  },
+  {
+    "description": "Flash Freeze Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "FSW"
+  },
+  {
+    "description": "Freeze Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "FZW"
+  },
+  {
+    "description": "Hurricane Local Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "HLS"
+  },
+  {
+    "description": "Hurricane Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "HUA"
+  },
+  {
+    "description": "Hurricane Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "HUW"
+  },
+  {
+    "description": "High Wind Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "HWA"
+  },
+  {
+    "description": "High Wind Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "HWW"
+  },
+  {
+    "description": "Special Weather Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "SPS"
+  },
+  {
+    "description": "Severe Thunderstorm Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "SVA"
+  },
+  {
+    "description": "Severe Thunderstorm Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "SVR"
+  },
+  {
+    "description": "Severe Weather Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "SVS"
+  },
+  {
+    "description": "Tornado Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "TOA"
+  },
+  {
+    "description": "Tornado Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "TOR"
+  },
+  {
+    "description": "Tropical Storm Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "TRA"
+  },
+  {
+    "description": "Tropical Storm Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "TRW"
+  },
+  {
+    "description": "Tsunami Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "TSA"
+  },
+  {
+    "description": "Tsunami Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "TSW"
+  },
+  {
+    "description": "Volcano Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "VOW"
+  },
+  {
+    "description": "Winter Storm Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "WSA"
+  },
+  {
+    "description": "Winter Storm Warning",
+    "category": "WRN",
+    "popular": true,
+    "code": "WSW"
+  },
+  {
+    "description": "Administrative Message",
+    "category": "ADV",
+    "popular": false,
+    "code": "ADR"
+  },
+  {
+    "description": "National Information Center Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "NIC"
+  },
+  {
+    "description": "Network Message Notification",
+    "category": "ADV",
+    "popular": false,
+    "code": "NMN"
+  },
+  {
+    "description": "Child Abduction Emergency",
+    "category": "ADV",
+    "popular": false,
+    "code": "CAE"
+  },
+  {
+    "description": "Local Area Emergency",
+    "category": "ADV",
+    "popular": false,
+    "code": "LAE"
+  },
+  {
+    "description": "911 Telephone Outage Emergency",
+    "category": "ADV",
+    "popular": false,
+    "code": "TOE"
+  },
+  {
+    "description": "Demonstration Message",
+    "category": "TEST",
+    "popular": false,
+    "code": "DMO"
+  },
+  {
+    "description": "National Audible Test",
+    "category": "TEST",
+    "popular": false,
+    "code": "NAT"
+  },
+  {
+    "description": "National Periodic Test",
+    "category": "TEST",
+    "popular": false,
+    "code": "NPT"
+  },
+  {
+    "description": "National Silent Test",
+    "category": "TEST",
+    "popular": false,
+    "code": "NST"
+  },
+  {
+    "description": "Required Monthly Test",
+    "category": "TEST",
+    "popular": false,
+    "code": "RMT"
+  },
+  {
+    "description": "Required Weekly Test",
+    "category": "TEST",
+    "popular": false,
+    "code": "RWT"
+  },
+  {
+    "description": "Civil Danger Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "CDW"
+  },
+  {
+    "description": "Civil Emergency Message",
+    "category": "WRN",
+    "popular": false,
+    "code": "CEM"
+  },
+  {
+    "description": "Emergency Action Notification",
+    "category": "WRN",
+    "popular": false,
+    "code": "EAN"
+  },
+  {
+    "description": "Emergency Action Termination",
+    "category": "WRN",
+    "popular": false,
+    "code": "EAT"
+  },
+  {
+    "description": "Evacuation Immediate",
+    "category": "WRN",
+    "popular": false,
+    "code": "EVI"
+  },
+  {
+    "description": "Hazardous Materials Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "HMW"
+  },
+  {
+    "description": "Nuclear Power Plant Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "NUW"
+  },
+  {
+    "description": "Radiological Hazard Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "RHW"
+  },
+  {
+    "description": "Shelter In-place Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "SPW"
+  },
+  {
+    "description": "Law Enforcement Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "LEW"
+  },
+  {
+    "description": "Special Marine Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "SMW"
+  },
+  {
+    "description": "Unrecognized Statement",
+    "category": "ADV",
+    "popular": false,
+    "code": "??S"
+  },
+  {
+    "description": "Unrecognized Message",
+    "category": "ADV",
+    "popular": false,
+    "code": "??M"
+  },
+  {
+    "description": "Unrecognized Emergency",
+    "category": "ADV",
+    "popular": false,
+    "code": "??E"
+  },
+  {
+    "description": "Unrecognized Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "??A"
+  },
+  {
+    "description": "Unrecognized Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "??W"
+  },
+  {
+    "description": "Biological Hazard Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "BHW"
+  },
+  {
+    "description": "Boil Water Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "BWW"
+  },
+  {
+    "description": "Chemical Hazard Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "CHW"
+  },
+  {
+    "description": "Contaminated Water Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "CWW"
+  },
+  {
+    "description": "Dam Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "DBA"
+  },
+  {
+    "description": "Dam Break Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "DBW"
+  },
+  {
+    "description": "Contagious Disease Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "DEW"
+  },
+  {
+    "description": "Evacuation Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "EVA"
+  },
+  {
+    "description": "Food Contamination Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "FCW"
+  },
+  {
+    "description": "Iceberg Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "IBW"
+  },
+  {
+    "description": "Industrial Fire Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "IFW"
+  },
+  {
+    "description": "Land Slide Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "LSW"
+  },
+  {
+    "description": "Power Outage Advisory",
+    "category": "ADV",
+    "popular": false,
+    "code": "POS"
+  },
+  {
+    "description": "Wild Fire Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "WFA"
+  },
+  {
+    "description": "Wild Fire Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "WFW"
+  },
+  {
+    "description": "Extreme Wind Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "EWW"
+  },
+  {
+    "description": "Storm Surge Watch",
+    "category": "WCH",
+    "popular": false,
+    "code": "SSA"
+  },
+  {
+    "description": "Storm Surge Warning",
+    "category": "WRN",
+    "popular": false,
+    "code": "SSW"
+  }
+]

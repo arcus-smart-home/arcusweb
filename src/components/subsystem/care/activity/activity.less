@@ -1,0 +1,122 @@
+arcus-subsystem-care-activity {
+  display: block;
+  .content-coming-soon {
+    padding: @gutter;
+  }
+  .history { // heavy nesting to override shared history styles from place-wide history view
+    arcus-infinite-scroll {
+      height: 70vh;
+    }
+    .dropdown-wrapper {
+      height: auto;
+      opacity: 1;
+      transform: none;
+      .ui.selection.dropdown {
+        background-color: white;
+        .dropdown.icon {
+          font-size: @font-size-base;
+          top: ~"calc(50% - 9px)"
+        }
+        .label {
+          box-shadow: none;
+          border: 1px solid @peacock;
+          background-color: fade(@peacock, 5%);
+          transition: all ease-out 250ms;
+          .delete.icon {
+            opacity:.3;
+            transition: all ease-out 200ms;
+            transform: rotate(45deg);
+          }
+          // click-to-remove hover style
+          &:hover {
+            cursor: pointer;
+            color: fade(@peacock, 50%);
+            border-color: fade(@peacock, 50%);
+            .delete.icon {
+              color: @peacock;
+              opacity:.9;
+              font-weight: bolder;
+              transform: rotate(45deg) scale(1.2);
+            }
+          }
+        }
+      }
+    }
+    .sidebar {
+      .breakpoint(sm, {
+        max-width: 400px;
+      });
+      .header {
+        display: flex;
+        align-items: center;
+        margin: @gutter 0;
+        h3 {
+          margin: 0;
+          flex-grow: 1;
+        }
+      }
+      hr {
+        margin: 0 0 @gutter 0;
+      }
+    }
+  }
+
+  .device-radio {
+    h3 {
+      font-size: @font-size-large;
+      margin: @gutter 0;
+    }
+
+    .radio-wrapper { // nested needed to override existing history styles :(
+      display: flex;
+      flex-direction: row; // stop the madness of using row-reverse for no reason
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      &:not(:last-child) {
+        padding-bottom: @gutter / 2;
+      }
+      label {
+        flex-grow: 1;
+        width: auto;
+        text-transform: none;
+        .breakpoint(sm-down, {
+          font-size: @font-size-large;
+          margin-right: 0;
+        });
+      }
+      button.clear {
+        margin: 0;
+      }
+      .check {
+        cursor: pointer;
+      }
+      &.filter arcus-form-select {
+        margin-left: @gutter * 1.5;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .day-selector {
+    arcus-form-select {
+      margin-bottom: @gutter;
+      width: 100%;
+    }
+
+    label {
+      .font-regular;
+      display: inline-block;
+      color: @swift;
+      font-size: @font-size-large;
+      cursor: pointer;
+      z-index: @zindex-radio-button;
+      width: 100%;
+
+      .breakpoint(sm-down, {
+        font-size: @font-size-large;
+        margin-right: 0;
+      });
+    }
+  }
+}

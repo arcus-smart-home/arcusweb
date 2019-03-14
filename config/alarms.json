@@ -1,0 +1,43 @@
+{
+  "co": {
+    "displayName": "CO",
+    "icon": "icon-platform-co-smoke-2",
+    "service": "alarms",
+    "shoppingURLKey": "p_smoke",
+    "incidentClass": "fire"
+  },
+  "panic": {
+    "displayName": "Panic",
+    "icon": "icon-app-alarm-2",
+    "incidentClass": "panic",
+    "service": "alarms"
+  },
+  "security": {
+    "displayName": "Security",
+    "icon": "icon-platform-security-1",
+    "service": "alarms",
+    "shoppingURLKey": "p_security",
+    "incidentClass": "police"
+  },
+  "smoke": {
+    "displayName": "Smoke",
+    "icon": "icon-platform-smoke-2",
+    "service": "alarms",
+    "shoppingURLKey": "p_smoke",
+    "incidentClass": "fire"
+  },
+  "care": {
+    "displayName": "Care",
+    "icon": "icon-app-care-heart-2",
+    "service": "care",
+    "shoppingURLKey": "p_care",
+    "incidentClass": "care"
+  },
+  "water": {
+    "displayName": "Water Leak",
+    "icon": "icon-platform-water-leak-2",
+    "service": "alarms",
+    "shoppingURLKey": "p_water",
+    "incidentClass": "water"
+  }
+}

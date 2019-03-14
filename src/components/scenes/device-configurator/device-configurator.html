@@ -1,0 +1,58 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-scenes-device-configurator {selector}="selector" {(scene-device)}="sceneDevice" />
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import $ from 'jquery';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Device from 'i2web/models/device';
+  import SceneDevice from 'i2web/models/sceneDevice';
+  import lightData from 'i2web/models/fixtures/data/device/lights.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/scenes/device-configurator/';
+
+  const selector = {
+    max: null,
+    min: null,
+    name: "booleanVal",
+    step: null,
+    type: "BOOLEAN",
+    unit: null,
+    value: null,
+  };
+  const sceneDevice = new SceneDevice({
+    device: new Device(lightData[0]),
+    selectors: [selector],
+    values: {
+      booleanVal: true,
+    },
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: {
+      sceneDevice: sceneDevice,
+      selector: selector,
+    },
+    appScope: {},
+  }).then(() => {
+    let vm = canViewModel($('arcus-scenes-device-configurator')[0]);
+  });
+</script>

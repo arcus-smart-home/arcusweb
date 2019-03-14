@@ -1,0 +1,166 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-card-status-irrigation">
+  <template>
+    <can-import from="i2web/components/countdown/" />
+    <arcus-countdown style="display:none;"
+      {^@cancel}="cancelCountdown"
+      {formatter}="@formatTimeLeft"
+      {^text}="wateringTimeLeft"
+      {to}="wateringStopTime"
+    />
+    {{#if isWatering}}
+      {{wateringTimeLeft}}
+    {{else}}
+      {{#if scheduleStatus.enabled}}
+        {{{scheduleText}}}
+      {{else}}
+        Manual
+      {{/if}}
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import moment from 'moment';
+    import 'can-map-define';
+    import { irrigationScheduleStatus } from 'i2web/components/schedule/irrigation-schedulers';
+    import Device from 'i2web/models/device';
+    import IrrigationControllerCapability from 'i2web/models/capability/IrrigationController';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/card/status/irrigation
+         * @description The device we are displaying status for
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} isWatering
+         * @parent i2web/components/device/card/status/irrigation
+         * @description Is the irrigation controller currently watering
+         */
+        isWatering: {
+          get() {
+            return this.attr('device').attr('irrcont:controllerState')
+              === IrrigationControllerCapability.CONTROLLERSTATE_WATERING;
+          },
+        },
+        /**
+         * @property {Subsystem} lawnGarden
+         * @parent i2web/components/device/card/status/irrigation
+         * @description Helper property for quick access to the LawnsNGarden subsystem
+         */
+        lawnGarden: {
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            return subsystems && subsystems.findByName('sublawnngarden');
+          },
+        },
+        /**
+         * @property {Object} scheduleStatus
+         * @parent i2web/components/device/card/status/irrigation
+         * @description Helper property to get the scheduleStatus object
+         */
+        scheduleStatus: {
+          get() {
+            return irrigationScheduleStatus(this.attr('device'));
+          },
+        },
+        /**
+         * @property {String} scheduleText
+         * @parent i2web/components/device/card/status/irrigation
+         * @description If we are not watering, and we are scheduled, what do we display
+         */
+        scheduleText: {
+          get() {
+            if (this.attr('lawnGarden')) {
+              const scheduled = this.attr('scheduleStatus');
+              const event = scheduled.attr('nextEvent.startTime');
+              if (event) {
+                const when = moment(event);
+                const format = when.isSame(new Date(), 'day') ? 'h:mm A' : 'ddd h:mm A';
+                return `
+                  <i class="icon-app-calendar-1"></i>
+                  ${when.format(format)}
+                `;
+              }
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Number} wateringStopTime
+         * @parent i2web/components/device/card/status/irrigation
+         * @description When the watering of this device is supposed to stop
+         */
+        wateringStopTime: {
+          get() {
+            if (this.attr('lawnGarden')) {
+              const watering = this.attr('zonesWatering');
+              if (watering) {
+                const { duration, startTime } = watering;
+                return (duration * 60 * 1000) + startTime;
+              }
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Object} zonesWatering
+         * @parent i2web/components/device/card/status/irrigation
+         * @description Helper property to get the zonesWatering object
+         */
+        zonesWatering: {
+          get() {
+            const lawnGarden = this.attr('lawnGarden');
+            if (lawnGarden) {
+              lawnGarden.attr('sublawnngarden:zonesWatering');
+              return lawnGarden
+                .attr('sublawnngarden:zonesWatering')
+                .attr(this.attr('device.base:address'));
+            }
+            return undefined;
+          },
+        },
+      },
+      /**
+       * @function {String} formatTimeLeft
+       * @param {Number} seconds The number of seconds to format
+       * @description Covert and stringify a number of seconds into minutes and hours
+       */
+      formatTimeLeft(seconds) {
+        if (seconds < 60) {
+          return `1m Left`;
+        }
+        const remaining = Math.floor(seconds / 60);
+        if (remaining < 60) {
+          return `${Math.round(remaining)}m Left`;
+        }
+        const parts = [];
+        const minutes = Math.round(remaining % 60);
+        const hours = Math.floor(remaining / 60);
+        if (hours > 0) { parts.push(`${hours}h`); }
+        if (minutes > 0) { parts.push(`${minutes}m`); }
+        return `${parts.join(' ')} Left`;
+      },
+    });
+  </script>
+</can-component>

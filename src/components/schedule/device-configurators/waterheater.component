@@ -1,0 +1,103 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-waterheater">
+  <template>
+    <can-import from="i2web/components/spinner/" />
+    <div class="select-heat-state large-spinner">
+      <h4>Select Temperature for <strong>{{thing.name}}</strong></h4>
+      <arcus-spinner {formatter}="@formatter" {(value)}="setPoint" {min}="60" {max}="maxSetPoint" {step}="1" />
+    </div>
+    <hr />
+    <h4>Select a Time</h4>
+    <small>Arcus will inform the water heater to start heating 90 minutes prior to the start time, so you'll have hot water at the start time.</small>
+
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import temperatureConverter from 'i2web/plugins/temperature-converter';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/waterheater
+         * @description The device attributes used for editing the configurator
+         */
+        attributes: {
+          type: '*',
+          set(attributes) {
+            const setPoint = attributes.attr('waterheater:setpoint');
+            this.attr('setPoint', temperatureConverter(setPoint, 'F'));
+
+            return attributes;
+          },
+        },
+        /**
+         * @property {number} maxSetPoint
+         * @parent i2web/components/schedule/device-configurators/waterheater
+         * @description The max setpoint for temperature
+         */
+        maxSetPoint: {
+          get() {
+            const maxSetPoint = this.attr('thing.waterheater:maxsetpoint');
+            return temperatureConverter(maxSetPoint, 'F');
+          },
+        },
+        /**
+         * @property {number} setPoint
+         * @parent i2web/components/schedule/device-configurators/waterheater
+         * @description The heat set point of the water heater
+         */
+        setPoint: {
+          type: 'number',
+          value: 80,
+          set(setPoint) {
+            let setTo = setPoint;
+            // if value shows 80 and decrement button is clicked, value becomes 60 and
+            // decrement button is disabled
+            if (setTo === 79) { setTo = 60; }
+            // If value shows 60 and increment button is clicked, value becomes 80 and
+            // decrement button is enabled
+            if (setTo === 61) { setTo = 80; }
+
+            if (this.attr('attributes')) {
+              this.attr('attributes.waterheater:setpoint', temperatureConverter(setTo, 'C'));
+            }
+            return setTo;
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/waterheater
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+      },
+      /**
+       * @function formatter
+       * @parent i2web/components/schedule/device-configurators/waterheater
+       * @description Formatter to apply to the set point
+       */
+      formatter(value) {
+        return `${value} <span class="value-unit">°</span>`;
+      },
+    });
+  </script>
+</can-component>

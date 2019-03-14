@@ -1,0 +1,73 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/accordion/panel/" />
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/create-account/finish.component" />
+<can-import from="i2web/components/event-list/" />
+<can-import from="i2web/components/subsystem/card/" />
+<can-import from="i2web/components/subsystem/favorites/" />
+<can-import from="i2web/helpers/global"/>
+<can-import from="i2web/helpers/subsystem" />
+
+<arcus-context-bar>
+  <a href="javascript:void(0)" ($click)="toggleSidebar" class="sidebar-toggle">
+    <i class="{{#if showSidebar}}icon-app-sidebar-2{{else}}icon-app-sidebar-1{{/if}}"></i>
+  </a>
+  <!--
+  <a href="{{routeUrl page="preferences" subpage="cards"}}" class="preferences">
+    <i class="icon-app-gear"></i>
+  </a>
+  -->
+</arcus-context-bar>
+<div class="row content">
+  <div class="sidebar-container{{#unless showSidebar}} hidden{{/unless}}">
+    <div class="sidebar">
+      <div class="place-image">
+        <img src="/src/images/default-home.jpg"/>
+      </div>
+      <div class="place-name">
+        <h2><i class="icon-app-location-2"></i> {{place['place:name']}}</h2>
+      </div>
+      <div ($click)="refreshHistory()" class="history-refresh">
+        <h2>
+          History
+          <i class="icon-app-refresh"></i>
+        </h2>
+      </div>
+      <arcus-event-list {retrieve-events}="@retrieveHistory" {^@refresh-history}="refreshHistory" {place}="place" class="sidebar"/>
+      <button class="btn-primary" ($click)="routeToHistory()" data-analytics="dashboard.history" >More</button>
+    </div>
+  </div>
+  <div class="subsystems">
+    {{#each availableCards}}
+      {{#eq .['serviceName'] 'FAVORITES'}}
+        <arcus-subsystem-card-favorites {place}="place" {devices}="devices" {scenes}="scenes"/>
+      {{else}}
+        <arcus-subsystem-card {subsystem}=".['subsystem']" />
+      {{/eq}}
+    {{/each}}
+    {{#each unavailableCards}}
+      <arcus-subsystem-card {subsystem}=".['subsystem']" />
+    {{/each}}
+  </div>
+</div>
+<arcus-create-account-finish
+  {account}="account"
+  {from-email-link}="fromEmailLink"
+  {place}="place"
+/>

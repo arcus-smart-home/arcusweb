@@ -1,0 +1,72 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-catalog-selectable {thing}="brand" {thing-type}="'brand'"/>
+  <arcus-catalog-selectable {thing}="category" {thing-type}="'category'" />
+  <arcus-catalog-selectable {thing}="product" {thing-type}="'product'" />
+  <arcus-catalog-selectable {thing}="newArcusProduct" {thing-type}="'product'" />
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/catalog/selectable/';
+  import ProductData from 'i2web/models/fixtures/data/product.json'
+
+  const brand =  {
+    "description": null,
+    "image": null,
+    "name": "Arcus"
+  };
+
+  const category = {
+    "name": "Lights & Switches"
+  };
+  const session = new CanMap({
+    "secureStaticResourceBaseUrl": "https://ssr.arcus.com",
+  });
+
+  const newArcusProduct = {
+    "base:id": "aa30aa",
+    "product:id": "aa30aa",
+    "base:address": "SERV:product:aa30aa",
+    "product:screen": "Pendant",
+    "product:hubRequired": true,
+    "product:canBrowse": true,
+    "product:name": "New Pendant",
+    "product:shortName": "New Pendant",
+    "product:manufacturer": "CentraLite Systems",
+    "product:vendor": "Arcus"
+  };
+
+  const scope = new CanMap({
+    brand,
+    category,
+    product: ProductData[0],
+    newArcus Product,
+  });
+  const appScope = new CanMap({
+    session,
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

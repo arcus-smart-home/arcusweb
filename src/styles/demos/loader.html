@@ -1,0 +1,47 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="i2web/styles/global-styles.less!"/>
+  <h2>Standard Loader</h2>
+  <p><code>.loader</code></p>
+  <div class="loader">Loading...</div>
+  <div class="loader-wrapper">
+    <hr/>
+    <p>In a <code>.loader-wrapper</code></p>
+    <div class="loader">Loading...</div>
+    <p>Additional Loading Text</p>
+    <hr/>
+  </div>
+  <hr />
+  <h2>Pigeon Background Loader</h2>
+  <p><code>.gray-loader</code></p>
+  <div style="background-color: #EFEFEF;">
+    <div class="gray-loader">Loading...</div>
+  </div>
+  <hr />
+  <h2>Dark Background Loader</h2>
+  <p><code>.dark-loader</code></p>
+  <div style="background-color: black;">
+    <div class="dark-loader">Loading...</div>
+  </div>
+  <h2>In a button</h2>
+  <div>
+  <button class="btn saving disabled"><div class="loader">Loading...</div> Button Text</button>
+  </div>
+</script>
+<script src="../../../node_modules/steal/steal.js"
+        main="can-view-autorender/"></script>

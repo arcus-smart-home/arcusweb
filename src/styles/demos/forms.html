@@ -1,0 +1,162 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+.input-wrapper {
+  margin-top: 30px;
+}
+</style>
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="i2web/styles/global-styles.less!"/>
+  <div>
+  <h3>Text Inputs</h3>
+    <div class="input-wrapper">
+      <input type="text" id="text-input-example"{($value)}="text-input-example">
+      <label for="text-input-example">Text Input</label>
+    </div>
+    <div class="input-wrapper alternate-style">
+      <input type="text" id="text-input-example"{($value)}="text-input-example">
+      <label for="text-input-example">Alternate Style Text Input</label>
+    </div>
+    <div class="input-wrapper is-invalid">
+      <input type="text" id="text-input-error"{($value)}="text-input-error">
+      <label for="text-input-error">Text Input</label>
+      <p class="error">Invalid Text Input</p>
+    </div>
+  </div>
+  <div class="radio-buttons">
+  <h3>Radio Buttons</h3>
+    <ul>
+      <li class="radio-wrapper">
+        <input type="radio" id="wayne-manor" name="selector">
+        <label for="wayne-manor">Wayne Manor</label>
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper">
+        <input type="radio" id="bat-cave" name="selector">
+        <label for="bat-cave">Bat Cave</label>
+        <div class="check"></div>
+      </li>
+    </ul>
+  </div>
+  <div class="radio-buttons">
+  <h3>[Radio] Checkboxes</h3>
+    <ul>
+      <li class="radio-wrapper">
+        <label for="checkbox-regular">Regular Checkbox</label>
+        <input class="radio-checkbox" type="checkbox" id="checkbox-regular" checked >
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper small-radio">
+        <label for="checkbox-small">Small Checkbox</label>
+        <input class="radio-checkbox" type="checkbox" id="checkbox-small">
+        <div class="check"></div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <div class="radio-buttons">
+    <h3>[Radio] Checkboxes w/ Multi-Line Content</h3>
+    <p>The structure for having a title and subtext in a checkbox or radio button is a little different than above. The label tag will need the class <code>.complex-label</code>. The label content will need to be wrapped in a <span> tag with the class <code>.name</code> if you only want one line of subtext (additional text will be clipped and an elipsis "..." will be added to the end, or the class <code>.name-multi</code> to the span if you want the content to wrap as much as it needs to.</p>
+    <p>The label needs to be structured within the <span> tag with the title first, then a break tag <code>&lt;br&gt;</code> and then the subtext content.</p>
+    <p>In the demo below, a width of 50% have been added to the list to show clipping/wrapping. This is for demo purposes only.</p>
+    <ul style="width: 50%;">
+      Using <code>.name</code> on the span. <br><br>
+      <li class="radio-wrapper">
+        <label class="complex-label" for="checkbox-regular">
+          <span class="name">Fun Header Name<br>
+            <small class="type">Really cool one line of subcontent here. It goes on and on and on and on and on</small>
+          </span>
+        </label>
+        <input class="radio-checkbox" type="checkbox" checked >
+        <div class="check"></div>
+      </li>
+      Using <code>.name-multi</code> on the span.<br><br>
+      <li class="radio-wrapper">
+        <label class="complex-label" for="checkbox-regular">
+          <span class="name-multi">Fun Header Name<br>
+            <small class="type">Really cool multi-line of subcontent here. It goes on and on and on and on and on.</small>
+          </span>
+        </label>
+        <input class="radio-checkbox" type="checkbox" >
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper">
+        <label class="complex-label" for="checkbox-regular">
+          <span class="name-multi">Fun Header Name<br>
+            <small class="type">Really cool multi-line of subcontent here. It goes on and on and on and on and on. It goes on and on and on and on and on. It goes on and on and on and on and on.</small>
+          </span>
+        </label>
+        <input class="radio-checkbox" type="checkbox" >
+        <div class="check"></div>
+      </li>
+    </ul>
+  </div>
+  <div class="radio-buttons">
+    <h3>[Radio] Checkboxes when vertically centered on content</h3>
+    <p>Moving forward we've simplified centering radio and checkboxes on vertical content. If you want to vertically align a checkbox on content add the class <code>.centered-checkbox</code> to the class <code>.check</code>. This class overwrites <code>align-self: flex-start;</code> with <code>align-self: center;</code>.</p>
+    <p>NOTE: Prior to this class add (sprint 2.11) checkboxes were centered vertically on content within the component (e.g. Place Selector, Notification List, some side panels, etc. These were left as is. Please use the new method above moving forward.</p>
+    <br><br>
+    <div class="panel-content">
+      <ul class="option-list">
+        <li class="radio-wrapper" ($click)="selectOption(.)">
+          <input type="radio" name="device" {$checked}="isSelectedContext(.)" id="device-0">
+          <label class="complex-label" for="device-0">
+            <i class="icon-platform-carep-1 icon"></i>
+            <span class="name">alert me cp
+              <br>
+              <small class="type">Arcus Care Pendant</small>
+            </span>
+          </label>
+          <div class="check centered-checkbox"></div>
+        </li>
+      </ul>
+    </div>
+    <br><br>
+    <div class="panel-content">
+      <div class="content-container">
+        <ul class="panel-menu">
+          <li class="radio-wrapper" ($click)="setAccessType('FULL_ACCESS')">
+            <input type="radio" id="full-access" name="access-type">
+            <label for="full-access">
+              Full Access <small>(Email Required)</small>
+              <p class="small">Really cool multi-line of subcontent here. It goes on and on and on and on and on. It goes on and on and on and on and on. <br>It goes on and on and on and on and on. It goes on and on and on and on and on. It goes on and on and on and on and on.</p>
+            </label>
+            <div class="check centered-checkbox"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notification-container">
+      <ul class="notification-list">
+        <li class="radio-wrapper enabled-person">
+            <div class="buttons move-person">
+                <i class="icon-app-chevron chevron-btn down" ($click)="moveDown(., %event)"></i>
+            </div>
+          <label for="checkbox-regular" class="complex-label" ($click)="toggleFlag(., %event)">
+            <i class="icon-app-user-1 avatar"></i>
+            <span class="name">Jon Stewart</span>
+          </label>
+          <input class="radio-checkbox" type="checkbox" id="checkbox-regular">
+          <div class="check centered-checkbox"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</script>
+<script src="../../../node_modules/steal/steal.js"
+        main="can-view-autorender"></script>

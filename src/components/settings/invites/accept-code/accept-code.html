@@ -1,0 +1,100 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>&lt;arcus-settings-invites-accept-code&gt;</title>
+  <style>
+    .trigger {
+      margin: 100px;
+    }
+  </style>
+</head>
+<body>
+  <script type="text/stache" id="demo-html">
+    <can-import from="flexboxgrid/dist/flexboxgrid.min.css"/>
+    <arcus-notifications {(events)}="notifications" />
+    <div>
+      <button class="btn trigger" ($click)="acceptInvitationCode()">
+        ACCEPT INVITATION
+      </button>
+    </div>
+    <arcus-side-panel class="is-right" {(content)}="content" />
+  </script>
+
+  <script src="../../../../../node_modules/steal/steal-sans-promises.js" data-main="@empty">
+    import CanMap from 'can-map';
+    import canViewModel from 'can-view-model';
+    import domData from 'can-util/dom/data/';
+    import stache from 'can-stache';
+
+    import Person from 'i2web/models/person';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import 'i2web/app.less';
+    import 'i2web/components/side-panel/side-panel';
+    import 'i2web/components/notifications/notifications';
+    import 'i2web/components/settings/invites/accept-code/accept-code';
+
+    // inject dummy AppState to html element (the SideBar needs this)
+    const appState = new CanMap({
+      rightPanelContent: {},
+      notifications: [],
+    });
+    domData.set.call(document.querySelector('html'), 'viewModel', appState);
+
+    const person = new Person({});
+    person.ChangePinV2 = function ChangePinV2() {
+      return Promise.resolve({ success: true });
+    };
+
+    // render the side panel
+    const template = stache(document.querySelector('#demo-html').innerHTML);
+    const scope = new CanMap({
+      notifications: appState.attr('notifications'),
+      content: domData
+        .get
+        .call(document.querySelector('html'), 'viewModel')
+        .compute('rightPanelContent'),
+      acceptInvitationCode() {
+        SidePanel.right(
+          `<arcus-settings-invites-accept-code
+            {person}="person"
+            place-name="My Awesome New Place"
+            {accept-invitation}="@acceptInvitation"
+          />`,
+          {
+            person,
+            acceptInvitation() {
+              return new Promise((resolve, reject) => {
+                setTimeout(resolve, 250);
+                // const error = new Error('Uh-oh, something went wrong!');
+                // error.code = 'request.destination.notfound';
+                // setTimeout(() => reject(error), 250);
+              });
+            }
+          }
+        );
+      },
+    });
+    document.body.appendChild(template(scope));
+    window.canViewModel = canViewModel;
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-generic-selector">
+  <template>
+    <ul class="option-list">
+      {{#each things}}
+        <li class="radio-wrapper" ($click)="_selectOption(this)">
+          <input type="radio" value="thing-{{%index}}" name="thingname-{{componentKey}}" {$checked}="_isSelectedContext(this)">
+          <label for="thing-{{%index}}" class="complex-label">{{{iconOf(.)}}}{{{thingName(., nameKey)}}}</label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+    </ul>
+  </template>
+  <script type="helpers">
+    import _ from 'lodash';
+
+    export default {
+      /**
+       * @function thingName
+       * @param {thing} thing The thing to attempt to name
+       * Attempts to pull out a name out of the thing to render
+       *
+       * @return {String} The name of the thing if it can find one, otherwise 'Unknown'
+       */
+      thingName(thing, nameSelector) {
+        let names = _([nameSelector, 'person:name', 'person:email', 'dev:name', 'name']);
+
+        names = names.map((attr) => {
+          return thing.attr(attr);
+        })
+        .omitBy(_.isUndefined)
+        .omitBy(_.isEmpty)
+        .toArray()
+        .value();
+
+        return names[0] || 'Unknown';
+      },
+    };
+  </script>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canList from 'can-list';
+    import canDev from 'can-util/js/dev/';
+    import 'can-map-define';
+    import 'i2web/helpers/global';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canList} things
+         * @parent i2web/components/selectors/generic
+         * @description The list of things that will be displayed for the User to select
+         */
+        things: {
+          Type: canList,
+        },
+        componentKey: {
+          type: String,
+          value() {
+            return Math.random().toString(36).substring(5);
+          },
+        },
+        nameKey: {
+          type: String,
+          value: '',
+        },
+      },
+      /**
+       * @function _isSelectedContext
+       * @param {Object} thing The current option
+       * Requires `isSelected` to be passed into the component to determine
+       * whether the thing passed in is the selected thing or not
+       *
+       * @return {Boolean} Whether the current thing is the selected thing
+       */
+      _isSelectedContext(thing) {
+        if (this.isSelected !== undefined) {
+          const isSelected = this.isSelected(thing);
+
+          if (isSelected) {
+            this.attr('selectedThing', thing);
+          }
+
+          return isSelected;
+        }
+
+        canDev.warn('isSelected is not passed into the component, returning false');
+        return false;
+      },
+      /**
+       * @function _selectOption
+       * @param {Object} thing The current option
+       * Requires `selectOption` to be passed into the component to actively
+       * select the item for whatever it's purpose is.
+       */
+      _selectOption(thing) {
+        if (this.selectOption !== undefined) {
+          return this.selectOption(thing);
+        }
+
+        this.attr('selectedThing', thing);
+
+        canDev.warn('selectOption is not passed into the component');
+        return false;
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,212 @@
+arcus-page-history {
+  display: flex;
+  flex-direction: column;
+}
+
+arcus-page-history, .history {
+  .context-bar {
+    justify-content: space-between;
+    border-bottom: @border;
+  }
+  .history-refresh {
+    position: absolute;
+    right: @gutter;
+    top: @gutter;
+    z-index: @zindex-tooltip;
+    i {
+      transition: all 0.15s ease;
+      font-size: @font-size-larger;
+      color: @link-color;
+      &:hover {
+        opacity: 0.75;
+        cursor: pointer;
+      }
+    }
+  }
+  .sidebar {
+    background-color: @pigeon;
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+    border-bottom: @border;
+    border-right: none;
+    max-width: 100%;
+    width: 100%;
+    flex: 0 1 100%;
+    .breakpoint(sm, {
+      padding-left: @gutter;
+      padding-right: @gutter;
+      border-bottom: none;
+      border-right: @border;
+      max-width: 350px;
+      width: 50%;
+      flex-basis: auto;
+    });
+  }
+  .panel-menu {
+    padding-left: 0;
+    margin-top: @gutter;
+  }
+  .radio-wrapper {
+    align-items: flex-start;
+    padding-bottom: @gutter/2;
+
+    .check {
+      cursor: pointer;
+    }
+    label {
+      .breakpoint(sm-down {
+        font-size: @font-size-large;
+        margin-right: 0;
+      });
+    }
+  }
+  .radio-dropdown-wrapper {
+    width: 100%;
+  }
+  .dropdown-wrapper {
+    height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transform: translateY(-20px) scaleY(0);
+    &.checked {
+      height: 63px;
+      opacity: 1;
+      transition: height .3s linear, transform .25s linear;
+      transform: translateY(0) scaleY(1);
+      z-index: @zindex-dropdown;
+      .ui.selection.dropdown {
+        color: @text-color;
+        .item-name {
+          line-height: 1;
+          margin-top: @line-height/2;
+        }
+      }
+    }
+    &:not(:first-of-type) {
+      padding-top: inherit;
+    }
+    .ui.selection.dropdown {
+      color: @grouse;
+      background-color: @pigeon;
+    }
+    .item-name {
+      color: @swift;
+    }
+  }
+
+
+  .event-listing {
+    max-width: 100%;
+    flex: 1 1 auto;
+    position: relative;
+  }
+  .header-nav {
+    padding-bottom: @gutter;
+    padding-top: @gutter;
+    border-bottom: @border;
+    text-align: center;
+    h3 {
+      font-size: @font-size-h2;
+      margin: 0;
+    }
+  }
+  .infinite-footer {
+    border-top: @border;
+    padding-top: @gutter/2;
+    padding-left: @gutter/2;
+    .breakpoint(sm, {
+      padding-top: @gutter;
+    });
+    .breakpoint(md, {
+      padding-left: @gutter;
+    });
+  }
+  arcus-infinite-scroll {
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+    ul {
+      height: calc(~'100% -' (@infinite-footer-height + 86px)); //86px = height of scroller header
+    }
+    .event-item {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 100%;
+      flex-basis: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+      .breakpoint(md, {
+        margin-left: @gutter/2;
+        margin-right: @gutter;
+      });
+
+    }
+    .event {
+      padding-top: @gutter/2;
+      padding-bottom: @gutter/2;
+      border-bottom: @border;
+      margin-bottom: 0;
+      &.hidden {
+        display: none;
+      }
+      p {
+        font-size: @font-size-large;
+        margin-bottom: 0;
+      }
+    }
+    .date {
+      flex: 0 1 100%;
+      padding-top: @gutter;
+      padding-bottom: @gutter;
+      border-bottom: @border;
+      margin-left: @gutter*2.5;
+      &.hidden {
+        display: none;
+      }
+      h3 {
+        text-align: center;
+        margin-left: -(@gutter*4);
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+    }
+    .time {
+      .font-demibold;
+      display: inline-block;
+      width: 90px;
+      text-align: right;
+      text-transform: uppercase;
+      font-size: @font-size-small;
+      padding-right: @gutter/2;
+      padding-top: @gutter/2;
+      line-height: 2.18;
+      white-space: nowrap;
+    }
+    .tombstone {
+      .time {
+        height: @font-size-small;
+        background-color: @heron;
+        border-right: @gutter/2 solid @body-bg;
+      }
+      .event {
+        .event-description {
+          width: 97%;
+        }
+        p {
+          height: @font-size-large;
+          background-color: @heron;
+          margin-bottom: @gutter/2;
+          width: 100%;
+        }
+        small {
+          display: block;
+          width: 80%;
+          height: @font-size-small;
+          background-color: @heron;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+  }
+}

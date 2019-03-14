@@ -1,0 +1,43 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/form/billing/" />
+<can-import from="i2web/components/settings/places/update-service-level/premium-to-basic.component" />
+<can-import from="i2web/components/settings/places/update-service-level/promon-to-basic.component" />
+<can-import from="i2web/components/settings/places/update-service-level/promon-to-premium.component" />
+<can-import from="i2web/components/settings/places/update-service-level/upgrade.component" />
+
+{{#switch activeDisplay}}
+  {{#case 'confirm'}}
+    {{close-button type="cancel"}}
+    {{#if downgradeType}}
+      {{downgrade-component(downgradeType)}}
+    {{else}}
+      <arcus-settings-update-service-level-upgrade {service-level}="newServiceLevel" />
+    {{/if}}
+    <hr>
+    <button ($click)="confirmUpdate()" class="btn {{#if saving}}saving disabled{{/if}}">
+      {{#if saving}}
+        <div class="loader" /> Saving
+      {{else}}
+        Confirm
+      {{/if}}
+    </button>
+  {{/case}}
+  {{#case 'billing'}}
+    <arcus-form-billing {(account)}="account" {on-save}="@onSave" {initial-error}="upgradeError" {place}="place" />
+  {{/case}}
+{{/switch}}

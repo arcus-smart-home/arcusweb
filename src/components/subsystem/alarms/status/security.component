@@ -1,0 +1,642 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-status-security">
+  <template>
+    <can-import from="i2web/components/shop-button.component" />
+    <can-import from="i2web/components/subsystem/alarms/bypass-confirm.component" />
+    <can-import from="i2web/components/segmented-radial/" />
+    <can-import from="i2web/components/segmented-radial/segment/" />
+    <can-import from="i2web/components/countdown/" />
+    <can-import from="i2web/components/subsystem/alarms/devices/security/" />
+    <can-import from="i2web/helpers/global" />
+
+    {{!-- this will only be shown when isArming is true --}}
+    <arcus-countdown {to}="countdownTo" {^@cancel}="cancelCountdown" {^text}="armingCountdown" style="display:none;" />
+
+    {{! START CARD }}
+    {{#if condensed}}
+      <div class="status-header">
+        <h2>
+          <a
+            data-analytics="dashboard.{{subsystem.analyticsTag}}"
+            href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}"
+          >
+            <i class="{{typeIcon}}"></i>
+            {{typeName}}
+          </a>
+        </h2>
+      </div>
+      {{#if isArming}}
+        <arcus-segmented-radial {text}="armingCountdown">
+          <arcus-segmented-radial-segment state="arming" />
+        </arcus-segmented-radial>
+      {{else}}
+        {{#if isInactive}}
+          <arcus-segmented-radial />
+        {{else}}
+          <arcus-segmented-radial {is-off}="enableOnAndPartial">
+            {{#if enableOnAndPartial}}
+              <arcus-segmented-radial-segment />
+            {{else}}
+              {{#subsystem['alarm:activeDevices:SECURITY'])}}
+                <arcus-segmented-radial-segment state="ready" />
+              {{/subsystem['alarm:activeDevices:SECURITY'])}}
+              {{#subsystem['alarm:offlineDevices:SECURITY'])}}
+                <arcus-segmented-radial-segment state="alarming" />
+              {{/subsystem['alarm:offlineDevices:SECURITY'])}}
+              {{#subsystem['alarm:triggeredDevices:SECURITY'])}}
+                <arcus-segmented-radial-segment />
+              {{/subsystem['alarm:triggeredDevices:SECURITY'])}}
+            {{/if}}
+          </arcus-segmented-radial>
+        {{/if}}
+      {{/if}}
+      {{#if isArming}}
+        <p class="bold">{{statusTimeText}}</p>
+      {{else}}
+        <small>{{statusTimeText}}</small>
+      {{/if}}
+      {{#if subsystem['alarm:devices:SECURITY.length']}}
+        <small>{{bypassedOfflineText}}</small>
+        <div class="alarm-state-buttons">
+          {{#if isArming}}
+            <button class="btn-cancel" ($click)="disarmAlarm('cancel')">
+              {{#if waitingForDisarm}}
+                <div class="loader"></div>
+              {{else}}
+                Cancel
+              {{/if}}
+            </button>
+          {{else}}
+            <button class="btn {{^if enableOn}}disabled{{/if}} {{#if waitingForArm}}disabled saving{{/if}}"
+              ($click)="armAlarm('ON')">
+              {{#if waitingForArm}}
+                <div class="loader"></div>
+              {{else}}
+                On
+              {{/if}}
+            </button>
+            <button class="btn {{^if enablePartial}}disabled{{/if}} {{#if waitingForPartial}}disabled saving{{/if}}"
+              ($click)="armAlarm('PARTIAL')">
+              {{#if waitingForPartial}}
+                <div class="loader"></div>
+              {{else}}
+                Partial
+              {{/if}}
+            </button>
+            <button class="btn {{^if enableOff}}disabled{{/if}} {{#if waitingForDisarm}}disabled saving{{/if}}"
+              ($click)="disarmAlarm()">
+              {{#if waitingForDisarm}}
+                <div class="loader"></div>
+              {{else}}
+                Off
+              {{/if}}
+            </button>
+          {{/if}}
+        </div>
+      {{else}}
+        <p class="bold">The Security Alarm Service helps you protect what matters most.</p>
+        <arcus-shop-button href="{{redirectToUrl(shoppingURLKey)}}" expanded>
+          Shop Devices
+        </arcus-shop-button>
+      {{/if}}
+    {{! END CARD }}
+
+    {{! START STATUS }}
+    {{else}}
+      <div class="status-header">
+        <h2>
+          <i class="{{typeIcon}}"></i>
+          {{typeName}}
+        </h2>
+        {{#if subsystem['alarm:monitored:SECURITY']}}
+          <span class="pro-badge">Pro</span>
+        {{/if}}
+      </div>
+      <div class="left-content">
+        {{#if isArming}}
+          <arcus-segmented-radial {text}="armingCountdown">
+            <arcus-segmented-radial-segment state="arming" />
+          </arcus-segmented-radial>
+        {{else}}
+          {{#if isInactive}}
+            <arcus-segmented-radial />
+          {{else}}
+            <arcus-segmented-radial {is-off}="enableOnAndPartial">
+              {{#if enableOnAndPartial}}
+                <arcus-segmented-radial-segment />
+              {{else}}
+                {{#subsystem['alarm:activeDevices:SECURITY'])}}
+                  <arcus-segmented-radial-segment state="ready" />
+                {{/subsystem['alarm:activeDevices:SECURITY'])}}
+                {{#subsystem['alarm:offlineDevices:SECURITY'])}}
+                  <arcus-segmented-radial-segment state="alarming" />
+                {{/subsystem['alarm:offlineDevices:SECURITY'])}}
+                {{#subsystem['alarm:triggeredDevices:SECURITY'])}}
+                  <arcus-segmented-radial-segment />
+                {{/subsystem['alarm:triggeredDevices:SECURITY'])}}
+              {{/if}}
+            </arcus-segmented-radial>
+          {{/if}}
+        {{/if}}
+        {{#if isArming}}
+          <p class="bold">{{statusTimeText}}</p>
+        {{else}}
+          <small>{{statusTimeText}}</small>
+        {{/if}}
+        {{#if subsystem['alarm:devices:SECURITY.length']}}
+          <small>{{bypassedOfflineText}}</small>
+        {{else}}
+          <p class="bold">The Security Alarm Service helps you protect what matters most.</p>
+          <arcus-shop-button href="{{redirectToUrl(shoppingURLKey)}}" expanded>
+            Shop Devices
+          </arcus-shop-button>
+        {{/if}}
+      </div>
+      <div class="right-content">
+        {{#if subsystem['alarm:devices:SECURITY.length']}}
+          <div class="alarm-state-buttons">
+            {{#if isArming}}
+              <button class="btn-cancel" ($click)="disarmAlarm('cancel')">
+                {{#if waitingForDisarm}}
+                  <div class="loader"></div>
+                {{else}}
+                  Cancel
+                {{/if}}
+              </button>
+            {{else}}
+              <button class="btn {{^if enableOn}}disabled{{/if}} {{#if waitingForArm}}disabled saving{{/if}}"
+                      ($click)="armAlarm('ON')">
+                {{#if waitingForArm}}
+                  <div class="loader"></div>
+                {{else}}
+                  On
+                {{/if}}
+              </button>
+              <button class="btn {{^if enablePartial}}disabled{{/if}} {{#if waitingForPartial}}disabled saving{{/if}}"
+                      ($click)="armAlarm('PARTIAL')">
+                {{#if waitingForPartial}}
+                  <div class="loader"></div>
+                {{else}}
+                  Partial
+                {{/if}}
+              </button>
+              <button class="btn {{^if enableOff}}disabled{{/if}} {{#if waitingForDisarm}}disabled saving{{/if}}"
+                      ($click)="disarmAlarm()">
+                {{#if waitingForDisarm}}
+                  <div class="loader"></div>
+                {{else}}
+                  Off
+                {{/if}}
+              </button>
+            {{/if}}
+          </div>
+          <button class="btn" ($click)="manageDevices()">
+            Manage Devices
+          </button>
+        {{else}}
+          <p>To enable this feature, at least one of the following devices must be paired.</p>
+          <ul class="device-list">
+            <li>Contact Sensor</li>
+            <li>Motion Sensor</li>
+            <li>Glass Break Sensor</li>
+            <li>Cameras (via Internal Motion Sensor)</li>
+            <li>Door Hinge Sensor</li>
+            <li>Tilt Sensor</li>
+          </ul>
+          <small>
+            More than 1 security device is strongly recommended to properly
+            secure your home and reduce false alarms.
+          </small>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{! END STATUS }}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import moment from 'moment';
+    import tz from 'jstz';
+    import Analytics from 'i2web/plugins/analytics';
+    import AppState from 'i2web/plugins/get-app-state';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import AlarmCapability from 'i2web/models/capability/Alarm';
+    import AlarmSubsystemCapability from 'i2web/models/capability/AlarmSubsystem';
+    import Place from 'i2web/models/place';
+    import Subsystem from 'i2web/models/subsystem';
+    import AlarmsConfig from 'config/alarms.json';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {string} armingCountdown
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The countdown until the alarm subsystem will arm
+         * (received from the countdown component). For ITWO-11678, we don't
+         * want to handle the segmented-radial a false value. So that we render
+         * the countdown until the alarmState changes
+         */
+        armingCountdown: {
+          get(countdown) {
+            return (!countdown) ? ' ' : countdown;
+          },
+        },
+        /**
+         * @property {number} countdownTo
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Countdown to the armTime plus one second
+         */
+        countdownTo: {
+          get() {
+            const armTime = this.attr('subsystem.subalarm:securityArmTime');
+            return armTime && (armTime + 1000);
+          },
+        },
+        /**
+         * @property {string} bypassedOfflineText
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Display the number of devices bypassed in the security system
+         */
+        bypassedOfflineText: {
+          type: 'string',
+          get() {
+            if (this.attr('isArming')) return 'Arming...';
+
+            const statusText = [];
+            const excludedCount =
+              this.attr('subsystem.alarm:triggeredDevices:SECURITY.length');
+            if (excludedCount > 0) statusText.push(`${excludedCount} Bypassed`);
+            const offlineCount =
+              this.attr('subsystem.alarm:offlineDevices:SECURITY.length');
+            if (offlineCount > 0) statusText.push(`${offlineCount} Offline`);
+            return statusText.join(', ');
+          },
+        },
+        /**
+         * @property {htmlbool} condensed
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If true this component is being rendered on the dashboard
+         */
+        condensed: {
+          type: 'htmlbool',
+          value: false,
+        },
+        /**
+         * @property {boolean} enableOff
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the Off button should be enabled, and device rings should be shown
+         * Logic taken directly from: https://eyeris.atlassian.net/wiki/display/I2D/Alarm+Service+Card
+         */
+        enableOff: {
+          type: 'boolean',
+          get() {
+            const state = this.attr('subsystem.alarm:alertState:SECURITY');
+            return state === AlarmCapability.ALERTSTATE_ARMING
+              || state === AlarmCapability.ALERTSTATE_READY
+              || state === AlarmCapability.ALERTSTATE_ALERT
+              || state === AlarmCapability.ALERTSTATE_PREALERT;
+          },
+        },
+        /**
+         * @property {boolean} enableOn
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the On button should be enabled
+         * Logic taken directly from: https://eyeris.atlassian.net/wiki/display/I2D/Alarm+Service+Card
+         */
+        enableOn: {
+          type: 'boolean',
+          get() {
+            return this.attr('enableOnAndPartial') && !this.attr('waitingForPartial');
+          },
+        },
+        /**
+         * @property {boolean} enablePartial
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the Partial button should be enabled
+         * Logic taken directly from: https://eyeris.atlassian.net/wiki/display/I2D/Alarm+Service+Card
+         */
+        enablePartial: {
+          type: 'boolean',
+          get() {
+            return this.attr('enableOnAndPartial') && !this.attr('waitingForArm');
+          },
+        },
+        /**
+         * @property {boolean} enableOnAndPartial
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the On and Partial buttons should be enabled, the ring should read 'Off'
+         * Logic taken directly from: https://eyeris.atlassian.net/wiki/display/I2D/Alarm+Service+Card
+         */
+        enableOnAndPartial: {
+          type: 'boolean',
+          get() {
+            const state = this.attr('subsystem.alarm:alertState:SECURITY');
+            return state === AlarmCapability.ALERTSTATE_DISARMED
+              || state === AlarmCapability.ALERTSTATE_CLEARING;
+          },
+        },
+        /**
+         * @property {boolean} hubAlarmProviderOffline
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Indicates whether the hub is offline and it also provides local alarm services
+         */
+        hubAlarmProviderOffline: {
+          type: 'boolean',
+          get() {
+            const hub = AppState().attr('hub');
+            if (hub && hub.attr('isOffline') &&
+              this.attr('subsystem.subalarm:alarmProvider') === AlarmCapability.ALARMPROVIDER_HUB) {
+              return true;
+            }
+            return false;
+          },
+        },
+        /**
+         * @property {boolean} isArming
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the security system is 'ARMING'
+         */
+        isArming: {
+          type: 'boolean',
+          get() {
+            const state = this.attr('subsystem.alarm:alertState:SECURITY');
+            return state === AlarmCapability.ALERTSTATE_ARMING;
+          },
+        },
+        /**
+         * @property {boolean} isInactive
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description If the alarm type is inactive
+         */
+        isInactive: {
+          type: 'boolean',
+          get() {
+            const state = this.attr('subsystem.alarm:alertState:SECURITY');
+            return state === AlarmCapability.ALERTSTATE_INACTIVE;
+          },
+        },
+        /**
+         * @property {Place} place
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The subsystem's place
+         */
+        place: {
+          Type: Place,
+          get() {
+            return AppState().attr('place');
+          },
+        },
+        /**
+         * @property {string} shoppingURLKey
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The key for the URL that points to specific alarm type devices
+         */
+        shoppingURLKey: {
+          type: 'string',
+          get() {
+            return AlarmsConfig.security.shoppingURLKey;
+          },
+        },
+        /**
+         * @property {string} statusTimeText
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The alarm status text akin to <status> since <time>
+         */
+        statusTimeText: {
+          type: 'string',
+          get() {
+            if (this.attr('isArming')) {
+              return 'Grace Period Countdown';
+            }
+            if (!this.attr('subsystem.alarm:devices:SECURITY.length')) {
+              return '0 Devices Paired';
+            }
+            if (this.attr('enableOnAndPartial')) {
+              const lastDisarmedTime = this.attr('subsystem.subalarm:lastDisarmedTime');
+              return `Off Since ${this.formatDateTime(lastDisarmedTime)}`;
+            }
+            if (this.attr('enableOff')) {
+              const status = this.attr('subsystem.subalarm:securityMode');
+              const lastArmedTime = this.attr('subsystem.subalarm:lastArmedTime');
+              if (status === AlarmSubsystemCapability.SECURITYMODE_ON) {
+                return `On Since ${this.formatDateTime(lastArmedTime)}`;
+              }
+              if (status === AlarmSubsystemCapability.SECURITYMODE_PARTIAL) {
+                return `Partial Since ${this.formatDateTime(lastArmedTime)}`;
+              }
+            }
+            // AlarmSubsystemCapability.SECURITYMODE_INACTIVE
+            // no time is displayed because the SHOP button is displayed
+            return '';
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The alarm subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {string} type
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The icon for the alarm type; smoke / co / water
+         */
+        typeIcon: {
+          type: 'string',
+          get() {
+            return AlarmsConfig.security.icon;
+          },
+        },
+        /**
+         * @property {boolean} waitingForArm
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Indicates if the user has pressed Arm and is waiting for the platform and hub to respond
+         */
+        waitingForArm: {
+          type: 'boolean',
+        },
+        /**
+         * @property {boolean} waitingForDisarm
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Indicates if the user has pressed Disarm and is waiting for the platform and hub to respond
+         */
+        waitingForDisarm: {
+          type: 'boolean',
+        },
+        /**
+         * @property {boolean} waitingForPartial
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description Indicates if the user has pressed Partial and is waiting for the platform and hub to respond
+         */
+        waitingForPartial: {
+          type: 'boolean',
+        },
+        /**
+         * @property {string} typeName
+         * @parent i2web/components/subsystem/alarms/status/security
+         * @description The name of the alarm type that will be displayed
+         */
+        typeName: {
+          type: 'string',
+          get() {
+            return AlarmsConfig.security.displayName;
+          },
+        },
+      },
+      /**
+       * @function armAlarm
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @parm {string} mode The mode in which to arm the alarm
+       * @description Set the alarm subsystem to ON or PARTIAL
+       */
+      armAlarm(mode, bypassed = false) {
+        if (bypassed) {
+          SidePanel.closeRight();
+        } else if (mode === 'ON') {
+          this.attr('waitingForArm', true);
+        } else {
+          this.attr('waitingForPartial', true);
+        }
+        const subsystem = this.attr('subsystem');
+        const armFunction = (!bypassed) ? subsystem.Arm : subsystem.ArmBypassed;
+        (armFunction.bind(subsystem))(mode).then(() => {
+          Analytics.tag(
+            mode === 'ON' ? 'alarms.security.on' : 'alarms.security.partial',
+          );
+          this.attr('waitingForArm', false);
+          this.attr('waitingForPartial', false);
+        }).catch((e) => {
+          this.attr('waitingForArm', false);
+          this.attr('waitingForPartial', false);
+          const code = e.code;
+          if (code && code.includes('.')) {
+            this.bypassConfirm(mode, e);
+          } else {
+            const msg = 'An error occurred when trying to arm your Security Alarm. Please try again later.';
+            Errors.log(msg, true);
+          }
+        });
+      },
+      /**
+       * @function bypassConfirm
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @param {string} mode The arming mode
+       * @param {Object} code, message properties from the error returned by the platform
+       * @description Open the side-panel to allow the user to bypass any devices
+       */
+      bypassConfirm(mode, { code, message }) {
+        const addresses = message.split(',');
+        const isPromonitored = this.attr('place.isPromon');
+        const template =
+          `<arcus-subsystem-alarms-bypass-confirm
+            {addresses}="addresses"
+            {code}="code"
+            {continue-to-arm}="@continueToArm"
+            {is-promonitored}="isPromonitored"
+            {manage-devices}="@manageDevices"
+            {mode}="mode" />`;
+        SidePanel.right(template, {
+          addresses,
+          code,
+          continueToArm: this.armAlarm.bind(this),
+          isPromonitored,
+          manageDevices: this.manageDevices.bind(this),
+          mode,
+        });
+      },
+      /**
+       * @function disarmAlarm
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @description Disarm the alarm subsystem
+       */
+      disarmAlarm(action = 'off') {
+        this.attr('waitingForDisarm', true);
+        this.attr('subsystem').Disarm().then(() => {
+          Analytics.tag(
+            action === 'off' ? 'alarms.security.off' : 'alarms.security.canceled',
+          );
+          this.attr('waitingForDisarm', false);
+        }).catch(() => {
+          const msg = 'An error occurred when trying to disarm your Security Alarm. Please try again later.';
+          this.attr('waitingForDisarm', false);
+          Errors.log(msg, true);
+        });
+        this.cancelCountdown();
+      },
+      /**
+       * @function cancelCountdown
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @description Calls the countdown's cancel method
+       */
+      cancelCountdown() {},
+      /**
+       * @function formatDateTime
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @param {string} datetime epoch string
+       * @description Format the date and time of the last arm/disarm time
+       */
+      formatDateTime(datetime) {
+        const time = moment.tz(datetime, tz.determine().name());
+        const today = moment();
+        if (time.isSame(today, 'day')) {
+          // Today 2:30 AM
+          return `Today ${time.format('h:mm A')}`;
+        }
+
+        const tomorrow = moment().add(1, 'day');
+        if (time.isSame(tomorrow, 'day')) {
+          // Tomorrow 6:23 PM
+          return `Tomorrow ${time.format('h:mm A')}`;
+        }
+
+        // Jan 4 5:00 PM
+        return time.format('MMM D h:mm A');
+      },
+      /**
+       * @function manageDevices
+       * @parent i2web/components/subsystem/alarms/status/security
+       * @description Open the side panel so that User can manage their security devices
+       */
+      manageDevices() {
+        Analytics.tag('alarms.security.devices');
+        const subsystem = this.attr('subsystem');
+        SidePanel.right(`
+          <arcus-subsystem-alarms-devices-security {(subsystem)}="subsystem" />
+        `, {
+          subsystem,
+        });
+      },
+    });
+  </script>
+  <script type="events">
+  export default {
+    '{subsystem} alarm:alertState:SECURITY': function onAlertStateChange() {
+      if (this.viewModel.attr('waitingForDisarm')) {
+        this.viewModel.attr('waitingForDisarm', false);
+      } else if (this.viewModel.attr('waitingForArm')) {
+        this.viewModel.attr('waitingForArm', false);
+      } else if (this.viewModel.attr('waitingForPartial')) {
+        this.viewModel.attr('waitingForPartial', false);
+      }
+    },
+  };
+</script>
+</can-component>

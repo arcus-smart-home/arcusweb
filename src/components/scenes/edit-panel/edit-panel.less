@@ -1,0 +1,159 @@
+arcus-scenes-edit-panel {
+	display: flex;
+  flex-direction: column;
+  height: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .row {
+      margin-top: 0;
+    }
+  }
+  .panel-header {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    border-bottom: @border;
+    padding-bottom: @gutter/2;
+  }
+  .scene-title {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    margin-bottom: @gutter;
+    .input-wrapper {
+      width: 100%;
+      margin-top: @gutter;
+    }
+    arcus-scenes-icon {
+      margin-left: @gutter/2;
+      //margin-right: @gutter/4; commented out until the edit icon/name panel is activated
+    }
+  }
+  arcus-scenes-action-category {
+    display: flex;
+    flex-shrink: 0;
+  }
+  .more-actions {
+    display: flex;
+    flex-shrink: 0;
+    cursor: pointer;
+    align-items: center;
+    border-top: @border;
+    border-bottom: @border;
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+    margin-top: @gutter/2;
+    .icon-app-chevron {
+      margin-left: auto;
+    }
+  }
+  .small-icon {
+    .icon-state {
+      width: 50px;
+      height: 50px;
+      border-radius: @border-radius;
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+  p + .scene-category {
+    margin-top: @gutter;
+  }
+  .scene-category {
+    cursor: pointer;
+    margin-bottom: @gutter/2;
+    width: 100%;
+    .icon-app-chevron {
+      margin-left: auto;
+    }
+  }
+  .category-name {
+    .font-regular;
+    font-size: @font-size-large;
+    color: @swift;
+    margin-bottom: 0;
+  }
+  .category-icon {
+    text-align: center;
+    color: @swift;
+    width: 30px;
+    font-size: 20px;
+    padding-right: @gutter/2;
+  }
+  .available-devices {
+    padding-left: 0;
+  }
+  .content-container {
+    display: flex;
+    flex-shrink: 1;
+    overflow: hidden;
+  }
+  .left-content {
+    overflow-y: scroll;
+    .icon-app-chevron {
+      transform: rotate(-90deg) translateX(0px);
+			&:hover {
+				transform: rotate(-90deg) translateX(3px);
+			}
+    }
+    .active-devices {
+      padding-left: @gutter;
+      padding-right: @gutter;
+      list-style-type: none;
+      li {
+        .small;
+        word-wrap: break-word;
+      }
+    }
+    .category-name {
+      width: calc(~"100% -" 60px); //60px = icons width +padding
+    }
+  }
+  .right-content {
+    overflow-y: scroll;
+    arcus-shop-button {
+      display: flex;
+      flex-shrink: 0;
+    }
+    .breakpoint(md, {
+      border-left: @border;
+    });
+    .category-name {
+      width: calc(~"100% -" 40px); //40px = icon width +padding
+    }
+  }
+  .delete-scene {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    .delete-warning {
+      .font-medium-italic;
+      margin-top: @gutter;
+      margin-bottom: 0;
+      color: @cardinal;
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+    button {
+      margin-top: @gutter;
+    }
+  }
+  .right-content {
+    .category-name {
+      width: calc(~"100% -" 40px); //40px = icon width +padding
+    }
+  }
+}
+.panel-container.is-double {
+  arcus-scenes-edit-panel {
+    .panel-header {
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }
+  }
+}

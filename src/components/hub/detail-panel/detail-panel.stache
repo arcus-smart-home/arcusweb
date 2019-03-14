@@ -1,0 +1,74 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/hub/detail-panel/remove/" />
+
+{{close-button}}
+
+<div class="panel-content">
+  <h3>More</h3>
+  <hr/>
+  <h3>Product Information</h3>
+
+  <h4>{{#if place['place:name']}}{{place['place:name']}}{{/if}}<br/>
+    <small>{{displayAttribute('hub:name')}}</small>
+  </h4>
+
+  <h4>Manufacturer<br/>
+    <small>{{displayAttribute('hubadv:mfgInfo')}}</small>
+  </h4>
+
+  <h4>Model Number<br/>
+    <small>{{displayAttribute('hub:model')}}</small>
+  </h4>
+
+  <h4>Hub ID<br/>
+    <small>{{displayAttribute('hub:id')}}</small>
+  </h4>
+
+  <h4>Last Contact<br/>
+    <small>{{lastChange}}</small>
+  </h4>
+
+  <hr/>
+  <h3>Firmware</h3>
+
+  <h4>Internal IP Address<br/>
+    <small>{{displayAttribute('hubnet:ip')}}</small>
+  </h4>
+
+  <h4>Wireless<br/>
+    <small>{{wirelessCap}}</small>
+  </h4>
+
+  <h4>Version<br/>
+    <small>{{osVersion}}</small>
+  </h4>
+
+  {{#if isHubAdv}}
+    <hr/>
+    <button type="button" class="btn-cancel reboot-hub" ($click)="rebootHub()" {{#if rebootHubDisabled}}disabled{{/if}}}>Reboot hub</button>
+    <button type="button" class="btn-cancel remove-hub" ($click)="removeHub()" {{#if removeHubDisabled}}disabled{{/if}}}>Remove device</button>
+
+    {{#if showRemoveForm}}
+      <arcus-hub-detail-panel-remove {hub}="hub"
+        {(show-remove-form)}="showRemoveForm"
+        {(remove-hub-in-progress)}="removeHubInProgress"/>
+    {{/if}}
+
+    <p class="error">{{formError}}</p>
+  {{/if}}
+</div>

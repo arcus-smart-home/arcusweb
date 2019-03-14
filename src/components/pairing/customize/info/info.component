@@ -1,0 +1,161 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-info">
+  <template>
+    <div class="{{imageClass}}">
+      <img src="{{imageUrl}}" ($load)="imageFound" ($error)="imageNotFound"/>
+    </div>
+    <div class="box-gray-radius">
+      {{#if subtitle}}
+        <h4>{{subtitle}}</h4>
+        <hr>
+      {{/if}}
+      {{#if description}}
+        {{#each description}}
+          <p>{{.}}</p>
+        {{/each}}
+      {{/if}}
+      {{#if link}}
+        <a href="{{link.url}}" target="_blank">{{link.text}}</a>
+      {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import Device from 'i2web/models/device';
+    import getAppState from 'i2web/plugins/get-app-state';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/info
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/info
+         * @description Device model relevant to the customization info
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Array} description
+         * @parent i2web/components/pairing/customize/info
+         * @description Description field from the customization step, to be displayed on screen
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {string} imageClass
+         * @parent i2web/components/pairing/customize/info
+         * @description Class to be applied to the container for an illustration
+        */
+        imageClass: {
+          type: 'string',
+          value: 'missing-illustration',
+        },
+        /**
+         * @property {string} imageUrl
+         * @parent i2web/components/pairing/customize/info
+         * @description Image URL for illustration on info step
+        */
+        imageUrl: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.id) {
+              const baseURL = getAppState().attr('session.secureStaticResourceBaseUrl');
+              const stepId = step.id;
+              const normalizedId = stepId.replace(/(_|-)+/g, '').toLowerCase();
+              return `${baseURL}/o/${normalizedId}-ios-2x.png`;
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Object} link
+         * @parent i2web/components/pairing/customize/info
+         * @description The link to be displayed
+        */
+        link: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.linkText && step.linkUrl) {
+              return { text: step.linkText, url: step.linkUrl };
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/info
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step) {
+              return step.title;
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/info
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.header) {
+              return step.header;
+            }
+            return 'Attention';
+          },
+        },
+      },
+      /**
+       * @function imageFound
+       * @description Callback for when the image is fully loaded
+       */
+      imageFound() {
+        this.attr('imageClass', 'illustration');
+      },
+      /**
+       * @function imageNotFound
+       * @description Error handler for the image cannot be loaded
+       */
+      imageNotFound() {
+        this.attr('imageClass', 'missing-illustration');
+      },
+    });
+  </script>
+</can-component>

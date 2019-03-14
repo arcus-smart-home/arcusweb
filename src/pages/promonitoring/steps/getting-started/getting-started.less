@@ -1,0 +1,117 @@
+arcus-pro-monitoring-step-getting-started {
+  .address-info {
+    margin-top: @gutter;
+  }
+  .left-wrapper,
+  .right-wrapper {
+    display: flex;
+    flex: 1 0 100%;
+    flex-direction: column;
+    padding-right: @gutter;
+    margin-bottom: @gutter;
+    .breakpoint(md, {
+      max-width: 50%;
+      flex-basis: 50%;
+      flex-direction: row;
+    });
+  }
+  .right-wrapper {
+    padding-left: @gutter;
+    align-self: center;
+    text-align: center;
+    &:before {
+      content: '';
+      height: @gutter*1.5;
+      width: 1px;
+      position: absolute;
+      background: @heron;
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }
+    button {
+      margin: @gutter/2 auto;
+    }
+  }
+
+  .place-avatar {
+    display: inline-flex;
+    .breakpoint(xs, {
+      margin-right: 0;
+      margin-bottom: @gutter/2;
+    });
+  }
+  .place-information {
+    display: inline-flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .info-panel {
+    &.error {
+      color: @cardinal;
+      p {
+        .font-regular;
+        color: @cardinal;
+      }
+      a {
+        .font-demibold;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .validated-address {
+    display: flex;
+    flex-direction: column;
+    color: @link-color;
+    .font-demibold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    .check {
+      color: @link-color-dark;
+      border: 1px solid @link-color;
+      border-radius: 100%;
+      height: 30px;
+      width: 30px;
+      transition: all .25s linear;
+      margin-right: @gutter/2;
+      z-index: (@zindex-radio-button - 1);
+      flex-shrink: 0;
+      flex-grow: 0;
+      position: relative;
+      &:before {
+        content: '\e913';
+        font-family: 'arcus-app-icons';
+        position: absolute;
+        color: transparent;
+        top: 7px;
+        left: 7px;
+        font-size: 14px;
+        line-height: 1;
+      }
+    }
+  }
+  .address-verified {
+    display: flex;
+    align-items: center;
+    i {
+      color: @link-color;
+      margin-right: @gutter/10;
+    }
+  }
+  .verifying-address {
+    display: flex;
+    align-items: center;
+    .loader {
+      display: inline-block;
+      margin: 0 @gutter/2 0 0;
+      width: 30px;
+      height: 30px;
+    }
+    .loader-text {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+  }
+}
+

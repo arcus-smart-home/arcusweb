@@ -1,0 +1,72 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-somfy-reversed">
+  <template>
+    <can-import from="i2web/components/control-switch/" />
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">
+        Reverse Blind Direction
+      </h4>
+      <arcus-control-switch {is-on}="isReversed" {toggle}="@toggleReversed" />
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import SomfyV1Capability from 'i2web/models/capability/Somfyv1';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/devices/configurators/somfy-reversed
+         * @description The somfy blind we are configuring
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} isReversed
+         * @parent i2web/components/devices/configurators/somfy-reversed
+         * @description Is the blind reversed or normal
+         */
+        isReversed: {
+          get() {
+            return this.attr('device.somfyv1:reversed') ===
+              SomfyV1Capability.REVERSED_REVERSED;
+          },
+        },
+      },
+      /**
+       * @function toggleReversed
+       * @parent i2web/components/devices/configurators/somfy-reversed
+       * @description Set the blind to reversed if normal, and normal if
+       * reversed
+       */
+      toggleReversed() {
+        const reversed = this.attr('device.somfyv1:reversed');
+        const setTo = (reversed === SomfyV1Capability.REVERSED_REVERSED)
+          ? SomfyV1Capability.REVERSED_NORMAL
+          : SomfyV1Capability.REVERSED_REVERSED;
+        this.attr('device.somfyv1:reversed', setTo);
+        this.attr('device').save().catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+</can-component>

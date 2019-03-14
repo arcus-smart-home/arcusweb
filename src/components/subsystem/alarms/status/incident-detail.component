@@ -1,0 +1,74 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-status-incident-detail">
+  <template>
+    {{close-button}}
+    <div class="panel-content">
+      <h2>
+        {{#switch incident['incident:alert']}}
+          {{#case IncidentCapability.ALERT_SECURITY}}Security{{/case}}
+          {{#case IncidentCapability.ALERT_PANIC}}Panic{{/case}}
+          {{#case IncidentCapability.ALERT_CO}}CO{{/case}}
+          {{#case IncidentCapability.ALERT_SMOKE}}Smoke{{/case}}
+          {{#case IncidentCapability.ALERT_WATER}}Water Leak{{/case}}
+        {{/switch}}
+        Event
+      </h2>
+      <can-import from="i2web/components/subsystem/alarms/incident-tracker/graphical/" />
+      <can-import from="i2web/components/subsystem/alarms/incident-tracker/list/" />
+
+      <hr />
+      <arcus-subsubsystem-alarms-incident-tracker-graphical {incident}="incident" show-place-name />
+      <arcus-subsubsystem-alarms-incident-tracker-list {incident}="incident" />
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Incident from 'i2web/models/incident';
+    import IncidentCapability from 'i2web/models/capability/AlarmIncident';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Incident} incident
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The incident used to retrieve the history entries
+         */
+        incident: {
+          Type: Incident,
+        },
+        /**
+         * @property {string} incidentAddress
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The incident address used to retrieve the incident
+         */
+        incidentAddress: {
+          type: 'string',
+          set(address) {
+            Incident.get({ 'base:address': address }).then((incident) => {
+              this.attr('incident', incident);
+            }).catch(e => Errors.log(e));
+            return address;
+          },
+        },
+      },
+      IncidentCapability,
+    });
+  </script>
+</can-component>

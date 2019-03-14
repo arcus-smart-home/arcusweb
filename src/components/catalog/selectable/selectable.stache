@@ -1,0 +1,68 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/shop-button.component" />
+<can-import from="i2web/helpers/global" />
+
+<div class="selectable-container {{containerClasses}}" ($click)="onSelect()">
+  <div class="logo-container">
+    {{#if brandLogoURL}}
+      <img src="{{brandLogoURL}}" title="{{thingName}}"/>
+    {{/if}}
+  </div>
+
+  <div class="main-container">
+    {{#if productImageURL}}
+        <img class="{{productImageClass}}" src="{{productImageURL}}" title="{{thingName}}"
+            ($load)="imageFound" ($error)="imageNotFound"/>
+        <div class="{{placeholderIconClass}}"><i class="icon-app-photo-camera"></i><div>Image Coming Soon</div></div>
+    {{else}}
+      {{#if iconName}}
+        <div class="icon-base"><i class="{{iconName}}"></i></div>
+      {{/if}}
+    {{/if}}
+    {{#if isShowingError}}
+      <div class="overlay">
+        {{#switch error}}
+          {{#case 'hub-required'}}
+            <span>Hub Required</span>
+          <arcus-shop-button expanded href="{{redirectToUrl('p_hub')}}" />
+          {{/case}}
+          {{#case 'hub-offline'}}
+            <span>Hub Offline</span>
+            <span>Re-connect your Hub and then try to pair this device.</span>
+          {{/case}}
+          {{#case 'mobile-pairing'}}
+            <span>Use the Mobile app to pair this device.</span>
+          {{/case}}
+          {{#case 'intermediary-missing'}}
+            <span>{{intermediaryName}} must be paired before pairing this device.</span>
+          {{/case}}
+          {{#case 'intermediary-offline'}}
+            <span>{{intermediaryName}} is offline. Re-connect it and then try to pair this device.</span>
+          {{/case}}
+          {{#case 'supported-browser-required'}}
+            <span>Use a supported browser such as Microsoft Edge or Google Chrome to pair this device.</span>
+          {{/case}}
+        {{/switch}}
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="bottom-container font-demibold {{thingNameContainerClass}}">
+    {{thingName}}
+  </div>
+</div>

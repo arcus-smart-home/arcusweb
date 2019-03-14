@@ -1,0 +1,64 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <div class="pairing-title" style="text-align:center;">{{title}}</div>
+  <arcus-pairing-customize-room
+    {device}="device"
+    {customization-step}="step"
+    {^title}="title"
+    {when-complete}="@customizationCompleted"/>
+</script>
+
+<script src="/node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import Device from 'i2web/models/device';
+
+  import 'i2web/components/pairing/customize/room/room.component';
+  import DeviceData from 'i2web/models/fixtures/data/device/halos.json';
+
+  const steps = [{
+    "action": "ROOM",
+    "addedAlarms": null,
+    "description": null,
+    "header": "Customize Device",
+    "id": "customize/favorite",
+    "info": "Halo will use this room name when speaking to you in the event of an alarm.",
+    "linkText": null,
+    "linkUrl": null,
+    "order": null,
+    "choices": null,
+    "title": "In what room will this device be installed?"
+  }];
+  const title = steps[0].header;
+  const appScope = new CanMap();
+  const scope = new CanMap({
+    device: (new Device(DeviceData[0])),
+    step: steps[0],
+    title,
+    customizationCompleted: function() {}
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

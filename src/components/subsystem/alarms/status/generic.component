@@ -1,0 +1,297 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-status-generic">
+  <template>
+    <can-import from="i2web/helpers/global" />
+    <can-import from="i2web/components/shop-button.component" />
+    <can-import from="i2web/components/segmented-radial/" />
+    <can-import from="i2web/components/segmented-radial/segment/" />
+    <can-import from="i2web/components/subsystem/alarms/devices/generic/" />
+    {{! START CARD }}
+    {{#if condensed}}
+      <div class="status-header">
+        <h2>
+          <a
+            data-analytics="dashboard.{{subsystem.analyticsTag}}"
+            href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}"
+          >
+            <i class="{{typeIcon}}" data-analytics="dashboard.{{subsystem.analyticsTag}}"></i>
+            {{typeName}}
+          </a>
+        </h2>
+        <span class="on-count">
+          {{#if deviceCount}}
+            {{{activeRatio}}}
+          {{else}}
+            <arcus-shop-button href="{{redirectToUrl(shoppingURLKey)}}" />
+          {{/if}}
+        </span>
+      </div>
+      {{{statusText}}}
+    {{! END CARD }}
+    {{! START STATUS }}
+    {{else}}
+      <div class="status-header">
+        <h2>
+          <i class="{{typeIcon}}"></i>
+          {{typeName}}
+        </h2>
+        {{#if isMonitored}}
+          <span class="pro-badge">Pro</span>
+        {{/if}}
+      </div>
+      {{#if isInactive}}
+        <arcus-segmented-radial />
+      {{else}}
+        <arcus-segmented-radial>
+          {{#getTypeProperty('alarm:activeDevices')}}
+            <arcus-segmented-radial-segment state="ready" />
+          {{/getTypeProperty('alarm:activeDevices')}}
+          {{#getTypeProperty('alarm:offlineDevices')}}
+            <arcus-segmented-radial-segment state="alarming" />
+          {{/getTypeProperty('alarm:offlineDevices')}}
+          {{#getTypeProperty('alarm:triggeredDevices')}}
+            <arcus-segmented-radial-segment />
+          {{/getTypeProperty('alarm:triggeredDevices')}}
+        </arcus-segmented-radial>
+      {{/if}}
+      {{{statusText}}}
+      {{#if isInactive}}
+        <arcus-shop-button href="{{redirectToUrl(shoppingURLKey)}}" expanded>
+          Shop Devices
+        </arcus-shop-button>
+      {{else}}
+        <button class="btn-primary" ($click)="viewDevices()">
+          View Devices
+        </button>
+      {{/if}}
+    {{/if}}
+    {{! END STATUS }}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Analytics from 'i2web/plugins/analytics';
+    import AppState from 'i2web/plugins/get-app-state';
+    import AlarmCapability from 'i2web/models/capability/Alarm';
+    import Place from 'i2web/models/place';
+    import Subsystem from 'i2web/models/subsystem';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import AlarmsConfig from 'config/alarms.json';
+
+    const ANALYTICS_TAGS = {
+      co: 'alarms.co.devices',
+      smoke: 'alarms.smoke.devices',
+      water: 'alarms.water.devices',
+    };
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {string} activeRatio
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description A ratio showing the number of active devices out
+         * of the total number of devices in the subsystem
+         */
+        activeRatio: {
+          type: 'string',
+          get() {
+            const type = this.attr('type').toUpperCase();
+            const ready = this.attr(`subsystem.alarm:activeDevices:${type}.length`);
+            const total = this.attr(`subsystem.alarm:devices:${type}.length`);
+            return `${ready} <span>/${total}</span>`;
+          },
+        },
+        /**
+         * @property {htmlbool} condensed
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description If true this component is being rendered on the dashboard
+         */
+        condensed: {
+          type: 'htmlbool',
+          value: false,
+        },
+        /**
+         * @property {number} deviceCount
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The total number of devices available for this type
+         */
+        deviceCount: {
+          type: 'number',
+          get() {
+            const type = this.attr('type').toUpperCase();
+            return this.attr(`subsystem.alarm:devices:${type}.length`);
+          },
+        },
+        /**
+         * @property {boolean} isClearing
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description If the alarm type is in a CLEARING state
+         */
+        isClearing: {
+          get() {
+            const state = this.getTypeProperty('alarm:alertState');
+            return state === AlarmCapability.ALERTSTATE_CLEARING;
+          },
+        },
+        /**
+         * @property {boolean} isInactive
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description If the alarm type is inactive
+         */
+        isInactive: {
+          get() {
+            const state = this.getTypeProperty('alarm:alertState');
+            return state === AlarmCapability.ALERTSTATE_INACTIVE;
+          },
+        },
+        /**
+         * @property {boolean} isMonitored
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description Whether this particular alarm system is monitored
+         */
+        isMonitored: {
+          get() {
+            return this.getTypeProperty('alarm:monitored');
+          },
+        },
+        /**
+         * @property {Place} place
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The subsystem's place
+         */
+        place: {
+          Type: Place,
+          get() {
+            return AppState().attr('place');
+          },
+        },
+        /**
+         * @property {string} shoppingURLKey
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The key for a redirect URL that points to specific alarm type devices
+         */
+        shoppingURLKey: {
+          type: 'string',
+          get() {
+            return AlarmsConfig[this.attr('type')].shoppingURLKey;
+          },
+        },
+        /**
+         * @property {string} statusText
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The status text for this portion of the alarm subsystem
+         */
+        statusText: {
+          type: 'string',
+          get() {
+            const type = this.attr('type').toUpperCase();
+
+            if (this.attr('deviceCount') === 0) {
+              return `<small>0 Devices Paired</small>`;
+            }
+
+            // From https://eyeris.atlassian.net/browse/ITWO-11205
+            // If length of alarm:offlineDevices:SMOKE|CO|WATER !== 0, show 'length Offline'
+            const offline =
+              this.attr(`subsystem.alarm:offlineDevices:${type}.length`);
+            if (offline > 0) {
+              return `<small>${offline} Offline</small>`;
+            }
+
+            // If length of alarm:triggeredDevices:SMOKE|CO|WATER !== 0 AND
+            // alarm:alertState:SMOKE|CO|WATER === CLEARING, show 'length Detecting
+            // Smoke|CO|Water' in red text
+            const triggered =
+              this.attr(`subsystem.alarm:triggeredDevices:${type}.length`);
+            if (triggered > 0 && this.attr('isClearing')) {
+              return `<small class="error">${triggered} Detecting ${this.attr('typeName')}</small>`;
+            }
+
+            // If length of alarm:offlineDevices:SMOKE|CO|WATER plus length of
+            // alarm:triggeredDevices:SMOKE|CO|WATER === 0, show 'Ok'
+            return '<small>Ok</small>';
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The alarm subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {string} type
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The alarm type; smoke / co / water
+         */
+        type: {
+          type: 'string',
+        },
+        /**
+         * @property {string} type
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The icon for the alarm type; smoke / co / water
+         */
+        typeIcon: {
+          type: 'string',
+          get() {
+            return AlarmsConfig[this.attr('type')].icon;
+          },
+        },
+        /**
+         * @property {string} typeName
+         * @parent i2web/components/subsystem/alarms/status/generic
+         * @description The name of the alarm type that will be displayed
+         */
+        typeName: {
+          type: 'string',
+          get() {
+            return AlarmsConfig[this.attr('type')].displayName;
+          },
+        },
+      },
+      /**
+       * @function viewDevices
+       * @description Opens alarms devices side panel with devices of the alarm type; smoke / co / water
+       */
+      viewDevices() {
+        const subsystem = this.attr('subsystem');
+        const type = this.attr('type');
+        Analytics.tag(ANALYTICS_TAGS[type]);
+        SidePanel.right(`
+          <arcus-subsystem-alarms-devices-generic {(type)}="type" {(subsystem)}="subsystem" />
+        `, {
+          type,
+          subsystem,
+        });
+      },
+      /**
+       * @function getTypeProperty
+       * @param {string} property The property string, i.e. 'alarm:alertState'
+       * @return {Array|String}
+       * @description Combine the property name and the subsystem type to retrive
+       * the value from the subsystem
+       */
+      getTypeProperty(property) {
+        const prop = `${property}:${this.attr('type').toUpperCase()}`;
+        return this.attr('subsystem').attr(prop);
+      },
+    });
+  </script>
+</can-component>

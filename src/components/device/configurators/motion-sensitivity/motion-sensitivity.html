@@ -1,0 +1,68 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Motion Sensitivity Configurator</title>
+</head>
+<body>
+  <div id="demo-html" style="width: 60%;"></div>
+  <script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+    import CanMap from 'can-map';
+    import canViewModel from 'can-view-model';
+    import Device from 'i2web/models/device';
+    import stache from 'can-stache';
+    import 'i2web/app.less';
+    import 'i2web/components/accordion/accordion';
+    import 'i2web/components/device/configurators/motion-sensitivity/motion-sensitivity';
+
+    let device = new Device({
+      'mot:sensitivitiesSupported': ['HIGH', 'LOW', 'MAX', 'MED', 'OFF'],
+      'mot:sensitivity': 'MED',
+    });
+
+    device.save = () => {
+      console.log(`Sensitivity: ${device.attr('mot:sensitivity')}`);
+      return Promise.resolve();
+    };
+
+    let tpl = stache(`
+      <arcus-accordion class="configurators-wrapper">
+        <arcus-accordion-panel {active}="true">
+          <arcus-accordion-panel-heading>
+            <h2>{{{*title}}}</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <arcus-device-configurator-motion-sensitivity
+              {^title}="*title"
+              {(device)}= "device"
+            />
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      </arcus-accordion>
+    `);
+
+    window.canViewModel = canViewModel;
+    document
+      .querySelector('#demo-html')
+      .appendChild(tpl(new CanMap({ device })));
+  </script>
+</body>
+</html>

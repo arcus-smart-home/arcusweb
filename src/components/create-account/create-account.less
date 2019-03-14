@@ -1,0 +1,110 @@
+@import "acknowledge/acknowledge.less";
+@import "billing-address/billing-address.less";
+@import "confirm-address/confirm-address.less";
+@import "how-to-use/how-to-use.less";
+@import "login/login.less";
+@import "pin/pin.less";
+@import "security-questions/security-questions.less";
+@import "welcome/welcome.less";
+@import "zip-code/zip-code.less";
+
+.create-account-step {
+  h1 {
+    text-transform: capitalize;
+  }
+  arcus-staged-progress {
+    display: none;
+    margin-top: @gutter/2;
+    margin-bottom: @gutter;
+  }
+  p {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .instructions {
+    margin-bottom: @gutter;
+  }
+  .stage-fields {
+    width: 55%;
+    min-width: 250px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stage-buttons {
+    margin-top: @gutter;
+  }
+  .input-wrapper {
+    width: 100%;
+  }
+  [type="number"] {
+    -moz-appearance:textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  .radio-wrapper {
+    display: inline-flex;
+    margin-left: @gutter *2; //offsets weird radio label margins needed
+    label {
+      margin-right: @gutter * 2;
+      text-transform: none;
+      text-align: left;
+      .breakpoint(s, {
+        margin-right: @gutter/2;
+      });
+      .breakpoint(xs, {
+        margin-right: @gutter/2;
+      });
+    }
+    .breakpoint(s, {
+      margin-left: @gutter/2;
+    });
+    .breakpoint(xs, {
+      margin-left: @gutter/2;
+    });
+  }
+  .complex-label {
+    text-align: left;
+  }
+  .dropdown-wrapper {
+    padding-top: 0px;
+    label {
+      display: flex;
+    }
+    .breakpoint(md, {
+      label {
+        white-space: nowrap;
+      }
+    });
+    &.is-invalid label {
+      display: none;
+    }
+  }
+  .fine-print {
+    font-size: @font-size-small;
+  }
+  .form-error {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/3;
+  }
+  arcus-create-account-confirm-address {
+    .suggestions {
+      margin-top: @gutter;
+    }
+    .tooltip-wrapper {
+      display: inline-block;
+      arcus-tooltip {
+        .tooltip-inner {
+          width: 250px;
+        }
+      }
+    }
+    p .tooltip-wrapper {
+      margin-top: inherit;
+    }
+  }
+}

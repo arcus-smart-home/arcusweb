@@ -1,0 +1,150 @@
+arcus-schedule-irrigation-event {
+  flex-shrink: 0;
+  .sub-instructions {
+    h4 {
+      span {
+        .font-demibold;
+      }
+    }
+  }
+  .chevron-btn {
+    transform: none;
+    width: 40px;
+    height: 40px;
+    margin-right: @gutter/2;
+    &:hover {
+      transform: none;
+    }
+    &.up {
+      transform: rotateX(180deg);
+    }
+    &.disabled {
+      pointer-events: none;
+      color: @heron;
+    }
+  }
+  .week-day-buttons {
+    text-align: center;
+    margin-bottom: @gutter;
+    margin-top: @gutter;
+    .btn {
+      .font-regular;
+      font-size: @font-size-large;
+      padding: 2px 0 0;
+      height: 40px;
+      width: 40px;
+      margin-right: @gutter/4;
+      letter-spacing: 0;
+      &.active {
+        cursor: pointer;
+        &:hover {
+          transform: translateY(-3px);
+        }
+      }
+    }
+    .form-error {
+      text-align: left;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+  }
+  .week-day-buttons {
+    width: 100%;
+    border-bottom: @border;
+    padding-bottom: @gutter;
+  }
+  .bottom-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    .breakpoint(lg, {
+      flex-wrap: nowrap;
+    });
+  }
+  .left-buttons,
+  .right-buttons {
+    display: inline-flex;
+    flex: 1 1 100%;
+    .breakpoint(lg, {
+      flex-basis: 50%;
+    });
+  }
+  .right-buttons {
+    .breakpoint(lg, {
+      justify-content: flex-end;
+    });
+    &.is-confirming {
+      flex-direction: column;
+    }
+    .form-error {
+      margin-bottom: @line-height/2;
+    }
+  }
+  form h4 + .input-wrapper {
+    margin-top: 0;
+  }
+  // Schedule zones and duration
+  hr:first-of-type {
+    margin: @gutter/2 0;
+  }
+  .radio-wrapper {
+    margin-top: @gutter/2;
+  }
+  .zone-content {
+    display: flex;
+    margin-bottom: @gutter/2;
+    &.active {
+      position: relative;
+    }
+    &.active:after {
+      position: absolute;
+      width: ~"calc(100% - 45px)";
+      content: '';
+      right: 0;
+      bottom: 0;
+      border-bottom: @border;
+    }
+    &.last-active:after {
+      border-bottom: none;
+    }
+    .zone-wrapper {
+      flex-direction: column;
+      width: 65%;
+    }
+    .radio-wrapper {
+      margin-top: 0;
+      .no-text-transform {
+        width: unset;
+      }
+    }
+    .input-wrapper {
+      flex-wrap: wrap;
+      margin-left: @gutter*(1.5);
+      margin-bottom: @gutter*(2/3);
+      label {
+        bottom: @gutter*(1.5);
+      }
+      &:not(:first-of-type) {
+        margin-top: @gutter*(2/3);
+      }
+    }
+    arcus-form-select {
+      .input-wrapper {
+        margin-left: 0;
+      }
+    }
+    .move-zone {
+      flex-direction: column;
+      margin-left: auto;
+      .chevron-btn {
+        font-size: 15px;
+        margin-bottom: @gutter*(2/3);
+      }
+    }
+    + hr {
+      margin-top: 0;
+    }
+  }
+  .sub-instructions {
+    margin-top: @gutter;
+  }
+}

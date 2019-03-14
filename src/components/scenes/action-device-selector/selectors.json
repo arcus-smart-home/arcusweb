@@ -1,0 +1,336 @@
+{
+    "actions": [{
+        "id": "switches",
+        "name": "Turn Lights On or Off",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:05af861d-4cde-4075-93b0-cc99db758ed8": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", [{
+                        "max": null,
+                        "min": null,
+                        "name": "dim",
+                        "step": null,
+                        "type": "PERCENT",
+                        "unit": null,
+                        "value": null
+                    }]],
+                    ["OFF", []]
+                ]
+            }],
+            "DRIV:dev:3193ebc7-0fe8-48dd-a4d1-f5916f474c67": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", []],
+                    ["OFF", []]
+                ]
+            }],
+            "DRIV:dev:66c3dc9c-4411-44c7-89cb-fb85808c0433": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", [{
+                        "max": null,
+                        "min": null,
+                        "name": "dim",
+                        "step": null,
+                        "type": "PERCENT",
+                        "unit": null,
+                        "value": null
+                    }]],
+                    ["OFF", []]
+                ]
+            }],
+            "DRIV:dev:7453a808-ccd5-4384-b46f-6d4b98927cd1": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", [{
+                        "max": null,
+                        "min": null,
+                        "name": "dim",
+                        "step": null,
+                        "type": "PERCENT",
+                        "unit": null,
+                        "value": null
+                    }]],
+                    ["OFF", []]
+                ]
+            }],
+            "DRIV:dev:a0ad6e25-254c-401a-895f-607b0f358605": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", [{
+                        "max": null,
+                        "min": null,
+                        "name": "dim",
+                        "step": null,
+                        "type": "PERCENT",
+                        "unit": null,
+                        "value": null
+                    }]],
+                    ["OFF", []]
+                ]
+            }],
+            "DRIV:dev:b7a39884-070b-4f77-89d4-0537fb583126": [{
+                "max": null,
+                "min": null,
+                "name": "switch",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", []],
+                    ["OFF", []]
+                ]
+            }]
+        },
+        "typehint": "light"
+    }, {
+        "id": "doorlocks",
+        "name": "Lock or Unlock Doors",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:0f50caee-8634-43b2-97f2-e61c6763f14f": [{
+                "max": null,
+                "min": null,
+                "name": "lockstate",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["LOCKED", []],
+                    ["UNLOCKED", []]
+                ]
+            }],
+            "DRIV:dev:e2618192-0940-4ede-8850-6f0f966b2afb": [{
+                "max": null,
+                "min": null,
+                "name": "lockstate",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["LOCKED", []],
+                    ["UNLOCKED", []]
+                ]
+            }]
+        },
+        "typehint": "lock"
+    }, {
+        "id": "vents",
+        "name": "Open or Close Vents",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:32c71775-5829-4f9c-bb32-1b01edf37e54": [{
+                "max": null,
+                "min": null,
+                "name": "vent",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["OPEN", [{
+                        "max": null,
+                        "min": null,
+                        "name": "ventlevel",
+                        "step": null,
+                        "type": "PERCENT",
+                        "unit": null,
+                        "value": null
+                    }]],
+                    ["CLOSE", []]
+                ]
+            }]
+        },
+        "typehint": "vent"
+    }, {
+        "id": "fans",
+        "name": "Turn Fans On or Off",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:9932fa98-d871-4688-a6ea-99705050a4d7": [{
+                "max": null,
+                "min": null,
+                "name": "fan",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["ON", [{
+                        "max": null,
+                        "min": null,
+                        "name": "fanspeed",
+                        "step": null,
+                        "type": "LIST",
+                        "unit": null,
+                        "value": [
+                            ["LOW", 1],
+                            ["MEDIUM", 2],
+                            ["HIGH", 3]
+                        ]
+                    }]],
+                    ["OFF", []]
+                ]
+            }]
+        },
+        "typehint": "fan"
+    }, {
+        "id": "garagedoors",
+        "name": "Open or Close Garage Doors",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:f7671479-9d4d-4047-9c37-e69d49a67049": [{
+                "max": null,
+                "min": null,
+                "name": "doorState",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["OPEN", []],
+                    ["CLOSE", []]
+                ]
+            }]
+        },
+        "typehint": "garage"
+    }, {
+        "id": "watervalves",
+        "name": "Open or Close Water Valves",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:756aa0df-2677-48c2-ae99-34c0365afa42": [{
+                "max": null,
+                "min": null,
+                "name": "valvestate",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["OPEN", []],
+                    ["CLOSE", []]
+                ]
+            }]
+        },
+        "typehint": "valve"
+    }, {
+        "id": "blinds",
+        "name": "Open or Close Blinds",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:f14448bc-f5ff-45e3-b110-c514981b492a": [{
+                "max": null,
+                "min": null,
+                "name": "shadeopen",
+                "step": null,
+                "type": "GROUP",
+                "unit": null,
+                "value": [
+                    ["OPEN", []],
+                    ["CLOSED", []]
+                ]
+            }]
+        },
+        "typehint": "blind"
+    }, {
+        "id": "security",
+        "name": "Set the Security Alarm",
+        "satisfiable": true,
+        "selectors": {
+            "SERV:subsecurity:707373e7-2ea4-4fb6-b815-d4490f53d70c": [{
+                "max": null,
+                "min": null,
+                "name": "alarm-state",
+                "step": null,
+                "type": "LIST",
+                "unit": null,
+                "value": [
+                    ["Arm On", "ON"],
+                    ["Arm Partial", "PARTIAL"],
+                    ["Disarm", "OFF"]
+                ]
+            }]
+        },
+        "typehint": "security"
+    }, {
+        "id": "cameras",
+        "name": "Record Video From Cameras",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:e384fdc4-d954-409f-8fd8-3e0f9354b90b": [{
+                "max": 600,
+                "min": 30,
+                "name": "duration",
+                "step": 30,
+                "type": "DURATION",
+                "unit": "SEC",
+                "value": null
+            }]
+        },
+        "typehint": "camera"
+    }, {
+        "id": "thermostats",
+        "name": "Set Thermostats",
+        "satisfiable": true,
+        "selectors": {
+            "DRIV:dev:5bde07a2-2048-4d20-8d7f-7c2f75a80213": [{
+                "max": null,
+                "min": null,
+                "name": "thermostat",
+                "step": null,
+                "type": "THERMOSTAT",
+                "unit": null,
+                "value": null
+            }],
+            "DRIV:dev:91dab4c6-57c1-4ab7-8c22-bdac6e85e45e": [{
+                "max": null,
+                "min": null,
+                "name": "thermostat",
+                "step": null,
+                "type": "THERMOSTAT",
+                "unit": null,
+                "value": null
+            }],
+            "DRIV:dev:9c18a2f4-0517-490e-bf6b-945a560af091": [{
+                "max": null,
+                "min": null,
+                "name": "thermostat",
+                "step": null,
+                "type": "THERMOSTAT",
+                "unit": null,
+                "value": null
+            }]
+        },
+        "typehint": "thermostat"
+    }, {
+        "id": "spaceheaters",
+        "name": "Set the Temperature on Space Heaters",
+        "satisfiable": false,
+        "selectors": {},
+        "typehint": "spaceheater"
+    }]
+}

@@ -1,0 +1,83 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-doors-garagedoor">
+  <template>
+    <h4>Choose a state for <strong>{{thing['dev:name']}}</strong></h4>
+    <hr />
+    <can-import from="i2web/components/control-switch/" />
+    {{#if attributes['motdoor:doorstate']}}
+      <div class="switch-value">
+        <h4>{{doorState}}</h4>
+        <arcus-control-switch
+          {is-on}="equal(~attributes['motdoor:doorstate'], MotorizedDoorCapability.DOORSTATE_OPEN)"
+          {toggle}="@toggleState" />
+      </div>
+    {{/if}}
+    <hr />
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import MotorizedDoorCapability from 'i2web/models/capability/MotorizedDoor';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/doors-garagedoor
+         * @description The device attributes used for displaying the configurator
+         */
+        attributes: {
+          type: '*',
+        },
+        /**
+         * @property {String} doorState
+         * @parent i2web/components/schedule/device-configurators/doors-garagedoor
+         * @description The textual representation of the door state (Open/Closed)
+         */
+        doorState: {
+          get() {
+            if (this.attr('attributes.motdoor:doorstate') === MotorizedDoorCapability.DOORSTATE_OPEN) {
+              return 'Open';
+            }
+            return 'Closed';
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/doors-garagedoor
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+      },
+      MotorizedDoorCapability,
+      /**
+       * @function toggleState
+       * @parent i2web/components/schedule/device-configurators/doors-garagedoor
+       * @description Toggles the binary property OPEN or CLOSED
+       */
+      toggleState() {
+        const doorstate = (this.attr('attributes.motdoor:doorstate') === MotorizedDoorCapability.DOORSTATE_OPEN) ? MotorizedDoorCapability.DOORSTATE_CLOSED : MotorizedDoorCapability.DOORSTATE_OPEN;
+        this.attr('attributes.motdoor:doorstate', doorstate);
+      },
+    });
+  </script>
+</can-component>

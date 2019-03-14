@@ -1,0 +1,123 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/helpers/device" />
+<can-import from="../icon/"/>
+<can-import from="../actions/"/>
+<can-import from="../badges/"/>
+<can-import from="./status/" />
+<can-import from="i2web/components/favorite/"/>
+<can-import from="i2web/components/firmware-updating.component" />
+<can-import from="i2web/components/form/confirm-field/"/>
+<can-import from="i2web/components/schedule/icon.component" />
+
+{{#unless device['web:dev:supported']}}
+  <div class="corner-tag">
+    <a href="{{redirectToUrl('s_betaweb')}}" target="_blank">
+      <i class="icon-app-info"></i>
+    </a>
+  </div>
+{{/unless}}
+{{#if focused}}
+  <a name="{{device['base:id']}}" class="jump-to" scroll-to />
+{{/if}}
+<div class="row panel-list-container {{#if showDisabled}} disabled{{/if}}">
+
+  <div class="panel-primary-wrapper">
+    <div class="col-xs-12 col-md panel-information">
+      <arcus-device-icon {(device)}="device"></arcus-device-icon>
+      <div class="device-information">
+        <arcus-form-confirm-field
+          {(model)}="device"
+          field="dev:name"
+          field-description="Device Name"
+          placeholder="Device Name"
+          notify-on-save="true"
+          attributes="character-count='254'" />
+        <h5>{{#if device.productName}}{{device.productName}}{{/if}}</h5>
+        <small class="next-scheduled">
+          {{#if device['web:dev:scheduleConfig']}}
+            {{{nextScheduledEvent(device)}}}
+          {{else}}
+            {{{device-template-to-string(device, 'web:panel:status')}}}
+          {{/if}}
+        </small>
+        <ul class="col-xs-12 col-md panel-options">
+        <li>
+          <arcus-favorite {thing}="device" {display-property}="'dev:name'" />
+        </li>
+        {{#if device['web:dev:scheduleConfig']}}
+          <li class="{{#if device.isOffline}}disabled{{/unless}}">
+            <arcus-schedule-icon {thing}="device" />
+          </li>
+        {{/if}}
+        {{#if device.configurators.length}}
+          <li>
+            <a ($click)="toggleConfigurationPanel()">
+              <i class="icon-app-controls-2" aria-hidden="true"></i>
+              <span class="sr-only">Configuration for {{device['dev:name']}}</span>
+            </a>
+          </li>
+        {{/if}}
+          <li>
+            <a ($click)="toggleDetailsPanel()">
+              <i class="icon-app-more-2" aria-hidden="true"></i>
+              <span class="sr-only">More details for {{device['dev:name']}}</span>
+            </a>
+          </li>
+        {{#if hasWarnings}}
+          <li>
+            <a ($click)="toggleErrorsPanel('warn')">
+              <button class="btn-warning"><i class="icon-platform-warning-2" aria-hidden="true"></i>
+                <span class="sr-only">Warnings for {{device['dev:name']}}</span>
+              </button>
+            </a>
+          </li>
+        {{/if}}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row panel-secondary-wrapper">
+    {{#if erroringNotUpdating}}
+      <div class="col-md panel-error">
+        <p>{{device.erroredState.long}}</p>
+        {{#if hasComplexErrors}}
+          <a ($click)="toggleErrorsPanel('error')"><button class="btn-cancel">View</button></a>
+        {{else}}
+          <a href="{{redirectToUrl(supportLinkKey)}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="col-md panel-action">
+        {{#if device.isFirmwareUpdateInProgress}}
+          <arcus-firmware-updating />
+        {{else}}
+          {{#if device['web:panel:action']}}
+            {{device-action(device, device['web:panel:action'])}}
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="col-md panel-status">
+        {{#each device.badges}}
+          {{device-badge(device, .)}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+

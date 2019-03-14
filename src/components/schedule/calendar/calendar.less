@@ -1,0 +1,28 @@
+arcus-schedule-calendar {
+  flex-shrink: 0;
+  .week-wrapper {
+    width: calc(~'100% -' 5px); //5px offsets 11:59p dot overflow
+    display: flex;
+    flex-direction: column;
+  }
+  .timeline {
+    display: block;
+    padding-left: @gutter;
+    margin-bottom: @gutter/2;
+    margin-top: @gutter/2;
+    .timeline-labels {
+      display: flex;
+      padding-left: 0;
+      list-style-type: none;
+      font-size: @font-size-small;
+      color: @coot;
+    }
+    .time-label {
+      width: 25%;
+      text-align: right;
+      &:first-of-type {
+        width: calc(~'25% +' 12px); //helps align label to segments in the day track
+      }
+    }
+  }
+}

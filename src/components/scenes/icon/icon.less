@@ -1,0 +1,25 @@
+arcus-scenes-icon {
+  display: block;
+  .scene-badge-icon {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    i {
+      position: absolute;
+      color: inherit;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+  .icon-state {
+    display: block;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border: 1px solid @swift;
+    border-radius: @border-radius;
+  }
+}

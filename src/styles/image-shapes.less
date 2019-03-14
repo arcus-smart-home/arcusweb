@@ -1,0 +1,40 @@
+/**
+* @stylesheet image-shapes.less Image Shapes
+* @parent styles.baseline-elements
+*
+* @description
+* Styles for shaping images in ways other than the default rectangle
+*
+* @demo ./src/styles/demos/image-shapes.html
+*
+**/
+
+.place-avatar {
+  display: block;
+  margin-right: @gutter/2;
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+  img {
+    border-radius: 0;
+    margin: 0;
+    width: auto;
+    height: 100%;
+  }
+}
+
+//user avatar
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid @raven;
+  border-radius: 100%;
+  height: @gutter * 2;
+  font-size: @font-size-large * 2;
+  margin-right: @gutter/2;
+  width: @gutter * 2;
+  flex-shrink: 0;
+}

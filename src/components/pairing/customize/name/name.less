@@ -1,0 +1,39 @@
+/**
+* @stylesheet customize-name.less Name Customization
+* @parent i2web/components/customize
+*
+* @description
+* This defines the name customization component
+*
+**/
+
+/**
+* @styles name Name Customization
+* @parent name.less 1
+*
+* @description
+* - Display a thin grey, rounded rectangle border around the component
+* - Display 'Give Your <Device or Hub> a Name' as the title, depending on what is being named
+* - Display a text entry field for the name, initially populated with the existing device name
+* - Allow the user to type in a new device name and save the device name when focus leaves the text entry field
+* - While the user is typing, show the number of remaining characters (max of 48 is allowed)
+* - Display copy at the bottom We recommend using simple, identifying language that is easily recognized by voice assistants.
+*
+* @demo ./src/components/pairing/customize/name/name.html
+*
+**/
+arcus-pairing-customize-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  arcus-form-confirm-field {
+    margin-top: @gutter;
+    align-self: stretch;
+    text-align: left;
+
+    .input-border {
+      border-bottom: 1px solid @heron;
+      margin-bottom: @gutter/2;
+    }
+  }
+}

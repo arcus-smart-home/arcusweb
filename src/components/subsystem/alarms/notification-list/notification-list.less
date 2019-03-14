@@ -1,0 +1,19 @@
+arcus-subsystem-alarms-notification-list {
+  display: block;
+  .notification-container {
+    margin: @gutter @gutter 0 @gutter;
+  }
+  .notification-list {
+    margin-bottom: @gutter/2;
+    .check, .radio-checkbox, .add {
+      align-self: center;
+    }
+    li {
+      &:last-of-type {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

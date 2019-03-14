@@ -1,0 +1,107 @@
+arcus-settings-places-promonitoring-info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .panel-header {
+    display: flex;
+    flex-direction: column;
+    border-bottom: @border;
+    padding-bottom: @gutter/2;
+    margin-top: 0;
+  }
+  .panel-buttons {
+    display: flex;
+    flex-shrink: 0;
+  }
+  .panel-body {
+    margin-top: 0;
+    arcus-accordion-panel > li {
+      padding-left: 0;
+      padding-right: @gutter/2;
+    }
+    arcus-accordion-panel-heading {
+      h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      small {
+        display: block;
+      }
+    }
+    arcus-accordion-panel-body {
+      border-top: @border;
+      padding-top: @gutter;
+      margin-top: @gutter;
+    }
+    arcus-promonitoring-permit-required,
+    arcus-promonitoring-additional-info {
+      input[type="text"] {
+        max-width: 300px;
+      }
+    }
+    arcus-promonitoring-additional-info {
+      h2 {
+        margin-top: @line-height;
+        margin-bottom: (@line-height / 2);
+      }
+      .occupants-panel {
+        display: flex;
+        padding-top: @gutter;
+        justify-content: space-between;
+        .occupants-panel-item {
+          padding-left: @gutter;
+          padding-right: @gutter;
+          .breakpoint(sm-down, {
+            padding-left: 0;
+            padding-right: 0;
+          });
+          .occupants {
+            .font-regular;
+            display: block;
+            font-size: @font-size-h3;
+            margin-top: @gutter/2;
+          }
+        }
+      }
+      .input-wrapper:not(:first-of-type) {
+        padding-top: 0;
+      }
+    }
+  }
+  .panel-footer {
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+    arcus-promonitoring-print-certificate {
+      display: flex;
+      align-items: center;
+      &:before {
+        content: '\e92d';
+        font-family: 'arcus-app-icons';
+        color: @link-color;
+        font-size: 24px;
+        padding-right: @gutter/3;
+      }
+      &:hover {
+        &:before {
+          content: '\e919';
+        }
+      }
+      p {
+        font-size: @font-size-large;
+        display: inline-flex;
+        margin-bottom: 0;
+      }
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

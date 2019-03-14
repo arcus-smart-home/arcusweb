@@ -1,0 +1,99 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/scenes/action-device-selector/" />
+<can-import from="i2web/components/scenes/icon/" />
+<can-import from="i2web/components/scenes/action-category.component" />
+<can-import from="i2web/components/scenes/more-actions.component" />
+
+<form ($submit)="saveScene" autocomplete="off" {{#if savingScene}}disabled{{/if}}>
+  <span class="left-panel-buttons">
+    <button class="btn {{#if savingScene}}saving{{/if}}">
+      {{#if savingScene}}
+        <div class="loader"></div> Saving
+      {{else}}
+        Save
+      {{/if}}
+    </button>
+    {{close-button type="cancel"}}
+  </span>
+  <span class="right-panel-buttons">
+    <button type="button" class="btn" ($click)="collapseRightPanel">Back</button>
+  </span>
+  <div class="panel-content">
+    <div class="panel-header">
+      {{#if formScene}}
+        <h3>Edit</h3>
+      {{else}}
+        <h3>Create New Scene</h3>
+      {{/if}}
+      <p class="instructions">Select participating devices and set their desired states.</p>
+    </div>
+    <div class="content-container">
+      {{#if formScene}}
+        <div class="left-content">
+          <div class="scene-title">
+            {{textInput('formScene.scene:name', 'Scene Name', class='sceneName')}}
+            {{#unless scene}}
+              <arcus-scenes-icon class="small-icon" type="new" />
+            {{else}}
+              <arcus-scenes-icon class="small-icon" {scene}="scene" />
+            {{/unless}}
+          </div>
+          {{#each satisfiableActions}}
+            <arcus-scenes-action-category {scene}="scene" {action}="." {action-icon}="@actionIcon" {expand-and-edit}="@expandAndEdit" />
+          {{/each}}
+
+          {{#if unsatisfiableActions.length}}
+            <div class="more-actions" ($click)="expandAndEdit('more', %element)">
+              <h4>More Actions</h4>
+              <i class="icon-app-chevron chevron-btn"><span class="sr-only">More Actions</span></i>
+            </div>
+          {{/if}}
+
+          {{#if scene}}
+            <div class="delete-scene bottom-buttons">
+            {{#unless deletingScene}}
+              <button class="btn-delete" type="button" ($click)="startDelete()">Delete Scene</button>
+            {{else}}
+              <p class="delete-warning">Are you sure you want to delete '{{formScene['scene:name']}}'? This cannot be undone.</p>
+              <button class="btn-delete" type="button" ($click)="continueDelete(scene)">Yes, Delete Scene</button>
+              <button class="btn-cancel" type="button" ($click)="cancelDelete()">Cancel</button>
+            {{/unless}}
+            </div>
+          {{/if}}
+        </div>
+        <div class="right-content">
+          {{#if selectedToEdit}}
+            {{#switch selectedToEdit}}
+              {{#case "name"}}
+                <!-- TODO Name editing component -->
+              {{/case}}
+              {{#case "more"}}
+                <arcus-scenes-more-actions {actions}="unsatisfiableActions" {action-icon}="@actionIcon" />
+              {{/case}}
+              {{#default}}
+                <arcus-scenes-action-device-selector {(context)}="selectedToEdit.context" {template}="selectedToEdit.template" />
+              {{/default}}
+            {{/switch}}
+          {{/if}}
+        </div>
+      {{else}}
+        <div class="loader"></div>
+      {{/if}}
+    </div>
+  </div>
+</form>

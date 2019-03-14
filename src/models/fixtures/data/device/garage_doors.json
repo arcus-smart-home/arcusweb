@@ -1,0 +1,42 @@
+[
+  {
+    "base:address": "DRIV:dev:cd43e1d0-7e56-479b-8837-06e53fe98795",
+    "base:caps": [
+      "motdoor",
+      "dev",
+      "devadv",
+      "devmock",
+      "devconn",
+      "devpow",
+      "base"
+    ],
+    "base:id": "cd43e1d0-7e56-479b-8837-06e53fe98795",
+    "base:images": { },
+    "base:instances": { },
+    "base:tags": [ ],
+    "base:type": "dev",
+    "dev:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+    "dev:devtypehint": "Garage Door",
+    "dev:model": "GarageDoor",
+    "dev:name": "Mock GarageDoor",
+    "dev:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+    "dev:productId": "73add4",
+    "dev:vendor": "Mockitron",
+    "devadv:added": 1488923510685,
+    "devadv:drivercommit": "1561e06f83fda26a63be35cd4305e8f4d4823f35",
+    "devadv:driverhash": "IJXT+AVOQ6Fv7U/Pqte4FkiBXSI",
+    "devadv:drivername": "MOCK_GarageDoor",
+    "devadv:driverversion": "1.1",
+    "devadv:protocol": "MOCK",
+    "devadv:protocolid": "pkeHvakWVmaUw6PVKbUChwAAAAA=",
+    "devconn:lastchange": 1488923510707,
+    "devconn:signal": 92,
+    "devconn:state": "ONLINE",
+    "devpow:backupbatterycapable": false,
+    "devpow:linecapable": true,
+    "devpow:source": "LINE",
+    "devpow:sourcechanged": 1488923510685,
+    "motdoor:doorstate": "CLOSED",
+    "motdoor:doorstatechanged": 1488923967672
+  }
+]

@@ -1,0 +1,268 @@
+arcus-subsystem-care-behaviors-edit-panel {
+  display: block;
+  hr {
+    margin: @gutter/1.5 0;
+  }
+  .overflow-container {
+    height: 100%;
+  }
+  .content-container {
+    display: flex;
+    flex-shrink: 1;
+    overflow-y: scroll;
+    height: 100vh;
+    .breakpoint(md-down, {
+      padding-right: @gutter/3;
+    });
+    .left-content {
+      height: 100%;
+      padding-top: @gutter/4;
+      .breakpoint(md, {
+        padding-right: @gutter/3;
+      });
+      .panel-actions {
+        height: 70px; // set height for flexbox
+      }
+      .form-error {
+        margin-bottom: 0;
+        & + div {
+          margin-top: @gutter/2;
+        }
+      }
+      .input-wrapper:not(:first-of-type) {
+        margin-top: @gutter/1.5;
+      }
+    }
+    .right-content {
+      padding-top: @gutter/4;
+      .breakpoint(md, {
+        margin-top: 80px;
+      });
+    }
+    h3 + p {
+      margin-bottom: 0;
+    }
+    h4 {
+      &.events-header {
+        margin-top: -@gutter/3;
+        padding-bottom: @gutter*(2/3);
+        border-bottom: @border;
+        margin-bottom: 0;
+      }
+    }
+    .input-wrapper + p,
+    p:first-of-type {
+      margin-bottom: 0;
+    }
+  }
+  .behavior-wrapper {
+    h4 {
+      .font-medium;
+      margin-top: 0;
+    }
+    .behavior-description {
+      display: flex;
+      align-items: center;
+      p {
+        font-style: italic;
+        margin: 0;
+      }
+      .left {
+        width: 70%;
+        padding-right: @gutter;
+        .breakpoint(sm-down, {
+          width: 60%;
+        });
+      }
+      .right {
+        width: 30%;
+        text-align: right;
+        .breakpoint(sm-down, {
+          width: 40%;
+          white-space: nowrap;
+        });
+        .required-field {
+          color: @cardinal;
+        }
+        .icon-app-chevron {
+          border-radius: 100%;
+          color: @link-color;
+          font-size: 20px;
+          display: inline-block;
+          margin-left: @gutter/3;
+          padding: @gutter/3;
+          transform: rotate(-90deg);
+          vertical-align: middle;
+          &.active, &:hover {
+            background-color: @link-color;
+            cursor: pointer;
+            color: @crane;
+          }
+          &.disabled {
+            background-color: @crane;
+            color: @heron;
+            border-color: @heron;
+            opacity: .7;
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+  .button-group {
+    margin: @gutter/2 auto;
+    width: 100%;
+  }
+  arcus-shop-button {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter*2;
+  }
+  .arcus-subsystem-care-behaviors-edit-duration {}
+
+  arcus-subsystem-care-behaviors-edit-temperature {
+    .temp-range {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      max-width: 200px;
+      margin: auto;
+      arcus-spinner {
+        margin: auto;
+      }
+    }
+  }
+
+  .arcus-subsystem-care-behaviors-edit-temperature {}
+  .arcus-subsystem-care-behaviors-edit-time {}
+
+  arcus-subsystem-care-behaviors-edit-time-windows-panel {
+    hr {
+      margin: @gutter 0;
+      &:first-of-type {
+        margin-top: @gutter/3;
+      }
+      &.bottom-seperator {
+        margin-bottom: @gutter*2/3;
+      }
+    }
+  }
+
+  arcus-subsystem-care-behaviors-edit-time-windows {
+    .events-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h3, .btn-primary {
+        margin: 0;
+      }
+    }
+    .week-day-buttons {
+      text-align: center;
+      .btn {
+        .font-regular;
+        font-size: @font-size-large;
+        padding: 2px 0 0;
+        height: 40px;
+        width: 40px;
+        margin-right: @gutter/4;
+        margin-bottom: @gutter/2;
+        letter-spacing: 0;
+        &.active {
+          cursor: pointer;
+          &:hover {
+            transform: translateY(-3px);
+          }
+        }
+      }
+    }
+    arcus-time {
+      margin-top: @gutter;
+      border: 0;
+      padding-bottom: 0;
+    }
+    arcus-accordion {
+      margin-top: -20px;
+      margin-bottom: 20px;
+      arcus-accordion-panel > li {
+        padding-right: 0;
+      }
+      arcus-accordion-panel {
+        li {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          padding-left: 0;
+          .toggle-panel {
+            top: 17px;
+            right: 0;
+          }
+        }
+        arcus-accordion-panel-body {
+          flex-direction: column;
+          .start-time-header, .end-time-header {
+            margin-top: 15px !important;
+            font-size: 20px !important;
+          }
+          .bottom-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            justify-content: space-between;
+            .breakpoint(lg, {
+              flex-wrap: nowrap;
+            });
+            button {
+              margin-bottom: @gutter/2;
+              .breakpoint(md-down, {
+                margin-bottom: @gutter/2;
+              });
+            }
+          }
+          .form-error {
+            margin-bottom: @gutter/2 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+arcus-subsystem-care-behaviors-edit-devices,
+arcus-subsystem-care-behaviors-edit-devices-open-count {
+  .radio-wrapper {
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    > label {
+      display: inline-flex;
+      align-items: center;
+      flex-grow: 1;
+      i {
+        font-size: 38px;
+      }
+      .text {
+        margin-left: @gutter / 2;
+      }
+      small {
+        color: @coot;
+      }
+    }
+    .check, .add {
+      align-self: unset;
+    }
+    arcus-form-select {
+      margin-left: 45px;
+      .input-wrapper {
+        margin-top: @gutter/2;
+      }
+      label {
+        position: static;
+        font-size: @font-size-base;
+        margin-bottom: @gutter/6;
+        white-space: nowrap;
+      }
+    }
+  }
+  .dropdown-wrapper {
+    padding-top: 0;
+  }
+}

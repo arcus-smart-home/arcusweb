@@ -1,0 +1,141 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-security-mode">
+  <template>
+    <can-import from="i2web/components/subsystem/alarms/devices/edit-participation/" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr>
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <hr/>
+      <div class="alarm-options">
+        <arcus-subsystems-alarms-devices-edit-participation {device}="device" {subsystem}="subsystem" for-pairing-customization />
+      </div>
+      <hr/>
+      <p>{{info}}</p>
+    </div>
+  </template>
+  <script type="view-model">
+
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import AppState from 'i2web/plugins/get-app-state';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /* @property {Array} description
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Description field from the customization step, to be displayed in paragraphs
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return ['You have paired a device that automatically participates in your Security Alarm system. Review the default settings below and customize your preferred settings.'];
+          },
+        },
+        /**
+         * @property {String} device
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} info
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Text info field from the customization step, to be displayed at the bottom
+         * of the box-gray-radius
+         */
+        info: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.info
+              ? step.info
+              : 'Any changes made will take effect next time you arm your system. Change these settings anytime in the Alarms service page.';
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description The Security subsystem
+         */
+        subsystem: {
+          get() {
+            return AppState().attr('subsystems').findByName('subsecurity');
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Security Alarm Updated';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Attention';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/security-mode
+         * @description Accept a whenComplete method to be invoked when the ON and PARTIAL lists change
+         *
+         */
+        whenComplete: {
+          type: '*',
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.subsystem} base:ValueChange': function participationChanged(vm) {
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('SECURITY_MODE');
+        }
+      },
+    };
+  </script>
+</can-component>

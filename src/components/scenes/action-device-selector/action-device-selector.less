@@ -1,0 +1,53 @@
+arcus-scenes-action-device-selector {
+  display: block;
+
+  arcus-accordion-panel {
+    margin-top: 0;
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    > li {
+      border-bottom: none;
+      padding: @gutter/2 0 0;
+    }
+   li.active {
+      margin-top: @gutter/2;
+      .type {
+        display: none;
+      }
+      arcus-accordion-panel-heading {
+        border-bottom: @border;
+        min-height: 50px;
+        .check {
+          display: none;
+        }
+      }
+      .radio-checkbox,
+      .complex-label {
+        pointer-events: none;
+      }
+    }    
+    .subheader {
+      .small;
+    }
+    .panel-heading,
+    .complex-label,
+    .radio-wrapper {
+      align-items: flex-start;
+      flex-shrink: 1;
+    }      
+    .accordion-panel-content  {
+      max-width: 100%;
+      flex: 1 1 100%;
+      flex-direction: column;
+
+      .selector-wrapper {
+        width: 100%;
+      }
+    }
+    .toggle-panel {
+      top: 18px;
+    }
+  }
+}

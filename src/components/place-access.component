@@ -1,0 +1,105 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-place-access">
+  <template>
+    <can-import from="i2web/components/animated/check.component" />
+    {{#if showPlaceAccessModal}}
+      <div class="modal-container">
+        <div class="modal-content">
+          <arcus-animated-check icon="icon-app-check" checked />
+          <h2>Excellent!</h2>
+          <hr/>
+          <p>
+            You now have access to <strong>{{placeName}}</strong> and
+            can manage things like devices, people, and alarms.
+          </p>
+          <p>
+            <strong>
+              To switch places, select <i class="icon-app-logout-1"></i>
+              on the main navigation.
+            </strong>
+          </p>
+          <hr/>
+          <a>
+            <button class="btn-primary" ($click)="closeModal()">
+              Close
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="modal-backdrop"></div>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Person from 'i2web/models/person';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {CanMap} invitation
+         * @parent i2web/components
+         * @description Truthy when the invitation is accepted by the User,
+         * set to undefined when the User closed the modal
+         */
+        invitation: {
+          Type: CanMap,
+          set(invitation) {
+            this.attr('showPlaceAccessModal', !!invitation);
+            return invitation;
+          },
+        },
+        /**
+         * @property {Person} person
+         * @parent i2web/components
+         * @description Person currently logged in; required to switch places
+        */
+        person: {
+          Type: Person,
+        },
+        /**
+         * @property {String} placeName
+         * @parent i2web/components
+         * @description The place name of the new place the User now has access to
+         */
+        placeName: {
+          get() {
+            return this.attr('invitation.placeName');
+          },
+        },
+        /**
+         * @property {Boolean} showNewPlaceModal
+         * @parent i2web/components
+         * @description Set to false when the user dismisses the modal
+         */
+        showPlaceAccessModal: {
+          type: 'boolean',
+          value: false,
+        },
+      },
+      /**
+       * @function closeModal
+       * @parent i2web/components
+       * @description Stop displaying the place access modal
+       */
+      closeModal() {
+        this.attr('invitation', undefined);
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,114 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-zwave-tools">
+  <template>
+    <can-import from="i2web/components/zwave-tools/rebuild/" />
+    <can-import from="i2web/components/zwave-tools/remove/" />
+    <arcus-accordion>
+      <arcus-accordion-panel>
+        <arcus-accordion-panel-heading><h2>Remove Z-Wave Device</h2></arcus-accordion-panel-heading>
+        <arcus-accordion-panel-body>
+          <div class="accordion-panel-content">
+            <div class="accordion-panel-copy">
+              <p>
+                Perhaps you are having trouble adding a Z-Wave device that was
+                previously paired or maybe your new device won't connect after
+                several attempts.
+              </p>
+              <p class="font-bold">
+                Tap 'Remove Z-Wave Devices' to remove orphaned Z-Wave devices
+                that no longer appear on your device list page. These devices
+                believe they are paired to the hub, but the hub does not know
+                about them.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-panel-action">
+            <div class="accordion-buttons">
+              <button class="btn-primary" ($click)="showZWaveRemoveModal()">
+                Remove Z-Wave Devices
+              </button>
+            </div>
+          </div>
+        </arcus-accordion-panel-body>
+      </arcus-accordion-panel>
+
+      <arcus-accordion-panel>
+        <arcus-accordion-panel-heading><h2>Rebuild Z-Wave Network</h2></arcus-accordion-panel-heading>
+        <arcus-accordion-panel-body>
+          <div class="accordion-panel-content">
+            <div class="accordion-panel-copy">
+              <p>
+                Z-Wave devices in your home link together to form a network. If  devices
+                are added, relocated, or removed, the network may need to be rebuilt.
+              </p>
+              <p>
+                The rebuild time varies depending on the number or Z-Wave devices in your
+                home. It may take a few minutes or several hours to complete.
+              </p>
+              <p class="font-bold">
+                Your Z-Wave devices will not work optimally during this process.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-panel-action">
+            <div class="accordion-buttons">
+              <button class="btn-primary {{^if enableZWaveRebuild}}disabled{{/if}}"
+                ($click)="showZWaveRebuild">
+                Rebuild Z-Wave Network
+              </button>
+            </div>
+          </div>
+        </arcus-accordion-panel-body>
+      </arcus-accordion-panel>
+    </arcus-accordion>
+
+    <arcus-zwave-tools-rebuild {^@open}="showZWaveRebuild" />
+    {{#if isZWaveRemoveModalOpen}}
+      <arcus-zwave-tools-remove {hub}="hub" {(open)}="isZWaveRemoveModalOpen" />
+    {{/if}}
+  </template>
+  <view-model>
+    import CanMap from 'can-map';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import find from 'lodash/find';
+
+    export default CanMap.extend({
+      define: {
+        enableZWaveRebuild: {
+          get() {
+            return getAppState().attr('hub.hubzwave:numDevices') > 0;
+          }
+        },
+        hub: {
+          get() {
+            return getAppState().attr('hub');
+          },
+        },
+        isZWaveRemoveModalOpen: {
+          value: false,
+        },
+        showZWaveRebuild: {
+          value: false,
+        },
+      },
+      showZWaveRemoveModal() {
+        this.attr('isZWaveRemoveModalOpen', true);
+      },
+    });
+  </view-model>
+</can-component>

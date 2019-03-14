@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+/**
+ * Copyright 2019 Arcus Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict'
+
+const file = require('file')
+const path = require('path')
+const prepend = require('prepend')
+
+const LICENSE_TEXT = `Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.`
+
+const HEADERS = {
+  COMPONENT:  `<!-- \n${LICENSE_TEXT}\n-->\n`,
+  HANDLEBARS: `{{!-- \n${LICENSE_TEXT}\n--}}\n`,
+  HTML:       `<!-- \n${LICENSE_TEXT}\n-->\n`,
+  JS:         `/**\n${LICENSE_TEXT.split('\n').map(l => ` * ${l}`).join('\n')}\n */\n`,
+  SH:         `${LICENSE_TEXT.split('\n').map(l => `# ${l}`).join('\n')}\n`,
+  STACHE:     `{{! \n${LICENSE_TEXT}\n}}\n`
+}
+
+
+if (process.argv.length < 3) {
+  console.error('Needs a directory to traverse.')
+  process.exit(1)
+}
+
+const dir = process.argv[2]
+walkDirectory(dir)
+
+function walkDirectory(directory) {
+  file.walk(directory, function (_, __, ___, files) {
+    files
+      .filter(f => !f.includes('node_modules'))
+      .forEach(licenseFile)
+  })
+}
+
+function licenseFile(file) {
+  const ext = path.extname(path.basename(file)).slice(1)
+  if (!ext) return
+
+  const extensions = [ 'component', 'handlebars', 'html', 'js', 'sh', 'stache' ]
+  if (extensions.includes(ext)) {
+    const header = HEADERS[ext.toUpperCase()]
+    prepend(file, header, function (err) {
+      if (err) console.error(err)
+    })
+    console.log(file)
+  }
+}

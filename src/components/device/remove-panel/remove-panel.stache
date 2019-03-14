@@ -1,0 +1,94 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#eq removalMode REMOVAL.MANUAL}}
+  <button class="btn btn-cancel {{#if isCancelling}}active disabled{{/if}}"
+          ($click)="cancel">
+    {{#if isCancelling}}<div class="loader">Loading...</div>{{/if}}
+    Cancel
+  </button>
+{{else}}
+  <button class="btn" ($click)="cancel">Close</button>
+{{/eq}}
+
+<div class="panel-content">
+  <h3>Remove Device</h3>
+  <hr>
+
+  {{#switch stage}}
+    {{#case STAGES.REMOVING}}
+      <h3>
+        {{#eq removalMode REMOVAL.AUTOMATIC}}
+          Removing Device...
+        {{else}}
+          Remove {{device['dev:name']}}
+        {{/eq}}
+      </h3>
+
+      <p class="small">{{tip}}</p>
+
+      {{#each removeSteps}}
+        <div class="box-gray-radius darken-bg step-box">
+          <div class="row-left-area">
+            {{#if showStepCount}}
+              <span class="step-count">{{%indexNum 1}}</span>
+            {{/if}}
+            <div>
+              {{#if instructions}}
+                {{#each instructions}}
+                  <p>{{.}}</p>
+                {{/each}}
+              {{else}}
+                {{#if info}}
+                  <p>{{info}}</p>
+                {{else}}
+                  <p>The hub will beep when the device is successfully removed.</p>
+                {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+
+      {{#eq removalMode REMOVAL.MANUAL}}
+        <h5>This may take several minutes.</h5>
+      {{/eq}}
+      <div class="loader-container">
+        <div class="loader">Loading...</div>
+      </div>
+    {{/case}}
+
+    {{#case STAGES.TIMED_OUT}}
+      <h4>Removal was unsuccessful.</h4>
+      <p>Force Remove will delete the device from the Hub.</p>
+
+      <button class="btn btn-cancel"
+              ($click)="forceRemove">
+        Force Remove
+      </button>
+    {{/case}}
+
+    {{#case STAGES.ERROR}}
+      <h4>Removal was unsuccessful.</h4>
+      <p>Force Remove will delete the device from the Hub.</p>
+
+      <button class="btn btn-cancel"
+              ($click)="forceRemove">
+        Force Remove
+      </button>
+    {{/case}}
+  {{/switch}}
+</div>

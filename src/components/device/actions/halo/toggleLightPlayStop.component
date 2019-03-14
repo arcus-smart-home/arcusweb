@@ -1,0 +1,97 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-halo-toggle-light-play-stop">
+  <template>
+    <can-import from="i2web/components/device/actions/toggleOnOff.component" />
+    <div class="content">
+      {{#if pluggedIn}}
+        <arcus-device-action-toggle-on-off {(device)}="device" />
+        {{#if isHaloPlus}}
+          <button class="btn-run" ($click)="togglePlaying">
+            {{#if isPlaying}}
+              Stop Radio
+            {{else}}
+              Play Radio
+            {{/if}}
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+    import DevicePower from 'i2web/models/capability/DevicePower';
+    import WeatherRadioCapability from 'i2web/models/capability/WeatherRadio';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} isHaloPlus
+         * @parent i2web/components/device/actions/halo/toggleLightPlayStop
+         */
+        isHaloPlus: {
+          get() {
+            const device = this.attr('device');
+            return device && _.includes(device.attr('base:caps'), 'noaa');
+          },
+        },
+        /**
+         * @property {Boolean} isPlaying
+         * @parent i2web/components/device/actions/halo/toggleLightPlayStop
+         * @description Whether the NOAA radio is playing
+         */
+        isPlaying: {
+          get() {
+            const playingState = this.attr('device').attr('noaa:playingstate');
+            return playingState === WeatherRadioCapability.PLAYINGSTATE_PLAYING;
+          },
+        },
+        /**
+         * @property {Boolean} pluggedIn
+         * @parent i2web/components/device/actions/halo/toggleLightPlayStop
+         * @description Whether the device is running on LINE power or BATTERY
+         */
+        pluggedIn: {
+          get() {
+            return this.attr('device.devpow:source') === DevicePower.SOURCE_LINE;
+          },
+        },
+      },
+      /**
+       * @function togglePlaying
+       * @parent i2web/components/device/actions/halo/toggleLightPlayStop
+       * @description Play or stop the Halo's NOAA radio
+       */
+      togglePlaying() {
+        const isPlaying = this.attr('isPlaying');
+        const halo = this.attr('device');
+        if (isPlaying) {
+          halo.StopPlayingStation().catch(e => Errors.log(e));
+        } else {
+          halo.PlayStation(halo.attr('noaa:stationselected'), -1).catch(e => Errors.log(e));
+        }
+      },
+    });
+  </script>
+</can-component>

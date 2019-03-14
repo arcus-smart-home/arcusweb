@@ -1,0 +1,34 @@
+{
+  "3d496bfc-1098-493e-afd4-7f56c12dbef6": {
+    "rules": [
+      {
+        "writeableAttributes": [
+          "rule:name",
+          "rule:description"
+        ],
+        "base:caps": [
+          "base",
+          "rule"
+        ],
+        "rule:state": "DISABLED",
+        "base:type": "rule",
+        "rule:template": "button-chime",
+        "rule:created": 1468874727786,
+        "base:id": "c27a60aa-3e71-4b77-a4e6-ddce42b3c2a9.1",
+        "rule:modified": 1471019089643,
+        "base:address": "SERV:rule:c27a60aa-3e71-4b77-a4e6-ddce42b3c2a9.1",
+        "rule:context": {
+          "button": "DRIV:dev:14116b14-841a-4da5-8281-e5217ae4eaa7",
+          "_accountId": "dc36cc0f-ebb7-444d-bf14-3d366fa625eb",
+          "address:hub:0": "SERV:LWF-5229:hub",
+          "_ruleName": "Door Bell Button",
+          "_stillFiring:0": [],
+          "_placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+          "_firing": false
+        },
+        "rule:name": "Door Bell Button",
+        "rule:description": "Use the Smart Button as a doorbell."
+      }
+    ]
+  }
+}

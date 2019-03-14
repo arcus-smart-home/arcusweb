@@ -1,0 +1,164 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-subsubsystem-alarms-incident-tracker-graphical 
+      {{#if showPlaceName}}show-place-name{{/if}}
+      {(incident)}="incident" />
+  <arcus-subsubsystem-alarms-incident-tracker-list {(incident)}="incident" />
+  <input type="checkbox" {($checked)}="showPlaceName" /> Show Place Name?
+  <input type="checkbox" {($checked)}="incident['incident:monitored']" /> Monitored?
+  <input type="checkbox" {($checked)}="incident['incident:confirmed']" /> Confirmed?
+  <h2>Place type</h2>
+  <select {($value)}="place['place:serviceLevel']">
+    <option value="{{PlaceCapability.SERVICELEVEL_BASIC}}">Basic</option>
+    <option value="{{PlaceCapability.SERVICELEVEL_PREMIUM}}">Premium</option>
+    <option value="{{PlaceCapability.SERVICELEVEL_PREMIUM_PROMON}}">ProMon</option>
+  </select>
+  <h2>Alert type</h2>
+  <select {($value)}="incident['incident:alert']">
+    <option value="{{IncidentCapability.ALERT_CO}}">CO</option>
+    <option value="{{IncidentCapability.ALERT_SMOKE}}">Smoke</option>
+    <option value="{{IncidentCapability.ALERT_SECURITY}}">Security</option>
+    <option value="{{IncidentCapability.ALERT_WATER}}">Water</option>
+    <!-- Not supported yet
+    <option value="{{IncidentCapability.ALERT_WEATHER}}">Weather</option>
+    <option value="{{IncidentCapability.ALERT_CARE}}">Care</option> -->
+    <option value="{{IncidentCapability.ALERT_PANIC}}">Panic</option>
+  </select>
+  <h2>Alert state</h2>
+  <select {($value)}="incident['incident:alertState']">
+    <option value="{{IncidentCapability.ALERTSTATE_PREALERT}}">PreAlert</option>
+    <option value="{{IncidentCapability.ALERTSTATE_ALERT}}">Alert</option>
+    <option value="{{IncidentCapability.ALERTSTATE_CANCELLING}}">Cancelling</option>
+    <option value="{{IncidentCapability.ALERTSTATE_COMPLETE}}">Complete</option>
+  </select>
+  {{#eq incident['incident:alertState'] IncidentCapability.ALERTSTATE_PREALERT}}
+    Timestamp: <input type="text" {($value)}="incident['incident:prealertEndtime']" />
+    <input type="button" ($click)="from20s" value="Start at 20s from now" />
+  {{/eq}}
+  <h2>Add new Incident Event</h2>
+  <form ($submit)="addIncidentEvent(%event)">
+    Key: <input {($value)}="newIncidentEvent.key" /><br />
+    Message: <input {($value)}="newIncidentEvent.message" /><br />
+    State: <select {($value)}="newIncidentEvent.state">
+      <option value="PREALERT">PreAlert</option>
+      <option value="ALERT">Alert</option>
+      <option value="CANCELLED">Cancelled</option>
+      <option value="DISPATCHING">Dispatching</option>
+      <option value="DISPATCHED">Dispatched</option>
+      <option value="DISPATCH_REFUSED">Dispatch Refused</option>
+      <option value="DISPATCH_FAILED">Dispatch Failed</option>
+      <option value="DISPATCH_CANCELLED">Dispatch Cancelled</option>
+    </select>
+    <input type="submit" value="Add" />
+  </form>
+  <h2>Emit new HistoryAdded event</h2>
+  <form ($submit)="emitHistoryEvent(%event)">
+    Subject: <input {($value)}="newHistoryEvent.subjectName" /><br />
+    Long Message: <input {($value)}="newHistoryEvent.longMessage" /><br />
+    <input type="submit" value="Emit" />
+  </form>
+  <button ($click)="toggleIncidentAsCurrent(%event)">Toggle Incident As Current</button>
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import canMap from 'can-map';
+  import canViewModel from 'can-view-model';
+  window.canViewModel = canViewModel;
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/subsystem/alarms/incident-tracker/list/';
+  import 'i2web/components/subsystem/alarms/incident-tracker/graphical/';
+  import incidents from 'i2web/models/fixtures/data/incident/incident.json';
+  import 'i2web/helpers/global';
+  import Cornea from 'i2web/cornea/';
+  import Incident from 'i2web/models/incident';
+  import IncidentCapability from 'i2web/models/capability/AlarmIncident';
+  import Place from 'i2web/models/place';
+  import PlaceCapability from 'i2web/models/capability/Place';
+  import places from 'i2web/models/fixtures/data/place/place.json';
+
+  const place = new Place(places[0]);
+  const incident = new Incident(incidents[0])
+  const VM = canMap.extend({
+    showPlaceName: false,
+    incident,
+    IncidentCapability,
+    place,
+    PlaceCapability,
+    newHistoryEvent: new canMap({
+      subjectName: '',
+      longMessage: '',
+    }),
+    newIncidentEvent: new canMap({
+      key: '',
+      message: '',
+      state: 'PREALERT',
+    }),
+    addIncidentEvent(ev) {
+      ev.preventDefault();
+      const event = Object.assign(this.attr('newIncidentEvent').attr(), {
+        time: Date.now(),
+      });
+      this.attr('incident.incident:tracker').push(event);
+      this.attr('newIncidentEvent').attr({
+        key: '',
+        message: '',
+        state: 'PREALERT',
+      }, true);
+    },
+    emitHistoryEvent(ev) {
+      ev.preventDefault();
+      const event = Object.assign(this.attr('newHistoryEvent').attr(), {
+        timestamp: Date.now(),
+      });
+      const historyPayload = Object.assign({
+        'base:address': this.attr('incident').attr('base:address'),
+        events: [event],
+      });
+      Cornea.emit('incident incident:HistoryAdded', historyPayload);
+      this.attr('newHistoryEvent').attr({
+        subjectName: '',
+        longMessage: '',
+      }, true);
+    },
+    toggleIncidentAsCurrent(ev) {
+      const appScope = canViewModel('html');
+
+      ev.preventDefault();
+
+      if(appScope.attr('currentIncident')) {
+        appScope.removeAttr('currentIncident');
+      } else {
+        appScope.attr('currentIncident', incident);
+      }
+    },
+    from20s() {
+      this.attr('incident.incident:prealertEndtime', Date.now() + (20 * 1000));
+    },
+  });
+
+  const scope = new VM({});
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope: {
+      place,
+      currentIncident: incident
+    },
+  });
+</script>

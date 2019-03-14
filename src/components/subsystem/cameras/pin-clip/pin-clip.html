@@ -1,0 +1,78 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>arcus-subsystem-camera-pin-clip</title>
+  <style>
+    #demo-html {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-html arcus-subsystem-cameras-pin-clip {
+      margin-top: 200px;
+    }
+    .favorite-icon i {
+      font-size: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo-html"></div>
+  <script src="../../../../../../node_modules/steal/steal.js" main="@empty">
+    import CanMap from 'can-map';
+    import sample from 'lodash/sample';
+    import stache from 'can-stache';
+    import Recording from 'i2web/models/recording';
+    import addAppState from 'i2web/test/util/addAppState';
+    import data from 'i2web/models/fixtures/data/video/recordings.json';
+    import 'i2web/app.less';
+    import 'i2web/components/notifications/notifications';
+    import 'i2web/components/subsystem/cameras/pin-clip/pin-clip';
+
+    const appState = new CanMap({ notifications: [] })
+    addAppState(appState);
+
+    const template = stache(`
+      <arcus-notifications {(events)}="notifications" />
+      <arcus-subsystem-cameras-pin-clip {clip}="clip" />
+    `);
+
+    const clip = new Recording(sample(data.payload.attributes.recordings));
+    clip.AddTags = function AddTags(tag) {
+      console.log(`Adding tag: ${tag}`);
+      return Promise.resolve();
+    };
+    clip.RemoveTags = function RemoveTags(tag) {
+      console.log(`Removing tag: ${tag}`);
+      return Promise.resolve();
+    };
+
+    const scope = new CanMap({
+      clip,
+      notifications: appState.attr('notifications')
+    });
+    document
+      .querySelector('#demo-html')
+      .appendChild(template(scope));
+  </script>
+</body>
+</html>

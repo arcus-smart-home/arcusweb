@@ -1,0 +1,162 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<form ($submit)="save" {{#if saving}}disabled{{/if}}>
+  <div class="panel-buttons">
+    {{close-button type="cancel"}}
+    {{#if allowRemovePlace}}
+      <button class="btn-delete" type="button" ($click)="showRemovePlace">
+        Remove Place
+      </button>
+    {{/if}}
+  </div>
+  <div class="panel-content">
+    <h3>{{headerString}}</h3>
+    {{#if description}}
+      <p>{{description}}</p>
+    {{/if}}
+    <hr/>
+    {{!-- STEP 1: EDIT ADDRESS --}}
+    <h3>{{subheaderStep1}}</h3>
+    {{#if showPlaceName}}
+      {{textInput('formPlace.place:name', 'Place Name')}}
+    {{/if}}
+    {{textInput('formPlace.place:streetAddress1', 'Address 1')}}
+    {{textInput('formPlace.place:streetAddress2', 'Address 2')}}
+    {{textInput('formPlace.place:city', 'City')}}
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        {{#selectInput('formPlace.place:state', 'State', allowSearch=true placeholder='State')}}
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        {{/selectInput}}
+      </div>
+      <div class="col-xs-12 col-sm-offset-1 col-sm-5 inline-with-dropdown">
+        {{textInput('formPlace.place:zipCode', 'Zip Code', attributes='type="tel" key-mask="99999"')}}
+      </div>
+    </div>
+    {{!-- STEP 2: VERIFICATION CHECK --}}
+    <h3>{{subheaderStep2}}</h3>
+    {{#if promonitoringSettings}}
+      <p>A verified address is required for Professional Monitoring customers so authorities can locate your home.</p>
+    {{/if}}
+    {{#if validateError}}
+      <p class="form-error">{{validateError}}</p>
+    {{/if}}
+    <button ($click)="validateAddress" {{#unless enableValidateButton}}type="button"{{/unless}} class="btn{{#if validating}} saving{{/if}} validate-address" {{#unless enableValidateButton}}disabled{{/unless}}>
+      {{#if validating}}
+        <div class="loader"></div> Verifying
+      {{else}}
+        Verify Address
+      {{/if}}
+    </button>
+    {{^eq suggestions undefined}}
+      <h3>{{subheaderStep3}}</h3>
+      {{#if promonitoringSettings}}
+        <p>Choose the correct address below and confirm it is a residential property. If none of the addresses below are correct, please check that your address has been entered correctly.</p>
+      {{/if}}
+      {{#unless promonitoringSettings}}
+        {{#eq suggestions.length 1}}
+          <p class="form-error">There are no suggested addresses found. Please check that your address has been entered correctly.</p>
+        {{/eq}}
+      {{/unless}}
+      <can-import from="i2web/components/selectors/generic.component" />
+      <div class="suggestions">
+        <arcus-generic-selector {things}="suggestions" {is-selected}="@isAddressSelected" {select-option}="@selectAddress" name-key="formattedName"/>
+      </div>
+      {{#if selectedAddress}}
+        {{#if promonitoringSettings}}
+          <hr/>
+          <div class="radio-wrapper">
+            <label for="verify-residential" class="no-text-transform">I confirm this is a residential property.</label>
+            <input class="radio-checkbox" type="checkbox" id="verify-residential" {($checked)}="isResidential">
+            <div class="check"></div>
+          </div>
+        {{else}}
+          {{#eq selectedAddress userEnteredAddressSuggestion}}
+            {{#selectInput('formPlace.place:tzId', 'Time Zone', placeholder='Time Zone')}}
+              {{#each timezones}}
+                <option value="{{id}}">{{name}}</option>
+              {{/each}}
+            {{/selectInput}}
+          {{/eq}}
+        {{/if}}
+        {{#if formError}}
+          <p class="form-error">{{formError}}</p>
+        {{/if}}
+        <button type="submit" class="btn-submit{{#unless formCompleted}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Saving
+          {{else}}
+            {{saveButtonLabel}}
+          {{/if}}
+        </button>
+      {{/if}}
+    {{/eq}}
+  </div>
+  <div hidden>
+    <input type="submit"/>
+  </div>
+</form>

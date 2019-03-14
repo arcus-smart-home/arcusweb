@@ -1,0 +1,72 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<div class="step {{activeStepClass}}">
+  <arcus-context-bar>
+    <h2>Professional Monitoring Signup</h2>
+  </arcus-context-bar>
+  <div class="container">
+    <div class="main-content">
+      <h2>Getting Started</h2>
+      <p>
+        You're minutes away from enjoying world class professional monitoring. Answer a few simple questions,
+        test your system, and experience a smarter way to protect your home and family.
+      </p>
+      <hr/>
+      <h2>Confirm where you live</h2>
+      <p>
+        Professional Monitoring is only intended for residential properties and is not intended for commercial
+        use. Please confirm or edit the residential address below:
+      </p>
+      <div class="row address-info">
+        <div class="left-wrapper">
+          <div class="place-avatar">
+            <img src="/src/images/default-home.jpg"/>
+          </div>
+          <div class="place-information">
+              <arcus-mailing-address {line1}="place['place:streetAddress1']"
+                                    {line2}="place['place:streetAddress2']"
+                                    {city}="place['place:city']"
+                                    {state}="place['place:state']"
+                                    {zip}="place['place:zipCode']"
+                                    {zip-plus4}="place['place:zipPlus4']" />
+              {{#if validating}}
+                <div class="verifying-address">
+                  <div class="loader"></div>
+                  <p class="loader-text">Verifying address...</p>
+                </div>
+              {{else}}
+                {{#if isAddressVerified}}
+                  <div class="address-verified">
+                    <i class="icon-app-check"></i>
+                    <span class="validated-address">Address Verified</span>
+                  </div>
+                {{else}}
+                  <div class="info-panel error">
+                    The address on file cannot be verified. Please <a ($click)="editPlaceAddress">edit</a> your address.
+                  </div>
+                {{/if}}
+              {{/if}}
+          </div>
+        </div>
+        <div class="right-wrapper">
+          <button class="btn-primary" ($click)="editPlaceAddress">Edit Address</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

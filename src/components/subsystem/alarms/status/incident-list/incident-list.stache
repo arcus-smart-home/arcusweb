@@ -1,0 +1,71 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<h2>Activity</h2>
+<div class="segment-btn">
+  <button ($click)="setActiveFilter('security')"
+    class="btn {{#if isActiveFilter('security')}}active{{/if}}">
+    <i class="icon-platform-security-1"></i>
+  </button>
+  <button ($click)="setActiveFilter('safety')"
+    class="btn {{#if isActiveFilter('safety')}}active{{/if}}">
+    <i class="icon-platform-smoke-2"></i>
+    <i class="icon-platform-co-smoke-2"></i>
+  </button>
+  <button ($click)="setActiveFilter('water')"
+    class="btn {{#if isActiveFilter('water')}}active{{/if}}">
+    <i class="icon-platform-water-leak-2"></i>
+  </button>
+</div>
+
+<div class="events">
+  {{#if loading}}
+    <div class="gray-loader">Loading History</div>
+  {{else}}
+    {{#unless history}}
+      <div class="event-item row">
+        <p class="no recent-activity">No recent {{activeFilterText}} Alarm Activity.</p>
+      </div>
+    {{else}}
+      {{#each datesWithHistory(history) as date}}
+        <div class="history-timestamp">
+          <small>{{format-date(date)}}</small>
+        </div>
+        {{^if getIncidentsForDate(date)}}
+          <div class="event-item row">
+            <p class="no recent-activity">You have no {{activeFilterText}} Alarm Activity.</p>
+          </div>
+        {{else}}
+          {{#each getIncidentsForDate(date) as entry}}
+            <div class="event-item row">
+              <span class="time">{{format-time(entry.timestamp)}}</span>
+              <div class="event col-xs">
+                <p>
+                  {{#if isIncident(entry)}}
+                    <a ($click)="examineIncident(entry)">{{subjectName}}</a>
+                  {{else}}
+                    {{subjectName}}
+                  {{/if}}
+                </p>
+                <small>{{longMessage}}</small>
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
+      {{/each}}
+    {{/unless}}
+  {{/if}}
+</div>

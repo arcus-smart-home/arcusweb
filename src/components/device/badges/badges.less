@@ -1,0 +1,97 @@
+.device-status-detail {
+  .font-regular;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  margin-right: @gutter/3;
+  margin-bottom: 5px;
+  min-height: 34px;
+  color: @coot;
+  border: 1px solid @heron;
+  border-radius: @border-radius;
+  text-align: center;
+  i {
+    font-size: 110%;
+  }
+  .value-unit {
+    font-size: 60%;
+    padding-left: 2px;
+  }
+
+  &.low-battery, &.low-salt {
+    white-space:nowrap;
+    color: @cardinal;
+    .value-unit {
+      color: @cardinal;
+    }
+  }
+}
+
+arcus-device-badge-lockstate {
+  .device-status-detail {
+    text-transform: capitalize;
+  }
+}
+
+.panel-list-container {
+  .panel-status {
+    justify-content: flex-start;
+    margin-left: @gutter/2;
+    text-align: left;
+    .breakpoint(md, {
+      margin-left: @gutter;
+    });
+
+    arcus-device-badge-camera-preview {
+      display: inline-flex;
+      align-self: flex-start;
+      border: 2px solid @heron;
+      border-radius: @border-radius;
+      margin-top: @gutter/6;
+      margin-bottom: @gutter/6;
+      margin-right: @gutter/3;
+      arcus-camera[preview-only] {
+        .video-wrapper {
+          height: 108px;
+          .breakpoint(md, {
+            height: 135px;
+          });
+        }
+      }
+      arcus-camera {
+        arcus-lazy-image {
+          height: auto;
+          min-height: 100px;
+          width: 145px;
+          align-items: center;
+          .breakpoint(md, {
+            width: 180px;
+            padding-top: 0;
+          });
+          .placeholder {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+          }
+          img {
+            height: auto;
+            border-radius: @border-radius;
+          }
+        }
+      }
+    }
+  }
+}
+
+arcus-device-badge-temperaturelocked {
+  width: 100%;
+  .temp-locked {
+    font-size: @font-size-small;
+    color: @swift;
+  }
+}
+
+arcus-device-badge-thermostat {
+  display: flex;
+}

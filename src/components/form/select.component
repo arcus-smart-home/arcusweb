@@ -1,0 +1,89 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-form-select">
+  <template>
+    <div class="dropdown-wrapper">
+      <label>{{label}}</label>
+      <div class="ui dropdown selection {{dropdownVariableClasses}}" {{#if multiple}}multiple{{/if}}>
+        <input type="hidden" {($value)}="value" />
+        <i class="dropdown icon"></i>
+        <div class="{{#if placeholder}}default{{/if}} text">{{placeholder}}</div>
+        <div class="menu">
+          {{#if options}}
+            {{#each options}}
+              <div class="item" data-value="{{.[optionValueProp]}}">{{.[optionLabelProp]}}</div>
+            {{/each}}
+          {{else}}
+            <content/>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+
+    export default CanMap.extend({
+      define: {
+        // allow to alias the option value to another property
+        optionValueProp: {
+          type: 'string',
+          value: 'value',
+        },
+        // allow to alias the option label to another property
+        optionLabelProp: {
+          type: 'string',
+          value: 'label',
+        },
+        multiple: {
+          value: false,
+        },
+        dropdownVariableClasses: {
+          get() {
+            let classes = '';
+            if (this.attr('multiple')) {
+              classes += 'fluid multiple';
+            }
+            return classes;
+          },
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    import 'semantic-ui-transition/transition';
+    import 'semantic-ui-transition/transition.css';
+    import 'semantic-ui-dropdown/dropdown.css';
+    import 'semantic-ui-dropdown/dropdown';
+    import $ from 'jquery';
+
+    export default {
+      inserted() {
+        $(this.element.querySelector('.ui.dropdown')).dropdown();
+      },
+      '{viewModel} value': function valueChanged(vm, evt, newValue) {
+        const $el = $(this.element.querySelector('.ui.dropdown'));
+        const dropdownValue = $el.dropdown('get value');
+
+        // sync up ui-dropdown when the data changes
+        if (newValue !== dropdownValue) {
+          $el.dropdown('set selected', newValue);
+        }
+      },
+    };
+  </script>
+</can-component>

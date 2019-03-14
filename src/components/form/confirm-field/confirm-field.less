@@ -1,0 +1,40 @@
+arcus-form-confirm-field {
+  h3 {
+    margin-top: 0;
+    &:hover {
+      color: @link-color;
+    }
+  }
+
+  .character-count {
+    .font-medium-italic;
+    color: @coot;
+    text-transform: capitalize;
+    text-align: left;
+    letter-spacing: 0;
+    margin-top: 5px;
+    line-height: 1;
+  }
+  .input-wrapper .alternate-style {
+    margin-bottom: 0;
+    input {
+      line-height: 1;
+    }
+  }
+}
+
+//this goes above the confirm field element to hide other elements when the field is active
+.is-isolating {
+  .scene-information h5,
+  .device-information h4,
+  .place-information h3,
+  .next-scheduled,
+  .rule-description,
+  .panel-options,
+  .panel-status,
+  .panel-secondary-wrapper {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease-in;
+  }
+}

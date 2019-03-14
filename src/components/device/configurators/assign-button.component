@@ -1,0 +1,234 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-assign-button">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <arcus-generic-selector {things}="templates" {is-selected}="@isSelected" {select-option}="@saveRule" name-key="web:button:description" />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import RuleTemplate from 'i2web/models/rule-template';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import _ from 'lodash';
+
+    /**
+     * Empty template, used if we need to delete a rule but not create a new one
+     * in its place.
+     */
+    const EMPTY_TEMPLATE = new RuleTemplate({
+      'base:id': 'activate-rule',
+      'ruletmpl:name': 'Activate A Rule',
+    });
+
+    /**
+     * Key value pairs that match the model name to the prefix of all the
+     * associated rule templates.
+     */
+    const PRODUCT_RULE_TEMPLATE_PREFIX = {
+      // 4 button keyfobs v3
+      '4fcccc': 'smartfobgen3-',
+      // 4 button keyfobs v2
+      '4fccbb': 'smartfob-',
+      // 2 button keyfobs
+      486390: 'smartfobgen1-',
+      // 1 button button
+      bbf1cf: 'button-',
+      bca135: 'button-',
+    };
+
+    /**
+     * Key value pairs that match the model name to the key in the rule
+     * context.
+     */
+    const PRODUCT_CONTEXT_KEY = {
+      // 4 button keyfobs v3
+      '4fcccc': 'smart fob',
+      // 4 button keyfobs v2
+      '4fccbb': 'smart fob',
+      // 2 button keyfobs
+      486390: 'key fob',
+      // 1 button button
+      bbf1cf: 'button',
+      bca135: 'button',
+    };
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} button
+         * @parent i2web/components/device/configurators/
+         * @description String name of being assigned
+         */
+        button: {
+          type: 'string',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/
+         * @description The device being configured
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Function} onButtonAssigned
+         * @parent i2web/components/device/configurators/
+         * @description If defined by the parent component, this method is invoked when the button's assignment is changed
+         */
+        onButtonAssigned: {
+          Type: Function,
+        },
+        /**
+         * @property {Rule} rule
+         * @parent i2web/components/device/configurators/
+         * @description
+         */
+        rule: {
+          get() {
+            let currentRule;
+            const rules = getAppState().attr('rules');
+            const deviceId = this.attr('device.base:address');
+            const button = this.attr('button');
+
+            rules.forEach((rule) => {
+              const context = rule.attr('rule:context').serialize();
+              for (const key in context) { // eslint-disable-line no-restricted-syntax
+                if (context.hasOwnProperty(key) && context[key] === deviceId &&
+                  // Unfortunately `context.button` can either be the name of the button for fobs
+                  // or it could be the device ID in the event it's an actual button, so we need
+                  // an or check
+                  (context.button === button || context.button === deviceId)) {
+                  this.setRuleTemplate(rule);
+                  currentRule = rule;
+                  return false;
+                }
+              }
+              return true;
+            });
+            return currentRule;
+          },
+        },
+        /**
+         * @property {String} ruleTemplateHint
+         * @parent i2web/components/device/configurators/
+         * @description Provides a shorter display string for the selected rule template
+         */
+        ruleTemplateHint: {
+          get() {
+            const templates = this.attr('templates');
+            let selectedTemplate = EMPTY_TEMPLATE;
+
+            templates.forEach((template) => {
+              if (this.isSelected(template)) {
+                selectedTemplate = template;
+                return false;
+              }
+              return true;
+            });
+
+            return selectedTemplate.attr('web:button:hint');
+          },
+        },
+        /**
+         * @property {RuleTemplate.List} templates
+         * @parent i2web/components/device/configurators/
+         * @description List of templates applicable for the device
+         */
+        templates: {
+          get() {
+            const productId = this.attr('device.dev:productId');
+            const templatePrefix = PRODUCT_RULE_TEMPLATE_PREFIX[productId];
+            const templates = _.chain(getAppState().attr('ruleTemplates'))
+              .filter(template => template.attr('base:id').indexOf(templatePrefix) !== -1)
+              .sortBy(template => template.attr('web:button:weight'))
+              .value();
+
+            templates.push(EMPTY_TEMPLATE);
+
+            return templates;
+          },
+        },
+      },
+      /**
+       * @function setRuleTemplate
+       * @parent i2web/components/device/configurators/
+       * Sets the given rule's ruleTemplate attribute to the corresponding template object
+       * @param Rule
+       */
+      setRuleTemplate(rule) {
+        const templates = getAppState().attr('ruleTemplates');
+        const templateIndex =
+          _.findIndex(templates, { 'base:id': rule.attr('rule:template') });
+        const template = (templateIndex > -1) ? templates.attr(`${templateIndex}`) : null;
+        rule.attr('ruleTemplate', template);
+      },
+      /**
+       * @function isSelected
+       * @parent i2web/components/device/configurators/
+       * Determines if the given rule template is the one currently selected for the device button
+       * @param template whose selection state is being checked
+       * @return Boolean
+       */
+      isSelected(ruleTemplate) {
+        const rule = this.attr('rule');
+
+        if (rule) {
+          return rule.attr('ruleTemplate') === ruleTemplate;
+        } else if (ruleTemplate === EMPTY_TEMPLATE) {
+          return true;
+        }
+
+        return false;
+      },
+      /**
+       * @function saveRule
+       * @parent i2web/components/device/configurators/
+       * Creates rule for the button based on selected template; deletes the old rule if applicable
+       * @param ruleTemplate to use when saving a new rule for the device button
+       */
+      saveRule(ruleTemplate) {
+        const rule = this.attr('rule');
+        if (this.attr('onButtonAssigned')) {
+          this.attr('onButtonAssigned')(this.attr('button'));
+        }
+        // If there is a rule, but we pass in the empty template, we only need
+        // to delete the rule and not create a new one in its place.
+        if (rule && ruleTemplate === EMPTY_TEMPLATE) {
+          return rule.Delete();
+        }
+
+        const placeId = getAppState().placeId;
+        const ruleName = ruleTemplate.attr('ruletmpl:name');
+        const button = this.attr('button');
+        const productId = this.attr('device.dev:productId');
+        const context = {
+          button,
+        };
+
+        context[PRODUCT_CONTEXT_KEY[productId]] = this.attr('device.base:address');
+        // As long as user did not select the empty template, create a new rule and delete the old one
+        return ruleTemplate.CreateRule(placeId, ruleName, ruleName, context).then(() => {
+          if (rule) {
+            rule.Delete();
+          }
+        });
+      },
+    });
+  </script>
+</can-component>

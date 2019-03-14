@@ -1,0 +1,74 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/subsystem/climate/no-devices.component" />
+
+{{#if subsystem}}
+  {{#if hasNoRelevantDevices}}
+    <arcus-subsystem-climate-no-devices />
+  {{else}}
+    {{#if hasTemperatureDevices}}
+      <div class="row panel-list-container">
+        <div class="panel-primary-wrapper">
+          <div class="col-xs-12 col-md panel-information">
+            <h2 class="setting-header">Temperature <br />
+              <small class="setting-description">
+                {{#if temperatureDevice}}
+                  Dashboard Temperature is based off of <strong>{{temperatureDevice['name']}}</strong>
+                {{else}}
+                  Click the Edit button to choose the device that reports Temperature on the Dashboard.
+                {{/if}}
+              </small>
+            </h2>
+          </div>
+        </div>
+        <div class="panel-secondary-wrapper">
+          <div class="col-md panel-secondary-combined">
+            <button class="btn" ($click)="selectDevice('temperature')">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+    {{#if hasHumidityDevices}}
+      <div class="row panel-list-container">
+        <div class="panel-primary-wrapper">
+          <div class="col-xs-12 col-md panel-information">
+            <h2 class="setting-header">Humidity <br />
+              <small class="setting-description">
+                {{#if humidityDevice}}
+                  Dashboard Humidity is based off of <strong>{{humidityDevice['name']}}</strong>
+                {{else}}
+                  Click the Edit button to choose the device that reports Humidity on the Dashboard.
+                {{/if}}
+              </small>
+            </h2>
+          </div>
+        </div>
+        <div class="panel-secondary-wrapper">
+          <div class="col-md panel-secondary-combined">
+            <button class="btn" ($click)="selectDevice('humidity')">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+{{else}}
+  <div class="loader"></div>
+{{/if}}

@@ -1,0 +1,71 @@
+arcus-page-product-catalog {
+  display: block;
+  .btn-small {
+    margin-bottom: 0;
+  }
+  .content-column {
+    width: 80vw;
+    margin: @gutter auto;
+  }
+  .detail-row {
+    display: flex;
+    margin: @gutter/2 @gutter/2 0 @gutter/2;
+    align-items: center;
+    .advanced-pairing {
+      margin-right: @gutter/4;
+      font-size: @font-size-small;
+    }
+    .product-count {
+      flex-grow: 1;
+      font-size: @font-size-small;
+      color: @coot;
+    }
+  }
+  .pairing-title {
+    h2 {
+      i {
+        font-size: 30px;
+        margin-right: @gutter/2;
+      }
+    }
+  }
+  .search-for-device {
+    text-align: center;
+    form {
+      text-align: center;
+      input {
+        width: 400px;
+        color: @grouse;
+        font-style: italic;
+        margin-bottom: @gutter/2;
+        padding: @gutter/4;
+      }
+    }
+  }
+  a, .btn-small {
+    font-size: 13px;
+  }
+  .btn-small.tooltip-trigger {
+    margin-left: 0;
+    margin-top: @gutter/3;
+  }
+  hr {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+  }
+  .segment-btn {
+    justify-content: center;
+    align-items: center;
+    button {
+      margin-bottom: 0;
+    }
+  }
+  arcus-catalog-categories {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+  }
+  .back-button {
+    margin: @gutter auto;
+    text-align: center;
+  }
+}

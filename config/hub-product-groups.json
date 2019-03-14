@@ -1,0 +1,30 @@
+[
+  {
+    "groupName": "Kits",
+    "products": [
+      {
+        "productId": "kitsafesec",
+        "productName": "Safe & Secure Starter Kit",
+        "canUseBle": true
+      },
+      {
+        "productId": "kitpromon",
+        "productName": "Pro Monitoring Starter Kit"
+      }
+    ]
+  },
+  {
+    "groupName": "Hubs",
+    "products": [
+      {
+        "productId": "dee001",
+        "productName": "Arcus Wi-Fi Smart Hub",
+        "canUseBle": true
+      },
+      {
+        "productId": "dee000",
+        "productName": "Arcus Smart Hub"
+      }
+    ]
+  }
+]

@@ -1,0 +1,32 @@
+arcus-pairing-customize-promon-alarm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .pro-badge {
+    font-size: @font-size-base;
+    margin-top: @gutter/3;
+    margin-bottom: @gutter/3;
+  }
+
+  .box-gray-radius {
+    .devices-triggered {
+      justify-content: center;
+      margin: 0 auto;
+      h4 {
+        color: @raven;
+        text-align: left;
+        line-height: 2;
+        i {
+          display: inline-block;
+          width: @font-size-larger;
+          font-size: @font-size-larger;
+          text-align: right;
+          margin-right: @gutter/3;
+        }
+        &:last-of-type {
+          margin-bottom: @gutter/2;
+        }
+      }
+    }
+  }
+}

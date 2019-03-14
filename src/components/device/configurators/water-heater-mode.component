@@ -1,0 +1,66 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-water-heater-mode">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">Choose A Mode</h4>
+    </div>
+    <div>
+      <p>EnergySmart&reg; mode is provided by your water heater manufacturer and saves energy by monitoring usage and adjusting the set point to match the water draw usage.</p>
+      <arcus-generic-selector {things}="modes" {is-selected}="@isRightMode" {select-option}="@modeChanged" />
+    </div>
+  </template>
+  <script type="view-model">
+    import canList from 'can-list';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import AOSmithWaterHeaterControllerCapability from 'i2web/models/capability/AOSmithWaterHeaterController';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        modes: {
+          value() {
+            return new canList([{
+              name: 'Standard',
+              value: AOSmithWaterHeaterControllerCapability.CONTROLMODE_STANDARD,
+            }, {
+              name: 'Energy Smart &reg',
+              value: AOSmithWaterHeaterControllerCapability.CONTROLMODE_ENERGY_SMART,
+            }]);
+          },
+        },
+      },
+      AOSmithWaterHeaterControllerCapability,
+      modeChanged(mode) {
+        const device = this.attr('device');
+        device.attr('aosmithwaterheatercontroller:controlmode', mode.value);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+      isRightMode(mode) {
+        const device = this.attr('device');
+        return device.attr('aosmithwaterheatercontroller:controlmode') === mode.value;
+      },
+    });
+  </script>
+</can-component>

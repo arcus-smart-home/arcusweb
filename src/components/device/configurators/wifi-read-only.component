@@ -1,0 +1,73 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-wifi-read-only">
+  <template>
+    {{#if isSwannCamera}}
+      <h4>Connected to Wi-Fi Network: <em>{{currentNetwork}}</em></h4>
+      <p>Use the Mobile App to connect or change the Wi-Fi network of this camera.</p>
+      <a href="{{redirectToUrl('s_swann_change_wifi')}}" target="_blank">Need help changing the network?</a>
+    {{else}}
+      <hr />
+      <h4>Wi-Fi Network: <span class="bold">{{device['wifi:ssid']}}</span></h4>
+      <p class="small">If this device is connected to the incorrect Wi-Fi Network, please update it on the device.</p>
+      <hr />
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} currentNetwork
+         * @parent i2web/components/device/configurators/wifi-read-only
+         * Current Wi-Fi network configured for device
+         */
+        currentNetwork: {
+          get() {
+            if (this.attr('device.isOffline')) {
+              return 'Unknown';
+            }
+            return this.attr('device.wifi:ssid') || 'None';
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/wifi-read-only
+         * Current device
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {boolean} isSwannCamera
+         * @parent i2web/components/device/configurators/wifi-read-only
+         * indicates if device is a Swann camera
+         */
+        isSwannCamera: {
+          get() {
+            const device = this.attr('device');
+            return !!device.attr('swannbatterycamera:sn');
+          },
+        },
+      },
+      title: 'Wi-Fi and Network Security',
+    });
+  </script>
+</can-component>

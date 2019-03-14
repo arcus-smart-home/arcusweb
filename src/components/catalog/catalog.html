@@ -1,0 +1,292 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  body > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  arcus-catalog-selectable {
+    margin-top: 50px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <div>
+    <div>
+      {{#if getAppState().hub}}
+        <button ($click)="setHubOnline()">Set Hub Online</button>
+        <button ($click)="setHubOffline()">Set Hub Offline</button>
+        <button ($click)="removeHub()">Remove Hub</button>
+      {{else}}
+        <button ($click)="restoreHub()">Restore Hub</button>
+      {{/if}}
+    </div>
+    <div>
+      <button ($click)="setProductRequiresMobile(true)">Set Mobile Pairing Requirement</button>
+      <button ($click)="setProductRequiresMobile(false)">Remove Mobile Pairing Requirement</button>
+    </div>
+    <div>
+          <button ($click)="setProductRequiresBridge(true)">Set Bridge Requirement</button>
+      <button ($click)="setProductRequiresBridge(false)">Remove Bridge Requirement</button>
+    </div>
+    <div>
+      {{#if getAppState().devices.length}}
+        <button ($click)="setBridgeOnline(true)">Set Bridge Online</button>
+        <button ($click)="setBridgeOnline(false)">Set Bridge Offline</button>
+        <button ($click)="removeBridge()">Remove Bridge</button>
+      {{else}}
+        <button ($click)="restoreBridge()">Restore Bridge</button>
+      {{/if}}
+    </div>
+    <div>
+      <button ($click)="setModel('product')">Product</button>
+      <button ($click)="setModel('brand')">Brand</button>
+      <button ($click)="setModel('category')">Category</button>
+    </div>
+  </div>
+
+  <!-- thing will be bound to a product, brand or category -->
+  <arcus-catalog-selectable
+    {thing}="thing"
+    {thing-type}="thingType" />
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import getAppState from 'i2web/plugins/get-app-state';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/catalog/selectable/';
+  import Device from 'i2web/models/device'
+
+  const brand = {
+    "description": null,
+    "image": 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Hotei_Arcus_on_Titan.jpg',
+    "name": "Arcus"
+  };
+  const category = {
+    "name": "Lights & Switches"
+  };
+  // list of products including required 3rd party bridge
+  const products = {
+    d8ceb2: {
+      "base:address": "SERV:product:d8ceb2",
+      "base:caps": [            "product",             "base"         ],
+      "base:id": "d8ceb2",
+      "base:type": "product",
+      "product:OTA": false,
+      "product:added": 1508239269000,
+      "product:appRequired": true,
+      "product:blacklisted": false,
+      "product:canBrowse": true,
+      "product:canDiscover": true,
+      "product:canSearch": true,
+      "product:categories": ["Lights & Switches"],
+      "product:cert": "WORKS",
+      "product:description": "",
+      "product:helpUrl": "",
+      "product:hubRequired": false,
+      "product:id": "d8ceb2",
+      "product:keywords": "lutron, caséta, bridge, light, switch, dimmer",
+      "product:lastChanged": 1508239269000,
+      "product:arcusComUrl": "https://www.arcus.com/pd/Lutron-Caseta-Wireless-Smart-Bridge-In-White/50450062",
+      "product:arcusModelId": "L-BDG2-WH",
+      "product:arcusProductId": "756373",
+      "product:arcusVendorId": "539",
+      "product:manufacturer": "Lutron",
+      "product:minAppVersion": "2.8.0",
+      "product:name": "Caséta Smart Bridge",
+      "product:pair": [{
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Install the Lutron bridge as described in the manufacturer's instructions.",
+        "type": "TEXT"
+      }, {
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Download the Lutron app and create a Lutron account. Pair your Lutron devices to the Lutron bridge using the Lutron app.",
+        "type": "TEXT"
+      }, {
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Tap 'Next' to log into your Lutron account. Linking your account to Arcus allows information sharing between Lutron and Arcus.",
+        "type": "TEXT"
+      }         ],
+      "product:pairVideoUrl": "https://youtu.be/VY--Ag3QOkM",
+      "product:populations": ["general"],
+      "product:protoFamily": "Lutron",
+      "product:removal": [{
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "The hub will beep when the device is successfully removed.",
+        "type": "TEXT"
+      }],
+      "product:reset": [],
+      "product:screen": "Lutron Bridge",
+      "product:shortName": "Caséta Bridge",
+      "product:vendor": "Lutron"
+    },
+    e44e37: {
+      "base:address": "SERV:product:e44e37",
+      "base:caps": ["product", "base"],
+      "base:id": "e44e37",
+      "base:type": "product",
+      "product:OTA": false,
+      "product:added": 1508239269000,
+      "product:appRequired": true,
+      "product:blacklisted": false,
+      "product:canBrowse": true,
+      "product:canDiscover": true,
+      "product:canSearch": true,
+      "product:categories": ["Lights & Switches"],
+      "product:cert": "WORKS",
+      "product:description": "",
+      "product:devRequired": "d8ceb2",
+      "product:helpUrl": "",
+      "product:hubRequired": true,
+      "product:id": "e44e37",
+      "product:keywords": "lutron, indoor, control, in, wall, switch, dimmer, PD, 6ANS",
+      "product:lastChanged": 1508239269000,
+      "product:arcusComUrl": "https://www.arcus.com/pd/Lutron-Caseta-Wireless-6-amp-White-Indoor-Light-Switch/1000045789",
+      "product:arcusModelId": "PD-6ANS-**",
+      "product:arcusProductId": "multiple",
+      "product:arcusVendorId": "539",
+      "product:manufacturer": "Lutron",
+      "product:minAppVersion": "2.8.0",
+      "product:name": "Caséta In-Wall Switch",
+      "product:pair": [{
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Install the switch as described in the printed instructions included with your device.",
+        "type": "TEXT"
+      }, {
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Once installed, pair the device with your Lutron bridge using the Lutron app.",
+        "type": "TEXT"
+      }, {
+        "img": "",
+        "inputs": [],
+        "message": null,
+        "subText": null,
+        "target": null,
+        "text": "Tap 'Next' discover newly paired Lutron devices.",
+        "type": "TEXT"
+      }         ],
+      "product:pairVideoUrl": "",
+      "product:populations": ["general"],
+      "product:protoFamily": "Lutron",
+      "product:removal": [],
+      "product:reset": [],
+      "product:screen": "Switch",
+      "product:shortName": "In-Wall Switch",
+      "product:vendor": "Lutron"
+    }
+  };
+  const session = new CanMap({
+    "secureStaticResourceBaseUrl": "https://ssr.arcus.com",
+  });
+  const product = products['e44e37'];
+  const hub = new CanMap({ isOffline: false });
+  const mockBridgeDevice = {'dev:productId': 'd8ceb2', 'isOffline': false};
+  const appScope = new CanMap({
+    hub,
+    products,
+    devices: [mockBridgeDevice],
+    session,
+  });
+  const scope = new CanMap({
+    product,
+    brand: undefined,
+    category: undefined,
+    thing: product,
+    thingType: 'PRODUCT',
+    setHubOnline() {
+      getAppState().attr('hub.isOffline', false);
+    },
+    setHubOffline() {
+      getAppState().attr('hub.isOffline', true);
+    },
+    removeHub() {
+      getAppState().removeAttr('hub');
+    },
+    restoreHub() {
+      getAppState().attr('hub', hub);
+    },
+    setProductRequiresMobile(val) {
+      this.attr('product.product:appRequired', val);
+    },
+    setProductRequiresBridge(val) {
+      if (val) {
+        this.attr('product.product:devRequired', 'd8ceb2');
+      } else {
+        this.removeAttr('product.product:devRequired');
+      }
+    },
+    setBridgeOnline(val) {
+      getAppState().attr('devices')[0].attr('isOffline', !val);
+    },
+    removeBridge() {
+      getAppState().attr('devices', []);
+    },
+    restoreBridge() {
+      getAppState().attr('devices', [mockBridgeDevice]);
+    },
+    setModel(type) {
+      switch(type) {
+        case 'product':
+          this.attr('thing', product);
+          this.attr('thingType', 'product');
+          break;
+        case 'brand':
+          this.attr('thing', brand);
+          this.attr('thingType', 'brand');
+          break;
+        case 'category':
+          this.attr('thing', category);
+          this.attr('thingType', 'category');
+          break;
+      }
+    },
+    getAppState,
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

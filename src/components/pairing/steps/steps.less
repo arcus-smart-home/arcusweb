@@ -1,0 +1,71 @@
+arcus-pairing-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .illustration {
+    width: 235px;
+    height: 235px;
+    margin-bottom: @gutter/2;
+  }
+  .missing-illustration {
+    display:none;
+  }
+  .tutorial {
+    margin-bottom: @gutter/2;
+    color: @peacock;
+    i {
+      font-size: @font-size-large;
+      display: inline-block; // using inline block to remove link underline
+      margin-right: 7px;
+    }
+    .copy {
+      font-size: @font-size-smaller;
+    }
+    > * {
+      vertical-align: middle;
+    }
+  }
+  .info {
+    .font-medium-italic;
+    color: @coot;
+    margin-bottom: @gutter/2;
+  }
+
+  .form {
+    width: 90%;
+    margin-top: @gutter;
+    .input-wrapper {
+      margin-top: @gutter/3;
+      .breakpoint(md-down, {
+        margin-left: @gutter*(2/3);
+        margin-right: @gutter*(2/3);
+      });
+      input {
+        text-transform: uppercase;
+      }
+      .error {
+        white-space: normal;
+        font-size: @font-size-smaller;
+        line-height: 1.3;
+        .breakpoint(sm, {
+          white-space: nowrap;
+          font-size: inherit;
+        });
+      }
+    }
+    .input-wrapper:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .buttons {
+    margin-top: @gutter;
+  }
+  .btn {
+    margin-bottom: 0;
+  }
+  .instructions-link {
+    margin-top: @gutter/2;
+    font-size: @font-size-smaller;
+  }
+}

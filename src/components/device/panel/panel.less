@@ -1,0 +1,45 @@
+arcus-device-panel {
+  display: block;
+  .corner-tag-mixin(3.3em, @pigeon);
+  .panel-list-container {
+    .breakpoint(md, {
+      padding: @gutter/2 @gutter;
+    });
+    &.disabled {
+      .icon-app-state {
+        border-color: @grouse;
+      }
+    }
+    .panel-error {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+  arcus-device-icon {
+    align-self: center;
+  }
+  .device-badge-icon {
+    margin-right: @gutter/2;
+  }
+  .device-information {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .toggle-container{
+    margin: 0 auto;
+  }
+  .jump-to {
+    position: absolute;
+    display: inline-block;
+    height: 1px;
+  }
+  .btn-warning {
+    margin-bottom: 0;
+    padding: 4px 5px 3px;
+    letter-spacing: 0;
+    i {
+      font-size: @font-size-base;
+    }
+  }
+}

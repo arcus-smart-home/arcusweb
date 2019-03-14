@@ -1,0 +1,73 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  body {
+    min-height: 300px;
+  }
+</style>
+<script type="text/stache" id="demo-html" class="demo" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css"/>
+  <can-import from="i2web/app.less"/>
+
+  <can-import from="i2web/components/side-panel/" />
+  <can-import from="i2web/components/settings/places/promonitoring-info/" />
+  <button id="not-required"><h4>Permit NOT Required</h4></button>
+  <button id="required"><h4>Permit Required</h4></button>
+  <h3>
+    Click on the backdrop to close the side-panel.
+  </h3>
+  <arcus-side-panel class="is-right" {(content)}="right" />
+</script>
+<script src="../../../../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import $ from 'jquery';
+  import canAutorender from 'can-view-autorender';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Places from 'i2web/models/fixtures/data/place/place.json';
+
+  const vm = canViewModel($('.demo')[0]);
+  vm.attr({ right: {} });
+
+  canAutorender(() => {
+    loginAndRender({
+      renderTo: '#foo',
+      template: '<br />',
+    })
+
+    $('#not-required').click(function rightClicked() {
+      vm.attr('right', {
+        template: '<arcus-settings-places-promonitoring-info {place}="place"></>',
+        attributes: {
+          place: Places[0],
+        },
+      });
+    });
+    
+    $('#required').click(function rightClicked() {
+      vm.attr('right', {
+        template: '<arcus-settings-places-promonitoring-info {place}="place"></>',
+        attributes: {
+          place: Places[1],
+        },
+      });
+    });
+
+    $('.panel-backdrop').click(() => {
+      vm.attr('right', {});
+    });
+  });
+</script>

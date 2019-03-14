@@ -1,0 +1,169 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-petdoor-smartkeys">
+  <template>
+    <div class="configurator-header">
+      <h4 class="config-title">Smart Keys</h4>
+    </div>
+    <div class="petdoor-container">
+      <div class="petdoor-left">
+        <p>The Smart Keys listed below have access to this door while in Auto Mode.</p>
+      </div>
+      <div class="petdoor-right">
+        <button class="btn {{#if tokenToRemove}}disabled{{/if}}" ($click)="addPetToken()">+ Add Smart Key</button>
+      </div>
+    </div>
+    
+    {{#if pairedPetTokens.length}}
+      {{#each pairedPetTokens}}
+        <div class="petdoor-container with-padding">
+          <div class="petdoor-left">
+            <div class="input-wrapper">
+              <label>Name</label>
+              <input type="text" {($value)}="petName" />
+            </div>
+          </div>
+          <div class="petdoor-right">
+            <button class="btn {{#if tokenToRemove}}disabled{{/if}}" ($click)="confirmRemove(.)">Remove</button>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="notes">
+        You have not added any Smart Keys yet.
+      </div>
+    {{/if}}
+    
+    {{#if tokenToRemove}}
+      <div class="form-error">
+        Are you sure you want to remove {{tokenToRemove['petName']}}?
+        <div>
+          <button class="btn-cancel" ($click)="cancelRemove()">Cancel</button>
+          <button class="btn-delete" ($click)="removePetToken()">Yes, Remove</button>
+        </div>
+      </div>
+    {{/if}}
+    
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/
+         * @description The device being configured
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Object} tokenToRemove
+         * @parent i2web/components/device/configurators/
+         * @description Attribute indicating which pet token is being removed
+         */
+        tokenToRemove: {
+          value: null,
+        },
+        /**
+         * @property {Array} pairedPetTokens
+         * @parent i2web/components/device/configurators/
+         * @description The list of pet tokens currently paired
+         */
+        pairedPetTokens: {
+          get() {
+            const device = this.attr('device');
+            if (device) {
+              const petTokens = device.attr('web:petdoor:pettokens');
+              const pairedTokens = _.filter(petTokens, (pt) => {
+                return pt.attr('paired');
+              });
+              return pairedTokens;
+            }
+            return [];
+          },
+        },
+      },
+      /**
+       * @function addPetToken
+       * @parent i2web/components/device/configurators/
+       * Starts the process to add a pet token by displaying instructions in the Side Panel
+       */
+      addPetToken() {
+        SidePanel.right('<arcus-device-configurator-petdoor-add-smartkey {(device)}="device" />', {
+          device: this.compute('device'),
+        });
+      },
+      /**
+       * @function cancelRemove
+       * @parent i2web/components/device/configurators/
+       * Cancels the process to remove a pet token.
+       */
+      cancelRemove() {
+        this.removeAttr('tokenToRemove');
+      },
+      /**
+       * @function confirmRemove
+       * @parent i2web/components/device/configurators/
+       * @param petToken User selected petToken
+       * Starts the process to remove a pet token
+       */
+      confirmRemove(petToken) {
+        this.attr('tokenToRemove', petToken);
+      },
+      /**
+       * @function removePetToken
+       * @parent i2web/components/device/configurators/
+       * Removes a pet token from the device
+       */
+      removePetToken() {
+        const device = this.attr('device');
+        const tokenId = this.attr('tokenToRemove.tokenId');
+        device.RemoveToken(tokenId)
+        .then(() => this.removeAttr('tokenToRemove'))
+        .catch(e => Errors.log(e));
+      },
+    });
+  </script>
+  <script type="events">
+    import Errors from 'i2web/plugins/errors';
+
+    export default {
+      nameChanged: null,
+      inserted() {
+        this.nameChanged = this.pettokenNameChanged.bind(this);
+        this.viewModel.attr('device.web:petdoor:pettokens').forEach((pt) => {
+          pt.on('petName', this.nameChanged);
+        });
+      },
+      removed() {
+        this.viewModel.attr('device.web:petdoor:pettokens').forEach((pt) => {
+          pt.off('petName', this.nameChanged);
+        });
+      },
+      pettokenNameChanged() {
+        this.viewModel.attr('device').save().catch(e => Errors.log(e, true));
+      },
+    };
+  </script>
+</can-component>

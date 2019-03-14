@@ -1,0 +1,118 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>arcus-subsystem-weather-alerts</title>
+  <style>
+    .trigger {
+      margin: 100px;
+    }
+  </style>
+</head>
+<body>
+  <script type="text/stache" id="demo-html">
+    <can-import from="flexboxgrid/dist/flexboxgrid.min.css"/>
+    <div>
+      <button class="btn trigger" ($click)="triggerAlerts()">TRIGGER ALERTS</button>
+    </div>
+    <arcus-side-panel class="is-right" {(content)}="content" />
+  </script>
+
+  <script src="../../../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+    import CanMap from 'can-map';
+    import CanList from 'can-list';
+    import domData from 'can-util/dom/data/';
+    import stache from 'can-stache';
+
+    import SidePanel from 'i2web/plugins/side-panel';
+    import 'i2web/app.less';
+    import 'i2web/components/side-panel/side-panel';
+    import 'i2web/components/subsystem/weather/alerts/alerts';
+
+    // inject dummy AppState to html element (the SideBar needs this)
+    domData.set.call(
+      document.querySelector('html'),
+      'viewModel',
+      new CanMap({
+        rightPanelContent: {},
+        notifications: [],
+      }),
+    );
+
+    // mock AppState to be used by the component
+    const appState = new CanMap({
+      devices: new CanList([
+        new CanMap({
+          'base:address': 'DRIV:dev:8206c650-6711-4c6f-93a1-652b154d127b',
+          'dev:name': 'Halo Smart Labs Halo Plus',
+          'noaa:lastalerttime': 1525213794913,
+          'noaa:currentalert': 'TOR',
+          'halo:devicestate': 'ALERT',
+          StartHush() {
+            console.log(`hushed: ${this.attr('base:address')}`);
+          },
+        }),
+        {
+          'base:address': 'DRIV:dev:8206c650-6711-4c6f-93a1-652b154d127c',
+          'dev:name': 'Halo Plus 2',
+          'noaa:lastalerttime': 1525213794913,
+          'noaa:currentalert': 'WSW',
+          'halo:devicestate': 'ALERT',
+          StartHush() {
+            console.log(`hushed: ${this.attr('base:address')}`);
+          },
+        },
+      ]),
+      subsystems: new CanMap({
+        findByName() {
+          return new CanMap({
+            'subweather:weatherRadios': new CanList([
+              'DRIV:dev:8206c650-6711-4c6f-93a1-652b154d127b',
+              'DRIV:dev:8206c650-6711-4c6f-93a1-652b154d127c',
+            ])
+          });
+        }
+      }),
+      place: new CanMap({
+        'place:addrCounty': 'Douglas',
+        'place:state': 'KS',
+      }),
+    });
+
+    const triggerAlerts = () => {
+      SidePanel.right(
+        `<arcus-subsystem-weather-alerts {app-state}="appState" />`,
+        { appState }
+      );
+    };
+
+    // render the side panel
+    const template = stache(document.querySelector('#demo-html').innerHTML);
+    const scope = new CanMap({
+      triggerAlerts,
+      content: domData.get
+        .call(document.querySelector('html'), 'viewModel')
+        .compute('rightPanelContent'),
+    });
+    document.body.appendChild(template(scope));
+  </script>
+</body>
+</html>

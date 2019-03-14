@@ -1,0 +1,21 @@
+@import 'access-list/access-list.less';
+@import 'settings/settings.less';
+@import 'status/status.less';
+
+arcus-subsystem-doors-locks {
+  display: flex;
+  flex-direction: column;
+  .doors-locks-navigation {
+    margin: @gutter/2;
+    .breakpoint(md, {
+      margin: @gutter;
+    });
+    button {
+      margin-bottom: 0;
+    }
+  }
+  hr {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

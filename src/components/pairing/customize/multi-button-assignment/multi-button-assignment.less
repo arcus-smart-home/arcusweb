@@ -1,0 +1,38 @@
+arcus-pairing-customize-multi-button-assignment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .box-gray-radius {
+    .option-list {
+      margin-left: @gutter/2;
+      width: 100%;
+      .breakpoint(sm, {
+        margin-left: @gutter*2;
+      });
+    }
+    arcus-accordion-panel {
+      &:first-of-type {
+        margin-top: @gutter*(-2/3);
+      }
+      &:last-of-type {
+        margin-bottom: @gutter*(-2/3);
+      }
+      > li {
+        padding: 0;
+        margin: @gutter*(2/3) 0;
+      }
+    }
+    .toggle-panel {
+      top: @gutter/2;
+      right: 0;
+    }
+  }
+
+  arcus-accordion-panel {
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+}

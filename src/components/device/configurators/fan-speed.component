@@ -1,0 +1,76 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-fan-speed">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-fan-speed">Choose Fan Speed</h4>
+    </div>
+    <arcus-generic-selector {things}="things" {is-selected}="@isSelected" {select-option}="@selectThing" />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canList from 'can-list';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        things: {
+          Type: canList,
+          get() {
+            const device = this.attr('device');
+            const format = device.attr('fan:speedDescriptions')[device.attr('fan:maxSpeed')];
+            const things = new canList();
+
+            // Skip 0, because we don't want to include "off" for web app
+            for (let i = 1; i <= device.attr('fan:maxSpeed'); i++) {
+              things.push({
+                value: i,
+                name: format ? format[i] : `${i}`,
+              });
+            }
+
+            return things;
+          },
+        },
+      },
+      isSelected(thing) {
+        const device = this.attr('device');
+
+        if (thing.value === device.attr('fan:speed')) {
+          return true;
+        }
+
+        return false;
+      },
+
+      selectThing(thing) {
+        const device = this.attr('device');
+
+        device.attr('fan:speed', thing.value);
+
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,140 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/devices.component" />
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/devices-open-count.component" />
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/duration.component" />
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/temperature.component" />
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/time.component" />
+<can-import from="i2web/components/subsystem/care/behaviors/edit-panel/time-windows.component" />
+<can-import from="i2web/components/shop-button.component" />
+
+<div class="overflow-container">
+  <div class="content-container">
+    <div class="left-content" id="top-left">
+
+      {{!-- The isReadOnly boolean is true when the user is viewing an unavailable template --}}
+      {{#if isReadOnly}}
+        <div class="panel-actions">
+          {{close-button type="done"}}
+        </div>
+        <p class="form-error">There are no devices paired that meet the requirement for this Care Behavior.</p>
+        <hr/>
+        <h3>{{template.name}}</h3>
+      {{else}}
+        <div class="panel-actions">
+          <button ($click)="saveCareBehavior()" {{#if disableSave}}disabled{{/if}} class="btn">Save</button>
+          {{close-button type="cancel"}}
+        </div>
+        {{#if formError}}
+          <p class="form-error">{{formError}}</p>
+          <hr/>
+        {{/if}}
+        {{textInput('formBehavior.name', 'Care Behavior Name', attributes='maxlength="36"')}}
+      {{/if}}
+
+      <p>{{template.description}}</p>
+      <hr/>
+
+      {{!-- Display a separate, expandable section for each field defined by the template --}}
+      {{#each sortedTemplateFields}}
+         <div class="behavior-wrapper">
+          <h4>{{label}}</h4>
+          <div class="behavior-description">
+            <div class="left">
+              <p>{{description}}</p>
+            </div>
+            <div class="right">
+              {{#if isReadOnly}}
+                <p><i class="icon-app-chevron disabled"></i></p>
+              {{else}}
+                <p>
+                  {{{getFieldStatus(sortKey)}}}
+                  <i ($click)="editField(sortKey)" class="icon-app-chevron {{#eq sortKey editFieldType}}active{{/eq}}"></i>
+                </p>
+              {{/if}}
+            </div>
+          </div>
+          <hr/>
+        </div>
+      {{/each}}
+
+      {{!-- The REMOVE button is only visible for existing Behaviors, not for new ones --}}
+      {{#unless isNew}}
+        {{#if confirmingDelete}}
+          <p class="form-error">Are you sure?</p>
+          <div>
+            <button class="btn-delete" ($click)="deleteBehavior()">
+                Yes, Remove Behavior
+            </button>
+            <button class="btn-cancel" ($click)="cancelDelete()">Cancel</button>
+          </div>
+        {{else}}
+          <div class="button-group">
+            <button class="btn-delete" ($click)="confirmDelete()">Remove Behavior</button>
+          </div>
+        {{/if}}
+      {{/unless}}
+      {{!-- The SHOP button is only visible for Read-only Behavior templates --}}
+      {{#if isReadOnly}}
+        <arcus-shop-button href="{{redirectToUrl('p_care')}}" expanded>
+          Shop Devices
+        </arcus-shop-button>
+      {{/if}}
+    </div>
+    <div class="right-content">
+      {{#switch editFieldType}}
+        {{#case 'devices'}}
+          <arcus-subsystem-care-behaviors-edit-devices
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+        {{#case 'devicesOpenCount'}}
+          <arcus-subsystem-care-behaviors-edit-devices-open-count
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+        {{#case 'duration'}}
+          <arcus-subsystem-care-behaviors-edit-duration
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+        {{#case 'temperatureRange'}}
+          <arcus-subsystem-care-behaviors-edit-temperature
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+        {{#case 'time'}}
+          <arcus-subsystem-care-behaviors-edit-time
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {place}="place"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+        {{#case 'timeWindows'}}
+          <arcus-subsystem-care-behaviors-edit-time-windows
+            {(behavior)}="formBehavior"
+            {template}="template"
+            {done-button-clicked}="@doneEditingField" />
+        {{/case}}
+      {{/switch}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#if subsystem}}
+<div class="row panel-list-container">
+  <div class="panel-primary-wrapper">
+    <div class="col-xs-12 col-md">
+      <h2 class="setting-header">Silent Alarm</h2>
+        <p>Turn on the Silent Alarm to mute the siren when a Care Alarm is triggered. Arcus will still call and send push notifications based on the Alarm Notification List below.</p>
+    </div>
+  </div>
+  <div class="panel-secondary-wrapper">
+    <div class="col-md panel-secondary-combined">
+      <arcus-control-switch
+        {is-on}="silentConfig"
+        {toggle}="@toggleState" />
+    </div>
+  </div>
+</div>
+<div class="notification-container">
+  <h2>Notification List</h2>
+  <p>A triggered Care Alarm will simultaneously notify the people below. Please verbally inform all parties to add 1-866-958-4450 to their phone's contact list so they know Arcus is calling.</p>
+  <ul class="notification-list">
+
+    {{#each enabledCallTree}}
+      <li class="radio-wrapper enabled-person" >
+        <input class="radio-checkbox" type="checkbox" id="checkbox-regular" checked>
+        <label for="checkbox-regular" class="complex-label" ($click)="toggleCallTree(., %event)">
+          <i class="icon-app-user-1 avatar"></i>
+          <span class="name">{{person['person:name']}}</span>
+        </label>
+        <div class="check"></div>
+      </li>
+    {{/each}}
+
+    <li class="context-bar">
+      <h3>Add More People To Your Care Notification List</h3>
+    </li>
+
+    {{#each disabledCallTree}}
+      <li class="radio-wrapper" ($click)="toggleCallTree(., %event)">
+        <input class="radio-checkbox" type="checkbox" id="checkbox-regular">
+        <label for="checkbox-regular" class="complex-label">
+          <i class="icon-app-user-1 avatar"></i>
+          <span class="name">{{person['person:name']}}</span>
+        </label>
+        <div class="check"></div>
+      </li>
+    {{/each}}
+    <li class="radio-wrapper add-person" ($click)="addPerson">
+      <label for="checkbox-regular" class="complex-label">
+        <i class="icon-app-user-3 avatar"></i>
+        <span class="name">Don't see the Person you are looking for? <br />
+        <small>Click the '+' sign to add a new person to your Notification List</small></span>
+      </label>
+      <div class="add"></div>
+    </li>
+  </ul>
+</div>
+{{else}}
+  <div class="loader"></div>
+{{/if}}

@@ -1,0 +1,571 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  .demo-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  h3 + arcus-pairing-steps {
+    margin-top: 0;
+  }
+  </style>
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="i2web/styles/global-styles.less!" />
+  <can-import from="i2web/app.less" />
+  <div class="demo-page">
+    <br>
+    <h3>Info Options</h3>
+    <div class="box-gray-radius">
+      <h4>H4 Title</h4>
+      <h5>H5 Subtitle</h5>
+      <hr>
+      <p>Standard paragraph tag here. Longer wrap around text demo'd here.</p>
+      <p>Another standard paragraph here.</p>
+    </div>
+    <br>
+    <div class="box-gray-radius">
+      <h4>H4 Title</h4>
+      <hr>
+      <p>Standard paragraph tag here. Longer wrap around text demo'd here.</p>
+      <p>Another standard paragraph here.</p>
+    </div>
+    <br>
+    <div class="box-gray-radius">
+      <h4>H4 Title</h4>
+      <h5>H5 Subtitle</h5>
+      <hr>
+      <p class="notes">Paragraph tag with class `notes` applied. Longer wrap around text demo'd here.</p>
+    </div>
+    <br>
+    <div class="box-gray-radius">
+      <h4>H4 Title</h4>
+      <hr>
+      <p class="notes">Paragraph tag with class `notes` applied. Longer wrap around text demo'd here.</p>
+    </div>
+    <br>
+    <h3>Favorite Box</h3>
+    <arcus-pairing-customize-favorite>
+      <div class="box-gray-radius">
+        <h4>Add Your Device to Favorites</h4>
+        <h5>Select heart to add or remove.</h5>
+        <arcus-favorite {thing}="device" {display-property}="'dev:name'">
+          <div class="favorite-icon">
+            <a>
+              <i aria-hidden="true" class="icon-app-heart-2 default"></i>
+              <span class="sr-only">Favorite</span>
+            </a>
+          </div>
+        </arcus-favorite>
+        <p class="notes">Favoriting a device makes it easily accessible from the Dashboard of both the Arcus Mobile app and Arcus Web Portal.</p>
+      </div>
+    </arcus-pairing-customize-favorite>
+    <br>
+    <h3>Promonitoring</h3>
+    <arcus-pairing-customize-promon-alarm>
+      <div class="box-gray-radius">
+        <span class="pro-badge">PRO</span>
+        <h4>Professional Monitoring</h4>
+        <hr>
+        <p>You have paired a device that will unlock a new professionally monitored alarm. It is automatically included at no
+          additional cost.</p>
+        <p>The authorities may come to your home if one of the following Alarms are triggered:</p>
+        <hr>
+        <div class="devices-triggered">
+          <h4>
+            <i class="icon-platform-security-1"></i> Security</h4>
+          <h4>
+            <i class="icon-platform-smoke-2"></i> Smoke</h4>
+          <h4>
+            <i class="icon-platform-co-smoke-2"></i> Carbon Monoxide</h4>
+          <h4>
+            <i class="icon-platform-security-1"></i> Panic</h4>
+        </div>
+      </div>
+    </arcus-pairing-customize-promon-alarm>
+    <br>
+    <h3>With Radios/Checkboxes</h3>
+    <arcus-pairing-customize-contact-type>
+      <div class="box-gray-radius">
+        <h4>Is this Contact Sensor being used on a door or a window?</h4>
+        <hr>
+        <arcus-generic-selector {things}="options" {is-selected}="@isSelected" {select-option}="@selectOption">
+          <ul class="option-list">
+            <li class="radio-wrapper" ($click)="_selectOption(this)">
+              <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-0" name="thingname-roxh7d9" checked="">
+              <label class="complex-label" for="thing-0">Door</label>
+              <div class="check"></div>
+            </li>
+            <li class="radio-wrapper" ($click)="_selectOption(this)">
+              <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-1" name="thingname-roxh7d9">
+              <label class="complex-label" for="thing-1">Window</label>
+              <div class="check"></div>
+            </li>
+            <li class="radio-wrapper" ($click)="_selectOption(this)">
+              <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-2" name="thingname-roxh7d9">
+              <label class="complex-label" for="thing-2">Other</label>
+              <div class="check"></div>
+            </li>
+          </ul>
+        </arcus-generic-selector>
+      </div>
+    </arcus-pairing-customize-contact-type>
+    <br>
+    <h3>Name</h3>
+    <arcus-pairing-customize-name {thing}="device" hub="">
+      <can-import from="i2web/components/form/confirm-field/"></can-import>
+      <div class="box-gray-radius">
+        <h4>Give Your Hub a Name</h4>
+        <arcus-form-confirm-field {(model)}="thing" field-description="Device Name" placeholder="Device Name" attributes="character-count='48'"
+          field="hub:name">
+          <form ($submit)="save(this, %element, %event)">
+            <div class="panel-content">
+              <div class="input-wrapper">
+                <input character-count="48" type="text" id="newProperty-07076506736212433" data-key="newProperty" class="newProperty alternate-style"
+                  {($value)}="newProperty" value="Test Hub" maxlength="48">
+                <label for="newProperty-07076506736212433"></label>
+                <p class="character-count">40 Characters Remaining</p>
+              </div>
+            </div>
+          </form>
+        </arcus-form-confirm-field>
+        <p class="notes"> We recommend using simple, identifying language that is easily recognized by voice assistants.
+        </p>
+      </div>
+    </arcus-pairing-customize-name>
+    <br>
+    <h3>Icons and Accordions</h3>
+    <arcus-pairing-customize-multi-button-assignment {customization-step}="step" {device}="device" {^title}="title">
+      <can-import from="i2web/components/device/configurators/assign-buttons.component"></can-import>
+      <div class="box-gray-radius">
+        <h4>Platform Subtitle</h4>
+        <hr>
+        <arcus-device-configurator-assign-buttons {device}="device" for-pairing-customization="" {on-button-assigned}="@onButtonAssigned">
+          <can-import from="i2web/components/device/configurators/assign-button.component"></can-import>
+          <can-import from="i2web/components/accordion/"></can-import>
+          <arcus-accordion>
+            <ul class="accordion">
+              <arcus-accordion-panel>
+                <can-import from="./heading.component"></can-import>
+                <can-import from="./body.component"></can-import>
+                <li scroll-to-if-invisible="true">
+                  <input type="checkbox" ($click)="parent.makeActive(., %element)" {($checked)}="equal(~active, false)" class="accordion-toggle">
+                  <i class="toggle-panel"></i>
+                  <arcus-accordion-panel-heading>
+                    <div class="complex-label">
+                      <i class="icon-platform-keyfob-circle fob-button-icon"></i>
+                      <div>
+                        <h5>Circle</h5>
+                        <small>Activate A Rule</small>
+                      </div>
+                    </div>
+                  </arcus-accordion-panel-heading>
+                  <arcus-accordion-panel-body>
+                    <arcus-device-configurator-assign-button {device}="device" {button}="name" {^rule-template-hint}="ruleHint" {on-button-assigned}="@onButtonAssigned">
+                      <can-import from="i2web/components/selectors/generic.component"></can-import>
+                      <arcus-generic-selector {things}="templates" {is-selected}="@isSelected" {select-option}="@saveRule" name-key="web:button:description">
+                        <ul class="option-list">
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-0" name="thingname-okkqfbk">
+                            <label class="complex-label" for="thing-0">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-1" name="thingname-okkqfbk">
+                            <label class="complex-label" for="thing-1">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-2" name="thingname-okkqfbk">
+                            <label class="complex-label" for="thing-2">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-3" name="thingname-okkqfbk">
+                            <label class="complex-label" for="thing-3">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-4" name="thingname-okkqfbk" checked="">
+                            <label class="complex-label" for="thing-4">Activate A Rule</label>
+                            <div class="check"></div>
+                          </li>
+                        </ul>
+                      </arcus-generic-selector>
+                    </arcus-device-configurator-assign-button>
+                  </arcus-accordion-panel-body>
+                </li>
+              </arcus-accordion-panel>
+              <arcus-accordion-panel>
+                <can-import from="./heading.component"></can-import>
+                <can-import from="./body.component"></can-import>
+
+                <li scroll-to-if-invisible="true">
+                  <input type="checkbox" ($click)="parent.makeActive(., %element)" {($checked)}="equal(~active, false)" class="accordion-toggle">
+                  <i class="toggle-panel"></i>
+                  <arcus-accordion-panel-heading>
+                    <div class="complex-label">
+                      <i class="icon-platform-keyfob-diamond fob-button-icon"></i>
+                      <div>
+                        <h5>Diamond</h5>
+                        <small>Activate A Rule</small>
+                      </div>
+                    </div>
+                  </arcus-accordion-panel-heading>
+                  <arcus-accordion-panel-body>
+                    <arcus-device-configurator-assign-button {device}="device" {button}="name" {^rule-template-hint}="ruleHint" {on-button-assigned}="@onButtonAssigned">
+                      <can-import from="i2web/components/selectors/generic.component"></can-import>
+                      <arcus-generic-selector {things}="templates" {is-selected}="@isSelected" {select-option}="@saveRule" name-key="web:button:description">
+                        <ul class="option-list">
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-0" name="thingname-ywplm08i">
+                            <label class="complex-label" for="thing-0">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-1" name="thingname-ywplm08i">
+                            <label class="complex-label" for="thing-1">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-2" name="thingname-ywplm08i">
+                            <label class="complex-label" for="thing-2">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-3" name="thingname-ywplm08i">
+                            <label class="complex-label" for="thing-3">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-4" name="thingname-ywplm08i" checked="">
+                            <label class="complex-label" for="thing-4">Activate A Rule</label>
+                            <div class="check"></div>
+                          </li>
+                        </ul>
+                      </arcus-generic-selector>
+                    </arcus-device-configurator-assign-button>
+                  </arcus-accordion-panel-body>
+                </li>
+              </arcus-accordion-panel>
+              <arcus-accordion-panel>
+                <can-import from="./heading.component"></can-import>
+                <can-import from="./body.component"></can-import>
+                <li scroll-to-if-invisible="true">
+                  <input type="checkbox" ($click)="parent.makeActive(., %element)" {($checked)}="equal(~active, false)" class="accordion-toggle">
+                  <i class="toggle-panel"></i>
+                  <arcus-accordion-panel-heading>
+                    <div class="complex-label">
+                      <i class="icon-platform-keyfob-square fob-button-icon"></i>
+                      <div>
+                        <h5>Square</h5>
+                        <small>Activate A Rule</small>
+                      </div>
+                    </div>
+                  </arcus-accordion-panel-heading>
+                  <arcus-accordion-panel-body>
+                    <arcus-device-configurator-assign-button {device}="device" {button}="name" {^rule-template-hint}="ruleHint" {on-button-assigned}="@onButtonAssigned">
+                      <can-import from="i2web/components/selectors/generic.component"></can-import>
+                      <arcus-generic-selector {things}="templates" {is-selected}="@isSelected" {select-option}="@saveRule" name-key="web:button:description">
+                        <ul class="option-list">
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-0" name="thingname-dfuu5km">
+                            <label class="complex-label" for="thing-0">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-1" name="thingname-dfuu5km">
+                            <label class="complex-label" for="thing-1">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-2" name="thingname-dfuu5km">
+                            <label class="complex-label" for="thing-2">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-3" name="thingname-dfuu5km">
+                            <label class="complex-label" for="thing-3">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-4" name="thingname-dfuu5km" checked="">
+                            <label class="complex-label" for="thing-4">Activate A Rule</label>
+                            <div class="check"></div>
+                          </li>
+                        </ul>
+                      </arcus-generic-selector>
+                    </arcus-device-configurator-assign-button>
+                  </arcus-accordion-panel-body>
+                </li>
+              </arcus-accordion-panel>
+              <arcus-accordion-panel>
+                <can-import from="./heading.component"></can-import>
+                <can-import from="./body.component"></can-import>
+                <li scroll-to-if-invisible="true">
+                  <input type="checkbox" ($click)="parent.makeActive(., %element)" {($checked)}="equal(~active, false)" class="accordion-toggle">
+                  <i class="toggle-panel"></i>
+                  <arcus-accordion-panel-heading>
+                    <div class="complex-label">
+                      <i class="icon-platform-keyfob-hexagon fob-button-icon"></i>
+                      <div>
+                        <h5>Hexagon</h5>
+                        <small>Activate A Rule</small>
+                      </div>
+                    </div>
+                  </arcus-accordion-panel-heading>
+                  <arcus-accordion-panel-body>
+                    <arcus-device-configurator-assign-button {device}="device" {button}="name" {^rule-template-hint}="ruleHint" {on-button-assigned}="@onButtonAssigned">
+                      <can-import from="i2web/components/selectors/generic.component"></can-import>
+                      <arcus-generic-selector {things}="templates" {is-selected}="@isSelected" {select-option}="@saveRule" name-key="web:button:description">
+                        <ul class="option-list">
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-0" name="thingname-xuijjsr">
+                            <label class="complex-label" for="thing-0">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-1" name="thingname-xuijjsr">
+                            <label class="complex-label" for="thing-1">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-2" name="thingname-xuijjsr">
+                            <label class="complex-label" for="thing-2">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-3" name="thingname-xuijjsr">
+                            <label class="complex-label" for="thing-3">Unknown</label>
+                            <div class="check"></div>
+                          </li>
+                          <li class="radio-wrapper" ($click)="_selectOption(this)">
+                            <input type="radio" {$checked}="_isSelectedContext(this)" value="thing-4" name="thingname-xuijjsr" checked="">
+                            <label class="complex-label" for="thing-4">Activate A Rule</label>
+                            <div class="check"></div>
+                          </li>
+                        </ul>
+                      </arcus-generic-selector>
+                    </arcus-device-configurator-assign-button>
+                  </arcus-accordion-panel-body>
+                </li>
+              </arcus-accordion-panel>
+            </ul>
+          </arcus-accordion>
+        </arcus-device-configurator-assign-buttons>
+      </div>
+    </arcus-pairing-customize-multi-button-assignment>
+    <br>
+    <h3>Pairing State</h3>
+    <arcus-pairing-device-state {pairing-device}="demoDevice" {try-again-promise}="tryAgainPromise">
+      <div class="box-gray-radius disabled">
+        <div class="row-left-area">
+          <div class="icon-circle">
+            <i class="icon-app-device-found"></i>
+          </div>
+        </div>
+        <div class="row-right-area">
+          <div class="sub-left-area">
+            <h4>Device Found</h4>
+            <span class="device-subtext">
+              <span class="icon loading"></span>
+              <span>Connecting to Device</span>
+            </span>
+          </div>
+          <div class="sub-right-area">
+            <button ($click)="onCustomize(%context)" class="btn disabled">
+              Customize
+            </button>
+          </div>
+        </div>
+      </div>
+    </arcus-pairing-device-state>
+    <br>
+    <arcus-pairing-device-state {pairing-device}="demoDevice" {try-again-promise}="tryAgainPromise">
+      <div class="box-gray-radius ">
+        <div class="row-left-area">
+          <div class="icon-circle">
+            <i class="icon-app-device-found"></i>
+          </div>
+        </div>
+        <div class="row-right-area">
+          <div class="sub-left-area">
+            <h4>Device Found</h4>
+            <span class="device-subtext">
+              <span class="icon success"></span>
+              <span>Device Ready</span>
+            </span>
+          </div>
+          <div class="sub-right-area">
+            <button ($click)="onCustomize(%context)" class="btn ">
+              Customize
+            </button>
+          </div>
+        </div>
+      </div>
+    </arcus-pairing-device-state>
+    <br>
+    <arcus-pairing-device-state {pairing-device}="demoDevice" {try-again-promise}="tryAgainPromise">
+      <div class="box-gray-radius ">
+        <div class="row-left-area">
+          <div class="icon-circle">
+            <i class="icon-app-device-found"></i>
+          </div>
+        </div>
+        <div class="row-right-area">
+          <div class="sub-left-area">
+            <h4>Device Found</h4>
+            <span class="device-subtext">
+              <span class="icon error"></span>
+              <span>Misconfigured</span>
+            </span>
+          </div>
+          <div class="sub-right-area">
+            <button class="btn-cancel" ($click)="onRemove(%context)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </arcus-pairing-device-state>
+    <br>
+    <h3>Two Column</h3>
+    <arcus-pairing-customize-rule {customization-step}="customizationStep">
+      <can-import from="i2web/components/accordion/"></can-import>
+      <div class="box-gray-radius">
+        <arcus-accordion>
+          <ul class="accordion">
+            <arcus-accordion-panel {enabled}="false" {active}="showSuggested">
+              <can-import from="./heading.component"></can-import>
+              <can-import from="./body.component"></can-import>
+              <li scroll-to-if-invisible="true">
+                <input type="checkbox" ($click)="parent.makeActive(., %element)" {($checked)}="equal(~active, false)" class="accordion-toggle"
+                  disabled="">
+                <arcus-accordion-panel-heading>
+                  <div class="row-left-area">
+                    <h4>Add a Rule</h4>
+                    <p>rules are a simple way to automate the control of devices based on things like temperature, presence,
+                      and/or the action of another device.</p>
+                  </div>
+                  <div class="row-right-area">
+                    <div class="sub-right-area">
+                      <button class="btn" ($click)="toggleSuggested">
+                        <i class="icon-app-pencil-1"></i> Show Suggested</button>
+                    </div>
+                  </div>
+                </arcus-accordion-panel-heading>
+              </li>
+            </arcus-accordion-panel>
+          </ul>
+        </arcus-accordion>
+      </div>
+    </arcus-pairing-customize-rule>
+    <br>
+    <h3>Single Step</h3>
+    <arcus-pairing-steps>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">1</span>
+          <div>
+            <p>Paragraph A of the first full instruction. This is to fill the rest of the box so you can see that content wraps.</p>
+          </div>
+        </div>
+      </div>
+    </arcus-pairing-steps>
+    <br>
+    <h3>Multisteps</h3>
+    <arcus-pairing-steps-combined>
+      <p class="header-content">This is the text that appears above the instructions. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur.</p>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">1</span>
+          <div>
+            <p>Paragraph A of the first full instruction. This is to fill the rest of the box so you can see that content wraps.</p>
+            <p>Paragraph B of the first instruction.</p>
+          </div>
+        </div>
+      </div>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">2</span>
+          <div>
+            <p>This is the second full instruction.</p>
+          </div>
+        </div>
+      </div>
+      <p class="footer-content">This is the text that appears below the instructions. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+        do eiusmod tempor dolore magna aliqua.</p>
+    </arcus-pairing-steps-combined>
+    <br>
+    <h3>Multisteps with Buttons</h3>
+    <arcus-pairing-help>
+      <div>
+        <h2>Hmm... This is taking longer than expected.</h2>
+        <p>Check out our tips for assistance with device detection.</p>
+      </div>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">1</span>
+          <div class="row-message">
+            <p>Move device closer to the hub.</p>
+            <p>
+              <a target="_blank" href="https://google.com">Hello World</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">2</span>
+          <div class="row-message">
+            <p>Ensure the device is in pairing mode per the manufacturer's instructions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">3</span>
+          <div class="row-message">
+            <p>Confirm that the pairing steps were properly followed.</p>
+          </div>
+        </div>
+        <div class="row-right-area">
+          <div class="sub-right-area with-button">
+            <button ($click)="actionClick(../['action'])" id="PAIRING_STEPS" class="btn">Show Steps</button>
+          </div>
+        </div>
+      </div>
+      <div class="box-gray-radius darken-bg step-box">
+        <div class="row-left-area">
+          <span class="step-count">4</span>
+          <div class="row-message">
+            <p>Do a factory reset on the device.</p>
+          </div>
+        </div>
+        <div class="row-right-area">
+          <div class="sub-right-area with-button">
+            <button ($click)="actionClick(../['action'])" id="FACTORY_RESET" class="btn-cancel">Reset Device</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!--end wrapper -->
+  <br>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender"></script>

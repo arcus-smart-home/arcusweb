@@ -1,0 +1,35 @@
+@import 'locate://i2web/styles/global-styles.less';
+
+.icon-styles {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: (@gutter / 2);
+    }
+
+    i {
+        display: block;
+        font-size: 60px;
+        color: @loon;
+        margin-bottom: (@gutter / 2);
+    }
+
+    code {
+        font-size: @font-size-smaller;
+        padding-top: (@gutter / 3);
+        padding-bottom: (@gutter / 3);
+    }
+
+    h2, h3 {
+        width: 100%;
+        border-bottom: @border;
+        padding-bottom: (@gutter / 2);
+    }
+    h2:not(:first-of-type) {
+        margin-top: @gutter*2;
+    }
+}

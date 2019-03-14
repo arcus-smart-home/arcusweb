@@ -1,0 +1,151 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-temperature">
+  <template>
+    <can-import from="i2web/components/spinner/" />
+    <h3>Set a Temperature Range</h3>
+    <hr />
+    <div class="temp-range">
+      <arcus-spinner
+        {formatter}="@formatForDisplay"
+        {max}="maxLowTemp"
+        {min}="values.0"
+        {(value)}="lowTemp"
+      />
+      to
+      <arcus-spinner
+        {formatter}="@formatForDisplay"
+        {max}="values.1"
+        {min}="minHighTemp"
+        {(value)}="highTemp"
+      />
+    </div>
+    <hr />
+    <div class="button-group">
+      <button ($click)="doneButtonClicked()" class="btn">Done</button>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import { formatTemp } from 'i2web/helpers/global';
+    import CareBehavior from 'i2web/models/care-behavior';
+
+    export default canMap.extend({
+      define: {
+        /**
+        * @property {CareBehavior} behavior
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+        * @description The associated careBehavior being edited
+        */
+        behavior: {
+          Type: CareBehavior,
+        },
+        /**
+        * @property {Function} doneButtonClicked
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+        * @description The function to be called when the DONE button is clicked
+        */
+        doneButtonClicked: {
+          Type: Function,
+        },
+        highTemp: {
+          get() {
+            return this.formatTemp(this.attr('behavior.highTemp'), 'F');
+          },
+          set(high) {
+            const low = this.attr('lowTemp');
+            if (Math.abs(high - low) < 3) {
+              if (low === parseInt(this.attr('values.0'), 10)) return;
+              this.attr('lowTemp', low - 1);
+            }
+
+            this.attr('behavior.highTemp', this.formatTemp(high, 'C'));
+            return high; // eslint-disable-line consistent-return
+          },
+        },
+        lowTemp: {
+          get() {
+            return this.formatTemp(this.attr('behavior.lowTemp'), 'F');
+          },
+          set(low) {
+            const high = this.attr('highTemp');
+            if (Math.abs(high - low) < 3) {
+              if (high === parseInt(this.attr('values.1'), 10)) return;
+              this.attr('highTemp', high + 1);
+            }
+
+            this.attr('behavior.lowTemp', this.formatTemp(low, 'C'));
+            return low; // eslint-disable-line consistent-return
+          },
+        },
+        /**
+         * @property {Number} maxLowTemp
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+         * @description maxLowTemp is 3 degrees less than behavior.highTemp
+         */
+        maxLowTemp: {
+          get() {
+            return parseInt(this.attr('values.1'), 10) - 3;
+          },
+        },
+        /**
+         * @property {Number} minHighTemp
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+         * @description minHighTemp is 3 degrees greater than behavior.lowTemp
+         */
+        minHighTemp: {
+          get() {
+            return parseInt(this.attr('values.0'), 10) + 3;
+          },
+        },
+        /**
+        * @property {Object} template
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+        * @description The template associated with the careBehavior being edited
+        */
+        template: {
+          type: '*',
+        },
+        /**
+        * @property {Array} units
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+        * @description Units for the temperature
+        */
+        units: {
+          get() {
+            return this.attr('template.fields.temperatureRange.unit');
+          },
+        },
+        /**
+        * @property {Array} values
+        * @parent i2web/components/subsystem/care/behaviors/edit-panel/temperature.component
+        * @description Contains the lower and upper limits of temperature range
+        */
+        values: {
+          get() {
+            return this.attr('template.fields.temperatureRange.value');
+          },
+        },
+      },
+      formatTemp,
+      formatForDisplay(value) {
+        return value && `${value.toFixed(0)}&deg;`;
+      },
+    });
+  </script>
+</can-component>

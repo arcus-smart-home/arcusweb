@@ -1,0 +1,68 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  #icon {
+    margin-top: 100px;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <arcus-notifications {(events)}="notifications" />
+
+  <label for="icon">Icon Class</label>
+  <input type="text" value="icon-app-notification-2" id="icon" />
+  <br />
+  <br />
+  <label for="message">Message</label>
+  <input type="text" value="Default Message" id="message" />
+  <br />
+  <br />
+  <button ($click)="showNotification('success')">Success</button>
+  <button ($click)="showNotification('warning')">Warning</button>
+  <button ($click)="showNotification('error')">Error</button>
+  <button ($click)="showNotification('info')">Info</button>
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import $ from 'jquery';
+  import CanMap from 'can-map';
+  import CanList from 'can-list';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/notifications/';
+  import Notifications from 'i2web/plugins/notifications';
+
+  const notifications = new CanList([]);
+
+  const scope = new CanMap({
+    notifications,
+    showNotification(type) {
+      notifications.unshift({
+        type,
+        message: $('#message').val(),
+        icon: $('#icon').val(),
+      });
+    },
+  });
+  const appScope = new CanMap({});
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

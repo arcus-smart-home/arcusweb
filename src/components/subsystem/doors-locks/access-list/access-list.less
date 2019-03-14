@@ -1,0 +1,54 @@
+arcus-subsystem-doors-locks-access-list {
+  display: block;
+  .notification-container {
+    margin: @gutter @gutter/2;
+    .breakpoint(md, {
+      margin: @gutter;
+    });
+  }
+  .notification-list {
+    margin: 0;
+    padding-left: @gutter;
+    padding-bottom: 0;
+    .breakpoint(sm-down, {
+      padding-left: 0;
+    });
+    .check, .radio-checkbox, .add {
+      align-self: center;
+    }
+    li {
+      &:first-of-type {
+        border-top: 0;
+      }
+      &:last-of-type {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+  h3 {
+    font-size: @font-size-h3;
+    i {
+      font-size: 30px;
+      margin-right: @gutter/3;
+    }
+  }
+  .loader {
+    font-size: @font-size-large * 2;
+    align-items: center;
+    justify-content: center;
+    height: @gutter;
+    width: @gutter;
+    flex-shrink: 0;
+    margin: 0 23px;
+  }
+  arcus-accordion-panel {
+    &> li.active {
+      padding: @gutter @gutter @gutter/2 @gutter;
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}

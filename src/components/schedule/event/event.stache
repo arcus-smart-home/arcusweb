@@ -1,0 +1,110 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/schedule/device-configurators/" />
+<can-import from="i2web/components/spinner/" />
+<can-import from="i2web/components/schedule/event/weekday-toggle.component" />
+<can-import from="i2web/components/schedule/time/" />
+<can-import from="i2web/components/schedule/offset-minutes/" />
+
+{{#if event}}
+  <form ($submit)="save" autocomplete="off" {{#if saving}}disabled{{/if}}>
+    {{#switch formEvent.scheduleId}}
+      {{#case 'FIRE'}}
+        <div class="sub-instructions">
+          <h4>Set a Runtime for <span>{{thing['scene:name']}}</span></h4>
+        </div>
+      {{/case}}
+      {{#case 'RULES'}}
+        <div class="select-state">
+          <h4>Select a State</h4>
+          <button class="btn{{#eq formEvent.messageType 'rule:Enable'}} active{{/eq}}" ($click)="toggleRule(%event, true)">Active</button>
+          <button class="btn{{#eq formEvent.messageType 'rule:Disable'}} active{{/eq}}" ($click)="toggleRule(%event, false)">Inactive</button>
+        </div>
+        <div class="sub-instructions">
+          <h4>Select a Time</h4>
+        </div>
+      {{/case}}
+      {{#default}}
+        {{renderConfigurator()}}
+      {{/default}}
+    {{/switch}}
+    <div class="time-buttons segment-btn">
+      <button class="btn{{#eq formEvent.mode 'ABSOLUTE'}} active{{/eq}}" ($click)="toggleMode(%event, 'ABSOLUTE')">Time</button>
+      <button class="btn{{#eq formEvent.mode 'SUNRISE'}} active{{/eq}}" ($click)="toggleMode(%event, 'SUNRISE')">Sunrise</button>
+      <button class="btn{{#eq formEvent.mode 'SUNSET'}} active{{/eq}}" ($click)="toggleMode(%event, 'SUNSET')">Sunset</button>
+    </div>
+    {{#eq formEvent.mode 'ABSOLUTE'}}
+      <arcus-time {(time)}="formEvent.time" />
+    {{else}}
+      <arcus-offset-minutes {(offset-minutes)}="formEvent.offsetMinutes" />
+    {{/eq}}
+    <div class="sub-instructions">
+      <h4>Repeat on</h4>
+    </div>
+    <div class="week-day-buttons">
+      {{#if daysError}}
+        <div class="form-error">At least one day must be selected</div>
+      {{/if}}
+      <arcus-schedule-edit-panel-weekday-toggle day="MON" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="TUE" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="WED" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="THU" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="FRI" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="SAT" {(days)}="formEvent.days" />
+      <arcus-schedule-edit-panel-weekday-toggle day="SUN" {(days)}="formEvent.days" />
+    </div>
+    {{#if formError}}
+      <div class="form-error">{{formError}}</div>
+    {{/if}}
+    <div class="bottom-buttons">
+      {{#unless confirmingDelete}}
+      <div class="left-buttons">
+        <button type="submit" class="btn{{#unless formHasChanges}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Saving
+          {{else}}
+            Save
+          {{/if}}
+        </button>
+        <button type="button" class="btn-cancel" ($click)="cancel(%event)">Cancel</button>
+      </div>
+      {{/unless}}
+      {{#if formEvent.id}}
+      <div class="right-buttons {{#if confirmingDelete}}is-confirming{{/if}}">
+        {{#if confirmingDelete}}
+          <p class="form-error">Are you sure you want to delete this event?</p>
+          <div>
+          <button class="btn-cancel" ($click)="cancelDelete(%event)">Cancel</button>
+          <button class="btn-delete{{#if deleting}} deleting{{/if}}" ($click)="delete(%event)">
+            {{#if deleting}}
+              <div class="loader"></div> Deleting
+            {{else}}
+              Delete Event
+            {{/if}}
+          </button>
+          </div>
+
+        {{else}}
+          <button class="btn-delete" ($click)="confirmDelete(%event)">Delete Event</button>
+        {{/if}}
+      </div>
+      {{/if}}
+    </div>
+  </form>
+{{else}}
+  <div class="loader" />
+{{/if}}

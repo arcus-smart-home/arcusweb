@@ -1,0 +1,180 @@
+{
+  "name": "i2web",
+  "version": "2018.10.2",
+  "description": "Arcus Web UI",
+  "scripts": {
+    "build": "npm-run-all clean compile",
+    "bundle-dev": "steal-tools bundle --dev --no-minify",
+    "clean": "npm-run-all clean:build",
+    "clean:build": "rimraf build",
+    "cleanup": "./bin/cleanup.sh",
+    "compile": "node bin/build",
+    "develop": "node bin/server",
+    "lint": "eslint src test --ext .js --ext .component",
+    "postinstall": "npm-run-all bundle-dev",
+    "start": "NODE_ENV=production node bin/server",
+    "test": "npm-run-all lint test:unit",
+    "test:bamboo": "npm run test:unit",
+    "test:bamboo:debug": "npm run test:unit:debug",
+    "test:unit": "node_modules/.bin/testee src/test.html -c testee-config.js",
+    "test:unit:debug": "DEBUG=testee:* node_modules/.bin/testee src/test.html -c testee-config.js",
+    "test:coverage": "node bin/coverage",
+    "test:coverage:debug": "DEBUG=testee:* node bin/coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:eyeris/i2web.git"
+  },
+  "license": "© 2019 Arcus",
+  "main": "i2web/index.stache!done-autorender",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "arcus"
+  ],
+  "steal": {
+    "main": "i2web/index.stache!done-autorender",
+    "directories": {
+      "lib": "src"
+    },
+    "configDependencies": [
+      "node_modules/can-zone/register"
+    ],
+    "map": {
+      "chai": "chai/chai",
+      "i2web-devtools": "i2web-devtools/build/i2web-devtools",
+      "babel-polyfill": "babel-polyfill/dist/polyfill"
+    },
+    "meta": {
+      "chai/chai": {
+        "format": "global",
+        "exports": "chai.assert"
+      },
+      "mocha/mocha": {
+        "format": "global",
+        "exports": "mocha"
+      },
+      "babel-polyfill/dist/polyfill": {
+        "format": "cjs"
+      }
+    },
+    "paths": {
+      "watch-element-resize": "src/vendor/watch-element-resize.min.js"
+    },
+    "plugins": [
+      "done-component",
+      "steal-css",
+      "steal-less",
+      "steal-stache"
+    ]
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "can-component": "3.0.7",
+    "can-compute": "3.0.11",
+    "can-connect": "1.3.11",
+    "can-construct": "3.1.1",
+    "can-construct-super": "3.0.3",
+    "can-control": "3.0.10",
+    "can-define": "1.0.26",
+    "can-event": "3.4.0",
+    "can-key-mask": "1.0.1",
+    "can-list": "3.0.5",
+    "can-list-sort": "3.0.0-pre.2",
+    "can-map": "3.0.7",
+    "can-map-backup": "3.0.3",
+    "can-map-define": "3.0.9",
+    "can-observation": "3.1.7",
+    "can-route": "3.0.11",
+    "can-route-pushstate": "3.0.3",
+    "can-set": "1.2.0",
+    "can-simple-map": "3.1.4",
+    "can-stache": "3.0.24",
+    "can-stache-bindings": "3.1.5",
+    "can-stache-converters": "3.1.0",
+    "can-types": "1.0.4",
+    "can-util": "3.7.0",
+    "can-vdom": "3.0.3",
+    "can-view-autorender": "3.0.4",
+    "can-view-callbacks": "3.0.6",
+    "can-view-href": "3.0.4",
+    "can-view-import": "3.0.7",
+    "can-view-live": "3.0.7",
+    "can-view-model": "3.1.3",
+    "can-view-nodelist": "3.0.4",
+    "can-view-parser": "3.1.0",
+    "can-view-scope": "3.1.4",
+    "can-view-target": "3.0.7",
+    "can-zone": "0.6.7",
+    "card-validator": "https://github.com/imjoshdean/card-validator.git",
+    "color-convert": "^1.5.0",
+    "deep-assign": "^2.0.0",
+    "documentjs": "^0.5.1",
+    "done-autorender": "1.0.0",
+    "done-component": "1.0.0",
+    "element-closest": "^2.0.2",
+    "es6-object-assign": "^1.0.3",
+    "events": "^1.1.1",
+    "flexboxgrid": "^6.3.1",
+    "fullscreen-api-polyfill": "^1.1.2",
+    "hls.js": "^0.7.7",
+    "jquery": "^3.2.1",
+    "jstz": "^1.0.8",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.1",
+    "moment-duration-format": "^2.0.1",
+    "moment-range": "^4.0.1",
+    "moment-timezone": "^0.5.11",
+    "node-uuid": "^1.4.7",
+    "nouislider": "github:nlundquist/noUiSlider#allow-large-padding",
+    "semantic-ui-css": "^2.1.8",
+    "semantic-ui-dropdown": "^2.2.1",
+    "semantic-ui-transition": "^2.2.1",
+    "regenerator-runtime": "0.10.5",
+    "semantic-ui-dropdown-canjs": "^1.0.0",
+    "semantic-ui-sticky": "^2.2.11",
+    "steal-stache": "3.0.7",
+    "swiper": "^3.4.0",
+    "validate.js": "^0.11.0"
+  },
+  "devDependencies": {
+    "can-fixture": "1.0.14",
+    "chai": "^4.1.0",
+    "compression": "^1.6.2",
+    "donejs-cli": "^1.0.1",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-done-component": "^0.2.3",
+    "eslint-plugin-html": "^1.7.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.10.0",
+    "express": "^4.14.0",
+    "express-history-api-fallback": "^2.0.0",
+    "fs-extra": "^0.30.0",
+    "funcunit": "^3.4.3",
+    "generator-donejs": "^1.0.5",
+    "i2web-devtools": "git+ssh://git@bitbucket.org/eyeris/i2web-devtools.git",
+    "infanticide": "^1.0.1",
+    "lolex": "^1.5.1",
+    "mocha": "^3.5.3",
+    "mocha-bamboo-reporter": "^1.1.1",
+    "mock-socket": "^5.0.1",
+    "mockdate": "^2.0.1",
+    "nconf": "^0.8.4",
+    "npm-run-all": "^3.1.1",
+    "puppeteer": "^0.11.0",
+    "remap-istanbul": "^0.7.0",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.6",
+    "steal": "github:m-mujica/steal#dependencies",
+    "steal-builtins": "^1.0.0",
+    "steal-css": "^1.3.1",
+    "steal-less": "^1.2.0",
+    "steal-tools": "^1.9.1",
+    "testee": "github:nlundquist/testee#handle-hook-failures",
+    "vhost": "^3.0.2"
+  }
+}

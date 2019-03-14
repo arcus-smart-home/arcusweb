@@ -1,0 +1,56 @@
+arcus-subsystem-water-card {
+  display: block;
+  .subsystem-card-title {
+    .breakpoint(sm, { border-bottom: @inner-card-border });
+    .total-count p {
+      align-items: baseline;
+    }
+  }
+  .subsystem-card-contents {
+    padding: 0;
+    .breakpoint(sm, {
+      display: flex;
+    });
+    > * {
+      flex-grow: 1;
+      flex-basis: 0;
+      padding: @gutter @gutter @gutter @gutter*2.5;
+      &:first-child {
+        border-right: @inner-card-border;
+      }
+      .breakpoint(lg-down, {
+        padding: @gutter @gutter @gutter @gutter*1.5;
+      });
+    }
+    div+div {
+      padding-left: @gutter;
+      padding-right: @gutter;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .water-device-detail {
+    margin-bottom: @gutter/2;
+    .font-regular;
+    font-size: @font-size-h3;
+    > * {
+      vertical-align: middle;
+    }
+  }
+  .status-header {
+    display: flex;
+    align-items: center;
+    h3 {
+      flex-grow: 1;
+      margin-top: 0;
+      line-height: 30px;
+    }
+  }
+  .device-name {
+    color: @swift;
+  }
+  arcus-shop-button > .btn {
+    margin-bottom: 0;
+  }
+}

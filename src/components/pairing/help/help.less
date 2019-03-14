@@ -1,0 +1,25 @@
+arcus-pairing-help {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: @gutter;
+  h2 {
+    .font-medium;
+    margin-top: 0;
+  }
+  .header-content {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+    padding-left: @gutter;
+    padding-right: @gutter;
+  }
+  .box-gray-radius {
+    flex-direction: row;
+    flex-wrap: wrap;
+    .breakpoint(sm, {
+      width: @box-md;
+    });
+  }
+}

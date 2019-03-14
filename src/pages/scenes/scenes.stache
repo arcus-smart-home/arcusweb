@@ -1,0 +1,56 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/scenes/list-panel/" />
+<can-import from="i2web/components/scenes/examples.component" />
+
+<arcus-context-bar>
+  <h2>
+    <i class="icon-app-scene-2"></i>
+    <span class="place-name">{{place["place:name"]}}</span> Scenes
+  </h2>
+</arcus-context-bar>
+<div class="scenes-container">
+  <div class="scenes-view-toggle">
+    <button id="add-scene" class="btn-primary" ($click)="createNewScene()">
+      + Add Scene
+    </button>
+    <button id="example-scene" class="btn-primary" ($click)="showExamplesPanel()">
+      Examples
+    </button>
+  </div>
+  <h2>Manage Scenes and Their Schedules</h2>
+  {{#unless scenes.length}}
+    <p>You have no Scenes set up. Scenes let you control multiple devices at once. Choose 'Add A Scene' to get started.</p>
+  {{/unless}}
+</div>
+<hr class="tutorial-border" />
+{{#each scenes}}
+  <arcus-scenes-list-panel {(scene)}="." {template}="templateFor(.)" />
+{{/each}}
+<div class="tutorials">
+  <h3>Scene Tutorials</h3>
+  <ul>
+    <li>
+      <a data-analytics="scenes.tutorial" href="{{redirectToUrl('s_scenes')}}" target="_blank">
+        <i class="icon-app-page-2"></i>
+        Learn About Scenes
+      </a>
+    </li>
+  </ul>
+</div>

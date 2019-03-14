@@ -1,0 +1,45 @@
+arcus-rules-my-list {
+	display: block;
+  .panel-list-container {
+    &.disabled {
+      [class^="btn"] {
+        .button-colors;
+      }
+    }
+    .panel-options {
+      li.disabled arcus-schedule-icon a i {
+        color: @peacock;
+      }
+    }
+    .panel-status {
+      justify-content: center;
+    }
+  }
+  .rule-information {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .rule-description {
+    .font-medium-italic;
+    margin-bottom: @line-height/3;
+  }
+  .rule-item {
+    &.error {
+      color: @cardinal;
+      text-transform: capitalize;
+      &:before {
+        content: '('
+      }
+      &:after {
+        content: ')'
+      }
+    }
+  }
+  .toggle-status {
+    .font-medium-italic;
+  }
+  .checkbox-label.disabled {
+    cursor: default;
+  }
+}

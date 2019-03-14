@@ -1,0 +1,127 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/control-switch/" />
+<can-import from="i2web/components/schedule/calendar/" />
+<can-import from="i2web/components/schedule/event/" />
+<can-import from="i2web/components/schedule/irrigation-event/" />
+<can-import from="i2web/components/schedule/mode/" />
+<can-import from="i2web/components/schedule/edit-panel/day-carousel/" />
+<can-import from="i2web/components/schedule/edit-panel/interval-duration.component" />
+
+<span class="left-panel-buttons">
+  {{close-button type="done" disabled=panelExpanded}}
+</span>
+<div class="panel-content">
+  <div class="panel-header">
+    <h3>Schedule</h3>
+    {{#if scheduler.hasCommands}}
+      <p>View and manage the Schedule for <strong>{{thingName}}</strong> below.</p>
+    {{/if}}
+    {{#unless scheduler.hasCommands}}
+      {{#if configuration.instructions}}
+        <p class="instructions">
+          {{configuration.instructions}}
+        </p>
+      {{/if}}
+    {{/unless}}
+  </div>
+  <div class="overflow-container">
+    <div class="content-container">
+      <div class="left-content" id="top-left">
+        {{#if scheduler}}
+          {{#if showFollowSchedule}}
+            <div class="follow-schedule">
+              <div class="follow-schedule-toggle">
+                <h4>Follow Schedule</h4>
+                <arcus-control-switch
+                  {(is-on)}="isScheduleFollowed"
+                  {toggle}="@toggleSchedule"
+                />
+              </div>
+              {{#unless isScheduleFollowed}}
+                <p class="instructions">
+                  {{notFollowedWarning}}
+                </p>
+              {{/unless}}
+            </div>
+          {{/if}}
+          {{#if showWaterSaverOption}}
+            <arcus-schedule-device-configurators-water-saver {device}="thing" />
+          {{/if}}
+          {{#if configuration.modes}}
+            <arcus-schedule-mode
+                {{#if event}}disable-buttons{{/if}}
+                {configuration}="configuration"
+                {thing}="thing"
+                {(selected-mode)}="selectedMode"
+                {subsystem}="subsystem"
+            />
+            <h4 class="events-header">Events</h4>
+          {{/if}}
+          {{#if showCalendar}}
+            <arcus-schedule-calendar
+              class="{{#unless isScheduleFollowed}}disabled{{/unless}}"
+              {configuration}="configuration"
+              {events}="scheduler.commandsByDay"
+              {mode}="selectedMode"
+            />
+          {{else}}
+            {{#is selectedMode 'INTERVAL'}}
+              <arcus-schedule-edit-panel-interval-duration
+                {(interval-duration)}="intervalDuration"
+              />
+            {{/is}}
+          {{/if}}
+          <arcus-day-carousel
+            {(event)}="event"
+            {configuration}="configuration"
+            {commands}="scheduler.commandsByDay"
+            {{#if irrigationSchedule}}
+            {interval-duration}="intervalDuration"
+            {{/if}}
+            {mode}="selectedMode"
+            {^selected-day-abbr}="selectedDay"
+            {thing}="thing"
+          />
+          <div class="bottom-buttons">
+            <button class="btn {{#unless canAddEvent}}disabled{{/unless}}" ($click)="addEvent()">
+              + Add {{selectedMode}} Event
+            </button>
+          </div>
+        {{else}}
+          <div class="loader" />
+        {{/if}}
+      </div>
+      <div class="right-content">
+        {{#if irrigationSchedule}}
+          <arcus-schedule-irrigation-event
+            {(event)}="event"
+            {device}="thing"
+            {subsystem}="subsystem"
+          />
+        {{else}}
+          <arcus-schedule-event
+            {configuration}="configuration"
+            {(event)}="event"
+            {thing}="thing"
+            {(mode)}="selectedMode"
+          />
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

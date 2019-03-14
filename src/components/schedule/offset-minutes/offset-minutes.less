@@ -1,0 +1,23 @@
+arcus-offset-minutes {
+	display: flex;
+  justify-content: center;
+  margin-top: @gutter/2;
+  margin-bottom: @gutter;
+  padding-bottom: @gutter;
+  border-bottom: @border;
+
+  .before-after-buttons {
+    display: flex;
+    margin-left: @gutter/2;
+    align-self: center;
+    flex-direction: column;
+    margin-top: 0;
+    [class^="btn"] {
+      margin-bottom: 0;
+      &+ [class^="btn"] {
+        margin-top: @gutter/4;
+        margin-left: 0;
+      }
+    }
+  }
+}

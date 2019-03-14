@@ -1,0 +1,38 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#if formError}}
+  <p class="form-error">{{formError}}</p>
+{{/if}}
+<form autocomplete="off"
+  {{#unless showConfirm}}($submit)="confirmRemove"
+  {{else}}($submit)="removeHub" {{/unless}}
+  {{#if saving}}disabled{{/if}}>
+
+  {{#unless showConfirm}}
+    <p class="form-error">Removing this Hub will remove the Hub and all of the devices that communicate to your Hub from this Place.</p>
+    <p class="form-error">To remove Hub, type <span class="bold">REMOVE</span> in the space below and click submit.</p>
+    {{textInput('remove', '')}}
+    <button type="submit" class="btn-cancel" {{#if saving}}disabled{{/if}}>Submit</button>
+    <button type="button" class="btn-cancel" ($click)="cancelRemove()" {{#if saving}}disabled{{/if}}>Cancel</button>
+  {{else}}
+    <div class="show-confirm">
+      <p class="error">Are you sure you want to remove your Hub? This action cannot be reversed.</p>
+      <button type="submit" class="btn-cancel" {{#if saving}}disabled{{/if}}>Yes, remove</button>
+      <button type="button" class="btn-cancel" ($click)="cancelRemove()" {{#if saving}}disabled{{/if}}>No, do not remove</button>
+    </div>
+  {{/unless}}
+</form>

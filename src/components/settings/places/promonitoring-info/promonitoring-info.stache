@@ -1,0 +1,79 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/promonitoring/additional-info.component" />
+<can-import from="i2web/components/promonitoring/permit-required.component" />
+<can-import from="i2web/components/promonitoring/print-certificate.component" />
+
+<form ($submit)="savePromonInfo" autocomplete="off">
+  <div class="panel-buttons">
+    <button type="submit" class="btn {{#unless hasChanges}}disabled{{/unless}} {{#if saving}}saving{{/if}}">
+      {{#if saving}}
+        <div class="loader"></div> Saving
+      {{else}}
+        Save
+      {{/if}}
+    </button>
+    {{close-button type="cancel"}}
+  </div>
+  <div class="panel-content">
+    <div class="panel-header">
+      <h3>Professional Monitoring Information</h3>
+    </div>
+    <div class="panel-body">
+      <arcus-accordion {on-panel-activation}="@toggleSubheader">
+        <arcus-accordion-panel id="permit">
+          <arcus-accordion-panel-heading>
+            <h3>
+              Permit
+              <small>Manage your permit code</small>
+            </h3>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            {{#if promonSettings}}
+              <arcus-promonitoring-permit-required {(promon-settings)}="promonSettings" />
+            {{else}}
+              <div class="loader"></div>
+            {{/if}}
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+        <arcus-accordion-panel id="additional-directions">
+          <arcus-accordion-panel-heading>
+            <h3>
+              Additional Directions
+              <small>Add additional details about your home</small>
+            </h3>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            {{#if promonSettings}}
+              <arcus-promonitoring-additional-info {(promon-settings)}="promonSettings" />
+            {{else}}
+              <div class="loader"></div>
+            {{/if}}
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      </arcus-accordion>
+    </div>
+    {{#if place['web:userOwnsPlace']}}
+      <div class="panel-footer">
+        <arcus-promonitoring-print-certificate {place}="place">
+          Download Your Professional Monitoring Certificate
+        </arcus-promonitoring-print-certificate>
+      </div>
+    {{/if}}
+  </div>
+</form>

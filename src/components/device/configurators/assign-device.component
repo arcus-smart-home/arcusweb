@@ -1,0 +1,198 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-assign-device">
+  <template>
+    {{#unless forPairingCustomization}}
+      <div class="configurator-header">
+        <h4 class="config-title" id="configuration-assign-device">Assign To</h4>
+      </div>
+    {{/unless}}
+    <ul class="option-list">
+      {{#each things}}
+        <li class="radio-wrapper" ($click)="selectThing(this)">
+          <input type="radio" value="thing-{{%index}}" name="presence-assignment" {$checked}="isSelected(this)">
+          <label for="thing-{{%index}}" class="complex-label">
+            <i class="{{getThingIcon(.)}} avatar"></i>
+            <span class="name-multi">{{getThingName(.)}}<br>
+              <small class="type">{{getThingRole(.)}}</small>
+            </span>
+          </label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+    </ul>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canList from 'can-list';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+    import PresenceCapability from 'i2web/models/capability/Presence';
+    import getAppState from 'i2web/plugins/get-app-state';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/configurators/
+         * @description Device being assigned
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {htmlboolean} forPairingCustomization
+         * @parent i2web/components/device/configurators/
+         * @description Attribute that indicates if the component is being used during pairing customization
+         * which impacts whether or not the 'Assign To' header will be shown
+         */
+        forPairingCustomization: {
+          type: 'htmlbool',
+          value: false,
+        },
+        /**
+         * @property {Place} place
+         * @parent i2web/components/device/configurators/
+         * @description Place to which the device belongs; determines the people it can be assigned to
+         */
+        place: {
+          get() {
+            return getAppState().attr('place');
+          },
+        },
+        /**
+         * @property {CanList} things
+         * @parent i2web/components/device/configurators/
+         * @description List of things (people and unassigned) to which device can be assigned
+         */
+        things: {
+          Type: canList,
+          get() {
+            // Create web:role attributes for people
+            this.attr('place').peopleWithAccess();
+            const things = new canList(getAppState().attr('people'));
+            things.push(this.attr('device'));
+            return things;
+          },
+        },
+      },
+      /**
+       * @function getThingIcon
+       * @parent i2web/components/device/configurators/
+       *
+       * Returns the icon displayed for a particular thing
+       * @param {canMap} thing
+       * @return {String}
+       */
+      getThingIcon(thing) {
+        return (this.getThingName(thing) === 'No One')
+          ? 'icon-app-user-3'
+          : 'icon-app-user-1';
+      },
+      /**
+       * @function getThingName
+       * @parent i2web/components/device/configurators/
+       *
+       * Returns the display name for a particular thing (person name or 'No One' for no assignment)
+       * @param {canMap} thing
+       * @return {String}
+       */
+      getThingName(thing) {
+        if (thing.attr('base:type') === 'person') {
+          return thing.attr('person:name');
+        }
+        return 'No One';
+      },
+      /**
+       * @function getThingRole
+       * @parent i2web/components/device/configurators/
+       *
+       * Returns the role display string for a particular thing (person name or 'Unassigned' for no assignment)
+       * @param {canMap} thing
+       * @return {String}
+       */
+      getThingRole(thing) {
+        if (thing.attr('base:type') === 'person') {
+          if (this.attr('place')) {
+            switch (thing.attr(`web:role:${this.attr('place.base:id')}`)) {
+              case 'OWNER':
+                return 'Account Owner';
+              case 'FULL_ACCESS':
+                return 'Full Access Guest';
+              case 'HOBBIT':
+              default:
+                return 'Partial Access Guest';
+            }
+          }
+        }
+        return 'Unassigned';
+      },
+      /**
+       * @function isSelected
+       * @parent i2web/components/device/configurators/
+       *
+       * Determines if the given thing is currently selected
+       * @param {canMap} thing
+       * @return {Boolean}
+       */
+      isSelected(thing) {
+        const device = this.attr('device');
+
+        if (thing.attr('base:type') === 'dev' && (!device.attr('pres:person') || device.attr('pres:person') === 'UNSET')) {
+          return true;
+        }
+
+        return device.attr('pres:person') === thing.attr('base:address');
+      },
+      /**
+       * @function selectThing
+       * @parent i2web/components/device/configurators/
+       *
+       * Selects the given thing and saves the assignment of the thing to the device to the platform
+       * @param {canMap} thing
+       */
+      selectThing(thing) {
+        const device = this.attr('device');
+
+        if (thing.attr('base:type') === 'dev') {
+          device.attr({
+            'pres:person': '',
+            'pres:usehint': PresenceCapability.USEHINT_UNKNOWN,
+          });
+        } else {
+          device.attr({
+            'pres:person': thing.attr('base:address'),
+            'pres:usehint': PresenceCapability.USEHINT_PERSON,
+          });
+        }
+        device.save()
+          .catch(e => Errors.log(e, !this.attr('forPairingCustomization')));
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} pres:usehint': function valueChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('PRESENCE_ASSIGNMENT');
+        }
+      },
+    };
+  </script>
+</can-component>

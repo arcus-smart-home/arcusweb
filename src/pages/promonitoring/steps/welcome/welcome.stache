@@ -1,0 +1,136 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/shop-button.component" />
+<can-import from="i2web/components/promonitoring/print-certificate.component" />
+<div class="step {{activeStepClass}}">
+  <arcus-context-bar>
+    <h2>{{contextHeader}}</h2>
+  </arcus-context-bar>
+  <div class="container">
+    <div class="main-content">
+
+      <h2>Save This Phone Number</h2>
+      <p>Please add {{monitoringStationNumber}} to your phone's contact list so you know the Monitoring Station is calling.
+      If you use the Do Not Disturb feature on your smartphone, please add the Monitoring Station
+      phone number to your exception list.
+      <hr />
+
+      <h2>Enhanced Call Verification</h2>
+      <p>Many local municipalities require the Monitoring Station to call a minimum of 2 people (with 2 different phone
+        numbers) prior to dispatching the authorities. This technique is called, Enhanced Call Verification, and is in
+        place for several reasons:</p>
+        <ul class="notifications">
+          <li>To help determine if the Security Alarm is real before dispatching the authorities.</li>
+          <li>To help reduce the number of false alarm dispatches.</li>
+          <li>To increase the accuracy of information passed to the authorities so they can better assist you.</li>
+          <li>To help the homeowner avoid costly false alarm fees as several municipalities will fine you if authorities are dispatched for false alarms.</li>
+        </ul>
+
+      <h2>Do I Need To Add More People To My Notification List?</h2>
+      <p>Alarm dispatch policies vary greatly and are managed at the local city or county level. It is recommended to
+        have at least two people on your Notification List. Check with your local ordinance or municipality for details.
+      </p>
+
+      <h2>Confirm Your Notification List</h2>
+      <p>Review the list below to ensure these are the people that you want to be
+        notified in the event of an alarm{{#if place['place:name']}} at {{place['place:name']}}{{/if}}.
+      </p>
+
+      {{#if notificationList}}
+      <ul class="notifications">
+        {{#each notificationList}}
+          <li>
+            {{#if ['person:name']}}{{['person:name']}}{{else}}{{['person:email']}}{{/if}}
+          </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+
+      <p>If you do not see the additional people you want notified, first ensure the people you want in
+        the list are added to your Place, then add them to your Notification List.
+        Visit the <a href="{{redirectToUrl('s_alarmlists')}}" target="_blank">Arcus Support Page</a>
+        to learn more about managing your Notification list.
+      </p>
+      <hr />
+
+      <h2>Professional Monitoring Certificate</h2>
+      <p class="required-for-insurance">Required for Insurance</p>
+      <p>Did you know some homeowner/renter insurance companies offer premium discounts for
+       customers with professional monitoring service? Check with your insurance provider
+       to see if these savings apply to you.
+      </p>
+      <arcus-promonitoring-print-certificate {place}="place">
+        <button type="button" class="btn">Print</button>
+      </arcus-promonitoring-print-certificate>
+      <hr />
+
+      <h2>Cellular Backup Service</h2>
+      <p>As a Professional Monitoring customer, Cellular Backup service is provided at no additional cost.
+        Purchase a 4G modem to stay connected when your internet goes down.
+      </p>
+      <arcus-shop-button expanded />
+      <hr />
+    </div>
+
+    {{#unless hideOfflineDevices}}
+      {{#if offlineDevices['length']}}
+        <div class="side-box">
+          <h4 class="side-box-title">
+            Devices Not Connected
+          </h4>
+          <div class="offline-info">
+            <p>
+              Please check to ensure the devices have power and replace batteries if needed.
+            </p>
+          </div>
+          <div class="offline-listing">
+          {{#each offlineDevices}}
+            <div class="offline-listing-row">
+              <div class="offline-listing-icon">{{{iconOf(.)}}}</div>
+              <div class="offline-listing-name">{{['dev:name']}}</div>
+            </div>
+          {{/each}}
+          </div>
+          <div class="offline-info">
+            <p>
+            Reminder! Replace batteries in your Hub periodically to ensure it will operate during a power outage.
+            </p>
+         </div>
+        </div>
+      {{/if}}
+    {{/unless}}
+  </div>
+
+  {{#unless hideTutorials}}
+  <hr />
+    <div class="tutorials">
+      <h3>Professional Monitoring Tutorials</h3>
+      <ul>
+        <li><a href="{{redirectToUrl('s_promonitoring')}}"
+               target="_blank"><i class="icon-app-page-2"></i> What to Expect with Professional Monitoring</a></li>
+        <li><a href="{{redirectToUrl('s_reducealarms')}}"
+               target="_blank"><i class="icon-app-page-2"></i> How to Reduce False Alarms</a></li>
+        <li><a href="{{redirectToUrl('s_alarmlists')}}"
+               target="_blank"><i class="icon-app-page-2"></i> Managing Alarm Notification Lists</a></li>
+        <li><a href="{{redirectToUrl('y_promonitoring')}}"
+               target="_blank"><i class="icon-platform-camera-2"></i> Intro to Arcus Professional Monitoring</a></li>
+      </ul>
+    </div>
+  {{/unless}}
+</div>

@@ -1,0 +1,52 @@
+@import "steps/additional-information/additional-information.less";
+@import "steps/connection-test/connection-test.less";
+@import "steps/getting-started/getting-started.less";
+@import "steps/permit-required/permit-required.less";
+@import "steps/review-your-information/review-your-information.less";
+@import "steps/welcome/welcome.less";
+@import "steps/your-alarms/your-alarms.less";
+
+arcus-page-promonitoring {
+  display: block;
+  .step.active {
+    display: block;
+  }
+  .step.inactive {
+    display: none;
+  }
+  .container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    .breakpoint(md, {
+      flex-direction: row;
+    });
+  }
+  .main-content {
+    padding: @gutter/2;
+    text-align: left;
+    .breakpoint(md, {
+      padding: @gutter/2 @gutter;
+    });
+  }
+  .alerts {
+    list-style: none;
+    padding-left: 0;
+  }
+  arcus-mailing-address {
+    margin-bottom: @gutter/2;
+    p {
+      font-size: @font-size-large;
+    }
+  }
+  .connection-test {
+    display: flex;
+    flex-direction: column;
+    .breakpoint(md, {
+      flex-direction: row;
+    });
+    .main-content {
+      flex: 1 1 auto;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/device/card/" />
+<can-import from="i2web/components/scenes/card/" />
+<can-import from="i2web/components/subsystem/status/" />
+<can-import from="i2web/components/carousel/" />
+
+<div class="row">
+  <div class="favorites-card-title">
+    <h3>
+      <i class="icon-app-heart-2"></i>
+      Favorites
+    </h3>
+    <a href="#">
+      <i class="icon-app-chevron"></i>
+    </a>
+      <div class="favorites-count">
+        <p>
+          {{#if favoriteThings.length}}
+            {{favoriteThings.length}}
+            <span>Total</span>
+          {{/if}}
+        </p>
+      </div>
+  </div>
+  <div class="favorites-badge-list">
+    {{#if favoriteThings.length}}
+      <arcus-carousel {nav}="false">
+        {{#each favoriteDevices}}
+          <div class="slider-item swiper-slide">
+            <arcus-device-card {(device)}="."></arcus-device-card>
+          </div>
+        {{/each}}
+        {{#each favoriteScenes}}
+          <div class="slider-item swiper-slide">
+            <arcus-scenes-card {(scene)}="."></arcus-scenes-card>
+          </div>
+        {{/each}}
+      </arcus-carousel>
+    {{else}}
+        <p> Choose your favorite devices and scenes using the heart icon on
+          <a href="{{routeUrl page="devices" subpage="list"}}">Devices</a>
+          and
+          <a href="{{routeUrl page="scenes"}}">Scenes</a>.
+        </p>
+    {{/if}}
+  </div>
+</div>

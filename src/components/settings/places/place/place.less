@@ -1,0 +1,31 @@
+arcus-settings-place {
+  position: relative;
+  .empty-people {
+    padding-left: @gutter;
+    width: 100%;
+    word-break: break-word;
+    .breakpoint(sm, {
+      padding-left: @indent-width;
+    });
+  }
+  .panel-list-container {
+    .panel-secondary-combined {
+      .breakpoint(md-down, {
+        margin-left: @indent-width;
+        align-items: flex-start;
+      });
+    }
+    hr {
+      flex-basis: 100%;
+      margin-left: @gutter;
+      .breakpoint(md, {
+        margin-left: @indent-width;
+      });
+    }
+    .panel-secondary-wrapper {
+      .breakpoint(md-down, {
+        border-top: none;
+      });
+    }
+  }
+}

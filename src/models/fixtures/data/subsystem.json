@@ -1,0 +1,1570 @@
+{
+  "3d496bfc-1098-493e-afd4-7f56c12dbef6": {
+    "subsystems": [
+      {
+        "base:caps": [
+          "subs",
+          "subsafety",
+          "base"
+        ],
+        "subsafety:alarm": "READY",
+        "base:id": "subsafety:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subsafety:pendingClear": [],
+        "base:address": "SERV:subsafety:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subsafety:silentAlarm": false,
+        "base:tags": [],
+        "subsafety:warnings": {},
+        "subsafety:callTreeEnabled": true,
+        "subsafety:totalDevices": [],
+        "subsafety:waterShutOff": true,
+        "subsafety:activeDevices": [],
+        "subs:hash": "6uMkT9PHbgW1eMW8B+6W5RHzlV8",
+        "subsafety:waterShutoffValves": [],
+        "subs:name": "SafetySubsystem",
+        "subsafety:sensorState": {
+          "GAS": "NONE",
+          "SMOKE": "NONE",
+          "CO": "NONE",
+          "WATER": "NONE"
+        },
+        "base:instances": {},
+        "subsafety:ignoredDevices": [],
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subsafety:quietPeriodSec": 0,
+        "subs:available": false,
+        "base:type": "subs",
+        "subsafety:callTree": [
+          {
+            "person": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": false
+          }
+        ],
+        "subsafety:alarmSensitivitySec": 0,
+        "subsafety:alarmSensitivityDeviceCount": 1,
+        "subsafety:triggers": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6"
+      },
+      {
+        "base:caps": [
+          "cellbackup",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "cellbackup:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:cellbackup:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:tags": [],
+        "base:type": "subs",
+        "cellbackup:errorState": null,
+        "cellbackup:status": "NOTREADY",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "cellbackup:notReadyState": "BOTH",
+        "subs:hash": "vnqwRVZ1VKqThrw3FzUJLea3dLE",
+        "subs:name": "CellBackupSubsystem"
+      },
+      {
+        "base:caps": [
+          "subsecurity",
+          "subs",
+          "base"
+        ],
+        "subsecuritymode:soundsEnabled:ON": true,
+        "subsecuritymode:silent:ON": false,
+        "subsecurity:keypadArmBypassedTimeOutSec": 4,
+        "subsecuritymode:exitDelaySec:ON": 15,
+        "subsecurity:bypassedDevices": [],
+        "subsecuritymode:silent:PARTIAL": false,
+        "subsecurity:currentAlertCause": "NONE",
+        "base:id": "subsecurity:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subsecurity:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subsecurity:securityDevices": [],
+        "subsecuritymode:devices:ON": [],
+        "subsecurity:offlineDevices": [],
+        "base:tags": [],
+        "subsecurity:currentAlertTriggers": {},
+        "subsecurity:callTree": [
+          {
+            "person": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": false
+          }
+        ],
+        "subsecuritymode:soundsEnabled:PARTIAL": true,
+        "subsecuritymode:exitDelaySec:PARTIAL": 15,
+        "subs:hash": "O+7ed5O9d0/ijdIpBgt1r1SWVog",
+        "subsecuritymode:entranceDelaySec:PARTIAL": 15,
+        "subs:name": "SecuritySubsystem",
+        "subsecurity:keypads": [],
+        "base:instances": {
+          "ON": [
+            "subsecuritymode"
+          ],
+          "PARTIAL": [
+            "subsecuritymode"
+          ]
+        },
+        "subsecuritymode:alarmSensitivityDeviceCount:ON": 0,
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subsecurity:readyDevices": [],
+        "subsecuritymode:entranceDelaySec:ON": 15,
+        "subsecuritymode:alarmSensitivityDeviceCount:PARTIAL": 0,
+        "subsecurity:alarmMode": "OFF",
+        "subsecuritymode:devices:PARTIAL": ["DRIV:dev:85fb07a6-c0a8-444b-8336-5e82e968c963"],
+        "subsecurity:triggeredDevices": [],
+        "base:type": "subs",
+        "subsecurity:lastAlertTriggers": {},
+        "subsecurity:alarmState": "DISARMED",
+        "subs:version": "1.0",
+        "subsecurity:armedDevices": [],
+        "subsecurity:callTreeEnabled": true,
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subsecurity:blacklistedSecurityDevices": []
+      },
+      {
+        "base:caps": [
+          "subclimate",
+          "subs",
+          "base"
+        ],
+        "_subvars:climate.thermostat.selected": "false",
+        "base:id": "subclimate:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subclimate:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subclimate:activeFans": [],
+        "base:tags": [],
+        "subclimate:primaryThermostat": "",
+        "subclimate:thermostats": [],
+        "subclimate:humidityDevices": [],
+        "subclimate:controlDevices": [],
+        "subclimate:temperatureDevices": [],
+        "subs:hash": "JSNu+UcjiQVdhb57NLLLYSpnXlQ",
+        "subs:name": "ClimateSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subclimate:closedVents": [],
+        "subclimate:thermostatSchedules": {},
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subclimate:primaryTemperatureDevice": "",
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subclimate:temperature": 22.5,
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subclimate:primaryHumidityDevice": ""
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcare",
+          "base"
+        ],
+        "subcare:callTreeEnabled": true,
+        "base:id": "subcare:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subcare:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:tags": [],
+        "subcare:careCapableDevices": [
+          "DRIV:dev:61cafb4e-c211-4111-a848-2b4c0efaec0f",
+          "DRIV:dev:d547f9d5-2a14-4126-83df-ae2baf5b4cb7"
+        ],
+        "subcare:careDevicesPopulated": true,
+        "subcare:alarmMode": "ON",
+        "subcare:lastAlertTriggers": {},
+        "subcare:behaviors": [],
+        "subs:hash": "XHCvViP/ceW1CEzjCk/mAUjTEY0",
+        "subcare:callTree": [
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": true
+          }
+        ],
+        "subs:name": "CareSubsystem",
+        "subcare:inactiveDevices": [],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subcare:silent": true,
+        "subcare:careDevices": [
+          "DRIV:dev:61cafb4e-c211-4111-a848-2b4c0efaec0f",
+          "DRIV:dev:d547f9d5-2a14-4126-83df-ae2baf5b4cb7"
+        ],
+        "subcare:triggeredDevices": [],
+        "subcare:activeBehaviors": [],
+        "base:type": "subs",
+        "subcare:alarmState": "READY",
+        "subs:version": "1.0",
+        "_subvars:silentInitialized": "true",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6"
+      },
+      {
+        "base:caps": [
+          "subwater",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subwater:primaryWaterHeater": "",
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subwater:waterDevices": [],
+        "subs:available": false,
+        "base:id": "subwater:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subwater:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subwater:closedWaterValves": [],
+        "base:tags": [],
+        "subwater:primaryWaterSoftener": "",
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "5HCrZwKe2NucV+wAh7v4ACHzI5c",
+        "subs:name": "WaterSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "base",
+          "subplacemonitor"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subplacemonitor:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subplacemonitor:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subplacemonitor:offlineNotificationSent": {},
+        "subplacemonitor:lowBatteryNotificationSent": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "subplacemonitor:updatedDevices": [],
+        "base:images": {},
+        "subplacemonitor:pairingState": "IDLE",
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "DcCzmOXUUlhyf1/4nUTzWPPq238",
+        "subplacemonitor:defaultRulesDevices": [],
+        "subs:name": "PlaceMonitorSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subspres",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subspres:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subspres:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subspres:allDevices": [],
+        "subspres:peopleAtHome": [],
+        "base:tags": [],
+        "subspres:occupiedConf": {},
+        "base:type": "subs",
+        "subspres:devicesAway": [],
+        "subspres:occupied": false,
+        "subs:version": "1.0",
+        "base:images": {},
+        "subspres:peopleAway": [],
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "4tqEC3gHopvAzBbrudcc03W6xpM",
+        "subs:name": "PresenceSubsystem",
+        "subspres:devicesAtHome": []
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublightsnswitches",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": true,
+        "base:id": "sublightsnswitches:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:sublightsnswitches:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "sublightsnswitches:switchDevices": [
+          "DRIV:dev:fa0ba765-16d3-4bcb-93cb-874df5c18673",
+          "DRIV:dev:8543a69a-7c99-4f01-9e37-4f98bb0301dd",
+          "DRIV:dev:f836e4f2-f4d5-40bf-b09c-56e066395175",
+          "DRIV:dev:5038a8d6-a3fd-4598-b17b-27453df3cf75",
+          "DRIV:dev:dcdc4c52-b029-4594-b79f-6cb3ec4f5b41",
+          "DRIV:dev:c3df5d96-7fc5-42f2-91a0-b9b5cf58a864",
+          "DRIV:dev:48c7f962-c281-45ee-aa02-b67ab392875c",
+          "DRIV:dev:683fecba-c6e5-4dc1-8674-f1b77a8ca617"
+        ],
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "boLQlgLZ2Q+UHvf+qrC5TZjSd4w",
+        "sublightsnswitches:onDeviceCounts": {
+          "light": 2,
+          "dimmer": 0,
+          "switch": 3
+        },
+        "subs:name": "LightsNSwitchesSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcameras",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subcameras:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subcameras:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subcameras:offlineCameras": [],
+        "base:tags": [],
+        "base:type": "subs",
+        "subcameras:cameras": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "L3I6i/f4VvAIuocs2HWEvUTDvGI",
+        "subs:name": "CamerasSubsystem",
+        "subcameras:recordingEnabled": true,
+        "subcameras:warnings": {}
+      },
+      {
+        "base:caps": [
+          "subdoorsnlocks",
+          "subs",
+          "base"
+        ],
+        "subdoorsnlocks:lockDevices": [],
+        "base:id": "subdoorsnlocks:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:subdoorsnlocks:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subdoorsnlocks:offlinePetDoors": [],
+        "subdoorsnlocks:contactSensorDevices": [],
+        "subdoorsnlocks:openContactSensors": [],
+        "subdoorsnlocks:offlineMotorizedDoors": [],
+        "subdoorsnlocks:autoPetDoors": [],
+        "base:tags": [],
+        "subdoorsnlocks:petDoorDevices": [],
+        "subdoorsnlocks:unlockedPetDoors": [],
+        "subs:hash": "KTqRgfAmybOeKvFgZZ+YMXOjKeA",
+        "subdoorsnlocks:unlockedLocks": [],
+        "subs:name": "DoorsNLocksSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subdoorsnlocks:warnings": {},
+        "subdoorsnlocks:offlineLocks": [],
+        "subdoorsnlocks:chimeConfig": [],
+        "subdoorsnlocks:authorizationByLock": {},
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subdoorsnlocks:motorizedDoorDevices": [],
+        "subdoorsnlocks:offlineContactSensors": [],
+        "subdoorsnlocks:openMotorizedDoors": [],
+        "subdoorsnlocks:allPeople": [
+          "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7"
+        ]
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublawnngarden",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "sublawnngarden:controllers": [],
+        "base:id": "sublawnngarden:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "base:address": "SERV:sublawnngarden:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "sublawnngarden:scheduleStatus": {},
+        "sublawnngarden:intervalSchedules": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "sublawnngarden:oddSchedules": {},
+        "sublawnngarden:weeklySchedules": {},
+        "sublawnngarden:zonesWatering": {},
+        "base:images": {},
+        "sublawnngarden:evenSchedules": {},
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "subs:hash": "BE8TgJkHuohyCegMgeScOBEOozs",
+        "subs:name": "LawnNGardenSubsystem"
+      },
+      {
+        "alarm:alertState:CO": "READY",
+        "alarm:activeDevices:WATER": [
+          "DRIV:dev:b1f12345-88a6-4918-a9f7-af911ec50b80",
+          "DRIV:dev:deef275a-c51e-4929-978a-8539df9bd404"
+        ],
+        "base:address": "SERV:subalarm:98381714-60f8-41fe-b9e7-d9f67ddca66b",
+        "alarm:triggers:WATER": [],
+        "alarm:monitored:CO": false,
+        "alarm:silent:WATER": true,
+        "alarm:triggers:SMOKE": [],
+        "subalarm:callTree": [
+          {
+            "person": "SERV:person:2ef087b1-99b6-4c09-8354-a091662cf3b7",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:a40dcaa5-66c0-420b-ae3a-70a24c956761",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:4c367f44-5997-4a5e-a2e2-2509e3e6ebb7",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:4d5207c9-f354-46dc-8ce4-a1cb269766e9",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:a39cd535-22de-4850-89f5-409e5b7a97da",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:853a0552-d856-4eb7-acfd-5cb6fb9076ca",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:c75383ff-2061-4598-9a08-c2da0d662ea7",
+            "enabled": false
+          }
+        ],
+        "base:tags": [],
+        "alarm:silent:SMOKE": true,
+        "alarm:offlineDevices:SMOKE": [],
+        "alarm:silent:CO": true,
+        "subalarm:lastArmedTime": 1492004115364,
+        "subalarm:lastDisarmedBy": "SERV:scene:98381714-60f8-41fe-b9e7-d9f67ddca66b.78",
+        "alarm:alertState:WATER": "READY",
+        "subs:hash": "jE7X8TNpZj77sJTNrlCNH+DGL1Y",
+        "subs:name": "AlarmSubsystem",
+        "alarm:monitored:SECURITY": false,
+        "subalarm:availableAlerts": [
+          "PANIC",
+          "SECURITY",
+          "SMOKE",
+          "CO",
+          "WATER"
+        ],
+        "_subvars:alerts": "{\"PANIC\":\"READY\",\"SECURITY\":\"READY\",\"SMOKE\":\"READY\",\"CO\":\"READY\",\"WATER\":\"READY\"}",
+        "alarm:triggeredDevices:SMOKE": [],
+        "alarm:alertState:SMOKE": "READY",
+        "_subvars:treePeople": "[\"SERV:person:853a0552-d856-4eb7-acfd-5cb6fb9076ca\",\"SERV:person:4c367f44-5997-4a5e-a2e2-2509e3e6ebb7\",\"SERV:person:2ef087b1-99b6-4c09-8354-a091662cf3b7\",\"SERV:person:4d5207c9-f354-46dc-8ce4-a1cb269766e9\",\"SERV:person:a39cd535-22de-4850-89f5-409e5b7a97da\",\"SERV:person:a40dcaa5-66c0-420b-ae3a-70a24c956761\",\"SERV:person:c75383ff-2061-4598-9a08-c2da0d662ea7\"]",
+        "subalarm:securityArmTime": 1492004115364,
+        "alarm:triggeredDevices:CO": [],
+        "alarm:monitored:SMOKE": false,
+        "alarm:triggers:CO": [],
+        "alarm:devices:PANIC": [
+          "DRIV:dev:1eb0784b-48f9-4bc3-9219-f0334ff5d5eb",
+          "DRIV:dev:d2874ce5-2b2b-43b4-bc7e-5ff1530ebb51",
+          "DRIV:dev:795311b0-2646-4bb0-bc59-130a5b83171d"
+        ],
+        "subalarm:lastDisarmedFrom": "SERV:scene:98381714-60f8-41fe-b9e7-d9f67ddca66b.78",
+        "subalarm:monitoredAlerts": [
+          "PANIC",
+          "SECURITY",
+          "SMOKE",
+          "CO"
+        ],
+        "_subvars:keypad:DRIV:dev:d2874ce5-2b2b-43b4-bc7e-5ff1530ebb51": "{\"bypassedUntil\":1490909140542}",
+        "alarm:devices:WATER": [
+          "DRIV:dev:b1f12345-88a6-4918-a9f7-af911ec50b80",
+          "DRIV:dev:deef275a-c51e-4929-978a-8539df9bd404"
+        ],
+        "subalarm:activeAlerts": [],
+        "subalarm:currentIncident": "",
+        "subs:version": "1.0",
+        "alarm:triggeredDevices:SECURITY": [],
+        "base:images": {},
+        "alarm:activeDevices:SMOKE": [
+          "DRIV:dev:edeaaf51-7d12-4089-b7ad-9511c174ddd4",
+          "DRIV:dev:825ad3b0-3de1-4c49-8d50-cbf57953123e",
+          "DRIV:dev:b9ad06ee-ec67-4002-8c1a-087828b6d2b0"
+        ],
+        "subs:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+        "alarm:devices:CO": [
+          "DRIV:dev:edeaaf51-7d12-4089-b7ad-9511c174ddd4",
+          "DRIV:dev:b9ad06ee-ec67-4002-8c1a-087828b6d2b0"
+        ],
+        "alarm:activeDevices:CO": [
+          "DRIV:dev:edeaaf51-7d12-4089-b7ad-9511c174ddd4",
+          "DRIV:dev:b9ad06ee-ec67-4002-8c1a-087828b6d2b0"
+        ],
+        "base:caps": [
+          "subs",
+          "subalarm",
+          "base"
+        ],
+        "alarm:activeDevices:PANIC": [
+          "DRIV:dev:1eb0784b-48f9-4bc3-9219-f0334ff5d5eb",
+          "DRIV:dev:d2874ce5-2b2b-43b4-bc7e-5ff1530ebb51",
+          "DRIV:dev:795311b0-2646-4bb0-bc59-130a5b83171d"
+        ],
+        "alarm:devices:SMOKE": [
+          "DRIV:dev:edeaaf51-7d12-4089-b7ad-9511c174ddd4",
+          "DRIV:dev:825ad3b0-3de1-4c49-8d50-cbf57953123e",
+          "DRIV:dev:b9ad06ee-ec67-4002-8c1a-087828b6d2b0"
+        ],
+        "alarm:triggers:PANIC": [],
+        "base:id": "subalarm:98381714-60f8-41fe-b9e7-d9f67ddca66b",
+        "alarm:silent:PANIC": true,
+        "alarm:activeDevices:SECURITY": [
+          "DRIV:dev:11f01eef-5e75-46ca-9000-02368b3bb08c",
+          "DRIV:dev:6b668939-3d71-4680-8565-701aa8a1b5b6",
+          "DRIV:dev:b470883c-cd7b-40c6-8991-5abe0315a96e",
+          "DRIV:dev:01bb42f3-f326-405a-9367-c8ab39c216ea",
+          "DRIV:dev:6de25fc4-d666-49b3-98c4-cc4b582533e1",
+          "DRIV:dev:197a701c-2b3d-4d69-8487-fd0cee77b5aa",
+          "DRIV:dev:dfc7ce59-4854-4b8e-ac5d-9b58fbbf0d4b"
+        ],
+        "alarm:silent:SECURITY": true,
+        "subalarm:lastArmedBy": "SERV:rule:98381714-60f8-41fe-b9e7-d9f67ddca66b.277",
+        "_subvars:statemachine": "\"ARMED\"",
+        "subalarm:lastDisarmedTime": 1491966142351,
+        "subalarm:securityMode": "ON",
+        "alarm:armedDevices:SECURITY": [
+          "DRIV:dev:943b1601-6767-4f2a-90ac-ff0a1697ecc7",
+          "DRIV:dev:11f01eef-5e75-46ca-9000-02368b3bb08c",
+          "DRIV:dev:6b668939-3d71-4680-8565-701aa8a1b5b6",
+          "DRIV:dev:b470883c-cd7b-40c6-8991-5abe0315a96e",
+          "DRIV:dev:01bb42f3-f326-405a-9367-c8ab39c216ea",
+          "DRIV:dev:6de25fc4-d666-49b3-98c4-cc4b582533e1",
+          "DRIV:dev:197a701c-2b3d-4d69-8487-fd0cee77b5aa",
+          "DRIV:dev:dfc7ce59-4854-4b8e-ac5d-9b58fbbf0d4b"
+        ],
+        "alarm:offlineDevices:CO": [],
+        "alarm:alertState:PANIC": "READY",
+        "alarm:alertState:SECURITY": "READY",
+        "alarm:devices:SECURITY": [
+          "DRIV:dev:71d8da4a-afdd-4737-b624-fa79e6427bed",
+          "DRIV:dev:943b1601-6767-4f2a-90ac-ff0a1697ecc7",
+          "DRIV:dev:11f01eef-5e75-46ca-9000-02368b3bb08c",
+          "DRIV:dev:6b668939-3d71-4680-8565-701aa8a1b5b6",
+          "DRIV:dev:b470883c-cd7b-40c6-8991-5abe0315a96e",
+          "DRIV:dev:01bb42f3-f326-405a-9367-c8ab39c216ea",
+          "DRIV:dev:6de25fc4-d666-49b3-98c4-cc4b582533e1",
+          "DRIV:dev:197a701c-2b3d-4d69-8487-fd0cee77b5aa",
+          "DRIV:dev:2e776559-5939-4a2e-8ac1-22d4684ab189",
+          "DRIV:dev:45af4927-3e65-435c-96b2-d708ac885cb5",
+          "DRIV:dev:dfc7ce59-4854-4b8e-ac5d-9b58fbbf0d4b"
+        ],
+        "base:instances": {
+          "PANIC": [
+            "alarm"
+          ],
+          "SECURITY": [
+            "alarm"
+          ],
+          "SMOKE": [
+            "alarm"
+          ],
+          "CO": [
+            "alarm"
+          ],
+          "WATER": [
+            "alarm"
+          ]
+        },
+        "subs:state": "ACTIVE",
+        "subs:account": "2bdb24e3-c50c-4de3-9d6d-2d8e6793f29e",
+        "subs:available": true,
+        "alarm:triggers:SECURITY": [],
+        "subalarm:lastArmedFrom": "SERV:rule:98381714-60f8-41fe-b9e7-d9f67ddca66b.277",
+        "alarm:excludedDevices:SECURITY": [],
+        "base:type": "subs",
+        "alarm:offlineDevices:SECURITY": [
+          "DRIV:dev:943b1601-6767-4f2a-90ac-ff0a1697ecc7"
+        ],
+        "alarm:monitored:PANIC": false,
+        "subalarm:alarmState": "READY",
+        "_subvars:SECURITY:READY": "1492013536959",
+        "alarm:monitored:WATER": false,
+        "alarm:triggeredDevices:WATER": [],
+        "alarm:offlineDevices:PANIC": [],
+        "_subvars:keypads": "[\"DRIV:dev:1eb0784b-48f9-4bc3-9219-f0334ff5d5eb\",\"DRIV:dev:d2874ce5-2b2b-43b4-bc7e-5ff1530ebb51\",\"DRIV:dev:795311b0-2646-4bb0-bc59-130a5b83171d\"]",
+        "alarm:offlineDevices:WATER": [],
+        "alarm:triggeredDevices:PANIC": []
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subpairing",
+          "base"
+        ],
+        "base:id": "subpairing:c27a60aa-3e71-4b77-a4e6-ddce42b3c2a9",
+        "subpairing:pairingMode": "IDLE",
+        "subpairing:searchTimeout": 0,
+        "base:address": "SERV:subpairing:c27a60aa-3e71-4b77-a4e6-ddce42b3c2a9",
+        "base:tags": [],
+        "subpairing:pairingModeChanged": 1530904043036,
+        "subs:hash": "SGlVbgqqtF3QA3Qg8PsTYKEYmjs",
+        "subpairing:searchIdle": false,
+        "subs:name": "PairingSubsystem",
+        "subpairing:searchDeviceFound": false,
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "dc36cc0f-ebb7-444d-bf14-3d366fa625eb",
+        "subs:available": true,
+        "subpairing:searchProductAddress": "",
+        "subpairing:pairingDevices": [],
+        "base:type": "subs",
+        "subpairing:searchIdleTimeout": 0,
+        "subs:version": "1.0",
+        "subpairing:pairingProtocols": [],
+        "base:images": {},
+        "subs:place": "c27a60aa-3e71-4b77-a4e6-ddce42b3c2a9"
+      }
+    ]
+  },
+  "5f37ea57-ad40-45db-92cb-bc09093c3578": {
+    "subsystems": [
+      {
+        "base:caps": [
+          "subs",
+          "subsafety",
+          "base"
+        ],
+        "subsafety:alarm": "READY",
+        "base:id": "subsafety:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subsafety:pendingClear": [],
+        "base:address": "SERV:subsafety:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subsafety:silentAlarm": false,
+        "base:tags": [],
+        "subsafety:warnings": {},
+        "subsafety:callTreeEnabled": true,
+        "subsafety:totalDevices": [
+          "DRIV:dev:c7ec618f-7d7a-46ad-b4d3-5c973883acb1"
+        ],
+        "subsafety:waterShutOff": true,
+        "subsafety:activeDevices": [
+          "DRIV:dev:c7ec618f-7d7a-46ad-b4d3-5c973883acb1"
+        ],
+        "subs:hash": "6uMkT9PHbgW1eMW8B+6W5RHzlV8",
+        "subsafety:waterShutoffValves": [],
+        "subs:name": "SafetySubsystem",
+        "subsafety:sensorState": {
+          "GAS": "NONE",
+          "SMOKE": "NONE",
+          "CO": "NONE",
+          "WATER": "SAFE"
+        },
+        "base:instances": {},
+        "subsafety:ignoredDevices": [],
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subsafety:quietPeriodSec": 0,
+        "subs:available": false,
+        "base:type": "subs",
+        "subsafety:callTree": [
+          {
+            "person": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:8b9f5875-a281-4909-989d-27cc92af8334",
+            "enabled": false
+          }
+        ],
+        "subsafety:alarmSensitivitySec": 0,
+        "subsafety:alarmSensitivityDeviceCount": 1,
+        "subsafety:triggers": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578"
+      },
+      {
+        "base:caps": [
+          "cellbackup",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "cellbackup:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:cellbackup:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:tags": [],
+        "base:type": "subs",
+        "cellbackup:errorState": "NONE",
+        "cellbackup:status": "NOTREADY",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "cellbackup:notReadyState": "BOTH",
+        "subs:hash": "vnqwRVZ1VKqThrw3FzUJLea3dLE",
+        "subs:name": "CellBackupSubsystem"
+      },
+      {
+        "base:caps": [
+          "subdoorsnlocks",
+          "subs",
+          "base"
+        ],
+        "subdoorsnlocks:lockDevices": [],
+        "base:id": "subdoorsnlocks:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subdoorsnlocks:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subdoorsnlocks:offlinePetDoors": [],
+        "subdoorsnlocks:contactSensorDevices": [],
+        "subdoorsnlocks:openContactSensors": [],
+        "subdoorsnlocks:offlineMotorizedDoors": [],
+        "subdoorsnlocks:autoPetDoors": [],
+        "base:tags": [],
+        "subdoorsnlocks:petDoorDevices": [],
+        "subdoorsnlocks:unlockedPetDoors": [],
+        "subs:hash": "KTqRgfAmybOeKvFgZZ+YMXOjKeA",
+        "subdoorsnlocks:unlockedLocks": [],
+        "subs:name": "DoorsNLocksSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subdoorsnlocks:warnings": {},
+        "subdoorsnlocks:offlineLocks": [],
+        "subdoorsnlocks:chimeConfig": [],
+        "subdoorsnlocks:authorizationByLock": {},
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subdoorsnlocks:motorizedDoorDevices": [],
+        "subdoorsnlocks:offlineContactSensors": [],
+        "subdoorsnlocks:openMotorizedDoors": [],
+        "subdoorsnlocks:allPeople": [
+          "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+          "SERV:person:8b9f5875-a281-4909-989d-27cc92af8334"
+        ]
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcameras",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subcameras:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subcameras:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subcameras:offlineCameras": [],
+        "base:tags": [],
+        "base:type": "subs",
+        "subcameras:cameras": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "L3I6i/f4VvAIuocs2HWEvUTDvGI",
+        "subs:name": "CamerasSubsystem",
+        "subcameras:recordingEnabled": true,
+        "subcameras:warnings": {}
+      },
+      {
+        "base:caps": [
+          "subwater",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subwater:primaryWaterHeater": "",
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subwater:waterDevices": [],
+        "subs:available": false,
+        "base:id": "subwater:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subwater:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subwater:closedWaterValves": [],
+        "base:tags": [],
+        "subwater:primaryWaterSoftener": "",
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "5HCrZwKe2NucV+wAh7v4ACHzI5c",
+        "subs:name": "WaterSubsystem"
+      },
+      {
+        "base:caps": [
+          "subclimate",
+          "subs",
+          "base"
+        ],
+        "_subvars:climate.thermostat.selected": "false",
+        "base:id": "subclimate:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subclimate:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subclimate:activeFans": [],
+        "base:tags": [],
+        "subclimate:primaryThermostat": "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b",
+        "subclimate:thermostats": [
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+        ],
+        "subclimate:humidityDevices": [
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+        ],
+        "subclimate:controlDevices": [
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+        ],
+        "subclimate:temperatureDevices": [
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+        ],
+        "subs:hash": "JSNu+UcjiQVdhb57NLLLYSpnXlQ",
+        "subs:name": "ClimateSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subclimate:closedVents": [],
+        "subclimate:thermostatSchedules": {
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b": {
+            "scheduler": "SERV:scheduler:6f7db166-8720-4bcc-babf-2021283b922d",
+            "thermostat": "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b",
+            "enabled": false
+          }
+        },
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subclimate:primaryTemperatureDevice": "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b",
+        "subclimate:humidity": 67,
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subclimate:temperature": 23.7,
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subclimate:primaryHumidityDevice": "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "base",
+          "subplacemonitor"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subplacemonitor:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subplacemonitor:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subplacemonitor:offlineNotificationSent": {},
+        "subplacemonitor:lowBatteryNotificationSent": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "subplacemonitor:updatedDevices": [],
+        "base:images": {},
+        "subplacemonitor:pairingState": "IDLE",
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "DcCzmOXUUlhyf1/4nUTzWPPq238",
+        "subplacemonitor:defaultRulesDevices": [
+          "DRIV:dev:2c1fae6a-6d96-495a-bb7f-05e701eefd36",
+          "DRIV:dev:c7ec618f-7d7a-46ad-b4d3-5c973883acb1",
+          "DRIV:dev:042c92e0-22f6-4260-8303-1bc76f133de0",
+          "DRIV:dev:27e970e5-7b87-4bf3-93dc-5239e006eb2b"
+        ],
+        "subs:name": "PlaceMonitorSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublightsnswitches",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "sublightsnswitches:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:sublightsnswitches:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "sublightsnswitches:switchDevices": [],
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "boLQlgLZ2Q+UHvf+qrC5TZjSd4w",
+        "sublightsnswitches:onDeviceCounts": {
+          "light": 0,
+          "dimmer": 0,
+          "switch": 0
+        },
+        "subs:name": "LightsNSwitchesSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcare",
+          "base"
+        ],
+        "subcare:callTreeEnabled": true,
+        "base:id": "subcare:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subcare:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:tags": [],
+        "subcare:careCapableDevices": [],
+        "subcare:careDevicesPopulated": true,
+        "subcare:alarmMode": "ON",
+        "subcare:lastAlertTriggers": {},
+        "subcare:behaviors": [],
+        "subs:hash": "XHCvViP/ceW1CEzjCk/mAUjTEY0",
+        "subcare:callTree": [
+          {
+            "person": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:8b9f5875-a281-4909-989d-27cc92af8334",
+            "enabled": false
+          }
+        ],
+        "subs:name": "CareSubsystem",
+        "subcare:inactiveDevices": [],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subcare:silent": true,
+        "subcare:careDevices": [],
+        "subcare:triggeredDevices": [],
+        "subcare:activeBehaviors": [],
+        "base:type": "subs",
+        "subcare:alarmState": "READY",
+        "subs:version": "1.0",
+        "_subvars:silentInitialized": "true",
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublawnngarden",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "sublawnngarden:controllers": [],
+        "base:id": "sublawnngarden:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:sublawnngarden:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "sublawnngarden:scheduleStatus": {},
+        "sublawnngarden:intervalSchedules": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "sublawnngarden:oddSchedules": {},
+        "sublawnngarden:weeklySchedules": {},
+        "sublawnngarden:zonesWatering": {},
+        "base:images": {},
+        "sublawnngarden:evenSchedules": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "BE8TgJkHuohyCegMgeScOBEOozs",
+        "subs:name": "LawnNGardenSubsystem"
+      },
+      {
+        "base:caps": [
+          "subsecurity",
+          "subs",
+          "base"
+        ],
+        "subsecuritymode:soundsEnabled:ON": true,
+        "subsecuritymode:silent:ON": false,
+        "subsecurity:keypadArmBypassedTimeOutSec": 4,
+        "subsecuritymode:exitDelaySec:ON": 15,
+        "subsecurity:bypassedDevices": [],
+        "subsecuritymode:silent:PARTIAL": false,
+        "subsecurity:currentAlertCause": "NONE",
+        "base:id": "subsecurity:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subsecurity:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subsecurity:securityDevices": [
+          "DRIV:dev:2c1fae6a-6d96-495a-bb7f-05e701eefd36",
+          "DRIV:dev:042c92e0-22f6-4260-8303-1bc76f133de0"
+        ],
+        "subsecuritymode:devices:ON": [
+          "DRIV:dev:2c1fae6a-6d96-495a-bb7f-05e701eefd36",
+          "DRIV:dev:042c92e0-22f6-4260-8303-1bc76f133de0"
+        ],
+        "subsecurity:offlineDevices": [],
+        "base:tags": [],
+        "subsecurity:currentAlertTriggers": {},
+        "subsecurity:callTree": [
+          {
+            "person": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+            "enabled": true
+          },
+          {
+            "person": "SERV:person:8b9f5875-a281-4909-989d-27cc92af8334",
+            "enabled": false
+          }
+        ],
+        "subsecuritymode:soundsEnabled:PARTIAL": true,
+        "subsecuritymode:exitDelaySec:PARTIAL": 15,
+        "subs:hash": "O+7ed5O9d0/ijdIpBgt1r1SWVog",
+        "subsecuritymode:entranceDelaySec:PARTIAL": 15,
+        "subs:name": "SecuritySubsystem",
+        "subsecurity:keypads": [],
+        "base:instances": {
+          "ON": [
+            "subsecuritymode"
+          ],
+          "PARTIAL": [
+            "subsecuritymode"
+          ]
+        },
+        "subsecuritymode:alarmSensitivityDeviceCount:ON": 1,
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "subsecurity:readyDevices": [
+          "DRIV:dev:2c1fae6a-6d96-495a-bb7f-05e701eefd36",
+          "DRIV:dev:042c92e0-22f6-4260-8303-1bc76f133de0"
+        ],
+        "subsecuritymode:entranceDelaySec:ON": 15,
+        "subsecuritymode:alarmSensitivityDeviceCount:PARTIAL": 1,
+        "subsecurity:alarmMode": "OFF",
+        "subsecuritymode:devices:PARTIAL": [
+          "DRIV:dev:2c1fae6a-6d96-495a-bb7f-05e701eefd36",
+          "DRIV:dev:042c92e0-22f6-4260-8303-1bc76f133de0"
+        ],
+        "subsecurity:triggeredDevices": [],
+        "base:type": "subs",
+        "subsecurity:lastAlertTriggers": {},
+        "subsecurity:alarmState": "DISARMED",
+        "subs:version": "1.0",
+        "subsecurity:armedDevices": [],
+        "subsecurity:callTreeEnabled": true,
+        "base:images": {},
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subsecurity:blacklistedSecurityDevices": []
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subspres",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+        "subs:available": false,
+        "base:id": "subspres:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "base:address": "SERV:subspres:5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subspres:allDevices": [],
+        "subspres:peopleAtHome": [],
+        "base:tags": [],
+        "subspres:occupiedConf": {},
+        "base:type": "subs",
+        "subspres:devicesAway": [],
+        "subspres:occupied": false,
+        "subs:version": "1.0",
+        "base:images": {},
+        "subspres:peopleAway": [],
+        "subs:place": "5f37ea57-ad40-45db-92cb-bc09093c3578",
+        "subs:hash": "4tqEC3gHopvAzBbrudcc03W6xpM",
+        "subs:name": "PresenceSubsystem",
+        "subspres:devicesAtHome": []
+      }
+    ]
+  },
+  "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177": {
+    "subsystems": [
+      {
+        "base:caps": [
+          "cellbackup",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "base:id": "cellbackup:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:cellbackup:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:tags": [],
+        "base:type": "subs",
+        "cellbackup:errorState": "NONE",
+        "cellbackup:status": "NOTREADY",
+        "subs:version": "1.0",
+        "base:images": {},
+        "cellbackup:notReadyState": "BOTH",
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subs:hash": "vnqwRVZ1VKqThrw3FzUJLea3dLE",
+        "subs:name": "CellBackupSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcameras",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "base:id": "subcameras:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subcameras:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subcameras:offlineCameras": [],
+        "base:tags": [],
+        "base:type": "subs",
+        "subcameras:cameras": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subs:hash": "L3I6i/f4VvAIuocs2HWEvUTDvGI",
+        "subs:name": "CamerasSubsystem",
+        "subcameras:recordingEnabled": true,
+        "subcameras:warnings": {}
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subsafety",
+          "base"
+        ],
+        "subsafety:alarm": "READY",
+        "base:id": "subsafety:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subsafety:pendingClear": [],
+        "base:address": "SERV:subsafety:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subsafety:silentAlarm": false,
+        "base:tags": [],
+        "subsafety:warnings": {},
+        "subsafety:callTreeEnabled": true,
+        "subsafety:totalDevices": [],
+        "subsafety:activeDevices": [],
+        "subsafety:waterShutOff": true,
+        "subs:hash": "6uMkT9PHbgW1eMW8B+6W5RHzlV8",
+        "subsafety:waterShutoffValves": [],
+        "subs:name": "SafetySubsystem",
+        "subsafety:sensorState": {
+          "GAS": "NONE",
+          "SMOKE": "NONE",
+          "CO": "NONE",
+          "WATER": "NONE"
+        },
+        "base:instances": {},
+        "subsafety:ignoredDevices": [],
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subsafety:quietPeriodSec": 0,
+        "subs:available": false,
+        "base:type": "subs",
+        "subsafety:callTree": [
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": true
+          }
+        ],
+        "subsafety:alarmSensitivitySec": 0,
+        "subsafety:alarmSensitivityDeviceCount": 1,
+        "subsafety:triggers": [],
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177"
+      },
+      {
+        "base:caps": [
+          "subclimate",
+          "subs",
+          "base"
+        ],
+        "_subvars:climate.thermostat.selected": "false",
+        "base:id": "subclimate:bf8bf389-80d1-4dcd-9d9f-7d3d51ac51778",
+        "base:address": "SERV:subclimate:bf8bf389-80d1-4dcd-9d9f-7d3d51ac51778",
+        "subclimate:activeFans": [],
+        "base:tags": [],
+        "subclimate:primaryThermostat": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053",
+        "subclimate:thermostats": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053"
+        ],
+        "subclimate:humidityDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053"
+        ],
+        "subclimate:controlDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053"
+        ],
+        "subclimate:temperatureDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053"
+        ],
+        "subs:hash": "JSNu+UcjiQVdhb57NLLLYSpnXlQ",
+        "subs:name": "ClimateSubsystem",
+        "base:instances": {},
+        "subclimate:closedVents": [],
+        "subclimate:thermostatSchedules": {
+          "DRIV:dev:c94f5ad9-c0dc-49c6-8f5e-e4dc5bbf4f9b": {
+            "scheduler": "SERV:scheduler:d8509bf1-4f29-4f98-9ac1-aee2bd1a9e9d",
+            "thermostat": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053",
+            "enabled": false
+          }
+        },
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "subclimate:primaryTemperatureDevice": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053",
+        "subclimate:humidity": 67,
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subclimate:temperature": 23.7,
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac51778",
+        "subclimate:primaryHumidityDevice": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189053"
+      },
+      {
+        "base:caps": [
+          "subclimate",
+          "subs",
+          "base"
+        ],
+        "_subvars:climate.thermostat.selected": "false",
+        "base:id": "subclimate:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subclimate:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subclimate:activeFans": [],
+        "base:tags": [],
+        "subclimate:primaryThermostat": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054",
+        "subclimate:thermostats": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054"
+        ],
+        "subclimate:humidityDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054"
+        ],
+        "subclimate:controlDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054"
+        ],
+        "subclimate:temperatureDevices": [
+          "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054"
+        ],
+        "subs:hash": "JSNu+UcjiQVdhb57NLLLYSpnXlQ",
+        "subs:name": "ClimateSubsystem",
+        "base:instances": {},
+        "subclimate:closedVents": [],
+        "subclimate:thermostatSchedules": {
+          "DRIV:dev:c94f5ad9-c0dc-49c6-8f5e-e4dc5bbf4f9b": {
+            "scheduler": "SERV:scheduler:d8509bf1-4f29-4f98-9ac1-aee2bd1a9e9d",
+            "thermostat": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054",
+            "enabled": false
+          }
+        },
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "subclimate:primaryTemperatureDevice": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054",
+        "subclimate:humidity": 67,
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subclimate:temperature": 23.7,
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subclimate:primaryHumidityDevice": "DRIV:dev:ed2cf2d6-306a-4b7f-88b5-83ad5b189054"
+      },
+      {
+        "base:caps": [
+          "subsecurity",
+          "subs",
+          "base"
+        ],
+        "subsecuritymode:silent:ON": false,
+        "subsecuritymode:soundsEnabled:ON": true,
+        "subsecurity:keypadArmBypassedTimeOutSec": 4,
+        "subsecuritymode:exitDelaySec:ON": 15,
+        "subsecurity:bypassedDevices": [],
+        "subsecuritymode:silent:PARTIAL": false,
+        "subsecurity:currentAlertCause": "NONE",
+        "base:id": "subsecurity:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subsecurity:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subsecurity:securityDevices": [],
+        "subsecuritymode:devices:ON": [],
+        "subsecurity:offlineDevices": [],
+        "base:tags": [],
+        "subsecurity:currentAlertTriggers": {},
+        "subsecurity:callTree": [
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": true
+          }
+        ],
+        "subsecuritymode:soundsEnabled:PARTIAL": true,
+        "subsecuritymode:exitDelaySec:PARTIAL": 15,
+        "subs:hash": "O+7ed5O9d0/ijdIpBgt1r1SWVog",
+        "subsecuritymode:entranceDelaySec:PARTIAL": 15,
+        "subs:name": "SecuritySubsystem",
+        "subsecurity:keypads": [],
+        "base:instances": {
+          "ON": [
+            "subsecuritymode"
+          ],
+          "PARTIAL": [
+            "subsecuritymode"
+          ]
+        },
+        "subsecuritymode:alarmSensitivityDeviceCount:ON": 1,
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "subsecurity:readyDevices": [],
+        "subsecuritymode:entranceDelaySec:ON": 15,
+        "subsecuritymode:alarmSensitivityDeviceCount:PARTIAL": 1,
+        "subsecurity:alarmMode": "OFF",
+        "subsecuritymode:devices:PARTIAL": [],
+        "subsecurity:triggeredDevices": [],
+        "base:type": "subs",
+        "subsecurity:lastAlertTriggers": {},
+        "subsecurity:alarmState": "DISARMED",
+        "subs:version": "1.0",
+        "subsecurity:armedDevices": [],
+        "subsecurity:callTreeEnabled": true,
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subsecurity:blacklistedSecurityDevices": []
+      },
+      {
+        "base:caps": [
+          "subwater",
+          "subs",
+          "base"
+        ],
+        "base:instances": {},
+        "subwater:primaryWaterHeater": "",
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subwater:waterDevices": [],
+        "subs:available": false,
+        "base:id": "subwater:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subwater:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subwater:closedWaterValves": [],
+        "base:tags": [],
+        "subwater:primaryWaterSoftener": "",
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subs:hash": "5HCrZwKe2NucV+wAh7v4ACHzI5c",
+        "subs:name": "WaterSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subcare",
+          "base"
+        ],
+        "subcare:callTreeEnabled": true,
+        "base:id": "subcare:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subcare:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:tags": [],
+        "subcare:careCapableDevices": [],
+        "subcare:careDevicesPopulated": true,
+        "subcare:alarmMode": "ON",
+        "subcare:lastAlertTriggers": {},
+        "subcare:behaviors": [],
+        "subs:hash": "XHCvViP/ceW1CEzjCk/mAUjTEY0",
+        "subcare:callTree": [
+          {
+            "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+            "enabled": true
+          }
+        ],
+        "subcare:inactiveDevices": [],
+        "subs:name": "CareSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subcare:silent": true,
+        "subs:available": false,
+        "subcare:careDevices": [],
+        "subcare:activeBehaviors": [],
+        "subcare:triggeredDevices": [],
+        "base:type": "subs",
+        "subcare:alarmState": "READY",
+        "_subvars:silentInitialized": "true",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "base",
+          "subplacemonitor"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "base:id": "subplacemonitor:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subplacemonitor:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subplacemonitor:lowBatteryNotificationSent": {},
+        "subplacemonitor:offlineNotificationSent": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "subplacemonitor:updatedDevices": [],
+        "base:images": {},
+        "subplacemonitor:pairingState": "IDLE",
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subplacemonitor:defaultRulesDevices": [
+          "DRIV:dev:c94f5ad9-c0dc-49c6-8f5e-e4dc5bbf4f9b",
+          "DRIV:dev:6cbbbb8f-7f52-4e68-96f6-d9e03d428507",
+          "DRIV:dev:083dd12a-6ab1-494a-b7fb-e2494f858fc6"
+        ],
+        "subs:hash": "DcCzmOXUUlhyf1/4nUTzWPPq238",
+        "subs:name": "PlaceMonitorSubsystem"
+      },
+      {
+        "base:caps": [
+          "subs",
+          "subspres",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "base:id": "subspres:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subspres:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subspres:allDevices": [],
+        "subspres:peopleAtHome": [],
+        "base:tags": [],
+        "subspres:occupiedConf": {},
+        "base:type": "subs",
+        "subspres:devicesAway": [],
+        "subspres:occupied": false,
+        "subs:version": "1.0",
+        "base:images": {},
+        "subspres:peopleAway": [],
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subs:hash": "4tqEC3gHopvAzBbrudcc03W6xpM",
+        "subs:name": "PresenceSubsystem",
+        "subspres:devicesAtHome": []
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublawnngarden",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "sublawnngarden:controllers": [],
+        "base:id": "sublawnngarden:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:sublawnngarden:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "sublawnngarden:scheduleStatus": {},
+        "sublawnngarden:intervalSchedules": {},
+        "base:tags": [],
+        "base:type": "subs",
+        "sublawnngarden:oddSchedules": {},
+        "sublawnngarden:weeklySchedules": {},
+        "sublawnngarden:zonesWatering": {},
+        "subs:version": "1.0",
+        "base:images": {},
+        "sublawnngarden:evenSchedules": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subs:hash": "BE8TgJkHuohyCegMgeScOBEOozs",
+        "subs:name": "LawnNGardenSubsystem"
+      },
+      {
+        "base:caps": [
+          "subdoorsnlocks",
+          "subs",
+          "base"
+        ],
+        "subdoorsnlocks:lockDevices": [
+          "DRIV:dev:6cbbbb8f-7f52-4e68-96f6-d9e03d428507"
+        ],
+        "base:id": "subdoorsnlocks:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:subdoorsnlocks:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subdoorsnlocks:offlinePetDoors": [],
+        "subdoorsnlocks:contactSensorDevices": [],
+        "subdoorsnlocks:openContactSensors": [],
+        "subdoorsnlocks:autoPetDoors": [
+          "DRIV:dev:083dd12a-6ab1-494a-b7fb-e2494f858fc6"
+        ],
+        "subdoorsnlocks:offlineMotorizedDoors": [],
+        "base:tags": [],
+        "subdoorsnlocks:petDoorDevices": [
+          "DRIV:dev:083dd12a-6ab1-494a-b7fb-e2494f858fc6"
+        ],
+        "subdoorsnlocks:unlockedPetDoors": [],
+        "subdoorsnlocks:unlockedLocks": [
+          "DRIV:dev:6cbbbb8f-7f52-4e68-96f6-d9e03d428507"
+        ],
+        "subs:hash": "KTqRgfAmybOeKvFgZZ+YMXOjKeA",
+        "subs:name": "DoorsNLocksSubsystem",
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "_subvars:DRIV:dev:6cbbbb8f-7f52-4e68-96f6-d9e03d428507.SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7": "1469819390253",
+        "subdoorsnlocks:warnings": {},
+        "subdoorsnlocks:offlineLocks": [],
+        "subdoorsnlocks:chimeConfig": [],
+        "subdoorsnlocks:authorizationByLock": {
+          "DRIV:dev:6cbbbb8f-7f52-4e68-96f6-d9e03d428507": [
+            {
+              "person": "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7",
+              "state": "AUTHORIZED"
+            }
+          ]
+        },
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "base:images": {},
+        "subdoorsnlocks:motorizedDoorDevices": [],
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "subdoorsnlocks:offlineContactSensors": [],
+        "subdoorsnlocks:allPeople": [
+          "SERV:person:61b2561a-48ed-4a2c-8196-c516c2e3e5b7"
+        ],
+        "subdoorsnlocks:openMotorizedDoors": []
+      },
+      {
+        "base:caps": [
+          "subs",
+          "sublightsnswitches",
+          "base"
+        ],
+        "base:instances": {},
+        "subs:state": "ACTIVE",
+        "subs:account": "857d811a-ab14-4461-b597-abca07089bb3",
+        "subs:available": false,
+        "base:id": "sublightsnswitches:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:address": "SERV:sublightsnswitches:bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "base:tags": [],
+        "base:type": "subs",
+        "subs:version": "1.0",
+        "sublightsnswitches:switchDevices": [],
+        "base:images": {},
+        "subs:place": "bf8bf389-80d1-4dcd-9d9f-7d3d51ac5177",
+        "sublightsnswitches:onDeviceCounts": {
+          "light": 0,
+          "dimmer": 0,
+          "switch": 0
+        },
+        "subs:hash": "boLQlgLZ2Q+UHvf+qrC5TZjSd4w",
+        "subs:name": "LightsNSwitchesSubsystem"
+      }
+    ]
+  }
+}

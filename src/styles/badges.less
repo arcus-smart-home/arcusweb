@@ -1,0 +1,74 @@
+/**
+* @stylesheet badges.less Badges
+* @parent styles.baseline-elements
+*
+* @description
+* Badges are cute little rounded boxes that can indicate a quick status with a line of text.
+* - The base mixin `badge-base` takes background and text color arguments, but default to `@peacock` background with `@crane` text.
+* - The `badge-base` mixin does not predefine any sizes so it is recommended if not using the `pro-badge` class that you select a size preset.
+* - There's is an `error-badge` preset, which changes the background to `@cardinal`.
+* - There are `small-badge` and `large-badge` presets, which can be brought in as mixins or classes to define the smaller "pro" style badge or the larger "hub offline" style badge.
+
+* @demo ./src/styles/demos/badges.html
+*
+**/
+
+.badge-base(@bg: @peacock, @color: @crane) {
+  background: @bg;
+  border-radius: 4px;
+  color: @color;
+  position: relative;
+}
+.small-badge {
+  .font-demibold;
+  font-size: 10px;
+  padding: 2px 5px;
+  top: -5px;
+}
+.large-badge {
+  .font-regular;
+  font-size: @font-size-small;
+  padding: @gutter/3;
+  i {
+    font-size: @font-size-large;
+    vertical-align: text-top;
+    padding-right: 2px;
+  }
+}
+a:hover {
+  .error-badge {
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .1s linear;
+    transform: translateY(-3px);
+    box-shadow: 0 2px 3px fade(@swift, 25);
+  }
+}
+
+.pro-badge {
+  .badge-base;
+  .small-badge;
+  text-transform: uppercase;
+  margin-left: @gutter/6;
+  background: linear-gradient(0deg, @bluejay, @peacock, @kingfisher);
+}
+
+.error-badge {
+  .badge-base(@cardinal);
+}
+
+.warning-badge {
+  .badge-base(@canary, @honeycreeper);
+}
+
+.button-badge {
+  .badge-base(transparent, @peacock);
+
+  display: inline-block;
+  padding: @gutter/6 @gutter/2;
+  cursor: pointer;
+
+  &.active {
+    .badge-base();
+  }
+}

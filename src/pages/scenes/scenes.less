@@ -1,0 +1,140 @@
+arcus-page-scenes {
+  display: flex;
+  flex-direction: column;
+  .scenes-view-toggle {
+    display: flex;
+    margin-top: @gutter;
+    [class^="btn"] {
+      display: flex;
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+  }
+  .scenes-container {
+    margin: 0 @gutter/2;
+    .breakpoint(md, {
+      margin-left: @gutter;
+      margin-right: @gutter;
+    });
+  }
+  .premium-instructions {
+    margin-top: @gutter;
+    margin-left: @gutter;
+    margin-bottom: @gutter;
+  }
+  .panel-secondary-wrapper {
+    [class^="btn"] {
+      margin-left: @gutter;
+      + [class^="btn"] {
+        margin-top: @gutter/4;
+      }
+    }
+  }
+  .premium-required {
+    display: flex;
+    flex-direction: column;
+    .breakpoint(md, {
+      flex-direction: row;
+    });
+  }
+  .left-wrapper,
+  .right-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    .breakpoint(md, {
+      max-width: 50%;
+      flex-basis: 50%;
+    });
+  }
+  .right-wrapper {
+    position: relative;
+    align-self: center;
+    text-align: center;
+    &:before {
+      content: '';
+      height: @gutter*1.5;
+      width: 1px;
+      position: absolute;
+      left: 0;
+      background: @heron;
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }
+    a {
+      margin: @gutter/2 auto;
+    }
+  }
+  .panel-information {
+    arcus-scenes-icon {
+      margin-right: @gutter/2;
+    }
+    &.disabled {
+      * {
+        color: @grouse
+      }
+      .icon-state {
+        border: 1px solid @grouse;
+      }
+    }
+  }
+  .panel-action {
+    flex-basis: 50%;
+  }
+  .panel-status {
+    flex-direction: column;
+  }
+  .category-wrapper {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    width: 150px;
+    margin-left: @gutter/2;
+    margin-right: @gutter/2;
+    &.active {
+      .category-icon {
+        background-color: @link-color;
+        border-color: @link-color;
+        color: @pigeon;
+      }
+    }
+  }
+  .category-icon {
+    border-radius: 100%;
+    border: 1px solid @swift;
+    width: 90px;
+    height: 90px;
+    font-size: 45px;
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+  }
+  .category-control {
+    margin-top: @gutter/2;
+    min-height: 58px; //to avoid hover flicker;
+    width: 100%;
+    text-align: center;
+    &:hover {
+      .btn-hover {
+        display: block;
+      }
+      .category-title {
+        display: none;
+      }
+    }
+    .category-title {
+      font-size: @font-size-large;
+    }
+    .btn-hover {
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  .tutorial-border {
+    margin-top: @gutter;
+    margin-bottom: 0;
+  }
+}

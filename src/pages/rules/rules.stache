@@ -1,0 +1,73 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/accordion/panel/" />
+<can-import from="i2web/components/rules/category-list/" />
+<can-import from="i2web/components/rules/my-list/" />
+
+<arcus-context-bar>
+  <h2>
+    <i class="icon-app-pencil-2"></i>
+    <span class="place-name">{{place["place:name"]}}</span> Rules
+  </h2>
+</arcus-context-bar>
+<div class="rules-container">
+  <div class="rules-view-toggle segment-btn">
+    <button id='my-rules' class="btn btn-primary {{#if displayRules('my')}}active{{/if}}" ($click)="changeRulesDisplayed('my')">
+      My Rules
+    </button>
+    <button id='add-rules' class="btn btn-primary {{#if displayRules('add')}}active{{/if}}" ($click)="changeRulesDisplayed('add')">
+      Rules Library
+    </button>
+  </div>
+  {{#is activeDisplay 'my'}}
+    <div class="row my-rules-instructions">
+      <h2>Manage Rules and Their Schedules</h2>
+      {{#unless rules.length}}
+        <p>You have no Rules set up. Rules connect and automate your devices. They tell devices what to do when something happens. Browse the Rules Library to get started.</p>
+      {{/unless}}
+    </div>
+  {{/is}}
+  {{#is activeDisplay 'add'}}
+  <div class="row add-rules-instructions">
+    <h2>Browse the Rules Library</h2>
+    <p>Rules connect and automate your devices. They tell devices what to do when something happens. Select a category below to get started.</p>
+  </div>
+  {{/is}}
+</div>
+<hr />
+{{#is activeDisplay 'my'}}
+  {{#if rules.length}}
+    <arcus-rules-my-list {templates}="templates" {(rules)}="rules" />
+  {{/if}}
+{{/is}}
+{{#is activeDisplay 'add'}}
+  <arcus-rules-category-list {templates}="templates" {categories}="categories" />
+{{/is}}
+<div class="tutorials">
+  <h3>Rules Tutorials</h3>
+  <ul>
+    <li>
+      <a data-analytics="rules.tutorial" href="{{redirectToUrl('s_appintrorules')}}" target="_blank">
+        <i class="icon-app-page-2"></i>
+        Learn About Rules
+      </a>
+    </li>
+  </ul>
+</div>

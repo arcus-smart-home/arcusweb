@@ -1,0 +1,135 @@
+arcus-subsystem-card {
+  display: block;
+  border-bottom: @border;
+  &:hover {
+    .subsystem-card-title.supported {
+      h3 {
+        color: @peacock;
+      }
+    }
+  }
+  &:last-of-type {
+    border-bottom: none;
+  }
+  .subsystem-card-title {
+    max-width: 100%;
+    flex-basis: 100%;
+    padding: @gutter;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    .breakpoint(sm-down, {
+      flex-direction: column;
+      padding-left: @gutter/2;
+      padding-right: @gutter/2;
+    });
+    .subsystem-status {
+      margin-left: auto;
+      .breakpoint(sm-down, {
+        margin-left: 0;
+        margin-top: @gutter/2;
+      });
+      a {
+        .breakpoint(sm-down, {
+          display: none;
+        });
+      }
+    }
+    h3 {
+      width: calc(100% - @gutter);
+      display: inline-flex;
+      color: @swift;
+      margin: 0;
+      padding: 0;
+      font-size: @font-size-h2;
+      white-space: nowrap;
+      .breakpoint(sm, {
+        width: 60%;
+      });
+      a,
+      a:visited {
+        color: @swift;
+        font-size: @font-size-h2;
+        text-decoration: none;
+        &:hover,
+        &:active {
+          color: @link-color;
+        }
+      }
+      i {
+        display: inline-block;
+        width: 40px;
+        text-align: center;
+      }
+    }
+    .subsystem-chevron {
+      display: inline-flex;
+      align-self: flex-end;
+      margin-top: -20px;
+      .breakpoint(sm, {
+        display: none;
+      });
+      &:hover {
+        text-decoration: none;
+      }
+      i {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+  .subsystem-card-contents {
+    max-width: 100%;
+    flex-basis: 100%;
+    padding-bottom: @gutter/2;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    .breakpoint(md-down, {
+      padding-left: 0;
+      padding-right: 0;
+    });
+    .breakpoint(sm-down, {
+      display: none;
+    });
+  }
+  .subsystem-unsupported-card-contents {
+    max-width: 100%;
+    flex-basis: 100%;
+    padding-bottom: @gutter/2;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    .breakpoint(md-down, {
+      padding-left: 0;
+      padding-right: 0;
+    });
+  }
+  .not-supported {
+    margin-bottom: 0;
+    .breakpoint(md-down, {
+      margin-left: @gutter/2;
+      margin-right: @gutter/2;
+    });
+  }
+  .total-count {
+    display: flex;
+    margin-top: @gutter/2;
+    .breakpoint(sm, {
+      margin-top: 0;
+      justify-content: flex-end;
+    });
+    .breakpoint(sm-down, {
+      margin-left: @gutter*1.5; // line up text to card title
+    });
+    p {
+      color: @swift;
+      display: flex;
+      font-size: @font-size-large;
+      margin-bottom: 0;
+      span {
+        font-size: @font-size-h4;
+        color: @grouse;
+        margin-left: 5px;
+      }
+    }
+  }
+}

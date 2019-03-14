@@ -1,0 +1,33 @@
+/**
+* @stylesheet devices/icon/icon-sizing.less Icon Massaging - Devices
+* @parent icons.less
+*
+* @description
+* <a name="device-massaging"></a> Because of optics, some icons need to be adjusted from the base size (currently 45px) inside of `device-badge-icon` and `box-gray-radius` to appear to take up the same amount of space within the status ring. The `icon-sizing.less` file `devices/icon/` is where this fine-tuning lives.
+*
+**/
+
+.device-badge-icon, .box-gray-radius .icon-circle {
+  i {
+    font-size: 32px; // the default
+  }
+  .icon-platform-carep-1 {
+    font-size: 38px;
+  }
+  .icon-platform-hub-v3-2 {
+    font-size: 46px;
+  }
+  .icon-app-devices,
+  .icon-platform-outlet-1,
+  .icon-platform-outlet-2,
+  .icon-platform-tilt-1,
+  .icon-platform-tilt-2,
+  .icon-platform-garage-bridge-1,
+  .icon-platform-garage-bridge-2,
+  .icon-platform-button-1,
+  .icon-platform-button-2,
+  .icon-platform-sprinkler-1,
+  .icon-platform-sprinkler-2 {
+    font-size: 30px;
+  }
+}

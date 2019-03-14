@@ -1,0 +1,242 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/pairing/completion/" />
+<can-import from="i2web/components/pairing/connect/device/" />
+<can-import from="i2web/components/pairing/connect/oauth/" />
+<can-import from="i2web/components/pairing/connect/hub/" />
+<can-import from="i2web/components/pairing/customize/completed/device.component" />
+<can-import from="i2web/components/pairing/devices-found.component" />
+<can-import from="i2web/components/pairing/firmware-exit.component" />
+<can-import from="i2web/components/pairing/remove/automatic.component" />
+<can-import from="i2web/components/pairing/remove/cloud.component" />
+<can-import from="i2web/components/pairing/remove/manual.component" />
+<can-import from="i2web/components/pairing/remove/modal.component" />
+<can-import from="i2web/components/pairing/customize/completed/hub.component" />
+<can-import from="i2web/components/pairing/customize/device/" />
+<can-import from="i2web/components/pairing/help/" />
+<can-import from="i2web/components/pairing/hub-unavailable.component" />
+<can-import from="i2web/components/pairing/reset/device.component" />
+<can-import from="i2web/components/pairing/reset/modal.component" />
+<can-import from="i2web/components/pairing/steps/" />
+<can-import from="i2web/components/pairing/exit-prompt.component" />
+<can-import from="i2web/components/staged-progress/" />
+
+<div class="step-container">
+  <div class="step-header">
+    <header class="app-header">
+      <a class="logo-link" ($click)="exitPairing()">
+        <img class="arcus-logo" src="/src/images/logo.svg" alt="Arcus Logo">
+      </a>
+      <a class="exit-pairing-link" ($click)="exitPairing()">
+        Go to Dashboard
+      </a>
+    </header>
+    {{#if currentIncident}}
+      <div class="alarm-banner">
+        <h2>
+          <i class="icon-platform-security-1"></i>
+          Security Alarm
+        </h2>
+      </div>
+    {{/if}}
+    <div class="staged-progress">
+      <arcus-staged-progress {stages}="stages" {{progressStage}}
+        {{#unless isFinishedCustomization}}in-progress{{/unless}}
+      />
+    </div>
+    <div class="pairing-title">
+      <h2 class="font-medium">{{pairingTitle}}</h2>
+    </div>
+  </div>
+  {{#if devicesFound}}
+    <arcus-pairing-devices-found
+      {(help-required)}="helpRequired"
+      {^ignore-found-devices}="ignoreFoundDevices"
+      {(is-finished-steps)}="isFinishedSteps"
+      {subsystem}="subsystem"
+    />
+  {{/if}}
+  <div class="step-wrapper">
+    {{#switch pairingStage}}
+      {{#case 'completed'}}
+        {{#if isHub}}
+          <arcus-pairing-customize-completed-hub
+            {pairing-device}="pairingDevice"
+            {product}="product"
+            {subsystem}="subsystem"
+            {^title}="pairingTitle"
+          />
+        {{else}}
+          <arcus-pairing-customize-completed-device
+            {on-customize}="@onCustomize"
+            {on-remove}="@onRemove"
+            {on-try-again}="@onTryAgain"
+            {pairing-device}="pairingDevice"
+            {pairing-devices}="pairingDevices"
+            {product}="product"
+            {subsystem}="subsystem"
+            {^title}="pairingTitle"
+          />
+        {{/if}}
+      {{/case}}
+      {{#case 'customize'}}
+        <arcus-pairing-customize-device
+          {customization-steps}="customizationSteps"
+          {pairing-device}="pairingDevice"
+          {is-hub}="isHub"
+          {(is-finished-customization)}="isFinishedCustomization"
+          {^title}="pairingTitle"
+        />
+      {{/case}}
+      {{#case 'hub-unavailable'}}
+        <arcus-pairing-hub-unavailable
+          {^title}="pairingTitle"
+        />
+      {{/case}}
+      {{#case 'reset'}}
+        <arcus-pairing-reset-device
+          {reset-steps}="resetSteps"
+          {^title}="pairingTitle"
+          {product}="product"
+          {pairing-device}="pairingDevice"
+          {on-pair-device-after-reset}="@onPairDeviceAfterReset"
+        />
+      {{/case}}
+      {{#case 'help'}}
+        <arcus-pairing-help
+          {action-click}="@helpButtonClick"
+          {help-steps}="helpSteps"
+          {(is-finished-steps)}="isFinishedSteps"
+          {^title}="pairingTitle"
+        />
+      {{/case}}
+      {{#case 'remove'}}
+        {{#switch pairingDevice['pairdev:removeMode']}}
+          {{#case 'HUB_AUTOMATIC'}}
+            <arcus-pairing-remove-automatic
+              {pairing-device}="pairingDevice"
+              {on-pair-removed-device}="@onPairRemovedDevice"
+              {^title}="pairingTitle"
+            />
+          {{/case}}
+          {{#case 'HUB_MANUAL'}}
+            <arcus-pairing-remove-manual
+              {on-pair-removed-device}="@onPairRemovedDevice"
+              {pairing-device}="pairingDevice"
+              {product}="product"
+              {reset-device}="@helpButtonClick"
+              {^title}="pairingTitle"
+            />
+          {{/case}}
+          {{#case 'CLOUD'}}
+            <arcus-pairing-remove-cloud
+              {pairing-device}="pairingDevice"
+              {pairing-devices}="pairingDevices"
+              {on-pair-removed-device}="@onPairRemovedDevice"
+              {^title}="pairingTitle"
+            />
+          {{/case}}
+        {{/switch}}
+      {{/case}}
+      {{#case 'registration'}}
+        {{#if isHub}}
+          <arcus-pairing-connect-hub
+            {form-values}="formValues"
+            {place}="place"
+            {(is-finished-steps)}="isFinishedSteps"
+            {is-v2-hub}="isV2Hub"
+            {^hub}="pairingDevice"
+            {^is-finished-registration}="isFinishedRegistration"
+            {^firmware-in-progress}="hubFirmwareInProgress"
+            {^title}="pairingTitle" />
+        {{else}}
+          {{#if isOAuthDevice}}
+            <arcus-pairing-connect-oauth
+              {^title}="pairingTitle"
+              {(is-finished-steps)}="isFinishedSteps"
+              {pairing-config}="pairingConfig"
+              {pairing-devices}="pairingDevices"
+              {vendor}="product['product:vendor']"
+              {on-customize}="@onCustomize"
+              {on-try-again}="@onTryAgain"
+              {on-remove}="@onRemove" />
+          {{else}}
+            <arcus-pairing-connect-device
+              {form-values}="formValues"
+              {on-customize}="@onCustomize"
+              {on-try-again}="@onTryAgain"
+              {on-remove}="@onRemove"
+              {product}="product"
+              {subsystem}="subsystem"
+              {(is-finished-registration)}="isFinishedRegistration"
+              {^help-required}="helpRequired"
+              {pairing-devices}="pairingDevices"
+              {^pairing-device}="pairingDevice"
+              {confirm-code}="@helpButtonClick"
+              {(show-unavailable-hub)}="showUnavailableHub"
+              {^title}="pairingTitle"
+            />
+          {{/if}}
+        {{/if}}
+      {{/case}}
+      {{#default}}
+        <arcus-pairing-steps
+          {config}="pairingConfig"
+          {^title}="pairingTitle"
+          {product}="product"
+          {on-abandon-pairing-steps}="@onAbandonPairingSteps"
+          {(is-finished-steps)}="isFinishedSteps"
+          {^form-values}="formValues"
+          {{#if showLastPairingStep}}
+            only-last-step
+          {{/if}}
+        />
+      {{/default}}
+    {{/switch}}
+  </div>
+{{#if dismissCompletionSteps.length}}
+  <arcus-pairing-completion-manager
+    {exit}="@onConfirmExitPairing"
+    {(steps)}="dismissCompletionSteps"
+  />
+{{/if}}
+{{#if showExitPrompt}}
+  <arcus-pairing-exit-prompt
+    {has-unpaired-devices}="hasUnpairedDevices"
+    {on-confirm-exit-pairing}="@onConfirmExitPairing"
+    {on-resume-pairing}="@onResumePairing"
+  />
+{{/if}}
+{{#if showFactoryResetModal}}
+  <arcus-pairing-reset-modal
+    {pairing-device}="pairingDevice"
+    {on-confirm-factory-reset}="@onConfirmFactoryReset"
+    {on-cancel-factory-reset}="@onCancelFactoryReset"
+  />
+{{/if}}
+{{#if showRemoveDeviceModal}}
+  <arcus-pairing-remove-modal
+    {pairing-device}="pairingDevice"
+    {on-remove-device}="@onRemoveDevice"
+    {on-cancel}="@onCancelRemoveDevice"
+  />
+{{/if}}
+{{#if showFirmwareExitModal}}
+  <arcus-pairing-firmware-exit
+    {(show-firmware-exit-modal)}="showFirmwareExitModal"
+  />
+{{/if}}

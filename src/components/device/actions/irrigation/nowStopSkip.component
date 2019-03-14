@@ -1,0 +1,279 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-irrigation-nowStopSkip">
+  <template>
+    <div class="content">
+      {{#if isWatering}}
+        <button
+          class="btn-run {{#if inTransitionToStop}}saving{{/if}}"
+          ($click)="buttonAction('stop-watering')"
+          {{#if isStopButtonDisabled}}disabled{{/if}}
+        >
+          {{#if inTransitionToStop}}<div class="loader"></div>{{/if}}
+          Stop
+        </button>
+      {{else}}
+        <button
+          class="btn-run {{#if inTransitionToWatering}}saving{{/if}}"
+          ($click)="buttonAction('water-now')"
+          {{#if isWaterButtonDisabled}}disabled{{/if}}
+        >
+          {{#if inTransitionToWatering}}<div class="loader"></div>{{/if}}
+          Water Now
+        </button>
+      {{/if}}
+      {{#if scheduleStatus.enabled}}
+        {{#if skippedUntil}}
+          <button class="btn-run" ($click)="cancelSkipped()">
+            Cancel
+          </button>
+        {{else}}
+          <button class="btn-run"
+            ($click)="buttonAction('skip-event')"
+            {{#if isWatering}}disabled{{/if}}
+          >
+            Skip
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import { irrigationScheduleStatus } from 'i2web/components/schedule/irrigation-schedulers';
+    import Device from 'i2web/models/device';
+    import IrrigationControllerCapability from 'i2web/models/capability/IrrigationController';
+    import Errors from 'i2web/plugins/errors';
+    import AppState from 'i2web/plugins/get-app-state';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import './skipEvent.component';
+    import './stopWatering.component';
+    import './waterNow.component';
+
+    const ACTIONS = {
+      WATER_NOW: 'water-now',
+      STOP_WATERING: 'stop-watering',
+    };
+
+    const TRANSITION_TIMEOUT = 30 * 1000; // 30 seconds
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} buttonActionClicked
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Which button has been clicked, values are either 'water-now'
+         * or 'stop-watering'
+         */
+        buttonActionClicked: {
+          type: 'string',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description The device these actions control
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} inTransitionToStop
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Whether the stop watering transition is in progress
+         */
+        inTransitionToStop: {
+          get() {
+            const device = this.attr('device');
+            const intent = this.attr('buttonActionClicked');
+            const isSingleZone = device.attr('irrcont:numZones') === 1;
+
+            if (intent === ACTIONS.STOP_WATERING) {
+              // single zone devices don't prompt the user like multi zones do,
+              // the platfrom call is sent right away
+              return isSingleZone
+                ? this.attr('isWatering')
+                : this.attr('saveInProgress') && this.attr('isWatering');
+            }
+
+            return false;
+          },
+        },
+        /**
+         * @property {Boolean} inTransitionToWatering
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Whether the water now transition is in progress
+         */
+        inTransitionToWatering: {
+          get() {
+            const intent = this.attr('buttonActionClicked');
+            return (
+              this.attr('saveInProgress') &&
+              intent === ACTIONS.WATER_NOW &&
+              !this.attr('isWatering')
+            );
+          },
+        },
+        /**
+         * @property {Boolean} isStopButtonDisabled
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Whether the 'Stop' button is disabled
+         */
+        isStopButtonDisabled: {
+          get() {
+            return this.attr('skippedUntil') || this.attr('inTransitionToStop');
+          },
+        },
+        /**
+         * @property {Boolean} isWatering
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Is the irrigation controller currently watering
+         */
+        isWatering: {
+          get() {
+            return this.attr('device').attr('irrcont:controllerState')
+              === IrrigationControllerCapability.CONTROLLERSTATE_WATERING;
+          },
+        },
+        /**
+         * @property {Boolean} isWaterButtonDisabled
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Whether the 'Water Now' button is disabled
+         */
+        isWaterButtonDisabled: {
+          get() {
+            return (
+              this.attr('skippedUntil') ||
+              this.attr('inTransitionToWatering')
+            );
+          },
+        },
+        /**
+         * @property {Subsystem} lawnGarden
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Helper property for quick access to the LawnsNGarden subsystem
+         */
+        lawnGarden: {
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            return subsystems && subsystems.findByName('sublawnngarden');
+          },
+        },
+        /**
+         * @property {Object} scheduleStatus
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Helper property to get the scheduleStatus object
+         */
+        scheduleStatus: {
+          get() {
+            return irrigationScheduleStatus(this.attr('device'));
+          },
+        },
+        /**
+         * @property {Boolean} skippedUntil
+         * @parent i2web/components/device/actions/irrigation/nowStopSkip
+         * @description Watering has been skipped until...
+         */
+        skippedUntil: {
+          get() {
+            return !!this.attr('scheduleStatus.skippedUntil');
+          },
+        },
+      },
+      /**
+       * @function buttonAction
+       * @param {String} action The action to perform
+       * @description Generic abstraction to handle click event code paths
+       */
+      buttonAction(action) {
+        const device = this.attr('device');
+        this.attr('buttonActionClicked', action);
+        if (action === ACTIONS.STOP_WATERING && device.attr('irrcont:numZones') === 1) {
+          const zones = Object.keys(device.attr('base:instances').attr());
+          this.attr('device').CancelV2(zones[0]).catch(e => Errors.log(e));
+        } else {
+          this.sidePanelAction(action);
+        }
+      },
+      /**
+       * @function cancelSkipped
+       * @description Cancels skipping of next event
+       */
+      cancelSkipped() {
+        const controller = this.attr('scheduleStatus.controller');
+        this.attr('lawnGarden').CancelSkip(controller).catch(e => Errors.log(e));
+      },
+      /**
+       * @function sidePanelAction
+       * @param {String} action The name of the component to render
+       * @description Open the right SidePanel with a specific irrigation action
+       */
+      sidePanelAction(action) {
+        const vm = this;
+        SidePanel.right(
+          `<arcus-device-action-irrigation-${action}
+            {device}="device"
+            {subsystem}="subsystem"
+            {after-cancel-action}="@afterCancelAction"
+            {after-save-action}="@afterSaveAction"
+          />`,
+          {
+            device: this.attr('device'),
+            subsystem: this.attr('lawnGarden'),
+            afterSaveAction() {
+              vm.attr({
+                saveInProgress: true,
+                transitionTimeout: setTimeout(() => {
+                  vm.attr('saveInProgress', false);
+                }, TRANSITION_TIMEOUT),
+              });
+            },
+            afterCancelAction() {
+              vm.attr('buttonActionClicked', null);
+            },
+          },
+        );
+      },
+    });
+  </script>
+  <script type="events">
+    import IrrigationControllerCapability from 'i2web/models/capability/IrrigationController';
+
+    export default {
+      '{viewModel.device} irrcont:controllerState': function stateChanged(_, __, value) {
+        const vm = this.viewModel;
+        const buttonAction = vm.attr('buttonActionClicked');
+        const watering =
+          (value === IrrigationControllerCapability.CONTROLLERSTATE_WATERING);
+
+        if (vm.attr('transitionTimeout')) {
+          clearTimeout(vm.attr('transitionTimeout'));
+        }
+        vm.attr({
+          saveInProgress: false,
+          transitionTimeout: null,
+        });
+        if (watering && buttonAction === 'water-now') {
+          vm.attr('buttonActionClicked', null);
+        }
+        if (!watering && buttonAction === 'stop-watering') {
+          vm.attr('buttonActionClicked', null);
+        }
+      },
+    };
+  </script>
+</can-component>

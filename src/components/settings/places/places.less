@@ -1,0 +1,14 @@
+arcus-settings-places {
+	display: block;
+
+  .context-bar {
+    border-bottom: @border;
+    &:first-of-type {
+      border-top: @border;
+    }
+  }
+
+  arcus-settings-place + .context-bar {
+    border-top: none;
+  }
+}

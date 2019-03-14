@@ -1,0 +1,267 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/accordion/panel/" />
+<can-import from="i2web/components/control-switch/" />
+<can-import from="i2web/components/spinner/" />
+<can-import from="i2web/components/subsystem/alarms/no-devices.component" />
+
+{{#if subsystem}}
+  {{#if hasNoRelevantDevices}}
+    <arcus-subsystem-alarms-no-devices />
+  {{else}}
+    <arcus-accordion {on-panel-activation}="@onAccordionPanelToggle">
+      {{#if showAlarmSounds}}
+        <arcus-accordion-panel {active}="true" action="globalSounds">
+          <arcus-accordion-panel-heading>
+            <h2>Global Alarm Sounds</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <div class="accordion-panel-content full-width">
+              <div class="accordion-panel-copy">
+                <p>When triggered, each alarm below will include sounds from the Hub, Keypad, Siren,
+                  and other sounding devices. If you wish to have a silent alarm, simply set the toggle to "Off"</p>
+              </div>
+            </div>
+            {{#if showSecurityAndPanic}}
+              <div class="accordion-panel-content">
+                <div class="accordion-panel-copy">
+                  <h3>Security and Panic Alarm</h3>
+                </div>
+              </div>
+              <div class="accordion-panel-action">
+                <div class="accordion-buttons">
+                  <arcus-control-switch
+                      {is-on}="securityAndPanicEnabled"
+                      toggle-attribute="securityAndPanicEnabled"
+                      {toggle}="@toggleAlarm" />
+                </div>
+              </div>
+            {{/if}}
+            {{#if showSmokeAndCO}}
+              <div class="accordion-panel-content">
+                <div class="accordion-panel-copy">
+                  <h3>Smoke and CO Alarm</h3>
+                </div>
+              </div>
+              <div class="accordion-panel-action">
+                <div class="accordion-buttons">
+                  <arcus-control-switch
+                      {is-on}="smokeAndCOEnabled"
+                      toggle-attribute="smokeAndCOEnabled"
+                      {toggle}="@toggleAlarm" />
+                </div>
+              </div>
+            {{/if}}
+            {{#if showWaterLeak}}
+              <div class="accordion-panel-content">
+                <div class="accordion-panel-copy">
+                  <h3>Water Leak Alarm</h3>
+                </div>
+              </div>
+              <div class="accordion-panel-action">
+                <div class="accordion-buttons">
+                  <arcus-control-switch
+                      {is-on}="waterLeakEnabled"
+                      toggle-attribute="waterLeakEnabled"
+                      {toggle}="@toggleAlarm" />
+                </div>
+              </div>
+            {{/if}}
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/if}}
+      {{^eq subsystem['alarm:alertState:SECURITY'] AlarmCapability.ALERTSTATE_INACTIVE}}
+        <arcus-accordion-panel
+          action="gracePeriods"
+          {{#unless showAlarmSounds}}{active}="true"{{/unless}}
+        >
+          <arcus-accordion-panel-heading>
+            <h2>Security Alarms Grace Periods</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <div class="accordion-panel-content">
+              <div class="accordion-panel-copy">
+                <h3>Grace Period Sounds</h3>
+                <p>Hub and Keypad make Entry and Exit sounds during Grace Periods.</p>
+              </div>
+            </div>
+            <div class="accordion-panel-action">
+              <div class="accordion-buttons">
+                <arcus-control-switch
+                  {is-on}="securityAlarmSoundsEnabled"
+                  {toggle}="@toggleSecurityAlarmSounds" />
+              </div>
+            </div>
+            <div class="accordion-panel-content">
+              <div class="accordion-panel-copy">
+                <h3>Exit and Entrance Delays</h3>
+                <p>
+                  <small>
+                    On Exit {{formatSeconds(securitySubsystem['subsecuritymode:exitDelaySec:ON'])}}
+                    <br>On Entrance {{formatSeconds(securitySubsystem['subsecuritymode:entranceDelaySec:ON'])}}
+                    <br>Partial Exit {{formatSeconds(securitySubsystem['subsecuritymode:exitDelaySec:PARTIAL'])}}
+                    <br>Partial Entrance {{formatSeconds(securitySubsystem['subsecuritymode:entranceDelaySec:PARTIAL'])}}
+                  </small>
+                </p>
+              </div>
+            </div>
+            <div class="accordion-panel-action">
+              <div class="accordion-buttons">
+                <button class="btn" ($click)="openDelaysPanel()">Edit</button>
+              </div>
+            </div>
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/eq}}
+      {{^eq subsystem['alarm:alertState:SECURITY'] AlarmCapability.ALERTSTATE_INACTIVE}}
+        <arcus-accordion-panel action="alarmRequirements">
+          <arcus-accordion-panel-heading>
+            <h2>Alarm Requirements</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <div class="accordion-panel-content">
+              <div class="accordion-panel-copy">
+                {{#if hasParticipatingSensors}}
+                  <p>Number of Participating Motion Sensors to Trigger before Security Alarm Grace Period Begins.</p>
+                  <p>
+                    <small>
+                      On {{securitySubsystem['subsecuritymode:alarmSensitivityDeviceCount:ON']}}
+                      <br>Partial {{securitySubsystem['subsecuritymode:alarmSensitivityDeviceCount:PARTIAL']}}
+                    </small>
+                  </p>
+                {{else}}
+                  <p>
+                    {{#if hasAnyMotionSensors}}
+                      Currently no motion sensors are set to participate. Please add one or more motion sensors to your participating alarm devices.
+                    {{else}}
+                      Pair a motion sensor to get additional settings.
+                    {{/if}}
+                  </p>
+                  <p>
+                    <small>Contact Sensors, Glass Break Sensors, and other non-motion Devices that trigger
+                      will also start the Security Alarm Grace Period.</small>
+                  </p>
+                {{/if}}
+              </div>
+            </div>
+            <div class="accordion-panel-action">
+              <div class="accordion-buttons">
+                {{#if hasAnyMotionSensors}}
+                  {{#if hasParticipatingSensors}}
+                    <button class="btn" ($click)="openRequirementsPanel()">Edit</button>
+                  {{/if}}
+                  <button class="btn" ($click)="manageDevices()">Manage Devices</button>
+                {{else}}
+                  <arcus-shop-button href="{{redirectToUrl('p_security')}}" expanded>
+                    Shop Devices
+                  </arcus-shop-button>
+                {{/if}}
+              </div>
+            </div>
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/eq}}
+      {{#if hasWaterValve}}
+        <arcus-accordion-panel action="waterShutOff">
+          <arcus-accordion-panel-heading>
+            <h2>Water Shut Off Valve</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <div class="accordion-panel-content">
+              <div class="accordion-panel-copy">
+                <h3>Turn Water Off When a Leak is Detected</h3>
+              </div>
+            </div>
+            <div class="accordion-panel-action">
+              <div class="accordion-buttons">
+                <arcus-control-switch
+                  {is-on}="safetySubsystem['subsafety:waterShutOff']"
+                  {toggle}="@toggleWaterShutOff" />
+              </div>
+            </div>
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/if}}
+      {{#if fanShutoffSupported}}
+        <arcus-accordion-panel action="smokeShutOff">
+          <arcus-accordion-panel-heading>
+            <h2>Smoke &amp; CO Safety Shut Off</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            {{#if hasAvailableSmokeAlerts}}
+              <div class="accordion-panel-content">
+                <div class="accordion-panel-copy">
+                  <p>Set all Thermostats, Fans &amp; Space Heaters to Off when a Smoke Alarm is triggered.</p>
+                </div>
+              </div>
+              <div class="accordion-panel-action">
+                <div class="accordion-buttons">
+                  <arcus-control-switch
+                    {is-on}="fanShutoffOnSmoke"
+                    toggle-attribute="fanShutoffOnSmoke"
+                    {toggle}="@toggleAlarm" />
+                </div>
+              </div>
+            {{/if}}
+            {{#if hasAvailableCOAlerts}}
+              <div class="accordion-panel-content">
+                <div class="accordion-panel-copy">
+                  <p>Set all Thermostats, Fans &amp; Space Heaters to Off when a CO Alarm is triggered.</p>
+                </div>
+              </div>
+              <div class="accordion-panel-action">
+                <div class="accordion-buttons">
+                  <arcus-control-switch
+                    {is-on}="fanShutoffOnCO"
+                    toggle-attribute="fanShutoffOnCO"
+                    {toggle}="@toggleAlarm" />
+                </div>
+              </div>
+            {{/if}}
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/if}}
+      {{#if recordingSupported}}
+        <arcus-accordion-panel action="recordAlarm">
+          <arcus-accordion-panel-heading>
+            <h2>Record Security Alarm</h2>
+          </arcus-accordion-panel-heading>
+          <arcus-accordion-panel-body>
+            <div class="accordion-panel-content">
+              <div class="accordion-panel-copy">
+                <h3>Record All When Security Alarm is Triggered</h3>
+                <p>Initiate a {{subsystem['subalarm:recordingDurationDescription']}} recording of all Cameras upon a triggered Security Alarm.</p>
+              </div>
+            </div>
+            <div class="accordion-panel-action">
+              <div class="accordion-buttons">
+                <arcus-control-switch
+                  {is-on}="recordOnSecurity"
+                  toggle-attribute="recordOnSecurity"
+                  {toggle}="@toggleAlarm" />
+              </div>
+            </div>
+          </arcus-accordion-panel-body>
+        </arcus-accordion-panel>
+      {{/if}}
+    </arcus-accordion>
+ {{/if}}
+{{else}}
+  <div class="loader"></div>
+{{/if}}

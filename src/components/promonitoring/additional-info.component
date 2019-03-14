@@ -1,0 +1,79 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-promonitoring-additional-info">
+  <template>
+    <can-import from="i2web/components/spinner/" />
+    <h2>Your Home Address</h2>
+    <p>Is your home easy to access using common GPS systems? If not, please elaborate
+      on the directions to your home. In the event of an emergency, this information
+      will help first responders quickly find your home.
+    </p>
+    {{textArea('promonSettings.promon:directions', 'Enter directions', attributes="character-count='500'")}}
+    <hr />
+
+    <h2>Who lives here?</h2>
+    <p>To better assist first responders during an emergency,
+      please provide an accurate count of people and pets living at this Place.
+    </p>
+    <div class="occupants-panel">
+      <div class="occupants-panel-item large-spinner">
+        <arcus-spinner {(value)}="promonSettings['promon:adults']" {min}="1" {max}="99" {step}="1" />
+        <label for="adults" class="occupants">Adults</label>
+      </div>
+      <div class="occupants-panel-item large-spinner">
+        <arcus-spinner {(value)}="promonSettings['promon:children']" {min}="0" {max}="99" {step}="1" />
+        <label for="children" class="occupants">Children</label>
+      </div>
+      <div class="occupants-panel-item large-spinner">
+        <arcus-spinner {(value)}="promonSettings['promon:pets']" {min}="0" {max}="99" {step}="1" />
+        <label for="pets" class="occupants">Pets</label>
+      </div>
+    </div>
+    <hr />
+
+    <h2>Gate Access</h2>
+    <p>Does your home have a gate access code? If so, please enter the code below:</p>
+    {{textInput('promonSettings.promon:gateCode', 'Enter access code')}}
+    <hr />
+
+    <h2>First Responder Information</h2>
+    <p>Please list any information that you would like first responders to know (i.e.
+      unusual obstructions at your property, firearms or important medical requirements).
+    </p>
+    {{textArea('promonSettings.promon:instructions', 'Please provide additional information', attributes="character-count='500'" class='long-label')}}
+    {{#if formError}}
+      <p class="error">{{formError}}</p>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import ProMonitoringSettings from 'i2web/models/pro-monitoring-settings';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {ProMonitoringSettings} promonSettings
+         * @parent i2web/components/promonitoring/additional-info
+         * @description View model copy of promonitoring settings config to use for Save operation
+         */
+        promonSettings: {
+          Type: ProMonitoringSettings,
+        },
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,22 @@
+arcus-pairing-customize-state-county-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .box-gray-radius {
+    overflow: visible;
+    arcus-device-configurator-noaa-location {
+      width: 100%;
+      margin-bottom: @gutter/2;
+      .dropdown-wrapper {
+        margin: 0;
+      }
+    }
+    .skipWeatherRadio {
+      color: @link-color;
+      &:hover {
+        opacity: 0.75;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div id="demo-source" class="demo"></div>
+<script id="template" type="text/stache">
+  <arcus-place-selector {(current-place)}="place" {(current-place-id)}="id" {logout}="@fn" />
+  <h3 id="user-is">Logged In!!</h3>
+</script>
+<script id="demo-source" src="../../../node_modules/steal/steal.js" main="@empty">
+  import $ from 'jquery';
+  import places from 'i2web/models/fixtures/data/place/place.json';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/place-selector/';
+
+  loginAndRender({
+    renderTo: '.demo',
+    template: '#template',
+    scope: {
+      place: places[0],
+      id: places[0]['base:id'],
+      fn() {
+        $('#user-is').text("Logged Out!!")
+      }, 
+    }
+  })
+</script>

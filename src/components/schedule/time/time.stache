@@ -1,0 +1,44 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/spinner/" />
+
+<div class="time-spinners large-spinner">
+  {{#if editHours}}
+    <arcus-spinner {(value)}="hour" min="1" max="12" cycle="true" />
+  {{else}}
+    <p class="spinner-value">
+      <div>
+        {{hour}}
+      </div>
+    </p>
+  {{/if}}
+  <span>:</span>
+  {{#if editMinutes}}
+    <arcus-spinner {(value)}="minuteTens" min="0" max="5" cycle="true" />
+    <arcus-spinner {(value)}="minuteOnes" min="0" max="9" cycle="true" />
+  {{else}}
+    <p class="spinner-value">
+      <div>
+        {{minuteTens}}{{minuteOnes}}
+      </div>
+    </p>
+  {{/if}}
+</div>
+<div class="am-pm-buttons">
+  <button class="btn{{^if isPM}} active{{/if}}" ($click)="togglePM(%event, false)">AM</button>
+  <button class="btn{{#if isPM}} active{{/if}}" ($click)="togglePM(%event, true)">PM</button>
+</div>

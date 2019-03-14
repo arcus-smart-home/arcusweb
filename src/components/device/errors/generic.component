@@ -1,0 +1,85 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-errors-generic">
+  <template>
+    {{#if showErrors}}
+      <h3>Errors</h3>
+      {{#each device.errors}}
+        <p><i class="icon-platform-warning-2" aria-hidden="true"></i>&nbsp;&nbsp;{{.}}</p>
+      {{/each}}
+      <hr/>
+    {{/if}}
+    {{#if showWarnings}}
+      <h3>Alerts</h3>
+      {{#if device.alertedState}}
+        <p><i class="icon-platform-warning-2" aria-hidden="true"></i>&nbsp;&nbsp;{{device.alertedState}}</p>
+      {{/if}}
+      {{#each device.warnings}}
+        <p><i class="icon-platform-warning-2" aria-hidden="true"></i>&nbsp;&nbsp;{{.}}</p>
+      {{/each}}
+        Your device may continue to sound a warning or show an alert until the surrounding area is clear.
+      <hr/>
+    {{/if}}
+    {{#if noContent}}
+      <p>No current device errors or warnings</p>
+    {{else}}
+      <a href="{{redirectToUrl(supportLinkKey)}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import { deviceSupportLinkKey } from 'i2web/helpers/device';
+    import _size from 'lodash/size';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        msgType: {
+          type: 'string',
+          value: 'error',
+        },
+        noContent: {
+          get() {
+            return !(this.attr('device.errors') && _size(this.attr('device.errors')) > 0)
+            && !(this.attr('device.warnings') && _size(this.attr('device.warnings')) > 0)
+            && !this.attr('device.alertedState');
+          },
+        },
+        showErrors: {
+          get() {
+            return this.attr('msgType') !== 'warn' && _size(this.attr('device.errors')) > 0;
+          },
+        },
+        showWarnings: {
+          get() {
+            return this.attr('msgType') !== 'error' && (_size(this.attr('device.warnings')) > 0 || this.attr('device.alertedState'));
+          },
+        },
+        supportLinkKey: {
+          get() {
+            const device = this.attr('device');
+            return deviceSupportLinkKey(device);
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

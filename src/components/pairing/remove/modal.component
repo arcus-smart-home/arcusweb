@@ -1,0 +1,83 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-remove-modal">
+  <template>
+    <div class="modal-container">
+      <div class="modal-content">
+        <h4>Are you sure you want to remove this device?</h4>
+        {{#if instructions}}
+          <p>
+            {{instructions}}
+          </p>
+        {{/if}}
+        <button class="btn" ($click)="onRemoveDevice()">
+          Yes, Remove Device
+        </button>
+        <button class="btn btn-cancel" ($click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+      <div class="modal-backdrop"></div>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import PairingDevice from 'i2web/models/pairing-device';
+
+    export default canMap.extend({
+      define: {
+        /**
+        * @property {String} instructions
+        * @parent i2web/components/pairing/remove
+        * @description Optional instructions to include with the prompt
+        */
+        instructions: {
+          get() {
+            if (this.attr('pairingDevice.pairdev:productAddress') === 'SERV:product:dead15') {
+              // Improperly paired Hue gets special treatment
+              return 'To fix the issue, remove the device from Arcus and pair it to the Hue Bridge. Then re-pair the Hue Bridge to Arcus as described in the pairing steps.';
+            } else if (this.attr('pairingDevice.pairdev:removeMode') === 'HUB_MANUAL') {
+              return 'Do not use other Arcus device whiles removing. You may unintentionally remove other devices during the process.';
+            }
+            return undefined;
+          },
+        },
+        /**
+        * @property {*} onRemoveDevice
+        * @parent i2web/components/pairing/remove
+        * @description Callback method to start the removal process
+        */
+        onRemoveDevice: {},
+        /**
+        * @property {*} onCancel
+        * @parent i2web/components/pairing/remove
+        * @description Callback method to hid the modal
+        */
+        onCancel: {},
+        /**
+        * @property {PairingDevice} pairingDevice
+        * @parent i2web/components/pairing/remove
+        * @description Specific pairingDevice that is being removed
+        */
+        pairingDevice: {
+          Type: PairingDevice,
+        },
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,128 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-cool">
+  <template>
+    {{#if hasCoolSetPoint}}
+      <h4>Select a Temperature</h4>
+      <hr />
+      <can-import from="i2web/components/spinner/" />
+      <div class="range large-spinner">
+        <arcus-spinner {formatter}="@formatter"
+          {(value)}="coolSetPoint"
+          {min}="minSetPoint"
+          {max}="maxSetPoint" />
+      </div>
+      <hr />
+    {{/if}}
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import temperatureConverter from 'i2web/plugins/temperature-converter';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description The device attributes used for displaying the configurator
+         */
+        attributes: {
+          type: '*',
+        },
+        /**
+         * @property {Number} coolSetPoint
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description Converted to and from F and C
+         */
+        coolSetPoint: {
+          get() {
+            const attributes = this.attr('attributes');
+
+            return temperatureConverter(attributes.attr('therm:coolsetpoint'), 'F');
+          },
+          set(coolSetPoint) {
+            const attributes = this.attr('attributes');
+
+            attributes.attr('therm:coolsetpoint', temperatureConverter(coolSetPoint, 'C'));
+
+            return coolSetPoint;
+          },
+        },
+        /**
+         * @property {Boolean} hasCoolSetPoint
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description Whether attributes includes the 'therm:coolsetpoint' property
+         */
+        hasCoolSetPoint: {
+          get() {
+            return this.attr('thing').hasCapability('therm');
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+        /**
+         * @property {Number} minSetPoint
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description Minimum temperature we can set to
+         */
+        minSetPoint: {
+          get() {
+            const device = this.attr('thing');
+            if (device && device.attr('therm:minsetpoint')) {
+              return temperatureConverter(device.attr('therm:minsetpoint'), 'F');
+            }
+            return 45;
+          },
+        },
+        /**
+         * @property {Number} maxSetPoint
+         * @parent i2web/components/schedule/device-configurators/cool
+         * @description Maximum temperature we can set to
+         */
+        maxSetPoint: {
+          get() {
+            const device = this.attr('thing');
+            if (device && device.attr('therm:maxsetpoint')) {
+              return temperatureConverter(device.attr('therm:maxsetpoint'), 'F');
+            }
+            return 95;
+          },
+        },
+      },
+      /**
+       * @function formatter
+       * @parent i2web/components/schedule/device-configurators/cool
+       * @param {Number} val
+       * @return {String}
+       *
+       * Formats the temperature value
+       */
+      formatter(val) {
+        return `${val.toFixed(0)}<span class="value-unit">&deg;</span>`;
+      },
+    });
+  </script>
+</can-component>

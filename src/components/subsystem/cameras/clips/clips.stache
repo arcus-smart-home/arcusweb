@@ -1,0 +1,83 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/recording/" />
+<can-import from="i2web/helpers/attributes"/>
+
+<div class="clip-filters" sticky-element sticky-placeholder=".clip-filters-placeholder">
+  <h2>Filters</h2>
+  <div class="filter-wrapper">
+    {{#if cameras.length}}
+      {{#selectInput('filters.camera', 'Camera', allowSearch=true)}}
+        <option value="0">All Cameras</option>
+        {{#each cameras as camera}}
+          <option value="{{camera['base:address']}}">{{camera['dev:name']}}</option>
+        {{/each}}
+      {{/selectInput}}
+    {{/if}}
+    {{#if days.length}}
+      {{#selectInput('filters.day', 'Date', allowSearch=true attributes={{daysDropdownAttributes}})}}
+        {{#each days as day}}
+          <option value="{{day.value}}">{{day.text}}</option>
+        {{/each}}
+      {{/selectInput}}
+    {{/if}}
+    <div class="filter-button">
+      <button class="btn" ($click)="applyFilters()">Apply Filters</button>
+    </div>
+  </div>
+  <div class="filter-state">
+    {{#unless place.isBasic}}
+      <div class="radio-wrapper">
+        <label for="checkbox-regular">Pinned Clips Only</label>
+        <input class="radio-checkbox" type="checkbox" id="checkbox-regular" {($checked)}="pinnedOnly">
+        <div class="check"></div>
+      </div>
+    {{/unless}}
+    <div class="current-filters" {{#if place.isBasic}}style="text-align: center;"{{/if}}>
+      {{#if place.isBasic}}
+        <h4>Filtered by {{cameraFilterText}} / {{dayFilterText}}</h4>
+      {{else}}
+        <h4>Filtered by {{cameraFilterText}}, {{dayFilterText}} and Older</h4>
+      {{/if}}
+    </div>
+    <div class="clip-count">
+      {{renderableClips.length}} <span>clip{{^eq renderableClips.length 1}}s{{/eq}}</span>
+    </div>
+  </div>
+</div>
+<div class="clip-filters-placeholder">&nbsp;</div>
+
+{{#if loadingClips}}
+  <div class="loader">Loading...</div>
+{{else}}
+  {{#if clips.length}}
+    <div class="clips-wrapper">
+      {{#each renderableClips as clip}}
+        <arcus-recording
+          {recording}="clip"
+          {can-pin-recording}="canPinClips"
+          {camera-name}="cameraNameFromID(clip['video:cameraid'])"
+        />
+      {{/each}}
+    </div>
+    {{#if lastToken}}
+      <button class="btn-load" ($click)="next(clips)">Load More</button>
+    {{/if}}
+  {{else}}
+    <p class="no-clips">No clips recorded.</p>
+  {{/if}}
+{{/if}}

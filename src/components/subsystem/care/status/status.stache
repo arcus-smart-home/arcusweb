@@ -1,0 +1,120 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+
+<can-import from="i2web/components/control-switch/" />
+<can-import from="i2web/components/form/confirm-field/" />
+<can-import from="i2web/components/schedule/icon.component" />
+<can-import from="i2web/components/subsystem/care/status/active/" />
+<can-import from="i2web/components/subsystem/care/status/incident-list/" />
+
+{{#if subsystem}}
+  <div class="care-behaviors">
+    {{#unless careAlert}}
+      <arcus-subsystem-care-status-active {subsystem}="subsystem" />
+    {{else}}
+      <div class="care-alarm">
+        <div class="care-alarm-icon">
+          <i class="icon-app-care-heart-1"></i>
+        </div>
+        <h3>Care Alarm Triggered</h3>
+        <p>{{careAlertName}}</p>
+        <button class="btn-primary active" ($click)="clearCareAlert()">
+          Cancel
+        </button>
+      </div>
+    {{/unless}}
+    <hr />
+    <div class="care-behaviors-list">
+      <div class="row behaviors-title">
+        <h3>My Care Behaviors</h3>
+        {{#if behaviors.length}}
+          <div class="behavior-add">
+            <a href="{{routeUrl page='services' subpage='care' action='behaviors'}}" data-analytics="dashboard.add.behavior">
+              <button class="btn-primary">+ Add Behavior</button>
+            </a>
+          </div>
+        {{/if}}
+      </div>
+      <div class="behavior-list">
+        {{#if behaviors.length}}
+          {{#each behaviors}}
+            <div class="row panel-list-container">
+              <div class="panel-primary-wrapper">
+                <div class="col-xs-12 col-md panel-information">
+                  <arcus-form-confirm-field
+                    {(model)}="."
+                    {notification-text}="notificationText"
+                    {save-function}="@updateBehavior"
+                    field="name"
+                    field-description="Behavior Name"
+                    placeholder="Behavior Name"
+                    notify-on-save="true"
+                    attributes="character-count='36'"
+                  />
+                  <div class="behavior-description">
+                    <p>{{descriptionOf(.)}}</p>
+                  </div>
+                  {{#if ifScheduled(.)}}
+                    <div class="col-xs-12 col-md panel-information schedule">
+                      <a ($click)="editSchedule(.)">
+                        <i aria-hidden="true" class="icon-app-calendar-1"></i>
+                        <span class="sr-only">Toggle Schedule</span>
+                      </a>
+                    </div>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="panel-secondary-wrapper">
+                <div class="col-md panel-action">
+                  <arcus-control-switch {is-on}=".['enabled']" {toggle}="@toggleBehavior(.)"/>
+                </div>
+                <div class="col-md panel-status">
+                  <button class="btn" ($click)="editBehavior(.)">
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="row panel-list-container">
+            <div class="panel-primary-wrapper">
+              <div class="col-xs-12 col-md">
+                <p>
+                  Care behaviors help you monitor your loved ones' daily routines
+                  and can trigger a Care Alarm if those routines are disrupted.
+                </p>
+              </div>
+            </div>
+            <div class="panel-secondary-wrapper">
+              <div class="col-md panel-secondary-combined">
+                <a href="{{routeUrl page='services' subpage='care' action='behaviors'}}" data-analytics="dashboard.add.behavior">
+                  <button class="btn">+ Add Behavior</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="care-activity">
+    <arcus-subsystem-care-status-incident-list {subsystem}="subsystem" />
+  </div>
+{{else}}
+  <div class="loader"></div>
+{{/if}}

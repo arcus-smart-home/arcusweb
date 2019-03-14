@@ -1,0 +1,71 @@
+arcus-subsystem-card-home-family {
+  display: block;
+  .subsystem-card-contents {
+    padding: 0;
+    align-items: flex-start;
+    .breakpoint(sm, {
+      display: flex;
+    });
+  }
+  .subsystem-card-title {
+    border-bottom: @inner-card-border;
+  }
+  .presence-category {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-width: 180px;
+    align-items: flex-start;
+    .breakpoint(lg, {
+      min-width: 220px;
+    });
+    &:first-of-type {
+      border-right: @inner-card-border;
+      padding: @gutter @gutter @gutter @gutter*2.5;
+      .breakpoint(lg-down, {
+        padding-left: @gutter*1.5;
+      });
+    }
+    &:last-of-type {
+      border-left: @inner-card-border;
+      margin-left: -1px;
+      padding: @gutter;
+    }
+    h3 {
+      width: 100%;
+      margin-top: 0;
+      margin-bottom: @gutter/2;
+    }
+  }
+  .presence-item-condensed {
+    display: flex;
+    flex: 0 1 33.3%;
+    flex-direction: column;
+    min-width: 120px;
+    align-items: center;
+    overflow: hidden;
+    padding-right: @gutter/1.5;
+    .breakpoint(lg, {
+      flex: 0 1 25%;
+    });
+    &:last-of-type {
+      margin-right: 0;
+    }
+    .avatar {
+      font-size: 32px;
+      margin-right: 0;
+      height: 80px;
+      width: 80px;
+    }
+  }
+  .device-name {
+    color: @swift;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    margin-top: @gutter/2;
+    margin-bottom: 0;
+    width: 100%;
+  }
+}

@@ -1,0 +1,82 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-devices-found">
+  <template>
+    <div class="found-container">
+      <div class="found-card">
+        <h6><i class="icon-app-check icon-circle"></i> Device(s) Found</h6>
+        <hr>
+        <div class="button-container">
+          <button class="btn" ($click)="viewFound()">View</button>
+          <button class="btn-cancel" ($click)="ignoreFound()">Ignore</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Boolean} helpRequired
+         * @parent i2ewb/components/pairing/devices-found
+         * @description Used to hide the help steps and send the User to the searching
+         * screen
+         */
+        helpRequired: {
+          type: 'boolean',
+        },
+        /**
+         * @property {Boolean} ignoreFoundDevices
+         * @parent i2web/components/pairing/devices-found
+         * @description Ignore the found devices modal
+         */
+        ignoreFoundDevices: {
+          type: 'boolean',
+        },
+        /**
+         * @property {Boolean} isFinishedSteps
+         * @parent i2ewb/components/pairing/devices-found
+         * @description Used to hide the pairing steps and send the User to the searching\
+         * screen
+         */
+        isFinishedSteps: {
+          type: 'boolean',
+        },
+      },
+      /**
+       * @function ignoreFound
+       * @parent i2web/components/pairing/devices-found
+       * @description Click handler to ignore devices found modal
+       */
+      ignoreFound() {
+        this.attr('ignoreFoundDevices', true);
+      },
+      /**
+       * @function viewFound
+       * @parent i2web/components/pairing/devices-found
+       * @description Click handler to take the User to the searching page and
+       * display the found devices
+       */
+      viewFound() {
+        this.attr({ helpRequired: false, isFinishedSteps: true });
+      },
+    });
+  </script>
+</can-component>

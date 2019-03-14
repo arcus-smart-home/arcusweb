@@ -1,0 +1,206 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  #test-area {
+    padding: 20px;
+  }
+</style>
+<div id="test-area"></div>
+<script type="text/stache" id="template" class="demo">
+  <arcus-validation-base-test-component></arcus-validation-base-test-component>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import 'can-map-define';
+  import stache from 'can-stache';
+  import 'can-stache-bindings';
+  import 'can-stache-converters';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/spinner/';
+  import { FormComponent, FormViewModel } from 'i2web/components/form/';
+  import renderTemplate from 'i2web/test/util/renderTemplate';
+  import canViewModel from 'can-view-model';
+  window.canViewModel = canViewModel;
+
+  const viewModel = FormViewModel.extend({
+    define: {
+      constraints: {
+        value: {
+          // required field tests
+          textInputRequired: {
+            presence: true,
+          },
+          textInputConditionallyRequired: {
+            presence: true,
+          },
+          textAreaRequired: {
+            presence: true,
+          },
+          selectInputRequired: {
+            presence: true,
+          },
+          'nestedObject.namespace:prop': {
+            presence: true,
+          },
+          // equality/password
+          'nestedObject.equality1': {},
+          'nestedObject.equality2': {
+            equality: {
+              attribute: 'nestedObject.equality1',
+            },
+          },
+          // custom validators
+          creditCardNumber: {
+            cardNumber: true,
+          },
+          password: {
+            length: {
+              minimum: 8,
+            },
+            oneLetterOneNumber: true,
+            noSpaces: true,
+          },
+        },
+      },
+      textInputRequired: {
+        value: '',
+      },
+      textInputConditionallyRequired: {
+        value: '',
+      },
+      textAreaRequired: {
+        value: '',
+      },
+      selectInputRequired: {
+        value: '',
+      },
+      nestedObject: {
+        value: {
+          'namespace:prop': 'Test Value',
+        },
+      },
+      equality1: {
+        value: '',
+      },
+      equality2: {
+        value: '',
+      },
+      password: {
+        value: '',
+      },
+      creditCardNumber: {
+        value: '',
+      },
+      spinner: {
+        value: 10,
+      },
+      checkbox: {
+        value: false,
+      },
+      radio: {
+        value: undefined,
+      },
+    },
+    submit(vm, el, ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (this.formValidates()) {
+        window.alert('submitted'); // eslint-disable-line no-alert
+      }
+    },
+  });
+
+  FormComponent.extend({
+    tag: 'arcus-validation-base-test-component',
+    viewModel,
+    view: stache(`
+      <form ($submit)="submit">
+        <h2>Required Fields:</h2>
+        {{textInput("textInputRequired", "Text Input Required")}}
+        {{textInput("nestedObject.namespace:prop", "Nested Object Property Required")}}
+        {{textInput("textInputConditionallyRequired", "Text Input Conditionally Required")}}
+        <input type="checkbox" {($checked)}="constraints.textInputConditionallyRequired.presence" /> Required?
+        {{textArea("textAreaRequired", "Text Area")}}
+        {{textArea("textAreaRequired", "Text Area", attributes="character-count='500'")}}
+        {{#selectInput("selectInputRequired", "Select Input", allowSearch=true placeholder="State")}}
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+        {{/selectInput}}
+        <h2>Equality:</h2>
+        {{textInput("nestedObject.equality1", "Input")}}
+        {{textInput("nestedObject.equality2", "Confirm Input")}}
+        <h2>Custom Validators:</h2>
+        {{textInput("password", "Password", type="password")}}
+        {{textInput("creditCardNumber", "Credit Card Number", attributes="key-mask='9999-9999-9999-9999'")}}
+        <h2>Other elements that should trigger hasChanges:</h2>
+        <arcus-spinner {(value)}="spinner" min="0" max="100" step="10" />
+        <div class="radio-wrapper">
+          <input class="radio-checkbox" type="checkbox" id="checkbox" {($checked)}="checkbox" />
+          <label for="checkbox">Checkbox</label>
+          <div class="check"></div>
+        </div>
+        <div class="radio-wrapper">
+          <input class="radio-checkbox" type="checkbox" id="disabled-checkbox" disabled/>
+          <label for="disabled-checkbox">Disabled Checkbox</label>
+          <div class="check"></div>
+        </div>
+        <div class="radio-wrapper">
+          <input class="radio-checkbox" type="checkbox" id="disabled-chcked-checkbox" checked disabled/>
+          <label for="disabled-chcked-checkbox">Disabled Checked Checkbox</label>
+          <div class="check"></div>
+        </div>
+        <ul>
+          <li class="radio-wrapper">
+            <input type="radio" {($checked)}="equal(~radio, 'yes')" id="yes" />
+            <label for="yes">Radio 1 (yes)</label>
+            <div class="check"></div>
+          </li>
+          <li class="radio-wrapper">
+            <input type="radio" {($checked)}="equal(~radio, 'no')" id="no" />
+            <label for="no">Radio 2 (no)</label>
+            <div class="check"></div>
+          </li>
+          <li class="radio-wrapper">
+            <input type="radio" disabled id="disabled" />
+            <label for="disabled">Radio Disabled</label>
+            <div class="check"></div>
+          </li>
+          <li class="radio-wrapper">
+            <input type="radio" disabled checked id="disabled-checked" />
+            <label for="disabled-checked">Radio Disabled Checked</label>
+            <div class="check"></div>
+          </li>
+        </ul>
+        {{#if formError}}<div style="color:#F00">{{formError}}</div><{{/if}}
+        <input type="submit" value="Submit" {{^if hasChanges}}disabled{{/if}} /> <input type="button" ($click)="resetForm(%ev)" value="Reset Visited and Errors" />
+      </form>
+      Required Fields: {{#each _requiredFields}}{{.}}, {{/each}}<br />
+      Equality Relations: {{#each _equalityRelations}}{{%key}}: {{.}}, {{/each}}<br />
+      {{#if hasValidationErrors}}Validation Errors: {{#each _validationErrors}}{{%key}}: {{.}}{{/each}}{{/if}}
+    `),
+  });
+  let render;
+  ({ render } = renderTemplate('#test-area', '#template', {}));
+  render();
+</script>

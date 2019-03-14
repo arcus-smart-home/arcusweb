@@ -1,0 +1,110 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-climate-fan">
+  <template>
+    <h4>Select a state for <strong>{{thing['dev:name']}}</strong></h4>
+    <hr />
+    <div class="fan-control segment-btn">
+      <button class="btn{{#eq fanSpeed 0}} active{{/eq}}" ($click)="changeFanSpeed(0, %event)">
+        Off
+      </button>
+      <button class="btn{{#eq fanSpeed 1}} active{{/eq}}" ($click)="changeFanSpeed(1, %event)">
+        Low
+      </button>
+      <button class="btn{{#eq fanSpeed 2}} active{{/eq}}" ($click)="changeFanSpeed(2, %event)">
+        Medium
+      </button>
+      <button class="btn{{#eq fanSpeed 3}} active{{/eq}}" ($click)="changeFanSpeed(3, %event)">
+        High
+      </button>
+    </div>
+    <hr />
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import SwitchCapability from 'i2web/models/capability/Switch';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/climate-fan
+         * @description The device attributes used for displaying the configurator
+         */
+        attributes: {
+          type: '*',
+          set(attributes) {
+            let fanSpeed = attributes.attr('fan:speed');
+            if (attributes.attr('swit:state') === SwitchCapability.STATE_OFF) {
+              fanSpeed = 0;
+            }
+
+            this.attr('fanSpeed', fanSpeed);
+
+            return attributes;
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/climate-fan
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+
+        /**
+         * @property {number} fanSpeed
+         * @parent i2web/components/schedule/device-configurators/climate-fan
+         * @description The speed of the fan
+         */
+        fanSpeed: {
+          type: 'number',
+          value: 3,
+        },
+      },
+      /**
+       * @function changeFanSpeed
+       * @param {number} speed
+       * @param {Object} ev
+       * @parent i2web/components/schedule/device-configurators/climate-fan
+       * @description Changes the speed of the fan
+       */
+      changeFanSpeed(speed, ev) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+        this.attr('fanSpeed', speed);
+
+        const attributes = this.attr('attributes');
+        if (!speed) {
+          attributes.removeAttr('fan:speed');
+          attributes.attr('swit:state', SwitchCapability.STATE_OFF);
+        } else {
+          attributes.attr('fan:speed', speed);
+          attributes.attr('swit:state', SwitchCapability.STATE_ON);
+        }
+
+        return speed;
+      },
+    });
+  </script>
+</can-component>

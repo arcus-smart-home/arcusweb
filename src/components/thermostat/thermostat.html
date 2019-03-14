@@ -1,0 +1,86 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  .switch-value {
+    display: flex;
+    padding-bottom: 15px;
+  }
+  .switch-value {
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 30px;
+  }
+  .switch-value p {
+    font-family: "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    color: #333333;
+    text-transform: capitalize;
+  }
+  .switch-value arcus-control-switch {
+    margin-left: auto;
+  }
+
+</style>
+<script type="text/stache" id="demo-html">
+  <arcus-thermostat
+    {device}="device"
+    {(schedule-enabled)}="FtoC(~temps.scheduleEnabled)"
+    {(mode)}="temps.mode"
+    {(heat-setpoint)}="FtoC(~temps.heatSetPoint)"
+    {(cool-setpoint)}="FtoC(~temps.coolSetPoint)"
+    {min-setpoint}="50"
+    {max-setpoint}="120"
+    {setpoint-separation}="1.67"
+    {auto-supported}="temps.autoSupported"
+  />
+  Schedule Enabled: {{temps.scheduleEnabled}}<br />
+  Mode: {{temps.mode}}<br />
+  Heat SetPoint: {{temps.heatSetPoint}}<br />
+  Cool SetPoint: {{temps.coolSetPoint}}<br />
+  Auto Mode Supported: {{temps.autoSupported}}
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import $ from 'jquery';
+  import canMap from 'can-map';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Device from 'i2web/models/device';
+  import ThermostatDeviceData from 'i2web/models/fixtures/data/device/thermostats.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/thermostat/';
+
+  const thermostat = new Device(ThermostatDeviceData[0]);
+
+  const config = new canMap({
+    device: thermostat,
+    temps: {
+      scheduleEnabled: false,
+      mode: 'COOL',
+      heatSetPoint: 23.888,
+      coolSetPoint: 27.888,
+      autoSupported: true,
+    },
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: config,
+    appScope: {},
+  }).then(() => {
+    let vm = canViewModel('arcus-thermostat');
+  });
+</script>

@@ -1,0 +1,16 @@
+arcus-subsystem-climate-settings {
+  display: block;
+  .setting-header {
+    margin-top: 0px;
+  }
+  .panel-list-container {
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+  .breakpoint(md-down, {
+    .panel-secondary-wrapper {
+      padding-top: @gutter/2;
+    }
+  });
+}

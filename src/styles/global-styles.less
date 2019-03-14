@@ -1,0 +1,84 @@
+// normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css
+@import "normalize.less";
+
+// variables
+@import "variables/color-palette.less";
+@import "variables/layout.less";
+@import "variables/typography.less";
+
+@import "breakpoints.less";
+@import "context-bars.less";
+@import "corner-tag.less";
+@import "font-faces.less";
+@import "fonts.less";
+@import "icons.less";
+@import "typography.less";
+@import "animations.less";
+@import "badges.less";
+@import "box-gray.less";
+@import "buttons.less";
+@import "forms.less";
+@import "lazy-image.less";
+@import "logo-tagline.less";
+@import "modal.less";
+@import "no-devices.less";
+@import "range-input.less";
+@import "panel-list-item.less";
+@import "loader.less";
+@import "side-box.less";
+@import "sub-panel.less";
+@import "tutorials.less";
+@import "video-buttons.less";
+@import "image-shapes.less";
+@import "notification-list.less";
+
+body {
+  font-family: @font-family-base;
+  background-color: @body-bg;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.app-content {
+  margin-bottom: 67px; //header height
+}
+
+//this is an experiment; I feel like the framework had a reason for their negative rem margins, but it's causing horizontal scroll of nothing
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+[class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+hr {
+  border-bottom: 0;
+  border-top: @border;
+  margin: @gutter 0;
+}
+
+* {
+  box-sizing: border-box;
+//Thin scrollbar on everything
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: @heron;
+    background-clip: padding-box;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-radius: 13px;
+    height: 90px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+  }
+}

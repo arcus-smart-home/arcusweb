@@ -1,0 +1,109 @@
+.video-buttons {
+  display: flex;
+  align-items: center;
+  padding: 3px @gutter/4;
+  left: 0;
+  button {
+    -webkit-appearance: none;
+    border: none;
+    background-color: transparent;
+    margin-right: @gutter/3;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+
+    width: 30px;
+    height: 30px;
+
+    &:disabled {
+      cursor: default;
+      pointer-events: none;
+      .record-shape {
+        background-color: @grouse;
+        box-shadow: 0px 0px 0px 1px @grouse;
+      }
+      .play-shape {
+        border-left-color: @grouse;
+      }
+    }
+  }
+  .play-shape {
+    border-top: 13px solid transparent;
+    border-left: 23px solid @crane;
+    border-bottom: 13px solid transparent;
+  }
+  .stop-shape {
+    background-color: @crane;
+    border: 2px solid @swift;
+    width: 70%;
+    height: 70%;
+  }
+  .record-shape {
+    background-color: @ibis;
+    border: 1px solid @swift;
+    width: 17px;
+    height: 17px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 0px 1px @crane;
+    margin-left: 1px;
+  }
+  .placeholder-shape {
+    width: 17px;
+    height: 17px;
+    border: none;
+    background-color: transparent;
+  }
+  .full-screen {
+    margin-right: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid @crane;
+    color: @crane;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    i {
+      font-size: 11px;
+      vertical-align: 2px;
+    }
+  }
+  .right-aligned {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .progress-bar {
+    color: @crane;
+    display: flex;
+    margin: 0 auto;
+    .bar {
+      background: @crane;
+      border-radius: 2em;
+      margin: 0 10px;
+      width: 200px;
+    }
+
+    .progress {
+      background: @swift;
+      border-bottom: 2px solid @crane;
+      border-top: 2px solid @crane;
+      border-radius: 2em;
+      height: 100%;
+      margin: 0 2px;
+    }
+  }
+  .status-badge {
+    color: @crane;
+    border: 1px solid;
+    padding: 0px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    margin-right: @gutter/3;
+    &.live {
+      background-color: @peacock
+    }
+    &.rec {
+      background-color: @ibis
+    }
+  }
+}

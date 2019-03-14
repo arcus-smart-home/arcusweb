@@ -1,0 +1,157 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-irrigation-stop-watering">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <form ($submit)="saveConfiguration" autocomplete="off" {{#if saving}}disabled{{/if}}>
+      <span class="left-panel-buttons">
+        <button class="btn {{#if saving}}saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Saving
+          {{else}}
+            Save
+          {{/if}}
+        </button>
+        <button type="button" class="btn-cancel" ($click)="cancelAction()">
+          Cancel
+        </button>
+      </span>
+      <div class="panel-content">
+        <h3>{{device['name']}}</h3>
+        <div class="configurators-wrapper">
+          <div class="configurator">
+            <div class="configurator-header">
+              <h4 class="config-title">Stop Watering</h4>
+            </div>
+            <p>
+              You are watering on a schedule. Do you want to stop watering the current zone
+              only, or all zones in this event?
+            </p>
+            <div>
+              <arcus-generic-selector
+                {things}="options"
+                {is-selected}="@isSelected"
+                {select-option}="@stopWatering"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </template>
+  <script type="view-model">
+    import canList from 'can-list';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Subsystem from 'i2web/models/subsystem';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/actions/irrigation/stopWatering
+         * @description The irrigation controller to stop watering
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {canList} options
+         * @parent i2web/components/device/actions/irrigation/stopWatering
+         * @description The User-selectable options
+         */
+        options: {
+          value() {
+            return new canList([{
+              name: 'Current Zone Only',
+              value: 'current',
+            }, {
+              name: 'All Zones',
+              value: 'all',
+            }]);
+          },
+        },
+        /**
+         * @property {String} selected
+         * @parent i2web/components/device/actions/irrigation/stopWatering
+         * @description The User-selected option
+         */
+        selected: {
+          value: 'all',
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/device/actions/irrigation/stopWatering
+         * @description The LawnNGarden subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+        },
+      },
+      /**
+       * @function cancelAction
+       * @parent i2web/components/device/actions/irrigation/stopWatering
+       * @description Close the panel and call the afterCancelAction callback
+       */
+      cancelAction() {
+        SidePanel.close();
+        if (this.afterCancelAction) {
+          this.afterCancelAction();
+        }
+      },
+      /**
+       * @function isSelected
+       * @parent i2web/components/device/actions/irrigation/stopWatering
+       * @description Is a particular option selected, used to show which radio
+       * button is selected
+       */
+      isSelected(option) {
+        return this.attr('selected') === option.value;
+      },
+      /**
+       * @function saveConfiguration
+       * @parent i2web/components/device/actions/irrigation/stopWatering
+       * @description Persist the waterNow configuration to the platform
+       */
+      saveConfiguration(vm, el, ev) {
+        ev.preventDefault();
+        const controller = this.attr('device.base:address');
+        const current = this.attr('selected') === 'current';
+        this.attr('subsystem')
+          .StopWatering(controller, current)
+          .then(() => {
+            SidePanel.closeRight();
+          })
+          .catch(e => Errors.log(e));
+        if (this.afterSaveAction) {
+          this.afterSaveAction();
+        }
+      },
+      /**
+       * @function stopWatering
+       * @parent i2web/components/device/actions/irrigation/stopWatering
+       * @description Called when the User clicks an option's radio button
+       */
+      stopWatering(selected) {
+        this.attr('selected', selected.value);
+      },
+    });
+  </script>
+</can-component>

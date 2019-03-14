@@ -1,0 +1,206 @@
+@import "event/event.less";
+
+arcus-subsubsystem-alarms-incident-tracker-graphical {
+  @border-width: 9px;
+
+  display:  block;
+  width: 100%;
+  padding-top: @gutter;
+
+  .trademark {
+    .font-regular;
+    text-align: center;
+    position: relative;
+    .pro-badge {
+      position: absolute;
+      right: @gutter;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .place {
+    margin-top: @gutter/2;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    i {
+      margin-right: 5px;
+      margin-left: 5px;
+      font-size: @font-size-large;
+    }
+  }
+  .swiper-container {
+    height: 300px;
+    width: 320px;
+    padding-left: @gutter*2;
+    padding-right: @gutter*2;
+    .breakpoint-custom(550px, {
+      width: 540px;
+    });
+  }
+  &[class*='alert-type'] {
+    .swiper-container {
+      height: 350px;
+    }
+  }
+  &.basic {
+    &.alert-type-SECURITY {
+      background-color: @police-bg;
+      arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+        background-color: @police-bg;
+      }
+    }
+    &.alert-type-SMOKE, &.alert-type-CO {
+      background-color: @fire-bg;
+      arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+        background-color: @fire-bg;
+      }
+    }
+    &.alert-type-WATER {
+      background-color: @water-bg;
+      arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+        background-color: @water-bg;
+      }
+    }
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+      &:after {
+        display: none;
+      }
+    }
+
+    .swiper-button-disabled {
+      display: none;
+    }
+  }
+
+  .swiper-wrapper {
+    width: 10000px;
+    height: 100%;
+    font-size: 0; //removes whitespace between slides
+    z-index: -1;
+  }
+  .swiper-slide {
+    display: inline-block;
+    text-align: center;
+    &:first-of-type {
+      arcus-subsubsystem-alarms-incident-tracker-graphical-event div {
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+  .swiper-slide-active {
+    arcus-subsubsystem-alarms-incident-tracker-graphical-event {
+      transform: scale(1.6);
+      transition: all .2s linear;
+
+      div:before,
+      div:after {
+        height: @border-width / 1.5; //division to counter the scale
+        width: 50%;
+        transition: height .2s linear, width .3s linear;
+      }
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: @crane;
+    display: flex;
+    height: 100%;
+    color: @link-color;
+    top: 0;
+    margin-top: 0;
+    position: absolute;
+    width: @gutter;
+    padding-top: 13.5%;
+    .breakpoint-custom(550px, {
+      width: @gutter*2;
+    });
+
+    .chevron-btn {
+      font-size: @font-size-base;
+      height: 40px;
+      width: 40px;
+      .breakpoint-custom-down(550px, {
+        display: none;
+      });
+    }
+  }
+  .swiper-button-prev {
+    background: linear-gradient(to right, @body-bg 70%, rgba(255,255,255,0));
+    left: 0;
+    justify-content: flex-start;
+    i {
+      &:before {
+        transform: rotate(-180deg) translateY(2px) translateX(1px);
+      }
+    }
+  }
+  .swiper-button-next {
+    background: linear-gradient(to left, @body-bg 70%, rgba(255,255,255,0));
+    right: 0;
+    justify-content: flex-end;
+  }
+  .swiper-button-disabled {
+    .chevron-btn {
+      display: none;
+    }
+  }
+
+  .event-accessories {
+    position: absolute;
+    bottom: @gutter/2;
+    left: -10%;
+    margin: 0 auto;
+    text-align: center;
+    width: 260px;
+
+    [class^="btn"] {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: @gutter/3;
+      + [class^="btn"] {
+        margin-left: auto;
+      }
+    }
+  }
+  .active-text {
+    .font-demibold;
+    margin-bottom: @gutter/1.5;
+  }
+  .btn-alarm-confirm {
+    .button-colors(@bg:@cardinal, @color:@crane, @border:@cardinal, @hover:@cardinal);
+    &:hover, &.hover, &.active {
+      background-color: @cardinal;
+      color: @crane;
+    }
+    .loader {
+      &:before,
+      &:after {
+        background-color: @cardinal;
+      }
+    }
+    i {
+      font-size: 120%;
+    }
+  }
+  .btn-alarm-cancel {
+    .button-colors(@bg:@peacock, @color:@crane, @border:@peacock, @hover:@peacock);
+    &:hover, &.hover, &.active {
+      background-color: @peacock;
+      color: @crane;
+    }
+    i {
+      font-size: 120%;
+    }
+  }
+  .icon-alarm-state-prealert {
+    font-size: 26px;
+    bottom: -5px;
+    left: 44px;
+  }
+}
+

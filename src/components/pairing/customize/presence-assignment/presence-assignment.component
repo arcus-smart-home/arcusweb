@@ -1,0 +1,112 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-presence-assignment">
+  <template>
+    <can-import from="i2web/components/device/configurators/assign-device.component" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr>
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <hr/>
+      <arcus-device-configurator-assign-device {device}="device" for-pairing-customization />
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /* @property {Array} description
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description Description field from the customization step, to be displayed in paragraphs
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return ['Don\'t see the person you would like to assign it to? Tap the button below and you can assign this device to them after you invite that Person to Arcus.'];
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Who is going to use this device?';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Customize Device';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/presence-assignment
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the presence assignment is changed
+         */
+        whenComplete: {
+          type: '*',
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} pres:person': function valueChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('PRESENCE_ASSIGNMENT');
+        }
+      },
+    };
+  </script>
+</can-component>

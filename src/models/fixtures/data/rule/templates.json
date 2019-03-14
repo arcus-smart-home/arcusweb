@@ -1,0 +1,2346 @@
+{
+  "3d496bfc-1098-493e-afd4-7f56c12dbef6": {
+    "ruleTemplates": [
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "61da3b",
+        "base:address": "SERV:ruletmpl:61da3b",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${contact} is ${state} then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "contact"
+        ],
+        "base:tags": [
+          "note",
+          "cont"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Notify me when a contact sensor is changed between certain times of day.",
+        "ruletmpl:categories": [
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Notify on Contact Sensor"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "c774bb",
+        "base:address": "SERV:ruletmpl:c774bb",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "Run the ${scene} scene when everyone leaves home.",
+        "ruletmpl:keywords": [
+          "scene"
+        ],
+        "base:tags": [
+          "scene",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1448841600000,
+        "ruletmpl:description": "Run a Scene when the last person leaves home.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene When the Last Person Leaves"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "7d8qe4",
+        "base:address": "SERV:ruletmpl:7d8qe4",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${key fob} ${button} is pressed then toggle state of ${switch}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "swit",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Turn a device on or off by pressing a custom button.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Control Devices with a 1st Gen KeyFob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "pendant-panic",
+        "base:address": "SERV:ruletmpl:pendant-panic",
+        "ruletmpl:premium": false,
+        "ruletmpl:template": "Pressing ${care pendent}, will trigger a Care Alarm on the Premium Plan and a Panic Alarm on the Basic Plan.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Press the button to trigger a Care Alarm on the Premium Plan and a Panic Alarm on the Basic Plan",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Care"
+        ],
+        "ruletmpl:name": "Care Pendant Trigger"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "779f740",
+        "base:address": "SERV:ruletmpl:779f740",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed, then ${control} ${garage door}.",
+        "ruletmpl:keywords": [
+          "button",
+          "motdoor"
+        ],
+        "base:tags": [
+          "but",
+          "motdoor"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1466467200000,
+        "ruletmpl:description": "Open or close a garage door when a button is pressed.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Open Garage Door with a Smart Button or Care Pendant"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfobgen1-arm-on",
+        "base:address": "SERV:ruletmpl:smartfobgen1-arm-on",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${key fob}, set the alarm to On.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to on using a button on the 1st Gen Key Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Arm On with the 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "6042c0",
+        "base:address": "SERV:ruletmpl:6042c0",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "Run the ${scene} scene when someone arrives to an empty house.",
+        "ruletmpl:keywords": [
+          "scene"
+        ],
+        "base:tags": [
+          "scene",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1448841600000,
+        "ruletmpl:description": "Run a Scene when the first person arrives home.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene When Someone Gets Home"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfobgen1-disarm",
+        "base:address": "SERV:ruletmpl:smartfobgen1-disarm",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${key fob}, set the alarm to Off.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to off using a button on the 1st Gen Key Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Disarm with the 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "890b7e",
+        "base:address": "SERV:ruletmpl:890b7e",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${state}, then ${control} the ${garage_door}.",
+        "ruletmpl:keywords": [
+          "motdoor"
+        ],
+        "base:tags": [
+          "motdoor"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When the security alarm is turned on, close my garage door.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm Set, Garage Door Closed"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "b33f29",
+        "base:address": "SERV:ruletmpl:b33f29",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is turned on or off, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "irrcont"
+        ],
+        "base:tags": [
+          "irrcont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443571200000,
+        "ruletmpl:description": "Notify me when an irrigation controller is turned on or off on the device.",
+        "ruletmpl:categories": [
+          "Lawn & Garden",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Irrigation Changed Locally"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "05f8a5",
+        "base:address": "SERV:ruletmpl:05f8a5",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${motion sensor} detects motion, start record video from ${camera} for ${duration}.",
+        "ruletmpl:keywords": [
+          "camera"
+        ],
+        "base:tags": [
+          "camera",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443744000000,
+        "ruletmpl:description": "Record movement for a specified time.",
+        "ruletmpl:categories": [
+          "Cameras & Sensors"
+        ],
+        "ruletmpl:name": "Record Movement"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "3f32096",
+        "base:address": "SERV:ruletmpl:3f32096",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed on ${key fob}, then ${control} ${garage door}.",
+        "ruletmpl:keywords": [
+          "button",
+          "motdoor"
+        ],
+        "base:tags": [
+          "but",
+          "motdoor"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1466467200000,
+        "ruletmpl:description": "Use the 1st Gen Key Fob to open or close a garage door when a button is pressed.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Open Garage Door with a 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "5a5d3d",
+        "base:address": "SERV:ruletmpl:5a5d3d",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When someone turns the ${thermostat} on and any door or window sensor is open send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "climate"
+        ],
+        "base:tags": [
+          "climate",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me if my thermostat comes on and I have a door or window open.",
+        "ruletmpl:categories": [
+          "Climate",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Don't Cool the Neighborhood"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "0fe147",
+        "base:address": "SERV:ruletmpl:0fe147",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${waterheater} has ${level}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "waterheater"
+        ],
+        "base:tags": [
+          "waterheater",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when hot water is available.",
+        "ruletmpl:categories": [
+          "Water",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Hot Water Available"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "31c90de",
+        "base:address": "SERV:ruletmpl:31c90de",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed on ${smart fob}, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "scene",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Run a scene when a Smart Fob button is pressed.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene using a Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "43a2db",
+        "base:address": "SERV:ruletmpl:43a2db",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${person or device} returns home, then unlock ${doorlock}.",
+        "ruletmpl:keywords": [
+          "pres"
+        ],
+        "base:tags": [
+          "pres",
+          "doorlock"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When I arrive home, unlock my door.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Unlock Door When Person is Home"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "55b0ce",
+        "base:address": "SERV:ruletmpl:55b0ce",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} temperature goes ${above or below} ${value}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "temp"
+        ],
+        "base:tags": [
+          "note",
+          "temp"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1453852800000,
+        "ruletmpl:description": "Notify me when a device temperature goes above or below a certain level.",
+        "ruletmpl:categories": [
+          "Climate",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Monitor Room Temperature"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "ad0873",
+        "base:address": "SERV:ruletmpl:ad0873",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} temperature goes ${above or below} ${value}, then turn ${switch} ${on or off} ${for awhile}.",
+        "ruletmpl:keywords": [
+          "temp"
+        ],
+        "base:tags": [
+          "swit",
+          "temp"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1453852800000,
+        "ruletmpl:description": "Turn lights and switches on or off based on the temperature of other devices.",
+        "ruletmpl:categories": [
+          "Climate"
+        ],
+        "ruletmpl:name": "Control Lights & Switches Based on Temperature"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "f37345",
+        "base:address": "SERV:ruletmpl:f37345",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed then run ${scene}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "scene",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Run a scene when a Smart Button is pressed.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Push Button Scene"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "16536e",
+        "base:address": "SERV:ruletmpl:16536e",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed then toggle state of ${switch}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "swit",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Turn a device on or off by pressing a custom button.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Control Devices with a Button"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "281262",
+        "base:address": "SERV:ruletmpl:281262",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${door} is ${opened or closed}, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "scene"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Run a scene when a door is opened or closed.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Run a Scene"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfob-arm-partial",
+        "base:address": "SERV:ruletmpl:smartfob-arm-partial",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${smart fob}, set the alarm to Partial.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to partial using a button on the Smart Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Arm Partial with the Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "button-panic",
+        "base:address": "SERV:ruletmpl:button-panic",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed, raise a panic alarm.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1444003200000,
+        "ruletmpl:description": "Use the Smart Button to raise a panic alarm.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Smart Panic Button"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "0bb95a0",
+        "base:address": "SERV:ruletmpl:0bb95a0",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed on ${smart fob}, then ${control} ${garage door}.",
+        "ruletmpl:keywords": [
+          "button",
+          "motdoor"
+        ],
+        "base:tags": [
+          "but",
+          "motdoor"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1466467200000,
+        "ruletmpl:description": "Use a Smart Fob to open or close a garage door when a button is pressed.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Open Garage Door with a Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "63065f",
+        "base:address": "SERV:ruletmpl:63065f",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When there is no activity detected by ${device} for ${duration} minutes, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "mot"
+        ],
+        "base:tags": [
+          "mot",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when no motion is detected for a period of time.",
+        "ruletmpl:categories": [
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Know When Nobody is Moving"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "1b7bef",
+        "base:address": "SERV:ruletmpl:1b7bef",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When smoke or carbon monoxide are detected, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "safety"
+        ],
+        "base:tags": [
+          "safety",
+          "scene"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447632000000,
+        "ruletmpl:description": "When smoke or carbon monoxide are detected, then run a scene.",
+        "ruletmpl:categories": [
+          "Smoke & CO",
+          "Scene"
+        ],
+        "ruletmpl:name": "Smoke or CO Detected, Run a Scene"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "084abd",
+        "base:address": "SERV:ruletmpl:084abd",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed, start record video from ${camera} for ${duration}.",
+        "ruletmpl:keywords": [
+          "camera"
+        ],
+        "base:tags": [
+          "camera",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443744000000,
+        "ruletmpl:description": "Press a button and start recording.",
+        "ruletmpl:categories": [
+          "Cameras & Sensors"
+        ],
+        "ruletmpl:name": "Touch Button Surveillance"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "5856c8",
+        "base:address": "SERV:ruletmpl:5856c8",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When smoke is detected, then unlock the ${lock}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When smoke is detected, unlock my locks.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Fast and Easy Fire Escape"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "4b7308",
+        "base:address": "SERV:ruletmpl:4b7308",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${leakh2o} reports a leak, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "leakh2o"
+        ],
+        "base:tags": [
+          "leakh2o",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "Notify me when a water leak has been detected.",
+        "ruletmpl:categories": [
+          "Water",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Water Leak Detected"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "23adbb",
+        "base:address": "SERV:ruletmpl:23adbb",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then ${control} the ${lock}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When the alarm mode changes then lock or unlock a door.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Control Lock via Security"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "5e5800",
+        "base:address": "SERV:ruletmpl:5e5800",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} electricity usage goes ${above or below} ${value}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "poweruse"
+        ],
+        "base:tags": [
+          "poweruse",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": true,
+        "ruletmpl:added": 1453852800000,
+        "ruletmpl:description": "Notify me when smart plug energy usage goes above or below a certain level.",
+        "ruletmpl:categories": [
+          "Energy",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Monitor Smart Plug Energy Usage"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "6ec06b",
+        "base:address": "SERV:ruletmpl:6ec06b",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is opened, start record video from ${camera} for ${duration}.",
+        "ruletmpl:keywords": [
+          "cont",
+          "camera"
+        ],
+        "base:tags": [
+          "cont",
+          "camera"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1462752000000,
+        "ruletmpl:description": "Record when a door, window, cabinet or drawer is opened",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Cameras & Sensors"
+        ],
+        "ruletmpl:name": "Record when a door opens"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "eab545",
+        "base:address": "SERV:ruletmpl:eab545",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "secure"
+        ],
+        "base:tags": [
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443571200000,
+        "ruletmpl:description": "Notify me when the security alarm mode changes.",
+        "ruletmpl:categories": [
+          "Security Alarm",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Notify on Alarm Changed"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfob-chime",
+        "base:address": "SERV:ruletmpl:smartfob-chime",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${smart fob}, play a chime on the hub.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Play a chime on the hub using a button on the Smart Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Chime with the Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "2ef6fa",
+        "base:address": "SERV:ruletmpl:2ef6fa",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is locked, arm ${on or partial} the security alarm.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1454284800000,
+        "ruletmpl:description": "Arm on or arm partial when a lock is locked.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm on or partial with a Lock"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "button-chime",
+        "base:address": "SERV:ruletmpl:button-chime",
+        "ruletmpl:premium": false,
+        "ruletmpl:template": "When ${button} is pressed, chime the hub.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1444003200000,
+        "ruletmpl:description": "Use the Smart Button as a doorbell.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Door Bell Button"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "cc753c",
+        "base:address": "SERV:ruletmpl:cc753c",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${lock} is ${locked or unlocked} then ${open or close} ${garage door}.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "motdoor",
+          "garage"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When lock is locked or unlocked, open or close the garage door.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Lock Up And Close Garage"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfobgen1-arm-partial",
+        "base:address": "SERV:ruletmpl:smartfobgen1-arm-partial",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${key fob}, set the alarm to Partial.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to partial using a button on the 1st Gen Key Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Arm Partial with the 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "3cdbb0",
+        "base:address": "SERV:ruletmpl:3cdbb0",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is opened, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when a window opens.",
+        "ruletmpl:categories": [
+          "Windows & Blinds",
+          "Doors & Locks",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Did Someone Open a Window?"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfob-disarm",
+        "base:address": "SERV:ruletmpl:smartfob-disarm",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${smart fob}, set the alarm to Off.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to off using a button on the Smart Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Disarm with the Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "5b738d",
+        "base:address": "SERV:ruletmpl:5b738d",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${a person or device} arrives, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "pres"
+        ],
+        "base:tags": [
+          "pres",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when someone arrives.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Who just got home?"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "01e7de",
+        "base:address": "SERV:ruletmpl:01e7de",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${smart fob}, raise a panic alarm.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Use a button on the Smart Fob to raise a panic alarm",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Smartfob Panic Button"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "3dbfc6",
+        "base:address": "SERV:ruletmpl:3dbfc6",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then ${control} ${light} ${for awhile}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When the security alarm mode changes, then control a device.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm Set, Lights Out"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "d2cd6c8",
+        "base:address": "SERV:ruletmpl:d2cd6c8",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When a pet enters or leaves through ${pet door}, then lock it ${for awhile}.",
+        "ruletmpl:keywords": [
+          "petdoor",
+          "pettoken"
+        ],
+        "base:tags": [
+          "petdoor",
+          "pettoken"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Lock the pet door when a pet enters or exits.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Lock the Pet Door"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "cd09b0",
+        "base:address": "SERV:ruletmpl:cd09b0",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} temperature goes ${above or below} ${value}, then set ${vent} to ${level}.",
+        "ruletmpl:keywords": [
+          "temp"
+        ],
+        "base:tags": [
+          "vent",
+          "temp"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1453852800000,
+        "ruletmpl:description": "Open or close vents based on the temperature of other devices.",
+        "ruletmpl:categories": [
+          "Climate"
+        ],
+        "ruletmpl:name": "Control Vents Based on Temperature"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "6c3953",
+        "base:address": "SERV:ruletmpl:6c3953",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${garage door} is set to ${state}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "motdoor"
+        ],
+        "base:tags": [
+          "motdoor",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when my garage door is opened or closed.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Garage Door Activated"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "902a41",
+        "base:address": "SERV:ruletmpl:902a41",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is open for ${duration} minutes, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when a door or window is left open for more than a certain period of time.",
+        "ruletmpl:categories": [
+          "Windows & Blinds",
+          "Climate",
+          "Doors & Locks",
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Someone Left the Door Open"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "54baaa",
+        "base:address": "SERV:ruletmpl:54baaa",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When carbon monoxide is detected, then unlock the ${lock}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When carbon monoxide is detected, unlock my locks.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Smoke & CO"
+        ],
+        "ruletmpl:name": "CO Detected; Unlock Doors"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "57befa",
+        "base:address": "SERV:ruletmpl:57befa",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${person or device} is missing from home for ${duration}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "pres"
+        ],
+        "base:tags": [
+          "pres",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "Notify me when a Care pendant is missing from home",
+        "ruletmpl:categories": [
+          "Home & Family"
+        ],
+        "ruletmpl:name": "Person is not Home"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "c64e13",
+        "base:address": "SERV:ruletmpl:c64e13",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is turned on but a lock is NOT locked then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when alarm is on and door is unlocked",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Forgot to Lock the Door"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Check with your HVAC expert to ensure proper airflow through your home.",
+        "base:id": "0b6ff3",
+        "base:address": "SERV:ruletmpl:0b6ff3",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${motion_device} detects motion, then set ${vent_device} to ${level}% open.",
+        "ruletmpl:keywords": [
+          "mot"
+        ],
+        "base:tags": [
+          "mot",
+          "vent"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When I walk into the room, open the vent.",
+        "ruletmpl:categories": [
+          "Climate"
+        ],
+        "ruletmpl:name": "Cool Whichever Room I am In"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "47e926",
+        "base:address": "SERV:ruletmpl:47e926",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When smoke or carbon monoxide are detected, turn ${light} ${on} ${for awhile}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [
+          "safety",
+          "switch"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": true,
+        "ruletmpl:added": 1451865600000,
+        "ruletmpl:description": "When smoke or carbon monoxide are detected, then switch on a light for awhile.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Smoke & CO"
+        ],
+        "ruletmpl:name": "Smoke Detected, Turn Lights On"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfobgen1-chime",
+        "base:address": "SERV:ruletmpl:smartfobgen1-chime",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${key fob}, play a chime on the hub.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Play a chime on the hub using a button on the 1st Gen Key Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Chime with the 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "47e925",
+        "base:address": "SERV:ruletmpl:47e925",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm changes to ${state}, then switch ${on_or_off} ${light} ${for awhile}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When the security alarm mode changes, then control a device.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm Triggered, Turn Lights On"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "c2dd38",
+        "base:address": "SERV:ruletmpl:c2dd38",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${key fob}, raise a panic alarm.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Use a button on the 1st Gen Key Fob to raise a panic alarm",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "1st Gen Key Fob Panic Button"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "7033ee",
+        "base:address": "SERV:ruletmpl:7033ee",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${person or device} is missing from home for ${duration} minutes, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "presence"
+        ],
+        "base:tags": [
+          "note",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when a care pendant is missing from home.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Care Pendant Is Not Home"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "21980a",
+        "base:address": "SERV:ruletmpl:21980a",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then ${control} the ${lock}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When the security alarm is armed, lock the doors.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm On; Lock Doors"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "9b4825",
+        "base:address": "SERV:ruletmpl:9b4825",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm triggers, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "security"
+        ],
+        "base:tags": [
+          "security",
+          "scene"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447632000000,
+        "ruletmpl:description": "When the security alarm is triggered, then run a scene.",
+        "ruletmpl:categories": [
+          "Security Alarm",
+          "Scene"
+        ],
+        "ruletmpl:name": "Alarm Triggered, Run a Scene"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "53ebbf",
+        "base:address": "SERV:ruletmpl:53ebbf",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} on ${smart fob} is pressed then toggle state of ${switch}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "swit",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Turn a device on or off by pressing a custom button.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Control Devices with a KeyFob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "80d915",
+        "base:address": "SERV:ruletmpl:80d915",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed then open or close ${vent}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "vent",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Open or close a vent when a Smart Button is pressed.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Touch-Button Comfort"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "a45e6b",
+        "base:address": "SERV:ruletmpl:a45e6b",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${door} is unlocked, turn ${switch} on.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "swit",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When a lock is unlocked, turn the light on.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Welcome Home"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "bd1116",
+        "base:address": "SERV:ruletmpl:bd1116",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "note",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Notify someone when a smart button has been pressed.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Who Pressed a Smart Button?"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "4d073c",
+        "base:address": "SERV:ruletmpl:4d073c",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${a person or device} leaves, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "pres"
+        ],
+        "base:tags": [
+          "pres",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when someone leaves.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Who left the House?"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "2a4a21",
+        "base:address": "SERV:ruletmpl:2a4a21",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} is unlocked, disarm the security alarm.",
+        "ruletmpl:keywords": [
+          "cont"
+        ],
+        "base:tags": [
+          "cont",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Disarm the security alarm when a lock is unlocked.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm off with a Lock"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "438d5f",
+        "base:address": "SERV:ruletmpl:438d5f",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${door} is set to ${state}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Notify me when a door is locked or unlocked.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Door Lock Activated"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "1e1f0d",
+        "base:address": "SERV:ruletmpl:1e1f0d",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${motion} detects motion, then turn the ${switch} to ${state} ${for awhile}.",
+        "ruletmpl:keywords": [
+          "mot"
+        ],
+        "base:tags": [
+          "mot",
+          "swit"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Turn a light on when something moves.",
+        "ruletmpl:categories": [
+          "Lights & Switches"
+        ],
+        "ruletmpl:name": "Motion Detected, Activate Switch"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "3502e4",
+        "base:address": "SERV:ruletmpl:3502e4",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${a person or device} is absent then lock ${door}.",
+        "ruletmpl:keywords": [
+          "lock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When I leave home, lock my doors.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Home & Family",
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Lock Up When I Leave"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "def48a",
+        "base:address": "SERV:ruletmpl:def48a",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} temperature goes ${above or below} ${value}, then set ${fan} to ${speed} ${for awhile}.",
+        "ruletmpl:keywords": [
+          "temp"
+        ],
+        "base:tags": [
+          "fan",
+          "temp"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1453852800000,
+        "ruletmpl:description": "Turn on or off the fan to help your home reach a specific temperature.",
+        "ruletmpl:categories": [
+          "Climate"
+        ],
+        "ruletmpl:name": "Control Fans Based on Temperature"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "abb7d3",
+        "base:address": "SERV:ruletmpl:abb7d3",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${doorlock} is ${state}, start record video from ${camera} for ${duration}.",
+        "ruletmpl:keywords": [
+          "camera"
+        ],
+        "base:tags": [
+          "camera",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443744000000,
+        "ruletmpl:description": "Keep an eye on things by recording anytime a door is locked or unlocked.",
+        "ruletmpl:categories": [
+          "Cameras & Sensors"
+        ],
+        "ruletmpl:name": "See Who Comes and Goes"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "d6a735",
+        "base:address": "SERV:ruletmpl:d6a735",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is turned on but a lock is NOT locked then lock lock and send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "Automatically lock my doors when the security alarm is on.",
+        "ruletmpl:categories": [
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Lock Doors When Security is On"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "d2833a",
+        "base:address": "SERV:ruletmpl:d2833a",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${tilt} changes to ${state} then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "tilt"
+        ],
+        "base:tags": [
+          "note",
+          "tilt"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Notify me when a tilt sensor is changed between certain times of day.",
+        "ruletmpl:categories": [
+          "Notifications"
+        ],
+        "ruletmpl:name": "Tilt Sensor Triggered"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "a00bcda",
+        "base:address": "SERV:ruletmpl:a00bcda",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${button} is pressed on ${key fob}, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "button"
+        ],
+        "base:tags": [
+          "scene",
+          "but"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Run a scene when a 1st Gen Key Fob button is pressed.",
+        "ruletmpl:categories": [
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene using a 1st Gen Key Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "a9242b",
+        "base:address": "SERV:ruletmpl:a9242b",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When motion detected by ${device}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "mot"
+        ],
+        "base:tags": [
+          "mot",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443571200000,
+        "ruletmpl:description": "Notify me when a motion sensor detects movement.",
+        "ruletmpl:categories": [
+          "Security Alarm",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Motion Detected"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "ceab2fc",
+        "base:address": "SERV:ruletmpl:ceab2fc",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device}'s humidity goes ${above or below} ${value}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "humid"
+        ],
+        "base:tags": [
+          "note",
+          "humid"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1447372800000,
+        "ruletmpl:description": "Notify me when the humidity of a device goes above or below a certain level.",
+        "ruletmpl:categories": [
+          "Climate",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Monitor Humidity"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "5371fe",
+        "base:address": "SERV:ruletmpl:5371fe",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${contact} is opened then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "contact"
+        ],
+        "base:tags": [
+          "note",
+          "cont"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Notify me when a contact sensor is opened between certain times of day.",
+        "ruletmpl:categories": [
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Door Opened at Time"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "e13466",
+        "base:address": "SERV:ruletmpl:e13466",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then run ${scene}.",
+        "ruletmpl:keywords": [
+          "scene"
+        ],
+        "base:tags": [
+          "scene",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1454630400000,
+        "ruletmpl:description": "Run a Scene when the security alarm mode changes.",
+        "ruletmpl:categories": [
+          "Security Alarm",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene via the Security Alarm"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "4t3itv",
+        "base:address": "SERV:ruletmpl:4t3itv",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "Run the ${scene} scene when ${a person or device} departs.",
+        "ruletmpl:keywords": [
+          "scene"
+        ],
+        "base:tags": [
+          "scene",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1448841600000,
+        "ruletmpl:description": "Run a scene when a person leaves home.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene When I Leave"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "180a7e",
+        "base:address": "SERV:ruletmpl:180a7e",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${person or device} is gone for ${duration}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "pres"
+        ],
+        "base:tags": [
+          "pres",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "Notify me when a care pendant is missing from home for a certain period of time and does not return.",
+        "ruletmpl:categories": [
+          "Notifications",
+          "Care"
+        ],
+        "ruletmpl:name": "Person Did not Return"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "426783",
+        "base:address": "SERV:ruletmpl:426783",
+        "ruletmpl:premium": false,
+        "ruletmpl:template": "Turn ${on or off} ${light} ${for awhile} when ${contact} is ${opened or closed}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1449446400000,
+        "ruletmpl:description": "When a contact sensor opens or closes, then control a light.",
+        "ruletmpl:categories": [
+          "Lights & Switches"
+        ],
+        "ruletmpl:name": "Control a light when a contact sensor opens or closes."
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Check with your HVAC expert to ensure proper airflow through your home.",
+        "base:id": "f8492e",
+        "base:address": "SERV:ruletmpl:f8492e",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When there is no activity detected by ${motion_device} for ${duration} minutes, then close ${vent_device}.",
+        "ruletmpl:keywords": [
+          "mot"
+        ],
+        "base:tags": [
+          "mot",
+          "vent"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1439251200000,
+        "ruletmpl:description": "When no one is in a room, close the vent.",
+        "ruletmpl:categories": [
+          "Climate"
+        ],
+        "ruletmpl:name": "Do not Cool an Empty Room"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "faee7b",
+        "base:address": "SERV:ruletmpl:faee7b",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the security alarm is set to ${mode}, then ${control} the ${lock}.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When the security alarm is set off, then unlock the house.",
+        "ruletmpl:categories": [
+          "Doors & Locks",
+          "Security Alarm"
+        ],
+        "ruletmpl:name": "Alarm Off; Unlock Doors"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "19cd1c",
+        "base:address": "SERV:ruletmpl:19cd1c",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} has been on for ${duration}, then turn it off.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": true,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When a smart plug has been on for too long turn it off.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Energy"
+        ],
+        "ruletmpl:name": "Turn Off a Device That's Been On Too Long"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "smartfob-arm-on",
+        "base:address": "SERV:ruletmpl:smartfob-arm-on",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When the ${button} is pressed on ${smart fob}, set the alarm to On.",
+        "ruletmpl:keywords": [],
+        "base:tags": [],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1438732800000,
+        "ruletmpl:description": "Set the security alarm to on using a button on the Smart Fob",
+        "ruletmpl:categories": [
+          "Buttons & Fobs"
+        ],
+        "ruletmpl:name": "Arm On with the Smart Fob"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "3ps8j9",
+        "base:address": "SERV:ruletmpl:3ps8j9",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${door lock} is ${locked or unlocked}, then turn ${switch} ${on} ${for awhile}.",
+        "ruletmpl:keywords": [
+          "doorlock"
+        ],
+        "base:tags": [
+          "doorlock",
+          "swit"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1451865600000,
+        "ruletmpl:description": "When a door is locked or unlocked, then control a switch.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Doors & Locks"
+        ],
+        "ruletmpl:name": "Door Locked or Unlocked, Activate Switch"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": "Keyfobs and Pendants are subject to delays in order to conserve battery life.",
+        "base:id": "tq29nh",
+        "base:address": "SERV:ruletmpl:tq29nh",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "Run the ${scene} scene when ${a person or device} arrives home.",
+        "ruletmpl:keywords": [
+          "scene"
+        ],
+        "base:tags": [
+          "scene",
+          "pres"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1448841600000,
+        "ruletmpl:description": "Run a scene when a person arrives home.",
+        "ruletmpl:categories": [
+          "Home & Family",
+          "Buttons & Fobs",
+          "Scene"
+        ],
+        "ruletmpl:name": "Run a Scene When I Arrive"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "669619",
+        "base:address": "SERV:ruletmpl:669619",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When any alarm goes off, start recording video from all cameras for ${duration}.",
+        "ruletmpl:keywords": [
+          "camera"
+        ],
+        "base:tags": [
+          "camera",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1443744000000,
+        "ruletmpl:description": "Record automatically when the smoke or CO alarms.",
+        "ruletmpl:categories": [
+          "Cameras & Sensors",
+          "Smoke & CO"
+        ],
+        "ruletmpl:name": "What Happened During Alarm"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "a1a7c5",
+        "base:address": "SERV:ruletmpl:a1a7c5",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${device} has been ${state} for ${duration} minutes, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "swit"
+        ],
+        "base:tags": [
+          "swit",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": true,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "Notify me when a smart plug has been on for too long.",
+        "ruletmpl:categories": [
+          "Lights & Switches",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Device On For Too Long Notification"
+      },
+      {
+        "base:caps": [
+          "base",
+          "ruletmpl"
+        ],
+        "ruletmpl:extra": null,
+        "base:id": "c117e7",
+        "base:address": "SERV:ruletmpl:c117e7",
+        "ruletmpl:premium": true,
+        "ruletmpl:template": "When ${leakh2o} reports a leak, then turn off ${valve}, then send ${person} a message via ${method}.",
+        "ruletmpl:keywords": [
+          "leakh2o"
+        ],
+        "base:tags": [
+          "leakh2o",
+          "note"
+        ],
+        "base:type": "ruletmpl",
+        "ruletmpl:lastModified": null,
+        "ruletmpl:satisfiable": false,
+        "ruletmpl:added": 1440633600000,
+        "ruletmpl:description": "When a water leak has been detected, close the water shut-off valve and notify me.",
+        "ruletmpl:categories": [
+          "Water",
+          "Notifications"
+        ],
+        "ruletmpl:name": "Water Leak Detected; Shut Off Water"
+      }
+    ]
+  }
+}

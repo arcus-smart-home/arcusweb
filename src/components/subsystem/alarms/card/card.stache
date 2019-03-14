@@ -1,0 +1,68 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="subsystem-card-title">
+  <h3 class="supported">
+    <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}">
+      {{{iconOf(subsystem)}}}
+      {{subsystem.displayName}}
+    </a>
+    {{#if place.isPromon}}
+      <span class="pro-badge">Pro</span>
+    {{/if}}
+  </h3>
+  {{#eq subsystem['subs:state'] 'ACTIVE'}}
+    <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}" class="subsystem-chevron">
+      <i class="icon-app-chevron"></i>
+    </a>
+  {{/eq}}
+  {{#unless hasAvailableAlerts}}
+    <div class="subsystem-status">
+      <a data-analytics="dashboard.{{subsystem.analyticsTag}}.info" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}" target="_blank">
+        Learn More
+      </a>
+    </div>
+  {{/unless}}
+</div>
+{{#if hasAvailableAlerts}}
+  {{#eq subsystem['subs:state'] 'ACTIVE'}}
+    <div class="subsystem-card-contents">
+      {{#if currentIncident}}
+        <can-import from="i2web/components/subsystem/alarms/incident-tracker/graphical/" />
+        <arcus-subsubsystem-alarms-incident-tracker-graphical {incident}="currentIncident" />
+      {{else}}
+        {{#if isAlarmProviderOffline}}
+          <can-import from="i2web/components/subsystem/alarms/status/security-hub-offline.component" />
+          <arcus-subsystem-alarms-status-security-hub-offline {subsystem}="subsystem" condensed />
+        {{else}}
+          <can-import from="i2web/components/subsystem/alarms/status/generic.component" />
+          <can-import from="i2web/components/subsystem/alarms/status/security.component" />
+
+          <arcus-subsystem-alarms-status-security {subsystem}="subsystem" condensed />
+          <div class="sensors">
+            <arcus-subsystem-alarms-status-generic {subsystem}="subsystem" type="smoke" condensed />
+            <arcus-subsystem-alarms-status-generic {subsystem}="subsystem" type="co" condensed />
+            <arcus-subsystem-alarms-status-generic {subsystem}="subsystem" type="water" condensed />
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="subsystem-alarms-card-suspended">
+      <p class="not-supported">Download the 2.1.1+ version of the Arcus iOS or Android app and login to this Place to activate the new Alarm service.</p>
+    </div>
+  {{/eq}}
+{{/if}}

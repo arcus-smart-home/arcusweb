@@ -1,0 +1,22 @@
+apply from: "build-release.gradle"
+
+def distDir = "dist";
+
+task installDeps(type: Exec) {
+   List<String> cLine = [ "npm", "install" ]
+
+   commandLine cLine
+}
+
+task compileJs(type: Exec) {
+   dependsOn installDeps
+
+   List<String> cLine = [ "npm", "run", "build" ]
+
+   commandLine cLine
+}
+
+task clean(type: Delete) {
+   delete 'node_modules', 'dist'
+}
+

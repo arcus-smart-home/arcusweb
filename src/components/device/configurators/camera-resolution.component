@@ -1,0 +1,95 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-camera-resolution">
+  <template>
+    {{#if isSwannCamera}}
+      <p>Choosing a higher quality will capture a better picture, but will use
+        more internet bandwidth. Recording image quality is defaulted to 1080p.</p>
+    {{else}}
+      <p>Choosing a higher quality resolution will capture a better picture, but will use more storage when saved.</p>
+    {{/if}}
+    {{#selectInput('resolution', 'Choose Resolution', placeholder=resolution)}}
+      {{#each supportedResolutions as res}}
+        <option value="{{res}}">{{res}}</option>
+      {{/each}}
+    {{/selectInput}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import orderBy from 'lodash/orderBy';
+    import Device from 'i2web/models/device';
+
+    const heightByResolution = {
+      '480p': 480,
+      '720p': 720,
+      '1080p': 1080,
+      '4k': 2160,
+      '8k': 4320,
+    };
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        isSwannCamera: {
+          get() {
+            return !!this.attr('device.swannbatterycamera:sn');
+          },
+        },
+        resolution: {
+          get() {
+            return this.attr('device.camera:resolution');
+          },
+          set(resolution) {
+            this.attr('device.camera:resolution', resolution);
+            return resolution;
+          },
+        },
+        supportedResolutions: {
+          get() {
+            return this.attr('isSwannCamera')
+              ? this.supportedResolutionsSorted()
+              : this.attr('device.camera:resolutionssupported');
+          },
+        },
+        title: {
+          get() {
+            return this.attr('isSwannCamera')
+              ? 'Live Stream Image Quality'
+              : 'Image Quality';
+          },
+        },
+      },
+      supportedResolutionsSorted() {
+        return orderBy(
+          this.attr('device.camera:resolutionssupported'),
+          [r => heightByResolution[r.toLowerCase()]],
+          ['desc'],
+        );
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} camera:resolution': function valueUpdated() {
+        this.viewModel.attr('device').save().catch();
+      },
+    };
+  </script>
+</can-component>

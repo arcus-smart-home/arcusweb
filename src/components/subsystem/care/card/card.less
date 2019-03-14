@@ -1,0 +1,111 @@
+arcus-subsystem-card-care {
+  display: block;
+  .subsystem-card-contents {
+    display: flex;
+    border-top: 1px solid @pigeon;
+    padding: 0;
+    flex: 1 0 auto;
+    .breakpoint(md-down, {
+      flex-direction: column;
+    });
+    .care-alarm {
+      background-color: @care-bg;
+      width: 100%;
+      text-align: center;
+      padding: @gutter*1.6 @gutter @gutter;
+      i {
+        color: @honeycreeper;
+        font-size: 50px;
+        border: 3px solid @honeycreeper;
+        border-radius: 100%;
+        padding: @gutter/1.5;
+      }
+      h3 {
+        .font-demibold;
+        margin-top: @gutter*1.5;
+        margin-bottom: @gutter/2;
+      }
+      p {
+        font-style: italic;
+        margin-bottom: @gutter/2;
+      }
+      .btn-primary {
+        margin-bottom: 0;
+      }
+    }
+    .left {
+      border-right: 1px solid @pigeon;
+      padding-left: @gutter*2.5;
+      width: 50%;
+      .breakpoint(lg-down, {
+        width: 100%;
+        padding-left: @gutter*1.5;
+      });
+      .breakpoint(sm-down, {
+        width: 100%;
+        padding-left: @gutter;
+      });
+    }
+    .right {
+      width: 50%;
+      .breakpoint(lg-down, {
+        border-top: 1px solid @pigeon;
+        width: 100%;
+      });
+      .event-item:last-of-type {
+        border-bottom: 0;
+      }
+      h3 {
+        margin-top: @gutter;
+        margin-bottom: 0;
+        .breakpoint(lg-down, {
+          margin-top: @gutter;
+          margin-left: @gutter;
+        });
+        .breakpoint(lg, {
+          margin-left: @gutter;
+        });
+        .breakpoint(sm-down, {
+          margin-left: @gutter;
+        });
+      }
+      .recent-activity {
+        border-top: 1px solid @pigeon;
+        margin-top: @gutter/2;
+        padding-top: @gutter/2;
+      }
+      .time {
+        min-width: 100px;
+      }
+      .history-timestamp {
+        border-bottom-color: @pigeon;
+        align-items: flex-start;
+        padding-left: @gutter;
+      }
+      .event {
+        border-bottom-color: @pigeon;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      .no-behaviors-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 @gutter;
+        .breakpoint(md-down, {
+          padding: @gutter;
+        });
+        .btn-primary {
+          margin: 0;
+        }
+      }
+    }
+    arcus-event-list {
+      .event-item + .history-timestamp {
+        border-top-color: @pigeon;
+      }
+    }
+  }
+}

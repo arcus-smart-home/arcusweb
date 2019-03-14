@@ -1,0 +1,192 @@
+arcus-device-card {
+  display: block;
+  height: 150px;
+  .device-badge {
+    &:hover {
+      cursor: pointer;
+      height: 100%;
+    }
+    .action {
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .btn-run {
+        margin-bottom: 0;
+      }
+    }
+    .details {
+      transition: all 0.25s ease-in-out;
+      width: 100%;
+      position: absolute;
+      top: @gutter*3;
+    }
+    .hover-action {
+      transition: all 0.25s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      .btn-run:first-child {
+        margin-bottom: @gutter/3;
+      }
+    }
+    .non-hover-action {
+      transition: all 0.25s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+    &.hasHoverAction {
+      .hover-action {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+      }
+      &:not(.offline) {
+        &:hover {
+          .hover-action {
+            opacity: 1;
+            height: 100%;
+          }
+          .non-hover-action {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    &.hasAction {
+      .action {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+      }
+      .details {
+        opacity: 1;
+        height: auto;
+      }
+      &:not(.offline) {
+        &:hover {
+          .action {
+            opacity: 1;
+            height: 100%;
+          }
+          .details {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    &.hasHoverStatus {
+      .non-hover-status {
+        transition: all 0.25s ease-in-out;
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+      }
+      .hover-status {
+        transition: all 0.25s ease-in-out;
+        opacity: 0;
+        height: 0;
+        width: 100%;
+        position: absolute;
+        overflow: hidden;
+      }
+      &:not(.offline) {
+        &:hover {
+          .hover-status {
+            opacity: 1;
+            height: 100%;
+          }
+          .non-hover-status {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    &.offline {
+      .device-name {
+        color: @grouse;
+      }
+    }
+    &.warning {
+      .device-status {
+      }
+      .hover-action {
+        align-items: center;
+      }
+    }
+     &.error {
+      .device-status {
+        color: @cardinal;
+      }
+      .hover-action {
+        align-items: center;
+      }
+    }
+    .btn-cancel {
+      margin-bottom: 0;
+    }
+  }
+  .toggle-container {
+    margin: 0 auto;
+  }
+  p {
+    color: @swift;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .icon-app-calendar-1 {
+    color: #6DCFF6;
+  }
+
+  arcus-device-action-toggle-on-off {
+    .content {
+      flex-direction: column;
+
+      label {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+    }
+  }
+  arcus-device-action-irrigation-nowstopskip,
+  arcus-device-action-lock-unlock,
+  arcus-device-action-lock-unlock-auto-petdoor,
+  arcus-device-action-stream-record {
+    .btn-run {
+      margin: 0;
+
+      &:last-of-type {
+        margin-left: 0;
+        margin-top: 5px;
+      }
+    }
+  }
+  arcus-device-action-changetemperature,
+  arcus-device-action-changewaterheatertemperature,
+  arcus-device-action-changeventlevel,
+  arcus-device-action-changeshadelevel {
+    align-self: flex-start;
+    margin-top: @gutter/8; //gives button hover space to avoid clipping
+  }
+}

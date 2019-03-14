@@ -1,0 +1,59 @@
+arcus-schedule-calendar-day {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+	.day-wrapper {
+  	display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .day-marker {  
+    display: block;
+    flex: 0 0 auto;
+    width: 20px;
+    color: @coot;
+    font-size: @font-size-small;
+    text-align: center;
+    margin-right: @gutter/2;
+  }
+  .day-track {
+    display: flex;
+    position: relative;
+    border: 1px solid @heron;
+    background-color: @crane;
+    width: 100%;
+    height: 12px;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      border-left: 1px solid @heron;
+      height: 10px;
+    }
+    &:before {
+      left: 25%;
+      border-right: 1px solid @heron;
+      width: 25%;
+    }
+    &:after {
+      right: 25%;
+    }
+  }
+  .day-event {
+    position: absolute;
+    background-color: @peacock;
+    border-radius: 50px;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    z-index: 2;
+    &.inactive {
+      background-color: @crane;
+      border: 1px solid @peacock;
+    }
+    &.disabled {
+      background-color: @heron;
+    }
+  }
+}

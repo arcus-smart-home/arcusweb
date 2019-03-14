@@ -1,0 +1,68 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/"/>
+<can-import from="../details/"/>
+
+<div class="panel-content">
+  <h3>More</h3>
+  <hr/>
+  <h3>Product Information</h3>
+  <h4>{{device['dev:name']}}<br/>
+  <small>{{#if device.product['product:name']}}{{device.product['product:name']}}{{/if}}</small></h4>
+
+  <h4>Model Number<br/>
+  <small>{{#if device.product['product:arcusModelId']}}{{device.product['product:arcusModelId']}}{{else}}-{{/if}}</small></h4>
+
+  <h4>Certification<br/>
+  <small>{{#if device.product['product:cert']}}{{device.product['product:cert']}} with Arcus{{else}}-{{/if}}</small></h4>
+
+  <h4>Last Paired<br/>
+  <small>{{format-date(device['devadv:added'], 'MMM DD YYYY')}}</small></h4>
+
+  <h4>Wireless<br/>
+  <small>{{#if device.product['product:protoFamily']}}{{device.product['product:protoFamily']}}{{else}}-{{/if}}</small></h4>
+
+  {{#if device['web:dev:hasDetails']}}
+    {{device-details(device}}
+  {{/if}}
+
+  <hr/>
+
+  <div class="removal">
+    {{^if isConfirmationShown}}
+      <div>
+        <button class="btn btn-cancel" ($click)="onPromptClick">
+          Remove Device
+        </button>
+      </div>
+    {{else}}
+      <div class="confirmation">
+        <p>Are you sure?</p>
+        {{#if confirmationText}}
+          <p>{{confirmationText}}</p>
+        {{/if}}
+
+        <button class="btn btn-cancel" ($click)="onConfirmationClick">
+          Yes, Remove Device
+        </button>
+        <button class="btn cancel-remove" ($click)="onCancelConfirmationClick">
+          Cancel
+        </button>
+      </div>
+    {{/if}}
+  </div>
+</div>

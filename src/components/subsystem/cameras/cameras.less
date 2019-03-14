@@ -1,0 +1,22 @@
+@import 'clips/clips.less';
+@import 'status/status.less';
+@import 'storage/storage.less';
+@import 'card/card.less';
+@import 'pin-clip/pin-clip.less';
+
+arcus-subsystem-cameras {
+  display: flex;
+  flex-direction: column;
+  .cameras-navigation {
+    margin: @gutter/2;
+    .breakpoint(md, {
+      margin: @gutter;
+    });
+    button {
+      margin-bottom: 0;
+    }
+  }
+  hr {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,87 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/form/confirm-field/"/>
+
+<div class="row panel-list-container {{#if hub['isOffline']}}offline{{/if}}">
+  <div class="panel-primary-wrapper">
+    <div class="col-xs-12 col-md panel-information">
+      <div class="device-badge-icon {{stateClass}}">
+        <div class="icon-app-state">
+          <i class="{{iconClass}}"></i>
+        </div>
+      </div>
+      <div class="device-information">
+        <arcus-form-confirm-field
+          {(model)}="hub"
+          field="hub:name"
+          field-description="Hub Name"
+          placeholder="Hub Name"
+          notify-on-save="true"
+          attributes="character-count='254' "/>
+        <h5>{{modelName}}</h5>
+        <ul class="col-xs-12 col-md panel-options">
+          <li>
+            <a ($click)="toggleConfigurationPanel()">
+              <i class="icon-app-controls-2" aria-hidden="true"></i>
+              <span class="sr-only">Configuration for {{hub['hub:name']}}</span>
+            </a>
+          </li>
+          <li>
+              <a ($click)="toggleDetailsPanel()">
+                <i class="icon-app-more-2" aria-hidden="true"></i>
+                {{#if hub['hub:name']}}
+                  <span class="sr-only">More details for {{hub['hub:name']}}</span>
+                {{/if}}
+              </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row panel-secondary-wrapper">
+    {{#if hub['isOffline']}}
+      <div class="col-md panel-error">
+        <p>The hub is not connected.</p>
+        <a href="{{redirectToUrl('s_hub')}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+      </div>
+    {{else}}
+      <div class="col-md panel-action">
+      </div>
+      <div class="col-md panel-status">
+        {{#if hub.connectionType}}
+          <span class="device-status-detail">{{hub.connectionType}}</span>
+        {{/if}}
+        {{#if hub.isConnectedWiFi}}
+          <span class="device-status-detail wifi">
+            <i class="{{signal-strength-icon(hub['hubwifi:wifiRssi'])}} {{signal-strength-text(hub['hubwifi:wifiRssi'])}}"></i>&nbsp;
+            {{signal-strength-text(hub['hubwifi:wifiRssi'])}}
+          </span>
+        {{/if}}
+        {{#if batteryPowered}}
+          <span class="device-status-detail {{#if hub['isBatteryLow']}}low-battery{{/if}}">
+            <i class="icon-app-battery"></i>&nbsp;
+            {{hub['hubpow:Battery']}}<sup class="value-unit">%</sup>
+          </span>
+        {{else}}
+          <span class="device-status-detail">AC</span>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+

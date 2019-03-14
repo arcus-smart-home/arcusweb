@@ -1,0 +1,35 @@
+arcus-scrubber {
+  display: flex;
+  flex-direction: column;
+  background: @pigeon;
+  border-radius: 2em;
+  position: relative;
+  border: 2px solid @pigeon;
+  overflow: hidden;
+  &.larger { // bigger progress bar, apply class to component
+    .progress-bar {
+      height: 20px;
+    }
+    .handle {
+      height: 24px;
+      width: 24px;
+    }
+  }
+  .progress-bar {
+    background: @swift;
+    height: 8px;
+    transform-origin: 0 0;
+    position: relative;
+  }
+  .handle {
+    background: @peacock;
+    border: 2px solid @pigeon;
+    border-radius: 100%;
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    left: -6px; // half width
+    top: -2px;
+  }
+}

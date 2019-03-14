@@ -1,0 +1,98 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-alarm-requirements">
+  <template>
+    <can-import from="i2web/helpers/global" />
+    <can-import from="i2web/components/shop-button.component" />
+    {{close-button}}
+    <div class="panel-content">
+      {{#if shouldRenderRequirements('SECURITY')}}
+        <h3>Security Requirements</h3>
+        <p>
+          These are the devices that participate in your Security Alarm. We strongly recommend having more than one
+          security device to properly secure your home.
+        </p>
+        <ul>
+          <li>Contact Sensor</li>
+          <li>Door Hinge Sensor</li>
+          <li>Tilt Sensor</li>
+          <li>Motion Sensor</li>
+          <li>Glass Break Sensor</li>
+          <li>Cameras (via Internal Motion Sensor)</li>
+          <li>Garage Doors*</li>
+        </ul>
+        <p class="small"><sup>*</sup>Genie Company has not granted permission to include their device in the Security Alarm service.</p>
+      {{/if}}
+      {{#if shouldRenderRequirements('SMOKE')}}
+        <h3>Smoke Requirements</h3>
+        <p>
+          A smoke detector is required to participate in your Smoke Alarm. More than one is recommended to properly
+          protect your home.
+        </p>
+      {{/if}}
+      {{#if shouldRenderRequirements('CO')}}
+        <h3>Carbon Monoxide (CO) Requirements</h3>
+        <p>
+          A carbon monoxide detector is required to participate in your CO Alarm. More than one is recommended to
+          properly protect your home.
+        </p>
+      {{/if}}
+      {{#if shouldRenderRequirements('PANIC')}}
+        <h3>Panic Requirements</h3>
+        <p>
+          These are the devices that participate in your Panic Alarm. At least one is required:
+        </p>
+        <ul>
+          <li>Keypad</li>
+          <li>Care Pendant*</li>
+          <li>Smart Button*</li>
+          <li>Smart Fob*</li>
+        </ul>
+        <p class="small"><sup>*</sup> A Rule must be assigned to these devices in order for them to interact with Professional Monitoring.</p>
+      {{/if}}
+      <hr/>
+      <arcus-shop-button href="{{redirectToUrl(productCategoryKey)}}" expanded />
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    export default canMap.extend({
+      define: {
+        reqType: {
+          type: 'string',
+          value: 'ALL',
+        },
+        productCategoryKey: {
+          get() {
+            // The productCategoryKey is used to redirect to the ARCUS product page
+            // that is shown when user presses SHOP button
+            switch (this.attr('reqType')) {
+              case 'SMOKE': return 'p_smoke';
+              case 'CO': return 'p_smoke';
+              case 'PANIC': return 'p_care';
+              default: return 'p_security';
+            }
+          },
+        },
+      },
+      shouldRenderRequirements(reqirementType) {
+        const reqType = this.attr('reqType');
+        return reqType === 'ALL' || reqType === reqirementType;
+      },
+    });
+  </script>
+</can-component>

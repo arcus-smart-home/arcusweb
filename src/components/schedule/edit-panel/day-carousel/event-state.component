@@ -1,0 +1,303 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-edit-panel-day-carousel-event-state">
+  <template>
+    <small class="event-state">
+      {{#switch command.scheduleId}}
+        {{#case 'RULES'}}
+          {{ruleEventState}}
+        {{/case}}
+        {{#case 'LIGHT'}}
+          {{{lightEventState}}}
+        {{/case}}
+        {{#case 'AUTO'}}
+          {{{thermHeatState}}} - {{{thermCoolState}}}
+        {{/case}}
+        {{#case 'COOL'}}
+          {{{thermCoolState}}}
+        {{/case}}
+        {{#case 'HEAT'}}
+          {{{thermHeatState}}}
+        {{/case}}
+        {{#case 'CLIMATE'}}
+          {{{climateEventState}}}
+        {{/case}}
+        {{#case 'DOORS'}}
+          {{{doorEventState}}}
+        {{/case}}
+        {{#case 'WATER'}}
+          {{{waterEventState}}}
+        {{/case}}
+        {{#case 'WEEKLY'}}
+          {{irrigationEventState}}
+        {{/case}}
+        {{#case 'INTERVAL'}}
+          {{irrigationEventState}}
+        {{/case}}
+        {{#case 'EVEN'}}
+          {{irrigationEventState}}
+        {{/case}}
+        {{#case 'ODD'}}
+          {{irrigationEventState}}
+        {{/case}}
+      {{/switch}}
+    </small>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import { formatDuration } from 'i2web/helpers/global';
+    import temperatureConverter from 'i2web/plugins/temperature-converter';
+    import MotorizedDoorCapability from 'i2web/models/capability/MotorizedDoor';
+    import PetDoorCapability from 'i2web/models/capability/PetDoor';
+    import SpaceHeaterCapability from 'i2web/models/capability/SpaceHeater';
+    import SwitchCapability from 'i2web/models/capability/Switch';
+    import ValveCapability from 'i2web/models/capability/Valve';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} command
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The scheduled command for the rule/scene/device
+         */
+        command: {
+          type: '*',
+        },
+        /**
+         * @property {String} irrigationEventState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The sum of each zone duration
+         */
+        irrigationEventState: {
+          get() {
+            const events = this.attr('command.events');
+            if (events) {
+              const total = events.attr()
+                .map(e => e.duration)
+                .reduce((acc, curr) => acc + curr, 0);
+              return formatDuration(total, 'minutes');
+            }
+            return '';
+          },
+        },
+        /**
+         * @property {String} thermCoolState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a themostat's cool state schedule item
+         */
+        thermCoolState: {
+          get() {
+            const state = this.attr('command.attributes.therm:coolsetpoint');
+            return `${temperatureConverter(state, 'F')}<sup class="value-unit">&deg;</sup>`;
+          },
+        },
+        /**
+         * @property {String} thermHeatState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a themostat's heat state schedule item
+         */
+        thermHeatState: {
+          get() {
+            const state = this.attr('command.attributes.therm:heatsetpoint');
+            return `${temperatureConverter(state, 'F')}<sup class="value-unit">&deg;</sup>`;
+          },
+        },
+        /**
+         * @property {String} waterHeatState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a water heater state schedule item
+         */
+        waterHeatState: {
+          get() {
+            const state = this.attr('command.attributes.waterheater:setpoint');
+            return `${temperatureConverter(state, 'F')}<sup class="value=unit">&deg;</sup>`;
+          },
+        },
+        /**
+         * @property {String} fanState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a fan's speed schedule item
+         */
+        fanState: {
+          get() {
+            const switState = this.attr('command.attributes.swit:state');
+            const fanSpeed = this.attr('command.attributes.fan:speed');
+            const speedDescriptions = ['Off', 'Low', 'Medium', 'High'];
+
+            if (switState === SwitchCapability.STATE_OFF) {
+              return speedDescriptions[0];
+            } else if (typeof fanSpeed === 'number') {
+              return speedDescriptions[fanSpeed];
+            }
+
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} spaceHeaterSetPoint
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a space heater schedule item
+         */
+        spaceHeaterSetPoint: {
+          get() {
+            const setPoint = this.attr('command.attributes.spaceheater:setpoint');
+
+            if (this.attr('command.attributes.spaceheater:heatstate') !== SpaceHeaterCapability.HEATSTATE_OFF) {
+              return `${temperatureConverter(setPoint, 'F')}<sup class="value-unit">&deg;</sup>`;
+            }
+
+            return 'Off';
+          },
+        },
+        /**
+         * @property {String} ventLevel
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a vent schedule item
+         */
+        ventLevel: {
+          get() {
+            const level = this.attr('command.attributes.vent:level');
+
+            return `${level}% Open`;
+          },
+        },
+        /**
+         * @property {String} garageDoorState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a garage door schedule item
+         */
+        garageDoorState: {
+          get() {
+            const doorstate = this.attr('command.attributes.motdoor:doorstate');
+            if (doorstate === MotorizedDoorCapability.DOORSTATE_OPEN) {
+              return 'Open';
+            }
+            return 'Closed';
+          },
+        },
+        /**
+         * @property {String} petDoorState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a pet door schedule item
+         */
+        petDoorState: {
+          get() {
+            const doorstate = this.attr('command.attributes.petdoor:lockstate');
+            if (doorstate === PetDoorCapability.LOCKSTATE_LOCKED) {
+              return 'Locked';
+            } else if (doorstate === PetDoorCapability.LOCKSTATE_UNLOCKED) {
+              return 'Unlocked';
+            }
+            return 'Auto';
+          },
+        },
+        /**
+         * @property {String} waterValveState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a water valve schedule item
+         */
+        waterValveState: {
+          get() {
+            const valvestate = this.attr('command.attributes.valv:valvestate');
+            if (valvestate === ValveCapability.VALVESTATE_OPEN) {
+              return 'Open';
+            }
+            return 'Closed';
+          },
+        },
+        /**
+         * @property {String} climateState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a CLIMATE schedule item
+         */
+        climateEventState: {
+          get() {
+            if (this.attr('command.attributes.vent:level') !== undefined) {
+              return this.attr('ventLevel');
+            } else if (this.attr('command.attributes.spaceheater:setpoint') !== undefined) {
+              return this.attr('spaceHeaterSetPoint');
+            } else if (this.attr('command.attributes.fan:speed') !== undefined || this.attr('command.attributes.swit:state') !== undefined) {
+              return this.attr('fanState');
+            }
+
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} doorEventState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a DOORS schedule item
+         */
+        doorEventState: {
+          get() {
+            if (this.attr('command.attributes.motdoor:doorstate') !== undefined) {
+              return this.attr('garageDoorState');
+            } else if (this.attr('command.attributes.petdoor:lockstate') !== undefined) {
+              return this.attr('petDoorState');
+            }
+
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} lightEventState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a LIGHT schedule item
+         */
+        lightEventState: {
+          get() {
+            const state = this.attr('command.attributes.swit:state');
+            if (state === SwitchCapability.STATE_OFF) { return 'Off'; }
+
+            const brightness = this.attr('command.attributes.dim:brightness');
+            if (brightness) {
+              return `<i class="icon-app-sun-1"></i>${brightness}<sup class="value-unit">%</sup>`;
+            }
+            // For switches (devices with swit capability, but no dim capability)
+            return 'On';
+          },
+        },
+        /**
+         * @property {String} ruleEventState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a RULES schedule item
+         */
+        ruleEventState: {
+          get() {
+            return (this.attr('command.messageType') === 'rule:Enable') ? 'Active' : 'Inactive';
+          },
+        },
+        /**
+         * @property {String} waterEventState
+         * @parent i2web/components/schedule/edit-panel/day-carousel/event-state
+         * @description The value of the event state for a WATER schedule item
+         */
+        waterEventState: {
+          get() {
+            if (this.attr('command.attributes.valv:valvestate') !== undefined) {
+              return this.attr('waterValveState');
+            } else if (this.attr('command.attributes.waterheater:setpoint') !== undefined) {
+              return this.attr('waterHeatState');
+            }
+            return undefined;
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

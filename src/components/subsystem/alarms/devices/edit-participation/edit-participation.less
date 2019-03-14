@@ -1,0 +1,26 @@
+arcus-subsystems-alarms-devices-edit-participation {
+  display: block;
+  h4 {
+    margin-bottom: @gutter;
+  }
+  .edit-participation-list {
+    margin-bottom: 0;
+    padding-left: 0;
+    .breakpoint(sm, {
+      padding-left: @gutter;
+    });
+  }
+  [class^='btn'] {
+    margin-bottom: 0;
+  }
+  .radio-wrapper {
+    label {
+      .breakpoint(lg, {
+        white-space: normal;
+      });
+    }
+    &:last-of-type {
+      margin-bottom: 0 !important;
+    }
+  }
+}

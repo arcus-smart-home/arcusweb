@@ -1,0 +1,114 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/lazy-image.component" />
+<can-import from="i2web/components/favorite/" />
+<can-import from="i2web/helpers/global" />
+{{#if camera}}
+  <div id="wrapper-{{uniqueID}}" class="video-wrapper {{#if isFullscreen}}is-fullscreen{{/if}} {{#if isMobileSafari()}}webkit-fake-fullscreen{{/if}}">
+    {{#if camera.isOffline}}
+      <div class="camera-offline">
+        <span>Camera is Offline.</span>
+        <i class="icon-platform-camera-3"></i>
+      </div>
+    {{else}}
+      {{#if loadingMedia}}
+        {{#unless showVideo}}
+          <div class="dark-loader-container">
+            <div class="dark-loader">Loading...</div>
+          </div>
+        {{/unless}}
+      {{else}}
+        {{#unless noPreview}}
+          <arcus-lazy-image
+            class="{{#if previewOnly}}preview-only{{/if}}" id="preview-{{uniqueID}}"
+            {image-url}="camera['web:camera:previewImageURL']"
+            refresh-every="15000"
+            {showing}="not(~playingOrRecording)">
+            <div class="placeholder">
+              <p>Preview Unavailable</p>
+            </div>
+          </arcus-lazy-image>
+        {{/unless}}
+      {{/if}}
+      {{#unless previewOnly}}
+        <video id="video-{{uniqueID}}" {{#unless showVideo}}style="display:none"{{/unless}}
+          preload="none" src="/src/images/video_loading.mp4"
+          {{#if isFullscreen}}poster="/src/images/video_loading.gif"{{/if}}
+          ($error)="mobileSafariFix()"
+          ($click)="mobileSafariFullscreenSync()"
+          {{#if nativeControlState}}controls{{/if}}>
+        </video>
+        <div class="video-buttons">
+          {{#unless camera.isFirmwareUpdateInProgress}}
+            {{#unless playingOrRecording}}
+              <button ($click)="streamOrRecordVideo('STREAM')" {{#if streamRecordDisabled}}disabled{{/if}} {{#if loadingMedia}}disabled{{/if}}>
+                <div class="play-shape"></div>
+              </button>
+            {{else}}
+              <button ($click)="stopStreaming"><div class="stop-shape"></div></button>
+            {{/unless}}
+            {{#if recordingEnabled}}
+              <button ($click)="streamOrRecordVideo('RECORD')" {{#if recordButtonDisabled}}disabled{{/if}}>
+                <div class="record-shape"></div>
+              </button>
+            {{/if}}
+          {{else}}
+            <div class="placeholder-shape"></div>
+          {{/unless}}
+          <div class="right-aligned">
+            {{#if playingOrRecording}}
+              <span class="status-badge {{playStatus(false)}}">{{playStatus()}}</span>
+              {{#if allowFullscreen}}
+                {{#unless isIOS9()}}
+                  <button ($click)="toggleFullScreen" class="full-screen">
+                    <i class="{{#if isFullscreen}}icon-app-expand-2{{/if}}{{#unless isFullscreen}}icon-app-expand-1{{/unless}}"></i>
+                  </button>
+                {{/unless}}
+              {{/if}}
+            {{else}}
+              {{#if loadingMedia}}
+                <span class="status-badge {{playStatus(false)}}">{{playStatus()}}</span>
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
+      {{/unless}}
+    {{/if}}
+  </div>
+  {{#unless previewOnly}}
+    {{#unless isFullscreen}}
+      <div class="camera-info">
+        <div class="camera-title">
+          <p>{{camera['dev:name']}}</p>
+          <small class="{{#if camera.isOffline}}offline{{/if}}">{{statusText}}</small>
+        </div>
+        {{#unless disableFavConfig}}
+          <div class="camera-options {{#if camera.isOffline}}offline{{/if}}">
+            <div class="favorites">
+              <arcus-favorite {thing}="camera" {display-property}="'dev:name'" />
+            </div>
+            <a class="camera-settings" ($click)="showCameraSettings">
+              <i class="icon-app-controls-1"><span class="sr-only">Settings</span></i>
+            </a>
+          </div>
+        {{/unless}}
+      </div>
+    {{/unless}}
+  {{/unless}}
+{{else}}
+  <div class="loader"></div>
+{{/if}}

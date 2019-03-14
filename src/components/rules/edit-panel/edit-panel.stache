@@ -1,0 +1,79 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/rules/selectors/device.component" />
+<can-import from="i2web/components/rules/selectors/generic.component" />
+<can-import from="i2web/components/rules/selectors/person.component" />
+<can-import from="i2web/components/rules/selectors/person-device.component" />
+<can-import from="i2web/components/shop-button.component" />
+
+<form ($submit)="saveRule" autocomplete="off" {{#if saving}}disabled{{/if}}>
+  <button type="submit" class="btn-save{{#if saving}} saving{{/if}}" {{#unless saveable}}disabled{{/unless}}>
+    {{#if saving}}
+      <div class="loader"></div> Saving
+    {{else}}
+      Save
+    {{/if}}
+  </button>
+  {{close-button type="cancel"}}
+  {{#if formError}}
+    <p class="form-error">{{formError}}</p>
+  {{/if}}
+  <div class="panel-content">
+    {{textInput('ruleName', 'Rule Name')}}
+    <p class="rule-description">
+      {{{description}}}
+    </p>
+    <hr />
+    {{#unless selected}}
+      <p class="instructions">Click a word or phrase above to edit.</p>
+    {{else}}
+      {{!-- Should only have 1 property on it, but we don't know the name of that property --}}
+      {{#each selected}}
+        {{#eq options.length 0}}
+          <p class="no-available-devices">There are {{noAvailableSelector(selected)}} that meet the requirements for this rule.</p>
+        {{else}}
+          <p class="options">
+            {{selectorFor(selected, rule, chosen)}}
+          </p>
+        {{/eq}}
+      {{/each}}
+    {{/unless}}
+    {{#if rule}}
+      <hr>
+      <div class="delete-rule bottom-buttons">
+      {{#unless deletingRule}}
+        <button type="button" class="btn-delete" ($click)="startDelete()">Delete Rule</button>
+        {{#unless saveable}}
+          <arcus-shop-button class="inline-shop-button" expanded />
+        {{/unless}}
+      {{else}}
+        <p class="delete-warning">Are you sure you want to delete '{{rule['rule:name'}}'? This cannot be undone.</p>
+        <button type="button" class="btn-delete" ($click)="continueDelete(rule)">Yes, Delete Rule</button>
+        <button type="button" class="btn-cancel" ($click)="cancelDelete()">Cancel</button>
+      {{/unless}}
+      </div>
+    {{/if}}
+    {{#unless rule}}
+      {{#unless saveable}}
+        <hr />
+        <div class="bottom-buttons">
+          <arcus-shop-button expanded />
+        </div>
+      {{/unless}}
+    {{/unless}}
+  </div>
+</form>

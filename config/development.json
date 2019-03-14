@@ -1,0 +1,10 @@
+{
+  "indexFile": "development.html",
+  "apiUrl": "https://testingurl.replaceme.com",
+  "redirectUrl": "https://testingurl.replaceme.com",
+  "wsUrl": "wss://testingurl.replaceme.com",
+  "iosDownloadUrl": "https://itunes.apple.com",
+  "androidDownloadUrl": "https://play.google.com/store/apps",
+  "enableYearlySubscription": "1",
+  "enableHubWifiScan": "1"
+}

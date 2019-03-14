@@ -1,0 +1,111 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html>
+  <body style="padding: 0 100px;">
+  <script type="text/stache" id="demo-html">
+    <div>
+      <h4>PAIRINGSTATE: {{demoDevice['pairdev:pairingState']}}</h4>
+      {{#each PAIRINGSTATE}}
+        <button ($click)="setPairingState(.)">{{%key}}</button>
+      {{/each}}
+    </div>
+
+    <div>
+      <h4>PAIRINGPHASE: {{demoDevice['pairdev:pairingPhase']}}</h4>
+      {{#each PAIRINGPHASE}}
+        <button ($click)="setPairingPhase(.)">{{%key}}</button>
+      {{/each}}
+    </div>
+
+    <div>
+      <h4>Device Id: {{demoDevice['pairdev:deviceAddress']}}</h4>
+      <button ($click)="setDeviceId()">Set Device Id</button>
+      <button ($click)="removeDeviceId()">Remove Device Id</button>
+    </div>
+
+    <div>
+      <h4>Try Again Promise:</h4>
+      <button ($click)="setTryAgainPromise()">Set Promise</button>
+      <button ($click)="removeTryAgainPromise()">Remove Promise</button>
+    </div>
+
+    <arcus-pairing-device-state {pairing-device}="demoDevice"
+      {try-again-promise}="tryAgainPromise"/>
+ </script>
+  <script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+    import CanMap from 'can-map';
+    import PairingDevice from 'i2web/models/pairing-device';
+    import loginAndRender from 'i2web/test/util/loginAndRender';
+    import 'flexboxgrid/dist/flexboxgrid.min.css';
+    import 'i2web/app.less';
+    import 'i2web/components/pairing/device-state/';
+    import PairDevCaps from 'i2web/models/capability/PairingDevice';
+    import toPairs from 'lodash/toPairs';
+    import fromPairs from 'lodash/fromPairs';
+
+    const PAIRINGSTATE = fromPairs(toPairs(PairDevCaps)
+      .filter(([k]) => k.startsWith('PAIRINGSTATE_'))
+      .map(([k, v]) => [k.substr(13), v]));
+
+    const PAIRINGPHASE = fromPairs(toPairs(PairDevCaps)
+      .filter(([k]) => k.startsWith('PAIRINGPHASE_'))
+      .map(([k, v]) => [k.substr(13), v]));
+
+    const scope = new CanMap({
+      demoDevice: new PairingDevice({
+        'pairdev:pairingState': PAIRINGSTATE.PAIRING,
+        'pairdev:pairingPhase': PAIRINGPHASE.JOIN,
+        'pairdev:deviceAddress': undefined,
+      }),
+      PAIRINGSTATE,
+      PAIRINGPHASE,
+      tryAgainPromise: undefined,
+      setPairingPhase(phase) {
+        scope.attr('demoDevice.pairdev:pairingPhase', phase);
+      },
+      setPairingState(state) {
+        scope.attr('demoDevice.pairdev:pairingState', state);
+      },
+      setDeviceId() {
+        scope.attr('demoDevice.pairdev:deviceAddress', 'demo-product-id');
+      },
+      removeDeviceId() {
+        scope.attr('demoDevice.pairdev:deviceAddress', undefined);
+      },
+      setTryAgainPromise() {
+        scope.attr('tryAgainPromise', new Promise(() => {}));
+      },
+      removeTryAgainPromise() {
+        scope.attr('tryAgainPromise', undefined);
+      }
+    });
+    const appScope = new CanMap({
+      devices: [{
+        'base:id': 'demo-product-id',
+        'product': {'product:name': 'Arcus Smart Button'},
+        'dev:devtypehint': 'button',
+      }]
+    });
+
+    loginAndRender({
+      template: '#demo-html',
+      scope,
+      appScope,
+    });
+  </script>
+  </body>
+</html>

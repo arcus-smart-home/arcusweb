@@ -1,0 +1,96 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/camera/" />
+<can-import from="i2web/components/control-switch/" />
+<can-import from="i2web/components/recording/" />
+<can-import from="i2web/components/subsystem/cameras/premium-required.component" />
+
+<div class="camera-count">{{pageDescription}} <sup class="total-count">/{{cameras.length}}</sup></div>
+<div class="camera-wrapper">
+  {{#unless cameras.length}}
+    <div class="no-cameras">
+      <p class="font-medium-italic">0 Cameras Paired</p>
+      <p class="bold">
+        Click the plus sign '+' on the navigation bar to pair a Camera.
+      </p>
+    </div>
+  {{/unless}}
+  {{#each pagedCameras as camera}}
+    <arcus-camera
+      inline-play
+      {camera}="camera"
+      {recording-enabled}="subsystem['subcameras:recordingEnabled']"
+    />
+  {{/each}}
+</div>
+{{#if pagingEnabled}}
+<div class="paging-buttons">
+  <button class="btn {{#eq currentPage 1}}btn-disabled{{/eq}}" {{#eq currentPage 1}}disabled{{/eq}} ($click)="previousPage">Back</button>
+  <button class="btn {{#if onLastPage}}btn-disabled{{/if}}" {{#if onLastPage}}disabled{{/if}} ($click)="nextPage">Next</button>
+</div>
+{{/if}}
+
+{{#if recordingSupported}}
+  <div class="security-integration">
+    <h2><i class="icon-platform-security-1"></i> Security Integration</h2>
+    <div class="security-content">
+      <div class="security-copy">
+        <h4><b>Record All When Security Alarm is Triggered</b></h4 >
+        <p><i>Initiate a recording of all cameras, upon a triggered Security Alarm.
+        Battery powered cameras can only record for a short duration unless motion is detected.</i></p>
+      </div>
+      <arcus-control-switch {is-on}="alarmSubsystem['subalarm:recordOnSecurity']" {toggle}="@toggleRecordingWhenAlarmTriggered" />
+    </div>
+  </div>
+{{/if}}
+
+<div class="recent-pins">
+  <h2><i class="icon-app-pin-2"></i> Recent Pins</h2>
+  {{#if place.isBasic}}
+    <arcus-subsystem-cameras-premium-required />
+  {{else}}
+    {{#if filteredClips.length}}
+      <div class="pins-wrapper">
+      {{#each filteredClips as clip}}
+        <arcus-recording
+          {recording}="clip"
+          {camera-name}="cameraNameFromID(clip['video:cameraid'])"
+        />
+      {{/each}}
+      {{#if clips._promise.isPending}}
+        <div class="loader-wrapper">
+          <div class="loader">Loading...</div>
+        </div>
+      {{/if}}
+      </div>
+    {{else}}
+      {{#if clips._promise.isPending}}
+        <div class="loader">Loading...</div>
+      {{else}}
+        <div class="empty-pins">
+          <div class="left-content">
+            <p class="font-demibold">Access important Clips quickly, by using our Pinning feature.</p>
+            <p>It's easy. Start by navigating to the Clips tab at the top. Click the Pin icon for the clip you would like to Pin. You can view all of your Pinned Clips at once by checking 'Show Pinned Clips Only' or view the most recent Pins here.</p>
+          </div>
+          <div class="right-content">
+            <p>You have 0 pinned clips.</p>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</div>

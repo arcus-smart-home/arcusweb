@@ -1,0 +1,31 @@
+/**
+* @stylesheet tutorials.less Tutorials
+* @parent styles.baseline-elements
+*
+* @description
+* Tutorial styles have been made global for ease of adding them around the app. They are a simple unordered list, wrapped in a `tutorials` class div. Apply whatever icon and tutorial title in the page markup.
+*
+* @demo ./src/styles/demos/tutorials.html
+*
+**/
+
+.tutorials {
+  margin: @gutter @gutter/2;
+  .breakpoint(md, {
+    margin-left: @gutter;
+    margin-right: @gutter;
+  });
+  ul {
+    padding-left: 0;
+    margin-top: @gutter/2;
+  }
+  li {
+    list-style-type: none;
+    margin-bottom: @gutter/4;
+    margin-left: @gutter/1.5;
+    i {
+      margin-right: 5px;
+      margin-left: -(@gutter/1.5);
+    }
+  }
+}

@@ -1,0 +1,162 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-create-account-finish">
+  <view>
+    <can-import from="i2web/components/logo-tagline.component" />
+    {{#if showFinishAccountCreationModal}}
+      <div class="modal-container">
+        <div class="modal-content">
+          <arcus-logo-tagline />
+          {{#if monitoringPreferred}}
+            <h1>You're Steps Away From Pro Monitoring.</h1>
+          {{else}}
+            <h1>Your Arcus Account is Almost Ready.</h1>
+          {{/if}}
+          {{#if monitoringPreferred}}
+            <p>
+              We see that you only have a few more steps until you complete the Professional
+              Monitoring sign up! Until you complete these steps, you will be self monitoring
+              and only have access to the features of the Basic Plan.
+            </p>
+          {{else}}
+            <p>
+              We see that you only have a few more steps until your Arcus account is ready to go!
+            </p>
+          {{/if}}
+          <a>
+            <button class="btn-primary finish-creation" ($click)="completeAccountCreation()">Complete Account Creation</button>
+          </a>
+          {{#if monitoringPreferred}}
+            <a class="logout" href="javascript:void(0)" ($click)="continueWithBasics()">I'll Start With The Basics</a>
+          {{else}}
+            <a class="logout" href="javascript:void(0)" ($click)="logout()">Log out</a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="modal-backdrop"></div>
+    {{/if}}
+  </view>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import canRoute from 'can-route';
+    import 'can-map-define';
+    import Account from 'i2web/models/account';
+    import Place from 'i2web/models/place';
+    import PlaceCapability from 'i2web/models/capability/Place';
+    import { clearAllProgress } from 'i2web/plugins/account-creation';
+    import Errors from 'i2web/plugins/errors';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    const MONITORING_PREF = `PREF_PLAN:${PlaceCapability.SERVICELEVEL_PREMIUM_PROMON}`;
+    const BASIC_PREF = `PREF_PLAN:${PlaceCapability.SERVICELEVEL_BASIC}`;
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Account} account
+         * @parent i2web/components/create-account/finish
+         * @description Show this modal if account:state !== 'COMPLETE'
+         */
+        account: {
+          Type: Account,
+        },
+        /**
+         * @property {Place} place
+         * @parent i2web/components/create-account/finish
+         * @description Contains the preferred plan in base:tags
+         */
+        place: {
+          Type: Place,
+        },
+        /**
+         * @property {String} fromEmailLink
+         * @parent i2web/components/create-account/finish
+         *
+         * @description Did the User come to the web by clicking on a link in an email?
+         */
+        fromEmailLink: {
+          type: 'string',
+        },
+        /**
+         * @property {boolean} monitoringPreferred
+         * @parent i2web/components/create-account/finish
+         * @description Whether promonitoring was the Users intented service plan
+         */
+        monitoringPreferred: {
+          type: 'boolean',
+          get() {
+            const place = this.attr('place');
+            if (place) {
+              return place.attr('base:tags').attr().includes(MONITORING_PREF);
+            }
+            return false;
+          },
+        },
+        /**
+         * @property {boolean} showFinishAccountCreationModal
+         * @parent i2web/components/create-account/finish
+         * @description Whether to inform the User they have to enter more information
+         */
+        showFinishAccountCreationModal: {
+          type: 'boolean',
+          get() {
+            const account = AppState().attr('account');
+            return (account.attr('account:state')) !== 'COMPLETE';
+          },
+        },
+      },
+      /**
+       * @function completeAccountCreation
+       * @parent i2web/components/create-account/finish
+       * @description Clear localStorage and route to the create-account route
+       */
+      completeAccountCreation() {
+        clearAllProgress();
+        const fromEmail = this.attr('fromEmailLink');
+        if (fromEmail && fromEmail !== 'web') {
+          canRoute.attr({ page: 'create-account', subpage: fromEmail });
+        }
+        canRoute.attr({ page: 'create-account' });
+      },
+      /**
+       * @function continueWithBasics
+       * @parent i2web/components/create-account/finish
+       * @description Clear localStorage and continue to the dashboard with the basic service plan
+       */
+      continueWithBasics() {
+        clearAllProgress();
+        const place = this.attr('place');
+        if (place) {
+          place.RemoveTags(MONITORING_PREF).then(() => {
+            place.AddTags(BASIC_PREF).then(() => {
+              canRoute.attr({ page: 'create-account' });
+            }).catch(e => Errors.log(e));
+          }).catch(e => Errors.log(e));
+        }
+      },
+      /**
+       * @function logout
+       * @parent i2web/components/create-account/finish
+       * @description Logout the current User
+       */
+      logout() {
+        AppState().attr('logoutRequested', true);
+        return AppState().logout();
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,2614 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  .icon-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .icon-grid {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 20px 0;
+  }
+
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 0 0;
+    border-top: 1px dotted #CCCCCC;
+  }
+
+  .font-size-base {
+    font-size: 16px;
+  }
+
+  .font-size-larger {
+    font-size: 22px;
+  }
+
+  .font-size-large {
+    font-size: 18px;
+  }
+
+  .font-size-small {
+    font-size: 14px;
+  }
+
+  .font-size-smaller {
+    font-size: 11px;
+  }
+
+  .font-size-h1 {
+    font-size: 30px;
+  }
+
+  .font-size-h2 {
+    font-size: 23px;
+  }
+
+  .font-size-h3 {
+    font-size: 20px;
+  }
+
+  .font-size-h4 {
+    font-size: 18px;
+  }
+
+  .font-size-h6 {
+    font-size: 15px;
+  }
+
+  [class^='font-size-'] {
+    margin-left: 20px;
+  }
+
+  .icon-circle {
+    box-shadow: 0 0 0 1px #000000;
+    background-color: #FFFFFF;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #000000;
+  }
+
+  .icon-app-state {
+    box-shadow: 0 0 0 1px #000000;
+    background-color: #FFFFFF;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #000000;
+    margin-right: 20px;
+  }
+
+  code {
+    display: block;
+  }
+
+  /* from icon-sizing.less */
+
+  .icon-circle .icon-app-devices {
+    font-size: 30px;
+  }
+  
+  .clip-overflow {
+    overflow: hidden;
+  }
+  
+</style>
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css!" />
+  <can-import from="i2web/styles/global-styles.less!" />
+  <can-import from="i2web/styles/demos/icon-styles.less!" />
+<div class="icon-group">
+
+<div class="icon-grid">
+  <div class="icon-wrapper">
+    <div class="icon-app-state clip-overflow">
+      <i class="icon-app-wi-fi-0"></i>
+    </div>
+    <div class="icon-circle">
+      <i class="icon-app-wi-fi-0"></i>
+    </div>
+    <i class="font-size-h2 icon-app-wi-fi-0"></i>
+    <i class="font-size-h3 icon-app-wi-fi-0"></i>
+    <i class="font-size-h4 icon-app-wi-fi-0"></i>
+    <i class="font-size-h6 icon-app-wi-fi-0"></i>
+    <i class="font-size-smaller icon-app-wi-fi-0"></i>
+    <i class="font-size-small icon-app-wi-fi-0"></i>
+    <i class="font-size-base icon-app-wi-fi-0"></i>
+    <i class="font-size-large icon-app-wi-fi-0"></i>
+    <i class="font-size-larger icon-app-wi-fi-0"></i>
+  </div>
+  <code>.icon-app-wi-fi-0</code>
+</div>
+
+<div class="icon-grid">
+  <div class="icon-wrapper">
+    <div class="icon-app-state clip-overflow">
+      <i class="icon-app-wi-fi-1"></i>
+    </div>
+    <div class="icon-circle">
+      <i class="icon-app-wi-fi-1"></i>
+    </div>
+    <i class="font-size-h2 icon-app-wi-fi-1"></i>
+    <i class="font-size-h3 icon-app-wi-fi-1"></i>
+    <i class="font-size-h4 icon-app-wi-fi-1"></i>
+    <i class="font-size-h6 icon-app-wi-fi-1"></i>
+    <i class="font-size-smaller icon-app-wi-fi-1"></i>
+    <i class="font-size-small icon-app-wi-fi-1"></i>
+    <i class="font-size-base icon-app-wi-fi-1"></i>
+    <i class="font-size-large icon-app-wi-fi-1"></i>
+    <i class="font-size-larger icon-app-wi-fi-1"></i>
+  </div>
+  <code>.icon-app-wi-fi-1</code>
+</div>
+
+<div class="icon-grid">
+  <div class="icon-wrapper">
+    <div class="icon-app-state clip-overflow">
+      <i class="icon-app-wi-fi-2"></i>
+    </div>
+    <div class="icon-circle">
+      <i class="icon-app-wi-fi-2"></i>
+    </div>
+    <i class="font-size-h2 icon-app-wi-fi-2"></i>
+    <i class="font-size-h3 icon-app-wi-fi-2"></i>
+    <i class="font-size-h4 icon-app-wi-fi-2"></i>
+    <i class="font-size-h6 icon-app-wi-fi-2"></i>
+    <i class="font-size-smaller icon-app-wi-fi-2"></i>
+    <i class="font-size-small icon-app-wi-fi-2"></i>
+    <i class="font-size-base icon-app-wi-fi-2"></i>
+    <i class="font-size-large icon-app-wi-fi-2"></i>
+    <i class="font-size-larger icon-app-wi-fi-2"></i>
+  </div>
+  <code>.icon-app-wi-fi-2</code>
+</div>
+
+<div class="icon-grid">
+  <div class="icon-wrapper">
+    <div class="icon-app-state clip-overflow">
+      <i class="icon-app-wi-fi-3"></i>
+    </div>
+    <div class="icon-circle">
+      <i class="icon-app-wi-fi-3"></i>
+    </div>
+    <i class="font-size-h2 icon-app-wi-fi-3"></i>
+    <i class="font-size-h3 icon-app-wi-fi-3"></i>
+    <i class="font-size-h4 icon-app-wi-fi-3"></i>
+    <i class="font-size-h6 icon-app-wi-fi-3"></i>
+    <i class="font-size-smaller icon-app-wi-fi-3"></i>
+    <i class="font-size-small icon-app-wi-fi-3"></i>
+    <i class="font-size-base icon-app-wi-fi-3"></i>
+    <i class="font-size-large icon-app-wi-fi-3"></i>
+    <i class="font-size-larger icon-app-wi-fi-3"></i>
+  </div>
+  <code>.icon-app-wi-fi-3</code>
+</div>
+
+<div class="icon-grid">
+  <div class="icon-wrapper">
+    <div class="icon-app-state clip-overflow">
+      <i class="icon-app-wi-fi-4"></i>
+    </div>
+    <div class="icon-circle">
+      <i class="icon-app-wi-fi-4"></i>
+    </div>
+    <i class="font-size-h2 icon-app-wi-fi-4"></i>
+    <i class="font-size-h3 icon-app-wi-fi-4"></i>
+    <i class="font-size-h4 icon-app-wi-fi-4"></i>
+    <i class="font-size-h6 icon-app-wi-fi-4"></i>
+    <i class="font-size-smaller icon-app-wi-fi-4"></i>
+    <i class="font-size-small icon-app-wi-fi-4"></i>
+    <i class="font-size-base icon-app-wi-fi-4"></i>
+    <i class="font-size-large icon-app-wi-fi-4"></i>
+    <i class="font-size-larger icon-app-wi-fi-4"></i>
+  </div>
+  <code>.icon-app-wi-fi-4</code>
+</div>
+  
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-photo-camera"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-photo-camera"></i>
+      </div>
+      <i class="font-size-h2 icon-app-photo-camera"></i>
+      <i class="font-size-h3 icon-app-photo-camera"></i>
+      <i class="font-size-h4 icon-app-photo-camera"></i>
+      <i class="font-size-h6 icon-app-photo-camera"></i>
+      <i class="font-size-smaller icon-app-photo-camera"></i>
+      <i class="font-size-small icon-app-photo-camera"></i>
+      <i class="font-size-base icon-app-photo-camera"></i>
+      <i class="font-size-large icon-app-photo-camera"></i>
+      <i class="font-size-larger icon-app-photo-camera"></i>
+    </div>
+    <code>.icon-app-photo-camera</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-search-icon"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-search-icon"></i>
+      </div>
+      <i class="font-size-h2 icon-app-search-icon"></i>
+      <i class="font-size-h3 icon-app-search-icon"></i>
+      <i class="font-size-h4 icon-app-search-icon"></i>
+      <i class="font-size-h6 icon-app-search-icon"></i>
+      <i class="font-size-smaller icon-app-search-icon"></i>
+      <i class="font-size-small icon-app-search-icon"></i>
+      <i class="font-size-base icon-app-search-icon"></i>
+      <i class="font-size-large icon-app-search-icon"></i>
+      <i class="font-size-larger icon-app-search-icon"></i>
+    </div>
+    <code>.icon-app-search-icon</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-play-w-circle"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-play-w-circle"></i>
+      </div>
+      <i class="font-size-h2 icon-app-play-w-circle"></i>
+      <i class="font-size-h3 icon-app-play-w-circle"></i>
+      <i class="font-size-h4 icon-app-play-w-circle"></i>
+      <i class="font-size-h6 icon-app-play-w-circle"></i>
+      <i class="font-size-smaller icon-app-play-w-circle"></i>
+      <i class="font-size-small icon-app-play-w-circle"></i>
+      <i class="font-size-base icon-app-play-w-circle"></i>
+      <i class="font-size-large icon-app-play-w-circle"></i>
+      <i class="font-size-larger icon-app-play-w-circle"></i>
+    </div>
+    <code>.icon-app-play-w-circle</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-exit-pairing-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-exit-pairing-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-exit-pairing-1"></i>
+      <i class="font-size-h3 icon-app-exit-pairing-1"></i>
+      <i class="font-size-h4 icon-app-exit-pairing-1"></i>
+      <i class="font-size-h6 icon-app-exit-pairing-1"></i>
+      <i class="font-size-smaller icon-app-exit-pairing-1"></i>
+      <i class="font-size-small icon-app-exit-pairing-1"></i>
+      <i class="font-size-base icon-app-exit-pairing-1"></i>
+      <i class="font-size-large icon-app-exit-pairing-1"></i>
+      <i class="font-size-larger icon-app-exit-pairing-1"></i>
+    </div>
+    <code>.icon-app-exit-pairing-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-get-support-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-get-support-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-get-support-1"></i>
+      <i class="font-size-h3 icon-app-get-support-1"></i>
+      <i class="font-size-h4 icon-app-get-support-1"></i>
+      <i class="font-size-h6 icon-app-get-support-1"></i>
+      <i class="font-size-smaller icon-app-get-support-1"></i>
+      <i class="font-size-small icon-app-get-support-1"></i>
+      <i class="font-size-base icon-app-get-support-1"></i>
+      <i class="font-size-large icon-app-get-support-1"></i>
+      <i class="font-size-larger icon-app-get-support-1"></i>
+    </div>
+    <code>.icon-app-get-support-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-kit-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-kit-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-kit-1"></i>
+      <i class="font-size-h3 icon-app-kit-1"></i>
+      <i class="font-size-h4 icon-app-kit-1"></i>
+      <i class="font-size-h6 icon-app-kit-1"></i>
+      <i class="font-size-smaller icon-app-kit-1"></i>
+      <i class="font-size-small icon-app-kit-1"></i>
+      <i class="font-size-base icon-app-kit-1"></i>
+      <i class="font-size-large icon-app-kit-1"></i>
+      <i class="font-size-larger icon-app-kit-1"></i>
+    </div>
+    <code>.icon-app-kit-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-kit-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-kit-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-kit-2"></i>
+      <i class="font-size-h3 icon-app-kit-2"></i>
+      <i class="font-size-h4 icon-app-kit-2"></i>
+      <i class="font-size-h6 icon-app-kit-2"></i>
+      <i class="font-size-smaller icon-app-kit-2"></i>
+      <i class="font-size-small icon-app-kit-2"></i>
+      <i class="font-size-base icon-app-kit-2"></i>
+      <i class="font-size-large icon-app-kit-2"></i>
+      <i class="font-size-larger icon-app-kit-2"></i>
+    </div>
+    <code>.icon-app-kit-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-expand-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-expand-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-expand-1"></i>
+      <i class="font-size-h3 icon-app-expand-1"></i>
+      <i class="font-size-h4 icon-app-expand-1"></i>
+      <i class="font-size-h6 icon-app-expand-1"></i>
+      <i class="font-size-smaller icon-app-expand-1"></i>
+      <i class="font-size-small icon-app-expand-1"></i>
+      <i class="font-size-base icon-app-expand-1"></i>
+      <i class="font-size-large icon-app-expand-1"></i>
+      <i class="font-size-larger icon-app-expand-1"></i>
+    </div>
+    <code>.icon-app-expand-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-expand-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-expand-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-expand-2"></i>
+      <i class="font-size-h3 icon-app-expand-2"></i>
+      <i class="font-size-h4 icon-app-expand-2"></i>
+      <i class="font-size-h6 icon-app-expand-2"></i>
+      <i class="font-size-smaller icon-app-expand-2"></i>
+      <i class="font-size-small icon-app-expand-2"></i>
+      <i class="font-size-base icon-app-expand-2"></i>
+      <i class="font-size-large icon-app-expand-2"></i>
+      <i class="font-size-larger icon-app-expand-2"></i>
+    </div>
+    <code>.icon-app-expand-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-download-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-download-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-download-1"></i>
+      <i class="font-size-h3 icon-app-download-1"></i>
+      <i class="font-size-h4 icon-app-download-1"></i>
+      <i class="font-size-h6 icon-app-download-1"></i>
+      <i class="font-size-smaller icon-app-download-1"></i>
+      <i class="font-size-small icon-app-download-1"></i>
+      <i class="font-size-base icon-app-download-1"></i>
+      <i class="font-size-large icon-app-download-1"></i>
+      <i class="font-size-larger icon-app-download-1"></i>
+    </div>
+    <code>.icon-app-download-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-download-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-download-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-download-2"></i>
+      <i class="font-size-h3 icon-app-download-2"></i>
+      <i class="font-size-h4 icon-app-download-2"></i>
+      <i class="font-size-h6 icon-app-download-2"></i>
+      <i class="font-size-smaller icon-app-download-2"></i>
+      <i class="font-size-small icon-app-download-2"></i>
+      <i class="font-size-base icon-app-download-2"></i>
+      <i class="font-size-large icon-app-download-2"></i>
+      <i class="font-size-larger icon-app-download-2"></i>
+    </div>
+    <code>.icon-app-download-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-trashcan-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-trashcan-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-trashcan-1"></i>
+      <i class="font-size-h3 icon-app-trashcan-1"></i>
+      <i class="font-size-h4 icon-app-trashcan-1"></i>
+      <i class="font-size-h6 icon-app-trashcan-1"></i>
+      <i class="font-size-smaller icon-app-trashcan-1"></i>
+      <i class="font-size-small icon-app-trashcan-1"></i>
+      <i class="font-size-base icon-app-trashcan-1"></i>
+      <i class="font-size-large icon-app-trashcan-1"></i>
+      <i class="font-size-larger icon-app-trashcan-1"></i>
+    </div>
+    <code>.icon-app-trashcan-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-trashcan-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-trashcan-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-trashcan-2"></i>
+      <i class="font-size-h3 icon-app-trashcan-2"></i>
+      <i class="font-size-h4 icon-app-trashcan-2"></i>
+      <i class="font-size-h6 icon-app-trashcan-2"></i>
+      <i class="font-size-smaller icon-app-trashcan-2"></i>
+      <i class="font-size-small icon-app-trashcan-2"></i>
+      <i class="font-size-base icon-app-trashcan-2"></i>
+      <i class="font-size-large icon-app-trashcan-2"></i>
+      <i class="font-size-larger icon-app-trashcan-2"></i>
+    </div>
+    <code>.icon-app-trashcan-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-eye-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-eye-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-eye-1"></i>
+      <i class="font-size-h3 icon-app-eye-1"></i>
+      <i class="font-size-h4 icon-app-eye-1"></i>
+      <i class="font-size-h6 icon-app-eye-1"></i>
+      <i class="font-size-smaller icon-app-eye-1"></i>
+      <i class="font-size-small icon-app-eye-1"></i>
+      <i class="font-size-base icon-app-eye-1"></i>
+      <i class="font-size-large icon-app-eye-1"></i>
+      <i class="font-size-larger icon-app-eye-1"></i>
+    </div>
+    <code>.icon-app-eye-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-user-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-user-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-user-1"></i>
+      <i class="font-size-h3 icon-app-user-1"></i>
+      <i class="font-size-h4 icon-app-user-1"></i>
+      <i class="font-size-h6 icon-app-user-1"></i>
+      <i class="font-size-smaller icon-app-user-1"></i>
+      <i class="font-size-small icon-app-user-1"></i>
+      <i class="font-size-base icon-app-user-1"></i>
+      <i class="font-size-large icon-app-user-1"></i>
+      <i class="font-size-larger icon-app-user-1"></i>
+    </div>
+    <code>.icon-app-user-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-user-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-user-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-user-2"></i>
+      <i class="font-size-h3 icon-app-user-2"></i>
+      <i class="font-size-h4 icon-app-user-2"></i>
+      <i class="font-size-h6 icon-app-user-2"></i>
+      <i class="font-size-smaller icon-app-user-2"></i>
+      <i class="font-size-small icon-app-user-2"></i>
+      <i class="font-size-base icon-app-user-2"></i>
+      <i class="font-size-large icon-app-user-2"></i>
+      <i class="font-size-larger icon-app-user-2"></i>
+    </div>
+    <code>.icon-app-user-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-user-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-user-3"></i>
+      </div>
+      <i class="font-size-h2 icon-app-user-3"></i>
+      <i class="font-size-h3 icon-app-user-3"></i>
+      <i class="font-size-h4 icon-app-user-3"></i>
+      <i class="font-size-h6 icon-app-user-3"></i>
+      <i class="font-size-smaller icon-app-user-3"></i>
+      <i class="font-size-small icon-app-user-3"></i>
+      <i class="font-size-base icon-app-user-3"></i>
+      <i class="font-size-large icon-app-user-3"></i>
+      <i class="font-size-larger icon-app-user-3"></i>
+    </div>
+    <code>.icon-app-user-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-notification-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-notification-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-notification-1"></i>
+      <i class="font-size-h3 icon-app-notification-1"></i>
+      <i class="font-size-h4 icon-app-notification-1"></i>
+      <i class="font-size-h6 icon-app-notification-1"></i>
+      <i class="font-size-smaller icon-app-notification-1"></i>
+      <i class="font-size-small icon-app-notification-1"></i>
+      <i class="font-size-base icon-app-notification-1"></i>
+      <i class="font-size-large icon-app-notification-1"></i>
+      <i class="font-size-larger icon-app-notification-1"></i>
+    </div>
+    <code>.icon-app-notification-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-notification-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-notification-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-notification-2"></i>
+      <i class="font-size-h3 icon-app-notification-2"></i>
+      <i class="font-size-h4 icon-app-notification-2"></i>
+      <i class="font-size-h6 icon-app-notification-2"></i>
+      <i class="font-size-smaller icon-app-notification-2"></i>
+      <i class="font-size-small icon-app-notification-2"></i>
+      <i class="font-size-base icon-app-notification-2"></i>
+      <i class="font-size-large icon-app-notification-2"></i>
+      <i class="font-size-larger icon-app-notification-2"></i>
+    </div>
+    <code>.icon-app-notification-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-envelope-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-envelope-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-envelope-1"></i>
+      <i class="font-size-h3 icon-app-envelope-1"></i>
+      <i class="font-size-h4 icon-app-envelope-1"></i>
+      <i class="font-size-h6 icon-app-envelope-1"></i>
+      <i class="font-size-smaller icon-app-envelope-1"></i>
+      <i class="font-size-small icon-app-envelope-1"></i>
+      <i class="font-size-base icon-app-envelope-1"></i>
+      <i class="font-size-large icon-app-envelope-1"></i>
+      <i class="font-size-larger icon-app-envelope-1"></i>
+    </div>
+    <code>.icon-app-envelope-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-envelope-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-envelope-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-envelope-2"></i>
+      <i class="font-size-h3 icon-app-envelope-2"></i>
+      <i class="font-size-h4 icon-app-envelope-2"></i>
+      <i class="font-size-h6 icon-app-envelope-2"></i>
+      <i class="font-size-smaller icon-app-envelope-2"></i>
+      <i class="font-size-small icon-app-envelope-2"></i>
+      <i class="font-size-base icon-app-envelope-2"></i>
+      <i class="font-size-large icon-app-envelope-2"></i>
+      <i class="font-size-larger icon-app-envelope-2"></i>
+    </div>
+    <code>.icon-app-envelope-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-connect_spinner"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-connect_spinner"></i>
+      </div>
+      <i class="font-size-h2 icon-app-connect_spinner"></i>
+      <i class="font-size-h3 icon-app-connect_spinner"></i>
+      <i class="font-size-h4 icon-app-connect_spinner"></i>
+      <i class="font-size-h6 icon-app-connect_spinner"></i>
+      <i class="font-size-smaller icon-app-connect_spinner"></i>
+      <i class="font-size-small icon-app-connect_spinner"></i>
+      <i class="font-size-base icon-app-connect_spinner"></i>
+      <i class="font-size-large icon-app-connect_spinner"></i>
+      <i class="font-size-larger icon-app-connect_spinner"></i>
+    </div>
+    <code>.icon-app-connect_spinner</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-refresh"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-refresh"></i>
+      </div>
+      <i class="font-size-h2 icon-app-refresh"></i>
+      <i class="font-size-h3 icon-app-refresh"></i>
+      <i class="font-size-h4 icon-app-refresh"></i>
+      <i class="font-size-h6 icon-app-refresh"></i>
+      <i class="font-size-smaller icon-app-refresh"></i>
+      <i class="font-size-small icon-app-refresh"></i>
+      <i class="font-size-base icon-app-refresh"></i>
+      <i class="font-size-large icon-app-refresh"></i>
+      <i class="font-size-larger icon-app-refresh"></i>
+    </div>
+    <code>.icon-app-refresh</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sidebar-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sidebar-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sidebar-1"></i>
+      <i class="font-size-h3 icon-app-sidebar-1"></i>
+      <i class="font-size-h4 icon-app-sidebar-1"></i>
+      <i class="font-size-h6 icon-app-sidebar-1"></i>
+      <i class="font-size-smaller icon-app-sidebar-1"></i>
+      <i class="font-size-small icon-app-sidebar-1"></i>
+      <i class="font-size-base icon-app-sidebar-1"></i>
+      <i class="font-size-large icon-app-sidebar-1"></i>
+      <i class="font-size-larger icon-app-sidebar-1"></i>
+    </div>
+    <code>.icon-app-sidebar-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sidebar-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sidebar-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sidebar-2"></i>
+      <i class="font-size-h3 icon-app-sidebar-2"></i>
+      <i class="font-size-h4 icon-app-sidebar-2"></i>
+      <i class="font-size-h6 icon-app-sidebar-2"></i>
+      <i class="font-size-smaller icon-app-sidebar-2"></i>
+      <i class="font-size-small icon-app-sidebar-2"></i>
+      <i class="font-size-base icon-app-sidebar-2"></i>
+      <i class="font-size-large icon-app-sidebar-2"></i>
+      <i class="font-size-larger icon-app-sidebar-2"></i>
+    </div>
+    <code>.icon-app-sidebar-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-info"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-info"></i>
+      </div>
+      <i class="font-size-h2 icon-app-info"></i>
+      <i class="font-size-h3 icon-app-info"></i>
+      <i class="font-size-h4 icon-app-info"></i>
+      <i class="font-size-h6 icon-app-info"></i>
+      <i class="font-size-smaller icon-app-info"></i>
+      <i class="font-size-small icon-app-info"></i>
+      <i class="font-size-base icon-app-info"></i>
+      <i class="font-size-large icon-app-info"></i>
+      <i class="font-size-larger icon-app-info"></i>
+    </div>
+    <code>.icon-app-info</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sunrise"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sunrise"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sunrise"></i>
+      <i class="font-size-h3 icon-app-sunrise"></i>
+      <i class="font-size-h4 icon-app-sunrise"></i>
+      <i class="font-size-h6 icon-app-sunrise"></i>
+      <i class="font-size-smaller icon-app-sunrise"></i>
+      <i class="font-size-small icon-app-sunrise"></i>
+      <i class="font-size-base icon-app-sunrise"></i>
+      <i class="font-size-large icon-app-sunrise"></i>
+      <i class="font-size-larger icon-app-sunrise"></i>
+    </div>
+    <code>.icon-app-sunrise</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sunset"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sunset"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sunset"></i>
+      <i class="font-size-h3 icon-app-sunset"></i>
+      <i class="font-size-h4 icon-app-sunset"></i>
+      <i class="font-size-h6 icon-app-sunset"></i>
+      <i class="font-size-smaller icon-app-sunset"></i>
+      <i class="font-size-small icon-app-sunset"></i>
+      <i class="font-size-base icon-app-sunset"></i>
+      <i class="font-size-large icon-app-sunset"></i>
+      <i class="font-size-larger icon-app-sunset"></i>
+    </div>
+    <code>.icon-app-sunset</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-logout-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-logout-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-logout-1"></i>
+      <i class="font-size-h3 icon-app-logout-1"></i>
+      <i class="font-size-h4 icon-app-logout-1"></i>
+      <i class="font-size-h6 icon-app-logout-1"></i>
+      <i class="font-size-smaller icon-app-logout-1"></i>
+      <i class="font-size-small icon-app-logout-1"></i>
+      <i class="font-size-base icon-app-logout-1"></i>
+      <i class="font-size-large icon-app-logout-1"></i>
+      <i class="font-size-larger icon-app-logout-1"></i>
+    </div>
+    <code>.icon-app-logout-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-manual-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-manual-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-manual-1"></i>
+      <i class="font-size-h3 icon-app-manual-1"></i>
+      <i class="font-size-h4 icon-app-manual-1"></i>
+      <i class="font-size-h6 icon-app-manual-1"></i>
+      <i class="font-size-smaller icon-app-manual-1"></i>
+      <i class="font-size-small icon-app-manual-1"></i>
+      <i class="font-size-base icon-app-manual-1"></i>
+      <i class="font-size-large icon-app-manual-1"></i>
+      <i class="font-size-larger icon-app-manual-1"></i>
+    </div>
+    <code>.icon-app-manual-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-manual-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-manual-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-manual-2"></i>
+      <i class="font-size-h3 icon-app-manual-2"></i>
+      <i class="font-size-h4 icon-app-manual-2"></i>
+      <i class="font-size-h6 icon-app-manual-2"></i>
+      <i class="font-size-smaller icon-app-manual-2"></i>
+      <i class="font-size-small icon-app-manual-2"></i>
+      <i class="font-size-base icon-app-manual-2"></i>
+      <i class="font-size-large icon-app-manual-2"></i>
+      <i class="font-size-larger icon-app-manual-2"></i>
+    </div>
+    <code>.icon-app-manual-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-menu"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-menu"></i>
+      </div>
+      <i class="font-size-h2 icon-app-menu"></i>
+      <i class="font-size-h3 icon-app-menu"></i>
+      <i class="font-size-h4 icon-app-menu"></i>
+      <i class="font-size-h6 icon-app-menu"></i>
+      <i class="font-size-smaller icon-app-menu"></i>
+      <i class="font-size-small icon-app-menu"></i>
+      <i class="font-size-base icon-app-menu"></i>
+      <i class="font-size-large icon-app-menu"></i>
+      <i class="font-size-larger icon-app-menu"></i>
+    </div>
+    <code>.icon-app-menu</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-add"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-add"></i>
+      </div>
+      <i class="font-size-h2 icon-app-add"></i>
+      <i class="font-size-h3 icon-app-add"></i>
+      <i class="font-size-h4 icon-app-add"></i>
+      <i class="font-size-h6 icon-app-add"></i>
+      <i class="font-size-smaller icon-app-add"></i>
+      <i class="font-size-small icon-app-add"></i>
+      <i class="font-size-base icon-app-add"></i>
+      <i class="font-size-large icon-app-add"></i>
+      <i class="font-size-larger icon-app-add"></i>
+    </div>
+    <code>.icon-app-add</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-check"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-check"></i>
+      </div>
+      <i class="font-size-h2 icon-app-check"></i>
+      <i class="font-size-h3 icon-app-check"></i>
+      <i class="font-size-h4 icon-app-check"></i>
+      <i class="font-size-h6 icon-app-check"></i>
+      <i class="font-size-smaller icon-app-check"></i>
+      <i class="font-size-small icon-app-check"></i>
+      <i class="font-size-base icon-app-check"></i>
+      <i class="font-size-large icon-app-check"></i>
+      <i class="font-size-larger icon-app-check"></i>
+    </div>
+    <code>.icon-app-check</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-chevron"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-chevron"></i>
+      </div>
+      <i class="font-size-h2 icon-app-chevron"></i>
+      <i class="font-size-h3 icon-app-chevron"></i>
+      <i class="font-size-h4 icon-app-chevron"></i>
+      <i class="font-size-h6 icon-app-chevron"></i>
+      <i class="font-size-smaller icon-app-chevron"></i>
+      <i class="font-size-small icon-app-chevron"></i>
+      <i class="font-size-base icon-app-chevron"></i>
+      <i class="font-size-large icon-app-chevron"></i>
+      <i class="font-size-larger icon-app-chevron"></i>
+    </div>
+    <code>.icon-app-chevron</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-heart-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-heart-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-heart-1"></i>
+      <i class="font-size-h3 icon-app-heart-1"></i>
+      <i class="font-size-h4 icon-app-heart-1"></i>
+      <i class="font-size-h6 icon-app-heart-1"></i>
+      <i class="font-size-smaller icon-app-heart-1"></i>
+      <i class="font-size-small icon-app-heart-1"></i>
+      <i class="font-size-base icon-app-heart-1"></i>
+      <i class="font-size-large icon-app-heart-1"></i>
+      <i class="font-size-larger icon-app-heart-1"></i>
+    </div>
+    <code>.icon-app-heart-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-heart-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-heart-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-heart-2"></i>
+      <i class="font-size-h3 icon-app-heart-2"></i>
+      <i class="font-size-h4 icon-app-heart-2"></i>
+      <i class="font-size-h6 icon-app-heart-2"></i>
+      <i class="font-size-smaller icon-app-heart-2"></i>
+      <i class="font-size-small icon-app-heart-2"></i>
+      <i class="font-size-base icon-app-heart-2"></i>
+      <i class="font-size-large icon-app-heart-2"></i>
+      <i class="font-size-larger icon-app-heart-2"></i>
+    </div>
+    <code>.icon-app-heart-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pin-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pin-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pin-1"></i>
+      <i class="font-size-h3 icon-app-pin-1"></i>
+      <i class="font-size-h4 icon-app-pin-1"></i>
+      <i class="font-size-h6 icon-app-pin-1"></i>
+      <i class="font-size-smaller icon-app-pin-1"></i>
+      <i class="font-size-small icon-app-pin-1"></i>
+      <i class="font-size-base icon-app-pin-1"></i>
+      <i class="font-size-large icon-app-pin-1"></i>
+      <i class="font-size-larger icon-app-pin-1"></i>
+    </div>
+    <code>.icon-app-pin-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pin-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pin-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pin-2"></i>
+      <i class="font-size-h3 icon-app-pin-2"></i>
+      <i class="font-size-h4 icon-app-pin-2"></i>
+      <i class="font-size-h6 icon-app-pin-2"></i>
+      <i class="font-size-smaller icon-app-pin-2"></i>
+      <i class="font-size-small icon-app-pin-2"></i>
+      <i class="font-size-base icon-app-pin-2"></i>
+      <i class="font-size-large icon-app-pin-2"></i>
+      <i class="font-size-larger icon-app-pin-2"></i>
+    </div>
+    <code>.icon-app-pin-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-calendar-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-calendar-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-calendar-1"></i>
+      <i class="font-size-h3 icon-app-calendar-1"></i>
+      <i class="font-size-h4 icon-app-calendar-1"></i>
+      <i class="font-size-h6 icon-app-calendar-1"></i>
+      <i class="font-size-smaller icon-app-calendar-1"></i>
+      <i class="font-size-small icon-app-calendar-1"></i>
+      <i class="font-size-base icon-app-calendar-1"></i>
+      <i class="font-size-large icon-app-calendar-1"></i>
+      <i class="font-size-larger icon-app-calendar-1"></i>
+    </div>
+    <code>.icon-app-calendar-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-calendar-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-calendar-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-calendar-2"></i>
+      <i class="font-size-h3 icon-app-calendar-2"></i>
+      <i class="font-size-h4 icon-app-calendar-2"></i>
+      <i class="font-size-h6 icon-app-calendar-2"></i>
+      <i class="font-size-smaller icon-app-calendar-2"></i>
+      <i class="font-size-small icon-app-calendar-2"></i>
+      <i class="font-size-base icon-app-calendar-2"></i>
+      <i class="font-size-large icon-app-calendar-2"></i>
+      <i class="font-size-larger icon-app-calendar-2"></i>
+    </div>
+    <code>.icon-app-calendar-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-calendar-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-calendar-3"></i>
+      </div>
+      <i class="font-size-h2 icon-app-calendar-3"></i>
+      <i class="font-size-h3 icon-app-calendar-3"></i>
+      <i class="font-size-h4 icon-app-calendar-3"></i>
+      <i class="font-size-h6 icon-app-calendar-3"></i>
+      <i class="font-size-smaller icon-app-calendar-3"></i>
+      <i class="font-size-small icon-app-calendar-3"></i>
+      <i class="font-size-base icon-app-calendar-3"></i>
+      <i class="font-size-large icon-app-calendar-3"></i>
+      <i class="font-size-larger icon-app-calendar-3"></i>
+    </div>
+    <code>.icon-app-calendar-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-controls-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-controls-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-controls-1"></i>
+      <i class="font-size-h3 icon-app-controls-1"></i>
+      <i class="font-size-h4 icon-app-controls-1"></i>
+      <i class="font-size-h6 icon-app-controls-1"></i>
+      <i class="font-size-smaller icon-app-controls-1"></i>
+      <i class="font-size-small icon-app-controls-1"></i>
+      <i class="font-size-base icon-app-controls-1"></i>
+      <i class="font-size-large icon-app-controls-1"></i>
+      <i class="font-size-larger icon-app-controls-1"></i>
+    </div>
+    <code>.icon-app-controls-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-controls-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-controls-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-controls-2"></i>
+      <i class="font-size-h3 icon-app-controls-2"></i>
+      <i class="font-size-h4 icon-app-controls-2"></i>
+      <i class="font-size-h6 icon-app-controls-2"></i>
+      <i class="font-size-smaller icon-app-controls-2"></i>
+      <i class="font-size-small icon-app-controls-2"></i>
+      <i class="font-size-base icon-app-controls-2"></i>
+      <i class="font-size-large icon-app-controls-2"></i>
+      <i class="font-size-larger icon-app-controls-2"></i>
+    </div>
+    <code>.icon-app-controls-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-more-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-more-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-more-1"></i>
+      <i class="font-size-h3 icon-app-more-1"></i>
+      <i class="font-size-h4 icon-app-more-1"></i>
+      <i class="font-size-h6 icon-app-more-1"></i>
+      <i class="font-size-smaller icon-app-more-1"></i>
+      <i class="font-size-small icon-app-more-1"></i>
+      <i class="font-size-base icon-app-more-1"></i>
+      <i class="font-size-large icon-app-more-1"></i>
+      <i class="font-size-larger icon-app-more-1"></i>
+    </div>
+    <code>.icon-app-more-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-more-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-more-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-more-2"></i>
+      <i class="font-size-h3 icon-app-more-2"></i>
+      <i class="font-size-h4 icon-app-more-2"></i>
+      <i class="font-size-h6 icon-app-more-2"></i>
+      <i class="font-size-smaller icon-app-more-2"></i>
+      <i class="font-size-small icon-app-more-2"></i>
+      <i class="font-size-base icon-app-more-2"></i>
+      <i class="font-size-large icon-app-more-2"></i>
+      <i class="font-size-larger icon-app-more-2"></i>
+    </div>
+    <code>.icon-app-more-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-invoice-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-invoice-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-invoice-1"></i>
+      <i class="font-size-h3 icon-app-invoice-1"></i>
+      <i class="font-size-h4 icon-app-invoice-1"></i>
+      <i class="font-size-h6 icon-app-invoice-1"></i>
+      <i class="font-size-smaller icon-app-invoice-1"></i>
+      <i class="font-size-small icon-app-invoice-1"></i>
+      <i class="font-size-base icon-app-invoice-1"></i>
+      <i class="font-size-large icon-app-invoice-1"></i>
+      <i class="font-size-larger icon-app-invoice-1"></i>
+    </div>
+    <code>.icon-app-invoice-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-page-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-page-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-page-2"></i>
+      <i class="font-size-h3 icon-app-page-2"></i>
+      <i class="font-size-h4 icon-app-page-2"></i>
+      <i class="font-size-h6 icon-app-page-2"></i>
+      <i class="font-size-smaller icon-app-page-2"></i>
+      <i class="font-size-small icon-app-page-2"></i>
+      <i class="font-size-base icon-app-page-2"></i>
+      <i class="font-size-large icon-app-page-2"></i>
+      <i class="font-size-larger icon-app-page-2"></i>
+    </div>
+    <code>.icon-app-page-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-phone-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-phone-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-phone-1"></i>
+      <i class="font-size-h3 icon-app-phone-1"></i>
+      <i class="font-size-h4 icon-app-phone-1"></i>
+      <i class="font-size-h6 icon-app-phone-1"></i>
+      <i class="font-size-smaller icon-app-phone-1"></i>
+      <i class="font-size-small icon-app-phone-1"></i>
+      <i class="font-size-base icon-app-phone-1"></i>
+      <i class="font-size-large icon-app-phone-1"></i>
+      <i class="font-size-larger icon-app-phone-1"></i>
+    </div>
+    <code>.icon-app-phone-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-star-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-star-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-star-1"></i>
+      <i class="font-size-h3 icon-app-star-1"></i>
+      <i class="font-size-h4 icon-app-star-1"></i>
+      <i class="font-size-h6 icon-app-star-1"></i>
+      <i class="font-size-smaller icon-app-star-1"></i>
+      <i class="font-size-small icon-app-star-1"></i>
+      <i class="font-size-base icon-app-star-1"></i>
+      <i class="font-size-large icon-app-star-1"></i>
+      <i class="font-size-larger icon-app-star-1"></i>
+    </div>
+    <code>.icon-app-star-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-star-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-star-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-star-2"></i>
+      <i class="font-size-h3 icon-app-star-2"></i>
+      <i class="font-size-h4 icon-app-star-2"></i>
+      <i class="font-size-h6 icon-app-star-2"></i>
+      <i class="font-size-smaller icon-app-star-2"></i>
+      <i class="font-size-small icon-app-star-2"></i>
+      <i class="font-size-base icon-app-star-2"></i>
+      <i class="font-size-large icon-app-star-2"></i>
+      <i class="font-size-larger icon-app-star-2"></i>
+    </div>
+    <code>.icon-app-star-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-cart-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-cart-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-cart-1"></i>
+      <i class="font-size-h3 icon-app-cart-1"></i>
+      <i class="font-size-h4 icon-app-cart-1"></i>
+      <i class="font-size-h6 icon-app-cart-1"></i>
+      <i class="font-size-smaller icon-app-cart-1"></i>
+      <i class="font-size-small icon-app-cart-1"></i>
+      <i class="font-size-base icon-app-cart-1"></i>
+      <i class="font-size-large icon-app-cart-1"></i>
+      <i class="font-size-larger icon-app-cart-1"></i>
+    </div>
+    <code>.icon-app-cart-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-cart-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-cart-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-cart-2"></i>
+      <i class="font-size-h3 icon-app-cart-2"></i>
+      <i class="font-size-h4 icon-app-cart-2"></i>
+      <i class="font-size-h6 icon-app-cart-2"></i>
+      <i class="font-size-smaller icon-app-cart-2"></i>
+      <i class="font-size-small icon-app-cart-2"></i>
+      <i class="font-size-base icon-app-cart-2"></i>
+      <i class="font-size-large icon-app-cart-2"></i>
+      <i class="font-size-larger icon-app-cart-2"></i>
+    </div>
+    <code>.icon-app-cart-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-alarm-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-alarm-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-alarm-1"></i>
+      <i class="font-size-h3 icon-app-alarm-1"></i>
+      <i class="font-size-h4 icon-app-alarm-1"></i>
+      <i class="font-size-h6 icon-app-alarm-1"></i>
+      <i class="font-size-smaller icon-app-alarm-1"></i>
+      <i class="font-size-small icon-app-alarm-1"></i>
+      <i class="font-size-base icon-app-alarm-1"></i>
+      <i class="font-size-large icon-app-alarm-1"></i>
+      <i class="font-size-larger icon-app-alarm-1"></i>
+    </div>
+    <code>.icon-app-alarm-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-alarm-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-alarm-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-alarm-2"></i>
+      <i class="font-size-h3 icon-app-alarm-2"></i>
+      <i class="font-size-h4 icon-app-alarm-2"></i>
+      <i class="font-size-h6 icon-app-alarm-2"></i>
+      <i class="font-size-smaller icon-app-alarm-2"></i>
+      <i class="font-size-small icon-app-alarm-2"></i>
+      <i class="font-size-base icon-app-alarm-2"></i>
+      <i class="font-size-large icon-app-alarm-2"></i>
+      <i class="font-size-larger icon-app-alarm-2"></i>
+    </div>
+    <code>.icon-app-alarm-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-alarm-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-alarm-3"></i>
+      </div>
+      <i class="font-size-h2 icon-app-alarm-3"></i>
+      <i class="font-size-h3 icon-app-alarm-3"></i>
+      <i class="font-size-h4 icon-app-alarm-3"></i>
+      <i class="font-size-h6 icon-app-alarm-3"></i>
+      <i class="font-size-smaller icon-app-alarm-3"></i>
+      <i class="font-size-small icon-app-alarm-3"></i>
+      <i class="font-size-base icon-app-alarm-3"></i>
+      <i class="font-size-large icon-app-alarm-3"></i>
+      <i class="font-size-larger icon-app-alarm-3"></i>
+    </div>
+    <code>.icon-app-alarm-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-clip-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-clip-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-clip-1"></i>
+      <i class="font-size-h3 icon-app-clip-1"></i>
+      <i class="font-size-h4 icon-app-clip-1"></i>
+      <i class="font-size-h6 icon-app-clip-1"></i>
+      <i class="font-size-smaller icon-app-clip-1"></i>
+      <i class="font-size-small icon-app-clip-1"></i>
+      <i class="font-size-base icon-app-clip-1"></i>
+      <i class="font-size-large icon-app-clip-1"></i>
+      <i class="font-size-larger icon-app-clip-1"></i>
+    </div>
+    <code>.icon-app-clip-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-work-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-work-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-work-1"></i>
+      <i class="font-size-h3 icon-app-work-1"></i>
+      <i class="font-size-h4 icon-app-work-1"></i>
+      <i class="font-size-h6 icon-app-work-1"></i>
+      <i class="font-size-smaller icon-app-work-1"></i>
+      <i class="font-size-small icon-app-work-1"></i>
+      <i class="font-size-base icon-app-work-1"></i>
+      <i class="font-size-large icon-app-work-1"></i>
+      <i class="font-size-larger icon-app-work-1"></i>
+    </div>
+    <code>.icon-app-work-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-work-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-work-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-work-2"></i>
+      <i class="font-size-h3 icon-app-work-2"></i>
+      <i class="font-size-h4 icon-app-work-2"></i>
+      <i class="font-size-h6 icon-app-work-2"></i>
+      <i class="font-size-smaller icon-app-work-2"></i>
+      <i class="font-size-small icon-app-work-2"></i>
+      <i class="font-size-base icon-app-work-2"></i>
+      <i class="font-size-large icon-app-work-2"></i>
+      <i class="font-size-larger icon-app-work-2"></i>
+    </div>
+    <code>.icon-app-work-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-family-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-family-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-family-1"></i>
+      <i class="font-size-h3 icon-app-family-1"></i>
+      <i class="font-size-h4 icon-app-family-1"></i>
+      <i class="font-size-h6 icon-app-family-1"></i>
+      <i class="font-size-smaller icon-app-family-1"></i>
+      <i class="font-size-small icon-app-family-1"></i>
+      <i class="font-size-base icon-app-family-1"></i>
+      <i class="font-size-large icon-app-family-1"></i>
+      <i class="font-size-larger icon-app-family-1"></i>
+    </div>
+    <code>.icon-app-family-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-family-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-family-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-family-2"></i>
+      <i class="font-size-h3 icon-app-family-2"></i>
+      <i class="font-size-h4 icon-app-family-2"></i>
+      <i class="font-size-h6 icon-app-family-2"></i>
+      <i class="font-size-smaller icon-app-family-2"></i>
+      <i class="font-size-small icon-app-family-2"></i>
+      <i class="font-size-base icon-app-family-2"></i>
+      <i class="font-size-large icon-app-family-2"></i>
+      <i class="font-size-larger icon-app-family-2"></i>
+    </div>
+    <code>.icon-app-family-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-door-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-door-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-door-1"></i>
+      <i class="font-size-h3 icon-app-door-1"></i>
+      <i class="font-size-h4 icon-app-door-1"></i>
+      <i class="font-size-h6 icon-app-door-1"></i>
+      <i class="font-size-smaller icon-app-door-1"></i>
+      <i class="font-size-small icon-app-door-1"></i>
+      <i class="font-size-base icon-app-door-1"></i>
+      <i class="font-size-large icon-app-door-1"></i>
+      <i class="font-size-larger icon-app-door-1"></i>
+    </div>
+    <code>.icon-app-door-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-door-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-door-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-door-2"></i>
+      <i class="font-size-h3 icon-app-door-2"></i>
+      <i class="font-size-h4 icon-app-door-2"></i>
+      <i class="font-size-h6 icon-app-door-2"></i>
+      <i class="font-size-smaller icon-app-door-2"></i>
+      <i class="font-size-small icon-app-door-2"></i>
+      <i class="font-size-base icon-app-door-2"></i>
+      <i class="font-size-large icon-app-door-2"></i>
+      <i class="font-size-larger icon-app-door-2"></i>
+    </div>
+    <code>.icon-app-door-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-care-heart-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-care-heart-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-care-heart-1"></i>
+      <i class="font-size-h3 icon-app-care-heart-1"></i>
+      <i class="font-size-h4 icon-app-care-heart-1"></i>
+      <i class="font-size-h6 icon-app-care-heart-1"></i>
+      <i class="font-size-smaller icon-app-care-heart-1"></i>
+      <i class="font-size-small icon-app-care-heart-1"></i>
+      <i class="font-size-base icon-app-care-heart-1"></i>
+      <i class="font-size-large icon-app-care-heart-1"></i>
+      <i class="font-size-larger icon-app-care-heart-1"></i>
+    </div>
+    <code>.icon-app-care-heart-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-care-heart-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-care-heart-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-care-heart-2"></i>
+      <i class="font-size-h3 icon-app-care-heart-2"></i>
+      <i class="font-size-h4 icon-app-care-heart-2"></i>
+      <i class="font-size-h6 icon-app-care-heart-2"></i>
+      <i class="font-size-smaller icon-app-care-heart-2"></i>
+      <i class="font-size-small icon-app-care-heart-2"></i>
+      <i class="font-size-base icon-app-care-heart-2"></i>
+      <i class="font-size-large icon-app-care-heart-2"></i>
+      <i class="font-size-larger icon-app-care-heart-2"></i>
+    </div>
+    <code>.icon-app-care-heart-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pet-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pet-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pet-1"></i>
+      <i class="font-size-h3 icon-app-pet-1"></i>
+      <i class="font-size-h4 icon-app-pet-1"></i>
+      <i class="font-size-h6 icon-app-pet-1"></i>
+      <i class="font-size-smaller icon-app-pet-1"></i>
+      <i class="font-size-small icon-app-pet-1"></i>
+      <i class="font-size-base icon-app-pet-1"></i>
+      <i class="font-size-large icon-app-pet-1"></i>
+      <i class="font-size-larger icon-app-pet-1"></i>
+    </div>
+    <code>.icon-app-pet-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pet-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pet-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pet-2"></i>
+      <i class="font-size-h3 icon-app-pet-2"></i>
+      <i class="font-size-h4 icon-app-pet-2"></i>
+      <i class="font-size-h6 icon-app-pet-2"></i>
+      <i class="font-size-smaller icon-app-pet-2"></i>
+      <i class="font-size-small icon-app-pet-2"></i>
+      <i class="font-size-base icon-app-pet-2"></i>
+      <i class="font-size-large icon-app-pet-2"></i>
+      <i class="font-size-larger icon-app-pet-2"></i>
+    </div>
+    <code>.icon-app-pet-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-energy-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-energy-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-energy-1"></i>
+      <i class="font-size-h3 icon-app-energy-1"></i>
+      <i class="font-size-h4 icon-app-energy-1"></i>
+      <i class="font-size-h6 icon-app-energy-1"></i>
+      <i class="font-size-smaller icon-app-energy-1"></i>
+      <i class="font-size-small icon-app-energy-1"></i>
+      <i class="font-size-base icon-app-energy-1"></i>
+      <i class="font-size-large icon-app-energy-1"></i>
+      <i class="font-size-larger icon-app-energy-1"></i>
+    </div>
+    <code>.icon-app-energy-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-lawn-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-lawn-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-lawn-1"></i>
+      <i class="font-size-h3 icon-app-lawn-1"></i>
+      <i class="font-size-h4 icon-app-lawn-1"></i>
+      <i class="font-size-h6 icon-app-lawn-1"></i>
+      <i class="font-size-smaller icon-app-lawn-1"></i>
+      <i class="font-size-small icon-app-lawn-1"></i>
+      <i class="font-size-base icon-app-lawn-1"></i>
+      <i class="font-size-large icon-app-lawn-1"></i>
+      <i class="font-size-larger icon-app-lawn-1"></i>
+    </div>
+    <code>.icon-app-lawn-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-scene-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-scene-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-scene-1"></i>
+      <i class="font-size-h3 icon-app-scene-1"></i>
+      <i class="font-size-h4 icon-app-scene-1"></i>
+      <i class="font-size-h6 icon-app-scene-1"></i>
+      <i class="font-size-smaller icon-app-scene-1"></i>
+      <i class="font-size-small icon-app-scene-1"></i>
+      <i class="font-size-base icon-app-scene-1"></i>
+      <i class="font-size-large icon-app-scene-1"></i>
+      <i class="font-size-larger icon-app-scene-1"></i>
+    </div>
+    <code>.icon-app-scene-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-scene-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-scene-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-scene-2"></i>
+      <i class="font-size-h3 icon-app-scene-2"></i>
+      <i class="font-size-h4 icon-app-scene-2"></i>
+      <i class="font-size-h6 icon-app-scene-2"></i>
+      <i class="font-size-smaller icon-app-scene-2"></i>
+      <i class="font-size-small icon-app-scene-2"></i>
+      <i class="font-size-base icon-app-scene-2"></i>
+      <i class="font-size-large icon-app-scene-2"></i>
+      <i class="font-size-larger icon-app-scene-2"></i>
+    </div>
+    <code>.icon-app-scene-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-devices"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-devices"></i>
+      </div>
+      <i class="font-size-h2 icon-app-devices"></i>
+      <i class="font-size-h3 icon-app-devices"></i>
+      <i class="font-size-h4 icon-app-devices"></i>
+      <i class="font-size-h6 icon-app-devices"></i>
+      <i class="font-size-smaller icon-app-devices"></i>
+      <i class="font-size-small icon-app-devices"></i>
+      <i class="font-size-base icon-app-devices"></i>
+      <i class="font-size-large icon-app-devices"></i>
+      <i class="font-size-larger icon-app-devices"></i>
+    </div>
+    <code>.icon-app-devices</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-history"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-history"></i>
+      </div>
+      <i class="font-size-h2 icon-app-history"></i>
+      <i class="font-size-h3 icon-app-history"></i>
+      <i class="font-size-h4 icon-app-history"></i>
+      <i class="font-size-h6 icon-app-history"></i>
+      <i class="font-size-smaller icon-app-history"></i>
+      <i class="font-size-small icon-app-history"></i>
+      <i class="font-size-base icon-app-history"></i>
+      <i class="font-size-large icon-app-history"></i>
+      <i class="font-size-larger icon-app-history"></i>
+    </div>
+    <code>.icon-app-history</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-gear"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-gear"></i>
+      </div>
+      <i class="font-size-h2 icon-app-gear"></i>
+      <i class="font-size-h3 icon-app-gear"></i>
+      <i class="font-size-h4 icon-app-gear"></i>
+      <i class="font-size-h6 icon-app-gear"></i>
+      <i class="font-size-smaller icon-app-gear"></i>
+      <i class="font-size-small icon-app-gear"></i>
+      <i class="font-size-base icon-app-gear"></i>
+      <i class="font-size-large icon-app-gear"></i>
+      <i class="font-size-larger icon-app-gear"></i>
+    </div>
+    <code>.icon-app-gear</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pencil-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pencil-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pencil-1"></i>
+      <i class="font-size-h3 icon-app-pencil-1"></i>
+      <i class="font-size-h4 icon-app-pencil-1"></i>
+      <i class="font-size-h6 icon-app-pencil-1"></i>
+      <i class="font-size-smaller icon-app-pencil-1"></i>
+      <i class="font-size-small icon-app-pencil-1"></i>
+      <i class="font-size-base icon-app-pencil-1"></i>
+      <i class="font-size-large icon-app-pencil-1"></i>
+      <i class="font-size-larger icon-app-pencil-1"></i>
+    </div>
+    <code>.icon-app-pencil-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-pencil-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-pencil-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-pencil-2"></i>
+      <i class="font-size-h3 icon-app-pencil-2"></i>
+      <i class="font-size-h4 icon-app-pencil-2"></i>
+      <i class="font-size-h6 icon-app-pencil-2"></i>
+      <i class="font-size-smaller icon-app-pencil-2"></i>
+      <i class="font-size-small icon-app-pencil-2"></i>
+      <i class="font-size-base icon-app-pencil-2"></i>
+      <i class="font-size-large icon-app-pencil-2"></i>
+      <i class="font-size-larger icon-app-pencil-2"></i>
+    </div>
+    <code>.icon-app-pencil-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-badge-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-badge-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-badge-1"></i>
+      <i class="font-size-h3 icon-app-badge-1"></i>
+      <i class="font-size-h4 icon-app-badge-1"></i>
+      <i class="font-size-h6 icon-app-badge-1"></i>
+      <i class="font-size-smaller icon-app-badge-1"></i>
+      <i class="font-size-small icon-app-badge-1"></i>
+      <i class="font-size-base icon-app-badge-1"></i>
+      <i class="font-size-large icon-app-badge-1"></i>
+      <i class="font-size-larger icon-app-badge-1"></i>
+    </div>
+    <code>.icon-app-badge-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-badge-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-badge-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-badge-2"></i>
+      <i class="font-size-h3 icon-app-badge-2"></i>
+      <i class="font-size-h4 icon-app-badge-2"></i>
+      <i class="font-size-h6 icon-app-badge-2"></i>
+      <i class="font-size-smaller icon-app-badge-2"></i>
+      <i class="font-size-small icon-app-badge-2"></i>
+      <i class="font-size-base icon-app-badge-2"></i>
+      <i class="font-size-large icon-app-badge-2"></i>
+      <i class="font-size-larger icon-app-badge-2"></i>
+    </div>
+    <code>.icon-app-badge-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-location-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-location-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-location-1"></i>
+      <i class="font-size-h3 icon-app-location-1"></i>
+      <i class="font-size-h4 icon-app-location-1"></i>
+      <i class="font-size-h6 icon-app-location-1"></i>
+      <i class="font-size-smaller icon-app-location-1"></i>
+      <i class="font-size-small icon-app-location-1"></i>
+      <i class="font-size-base icon-app-location-1"></i>
+      <i class="font-size-large icon-app-location-1"></i>
+      <i class="font-size-larger icon-app-location-1"></i>
+    </div>
+    <code>.icon-app-location-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-location-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-location-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-location-2"></i>
+      <i class="font-size-h3 icon-app-location-2"></i>
+      <i class="font-size-h4 icon-app-location-2"></i>
+      <i class="font-size-h6 icon-app-location-2"></i>
+      <i class="font-size-smaller icon-app-location-2"></i>
+      <i class="font-size-small icon-app-location-2"></i>
+      <i class="font-size-base icon-app-location-2"></i>
+      <i class="font-size-large icon-app-location-2"></i>
+      <i class="font-size-larger icon-app-location-2"></i>
+    </div>
+    <code>.icon-app-location-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-shield-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-shield-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-shield-1"></i>
+      <i class="font-size-h3 icon-app-shield-1"></i>
+      <i class="font-size-h4 icon-app-shield-1"></i>
+      <i class="font-size-h6 icon-app-shield-1"></i>
+      <i class="font-size-smaller icon-app-shield-1"></i>
+      <i class="font-size-small icon-app-shield-1"></i>
+      <i class="font-size-base icon-app-shield-1"></i>
+      <i class="font-size-large icon-app-shield-1"></i>
+      <i class="font-size-larger icon-app-shield-1"></i>
+    </div>
+    <code>.icon-app-shield-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-shield-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-shield-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-shield-2"></i>
+      <i class="font-size-h3 icon-app-shield-2"></i>
+      <i class="font-size-h4 icon-app-shield-2"></i>
+      <i class="font-size-h6 icon-app-shield-2"></i>
+      <i class="font-size-smaller icon-app-shield-2"></i>
+      <i class="font-size-small icon-app-shield-2"></i>
+      <i class="font-size-base icon-app-shield-2"></i>
+      <i class="font-size-large icon-app-shield-2"></i>
+      <i class="font-size-larger icon-app-shield-2"></i>
+    </div>
+    <code>.icon-app-shield-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-shield-3"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-shield-3"></i>
+      </div>
+      <i class="font-size-h2 icon-app-shield-3"></i>
+      <i class="font-size-h3 icon-app-shield-3"></i>
+      <i class="font-size-h4 icon-app-shield-3"></i>
+      <i class="font-size-h6 icon-app-shield-3"></i>
+      <i class="font-size-smaller icon-app-shield-3"></i>
+      <i class="font-size-small icon-app-shield-3"></i>
+      <i class="font-size-base icon-app-shield-3"></i>
+      <i class="font-size-large icon-app-shield-3"></i>
+      <i class="font-size-larger icon-app-shield-3"></i>
+    </div>
+    <code>.icon-app-shield-3</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-headset-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-headset-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-headset-1"></i>
+      <i class="font-size-h3 icon-app-headset-1"></i>
+      <i class="font-size-h4 icon-app-headset-1"></i>
+      <i class="font-size-h6 icon-app-headset-1"></i>
+      <i class="font-size-smaller icon-app-headset-1"></i>
+      <i class="font-size-small icon-app-headset-1"></i>
+      <i class="font-size-base icon-app-headset-1"></i>
+      <i class="font-size-large icon-app-headset-1"></i>
+      <i class="font-size-larger icon-app-headset-1"></i>
+    </div>
+    <code>.icon-app-headset-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-clockhands-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-clockhands-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-clockhands-1"></i>
+      <i class="font-size-h3 icon-app-clockhands-1"></i>
+      <i class="font-size-h4 icon-app-clockhands-1"></i>
+      <i class="font-size-h6 icon-app-clockhands-1"></i>
+      <i class="font-size-smaller icon-app-clockhands-1"></i>
+      <i class="font-size-small icon-app-clockhands-1"></i>
+      <i class="font-size-base icon-app-clockhands-1"></i>
+      <i class="font-size-large icon-app-clockhands-1"></i>
+      <i class="font-size-larger icon-app-clockhands-1"></i>
+    </div>
+    <code>.icon-app-clockhands-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-cloud-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-cloud-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-cloud-1"></i>
+      <i class="font-size-h3 icon-app-cloud-1"></i>
+      <i class="font-size-h4 icon-app-cloud-1"></i>
+      <i class="font-size-h6 icon-app-cloud-1"></i>
+      <i class="font-size-smaller icon-app-cloud-1"></i>
+      <i class="font-size-small icon-app-cloud-1"></i>
+      <i class="font-size-base icon-app-cloud-1"></i>
+      <i class="font-size-large icon-app-cloud-1"></i>
+      <i class="font-size-larger icon-app-cloud-1"></i>
+    </div>
+    <code>.icon-app-cloud-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-cloud-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-cloud-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-cloud-2"></i>
+      <i class="font-size-h3 icon-app-cloud-2"></i>
+      <i class="font-size-h4 icon-app-cloud-2"></i>
+      <i class="font-size-h6 icon-app-cloud-2"></i>
+      <i class="font-size-smaller icon-app-cloud-2"></i>
+      <i class="font-size-small icon-app-cloud-2"></i>
+      <i class="font-size-base icon-app-cloud-2"></i>
+      <i class="font-size-large icon-app-cloud-2"></i>
+      <i class="font-size-larger icon-app-cloud-2"></i>
+    </div>
+    <code>.icon-app-cloud-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sun-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sun-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sun-1"></i>
+      <i class="font-size-h3 icon-app-sun-1"></i>
+      <i class="font-size-h4 icon-app-sun-1"></i>
+      <i class="font-size-h6 icon-app-sun-1"></i>
+      <i class="font-size-smaller icon-app-sun-1"></i>
+      <i class="font-size-small icon-app-sun-1"></i>
+      <i class="font-size-base icon-app-sun-1"></i>
+      <i class="font-size-large icon-app-sun-1"></i>
+      <i class="font-size-larger icon-app-sun-1"></i>
+    </div>
+    <code>.icon-app-sun-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-sun-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-sun-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-sun-2"></i>
+      <i class="font-size-h3 icon-app-sun-2"></i>
+      <i class="font-size-h4 icon-app-sun-2"></i>
+      <i class="font-size-h6 icon-app-sun-2"></i>
+      <i class="font-size-smaller icon-app-sun-2"></i>
+      <i class="font-size-small icon-app-sun-2"></i>
+      <i class="font-size-base icon-app-sun-2"></i>
+      <i class="font-size-large icon-app-sun-2"></i>
+      <i class="font-size-larger icon-app-sun-2"></i>
+    </div>
+    <code>.icon-app-sun-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-night-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-night-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-night-1"></i>
+      <i class="font-size-h3 icon-app-night-1"></i>
+      <i class="font-size-h4 icon-app-night-1"></i>
+      <i class="font-size-h6 icon-app-night-1"></i>
+      <i class="font-size-smaller icon-app-night-1"></i>
+      <i class="font-size-small icon-app-night-1"></i>
+      <i class="font-size-base icon-app-night-1"></i>
+      <i class="font-size-large icon-app-night-1"></i>
+      <i class="font-size-larger icon-app-night-1"></i>
+    </div>
+    <code>.icon-app-night-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-night-2"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-night-2"></i>
+      </div>
+      <i class="font-size-h2 icon-app-night-2"></i>
+      <i class="font-size-h3 icon-app-night-2"></i>
+      <i class="font-size-h4 icon-app-night-2"></i>
+      <i class="font-size-h6 icon-app-night-2"></i>
+      <i class="font-size-smaller icon-app-night-2"></i>
+      <i class="font-size-small icon-app-night-2"></i>
+      <i class="font-size-base icon-app-night-2"></i>
+      <i class="font-size-large icon-app-night-2"></i>
+      <i class="font-size-larger icon-app-night-2"></i>
+    </div>
+    <code>.icon-app-night-2</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-temp-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-temp-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-temp-1"></i>
+      <i class="font-size-h3 icon-app-temp-1"></i>
+      <i class="font-size-h4 icon-app-temp-1"></i>
+      <i class="font-size-h6 icon-app-temp-1"></i>
+      <i class="font-size-smaller icon-app-temp-1"></i>
+      <i class="font-size-small icon-app-temp-1"></i>
+      <i class="font-size-base icon-app-temp-1"></i>
+      <i class="font-size-large icon-app-temp-1"></i>
+      <i class="font-size-larger icon-app-temp-1"></i>
+    </div>
+    <code>.icon-app-temp-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-climate-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-climate-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-climate-1"></i>
+      <i class="font-size-h3 icon-app-climate-1"></i>
+      <i class="font-size-h4 icon-app-climate-1"></i>
+      <i class="font-size-h6 icon-app-climate-1"></i>
+      <i class="font-size-smaller icon-app-climate-1"></i>
+      <i class="font-size-small icon-app-climate-1"></i>
+      <i class="font-size-base icon-app-climate-1"></i>
+      <i class="font-size-large icon-app-climate-1"></i>
+      <i class="font-size-larger icon-app-climate-1"></i>
+    </div>
+    <code>.icon-app-climate-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-air"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-air"></i>
+      </div>
+      <i class="font-size-h2 icon-app-air"></i>
+      <i class="font-size-h3 icon-app-air"></i>
+      <i class="font-size-h4 icon-app-air"></i>
+      <i class="font-size-h6 icon-app-air"></i>
+      <i class="font-size-smaller icon-app-air"></i>
+      <i class="font-size-small icon-app-air"></i>
+      <i class="font-size-base icon-app-air"></i>
+      <i class="font-size-large icon-app-air"></i>
+      <i class="font-size-larger icon-app-air"></i>
+    </div>
+    <code>.icon-app-air</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-barometer"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-barometer"></i>
+      </div>
+      <i class="font-size-h2 icon-app-barometer"></i>
+      <i class="font-size-h3 icon-app-barometer"></i>
+      <i class="font-size-h4 icon-app-barometer"></i>
+      <i class="font-size-h6 icon-app-barometer"></i>
+      <i class="font-size-smaller icon-app-barometer"></i>
+      <i class="font-size-small icon-app-barometer"></i>
+      <i class="font-size-base icon-app-barometer"></i>
+      <i class="font-size-large icon-app-barometer"></i>
+      <i class="font-size-larger icon-app-barometer"></i>
+    </div>
+    <code>.icon-app-barometer</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-flame"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-flame"></i>
+      </div>
+      <i class="font-size-h2 icon-app-flame"></i>
+      <i class="font-size-h3 icon-app-flame"></i>
+      <i class="font-size-h4 icon-app-flame"></i>
+      <i class="font-size-h6 icon-app-flame"></i>
+      <i class="font-size-smaller icon-app-flame"></i>
+      <i class="font-size-small icon-app-flame"></i>
+      <i class="font-size-base icon-app-flame"></i>
+      <i class="font-size-large icon-app-flame"></i>
+      <i class="font-size-larger icon-app-flame"></i>
+    </div>
+    <code>.icon-app-flame</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-hot-water"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-hot-water"></i>
+      </div>
+      <i class="font-size-h2 icon-app-hot-water"></i>
+      <i class="font-size-h3 icon-app-hot-water"></i>
+      <i class="font-size-h4 icon-app-hot-water"></i>
+      <i class="font-size-h6 icon-app-hot-water"></i>
+      <i class="font-size-smaller icon-app-hot-water"></i>
+      <i class="font-size-small icon-app-hot-water"></i>
+      <i class="font-size-base icon-app-hot-water"></i>
+      <i class="font-size-large icon-app-hot-water"></i>
+      <i class="font-size-larger icon-app-hot-water"></i>
+    </div>
+    <code>.icon-app-hot-water</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-snowflake"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-snowflake"></i>
+      </div>
+      <i class="font-size-h2 icon-app-snowflake"></i>
+      <i class="font-size-h3 icon-app-snowflake"></i>
+      <i class="font-size-h4 icon-app-snowflake"></i>
+      <i class="font-size-h6 icon-app-snowflake"></i>
+      <i class="font-size-smaller icon-app-snowflake"></i>
+      <i class="font-size-small icon-app-snowflake"></i>
+      <i class="font-size-base icon-app-snowflake"></i>
+      <i class="font-size-large icon-app-snowflake"></i>
+      <i class="font-size-larger icon-app-snowflake"></i>
+    </div>
+    <code>.icon-app-snowflake</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-battery"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-battery"></i>
+      </div>
+      <i class="font-size-h2 icon-app-battery"></i>
+      <i class="font-size-h3 icon-app-battery"></i>
+      <i class="font-size-h4 icon-app-battery"></i>
+      <i class="font-size-h6 icon-app-battery"></i>
+      <i class="font-size-smaller icon-app-battery"></i>
+      <i class="font-size-small icon-app-battery"></i>
+      <i class="font-size-base icon-app-battery"></i>
+      <i class="font-size-large icon-app-battery"></i>
+      <i class="font-size-larger icon-app-battery"></i>
+    </div>
+    <code>.icon-app-battery</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-thermometer"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-thermometer"></i>
+      </div>
+      <i class="font-size-h2 icon-app-thermometer"></i>
+      <i class="font-size-h3 icon-app-thermometer"></i>
+      <i class="font-size-h4 icon-app-thermometer"></i>
+      <i class="font-size-h6 icon-app-thermometer"></i>
+      <i class="font-size-smaller icon-app-thermometer"></i>
+      <i class="font-size-small icon-app-thermometer"></i>
+      <i class="font-size-base icon-app-thermometer"></i>
+      <i class="font-size-large icon-app-thermometer"></i>
+      <i class="font-size-larger icon-app-thermometer"></i>
+    </div>
+    <code>.icon-app-thermometer</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-bolt"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-bolt"></i>
+      </div>
+      <i class="font-size-h2 icon-app-bolt"></i>
+      <i class="font-size-h3 icon-app-bolt"></i>
+      <i class="font-size-h4 icon-app-bolt"></i>
+      <i class="font-size-h6 icon-app-bolt"></i>
+      <i class="font-size-smaller icon-app-bolt"></i>
+      <i class="font-size-small icon-app-bolt"></i>
+      <i class="font-size-base icon-app-bolt"></i>
+      <i class="font-size-large icon-app-bolt"></i>
+      <i class="font-size-larger icon-app-bolt"></i>
+    </div>
+    <code>.icon-app-bolt</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-device-found"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-device-found"></i>
+      </div>
+      <i class="font-size-h2 icon-app-device-found"></i>
+      <i class="font-size-h3 icon-app-device-found"></i>
+      <i class="font-size-h4 icon-app-device-found"></i>
+      <i class="font-size-h6 icon-app-device-found"></i>
+      <i class="font-size-smaller icon-app-device-found"></i>
+      <i class="font-size-small icon-app-device-found"></i>
+      <i class="font-size-base icon-app-device-found"></i>
+      <i class="font-size-large icon-app-device-found"></i>
+      <i class="font-size-larger icon-app-device-found"></i>
+    </div>
+    <code>.icon-app-device-found</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-facebook-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-facebook-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-facebook-1"></i>
+      <i class="font-size-h3 icon-app-facebook-1"></i>
+      <i class="font-size-h4 icon-app-facebook-1"></i>
+      <i class="font-size-h6 icon-app-facebook-1"></i>
+      <i class="font-size-smaller icon-app-facebook-1"></i>
+      <i class="font-size-small icon-app-facebook-1"></i>
+      <i class="font-size-base icon-app-facebook-1"></i>
+      <i class="font-size-large icon-app-facebook-1"></i>
+      <i class="font-size-larger icon-app-facebook-1"></i>
+    </div>
+    <code>.icon-app-facebook-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-youtube-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-youtube-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-youtube-1"></i>
+      <i class="font-size-h3 icon-app-youtube-1"></i>
+      <i class="font-size-h4 icon-app-youtube-1"></i>
+      <i class="font-size-h6 icon-app-youtube-1"></i>
+      <i class="font-size-smaller icon-app-youtube-1"></i>
+      <i class="font-size-small icon-app-youtube-1"></i>
+      <i class="font-size-base icon-app-youtube-1"></i>
+      <i class="font-size-large icon-app-youtube-1"></i>
+      <i class="font-size-larger icon-app-youtube-1"></i>
+    </div>
+    <code>.icon-app-youtube-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-app-twitter-1"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-app-twitter-1"></i>
+      </div>
+      <i class="font-size-h2 icon-app-twitter-1"></i>
+      <i class="font-size-h3 icon-app-twitter-1"></i>
+      <i class="font-size-h4 icon-app-twitter-1"></i>
+      <i class="font-size-h6 icon-app-twitter-1"></i>
+      <i class="font-size-smaller icon-app-twitter-1"></i>
+      <i class="font-size-small icon-app-twitter-1"></i>
+      <i class="font-size-base icon-app-twitter-1"></i>
+      <i class="font-size-large icon-app-twitter-1"></i>
+      <i class="font-size-larger icon-app-twitter-1"></i>
+    </div>
+    <code>.icon-app-twitter-1</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-alert"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-alert"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-alert"></i>
+      <i class="font-size-h3 icon-alarm-state-alert"></i>
+      <i class="font-size-h4 icon-alarm-state-alert"></i>
+      <i class="font-size-h6 icon-alarm-state-alert"></i>
+      <i class="font-size-smaller icon-alarm-state-alert"></i>
+      <i class="font-size-small icon-alarm-state-alert"></i>
+      <i class="font-size-base icon-alarm-state-alert"></i>
+      <i class="font-size-large icon-alarm-state-alert"></i>
+      <i class="font-size-larger icon-alarm-state-alert"></i>
+    </div>
+    <code>.icon-alarm-state-alert</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-cancelled"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-cancelled"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-cancelled"></i>
+      <i class="font-size-h3 icon-alarm-state-cancelled"></i>
+      <i class="font-size-h4 icon-alarm-state-cancelled"></i>
+      <i class="font-size-h6 icon-alarm-state-cancelled"></i>
+      <i class="font-size-smaller icon-alarm-state-cancelled"></i>
+      <i class="font-size-small icon-alarm-state-cancelled"></i>
+      <i class="font-size-base icon-alarm-state-cancelled"></i>
+      <i class="font-size-large icon-alarm-state-cancelled"></i>
+      <i class="font-size-larger icon-alarm-state-cancelled"></i>
+    </div>
+    <code>.icon-alarm-state-cancelled</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-dispatched"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-dispatched"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-dispatched"></i>
+      <i class="font-size-h3 icon-alarm-state-dispatched"></i>
+      <i class="font-size-h4 icon-alarm-state-dispatched"></i>
+      <i class="font-size-h6 icon-alarm-state-dispatched"></i>
+      <i class="font-size-smaller icon-alarm-state-dispatched"></i>
+      <i class="font-size-small icon-alarm-state-dispatched"></i>
+      <i class="font-size-base icon-alarm-state-dispatched"></i>
+      <i class="font-size-large icon-alarm-state-dispatched"></i>
+      <i class="font-size-larger icon-alarm-state-dispatched"></i>
+    </div>
+    <code>.icon-alarm-state-dispatched</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-dispatch-refused"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-dispatch-refused"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-h3 icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-h4 icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-h6 icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-smaller icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-small icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-base icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-large icon-alarm-state-dispatch-refused"></i>
+      <i class="font-size-larger icon-alarm-state-dispatch-refused"></i>
+    </div>
+    <code>.icon-alarm-state-dispatch-refused</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-dispatch-failed"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-dispatch-failed"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-h3 icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-h4 icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-h6 icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-smaller icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-small icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-base icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-large icon-alarm-state-dispatch-failed"></i>
+      <i class="font-size-larger icon-alarm-state-dispatch-failed"></i>
+    </div>
+    <code>.icon-alarm-state-dispatch-failed</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-dispatch-cancelled"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-dispatch-cancelled"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-h3 icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-h4 icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-h6 icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-smaller icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-small icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-base icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-large icon-alarm-state-dispatch-cancelled"></i>
+      <i class="font-size-larger icon-alarm-state-dispatch-cancelled"></i>
+    </div>
+    <code>.icon-alarm-state-dispatch-cancelled</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-dispatching"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-dispatching"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-dispatching"></i>
+      <i class="font-size-h3 icon-alarm-state-dispatching"></i>
+      <i class="font-size-h4 icon-alarm-state-dispatching"></i>
+      <i class="font-size-h6 icon-alarm-state-dispatching"></i>
+      <i class="font-size-smaller icon-alarm-state-dispatching"></i>
+      <i class="font-size-small icon-alarm-state-dispatching"></i>
+      <i class="font-size-base icon-alarm-state-dispatching"></i>
+      <i class="font-size-large icon-alarm-state-dispatching"></i>
+      <i class="font-size-larger icon-alarm-state-dispatching"></i>
+    </div>
+    <code>.icon-alarm-state-dispatching</code>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-wrapper">
+      <div class="icon-app-state clip-overflow">
+        <i class="icon-alarm-state-prealert"></i>
+      </div>
+      <div class="icon-circle">
+        <i class="icon-alarm-state-prealert"></i>
+      </div>
+      <i class="font-size-h2 icon-alarm-state-prealert"></i>
+      <i class="font-size-h3 icon-alarm-state-prealert"></i>
+      <i class="font-size-h4 icon-alarm-state-prealert"></i>
+      <i class="font-size-h6 icon-alarm-state-prealert"></i>
+      <i class="font-size-smaller icon-alarm-state-prealert"></i>
+      <i class="font-size-small icon-alarm-state-prealert"></i>
+      <i class="font-size-base icon-alarm-state-prealert"></i>
+      <i class="font-size-large icon-alarm-state-prealert"></i>
+      <i class="font-size-larger icon-alarm-state-prealert"></i>
+    </div>
+    <code>.icon-alarm-state-prealert</code>
+  </div>
+</div>
+  <div id="window_resizer_tooltip_wrapper" data-pos-y="bottom" data-pos-x="right"></div>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender"></script>

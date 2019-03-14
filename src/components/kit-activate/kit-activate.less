@@ -1,0 +1,102 @@
+@import 'device/grid/grid.less';
+
+arcus-kit-activate-device-grid {
+  display: block;
+  .device-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: @gutter auto 0 auto;
+    text-align: center;
+    width: 60%;
+    .breakpoint(md-down, {
+      justify-content: center;
+    });
+  }
+  .device-wrapper {
+    margin-bottom: @gutter/1.5;
+    width: 180px;
+    p {
+      .font-demibold;
+      margin: 0;
+    }
+  }
+  .circle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: @gutter/3;
+  }
+  .device-image {
+    &.check-position {
+      left: 29px;
+      position: relative;
+    }
+    img {
+      width: 120px;
+      border-radius: 100%;
+    }
+  }
+  .check {
+    background-color: @parakeet;
+    border: 3px solid @crane;
+    border-radius: 100%;
+    color: @crane;
+    margin: auto;
+    padding: 8px;
+    position: relative;
+    top: 35px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+  }
+  .disabled-text {
+    color: @grouse;
+  }
+  .warning-text {
+    color: @cardinal;
+    a {
+      color: @cardinal;
+      text-decoration: underline;
+    }
+  }
+}
+
+arcus-kit-activate-device-unpaired {
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    h4 {
+      .font-demibold;
+      margin-top: 0;
+    }
+    h3 {
+      .font-demibold;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    span {
+      color: @coot;
+    }
+    .buttons {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      [class^="btn"] {
+        margin-top: @gutter*(2/3);
+        margin-bottom: @gutter/2;
+        &.disabled {
+          pointer-events: none;
+          .loader::after {
+            background-color: @heron;
+          }
+        }
+      }
+    }
+  }
+}
+
+arcus-kit-activate-device-state {}

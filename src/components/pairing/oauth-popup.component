@@ -1,0 +1,212 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-oauth-popup">
+  <template></template>
+  <view-model>
+    import CanMap from 'can-map';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import PairingSubsystemCaps from 'i2web/models/capability/PairingSubsystem';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Window} popup
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description the popup window object instance
+         */
+        popup: {
+          type: '*',
+        },
+        /**
+         * @property {String} popupPath
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description the url the popup window is initially opened to
+         */
+        popupPath: {
+          get() {
+            return this.attr('config.oauthUrl') + '&template=v2-web';
+          },
+        },
+        /**
+         * @property {boolean} isPopupOpen
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description if the popup window is currently open
+         */
+        isPopupOpen: {
+          value: true,
+        },
+        /**
+         * @property {boolean} isDeviceFound
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description if a device has been found while this component is visible
+         */
+        isDeviceFound: {
+          value: false,
+        },
+        /**
+         * @property {boolean} isAuthFailed
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description if the oauth process has ended unsuccessfully
+         */
+        isAuthFailed: {
+          get() {
+            return this.attr('isAuthTimedOut') || (!this.attr('isPopupOpen') && !this.attr('isDeviceFound'))
+          },
+        },
+        /**
+         * @property {boolean} isAuthTimedOut
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description if the oauth process has ended unsuccessfully due to a timeout
+         */
+        isAuthTimedOut: {
+          get() {
+            const idle = this.attr('subsystem.subpairing:pairingMode') === PairingSubsystemCaps.PAIRINGMODE_IDLE;
+            const timeoutFlagSet = this.attr('subsystem.subpairing:searchTimeout') === 0;
+            const noPairingDevices = this.attr('subsystem.subpairing:pairingDevices.length') === 0;
+            return timeoutFlagSet && idle && noPairingDevices;
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/pairing/oauth-popup/
+         * @description the pairing subsystem
+         */
+        subsystem: {
+          get() {
+            return getAppState().subsystems.findByName('subpairing');
+          }
+        },
+      },
+      /**
+       * @function launchPopup
+       * @parent i2web/components/pairing/oauth-popup/
+       * @description launch a popup to view the oauth bridge
+       */
+      launchPopup() {
+        const width = 400;
+        const height = 600;
+        const y = window.top.screenY;
+        const x = window.top.screenX + (window.top.outerWidth - width) / 2;
+        const popup = window.open(
+          this.attr('popupPath'),
+          'Arcus OAuth',
+          `width=${width}, height=${height}, top=${y}, left=${x}, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no`
+        );
+
+        this.popup = popup;
+        this.attr('isPopupOpen', true);
+        this.dispatch('launched');
+        this.focusPopup();
+        this.startPopupOpenPoll();
+      },
+      /**
+       * @function closePopup
+       * @parent i2web/components/pairing/oauth-popup/
+       * @description close the popup and cancel associated polling
+       */
+      closePopup() {
+        this.popup.close();
+        this.popup = null;
+        this.attr('isPopupOpen', false);
+        this.stopPopupOpenPoll();
+      },
+      /**
+       * @function focusPopup
+       * @parent i2web/components/pairing/oauth-popup/
+       * @description set focus to the popup window
+       */
+      focusPopup() {
+        this.popup.focus();
+      },
+      /**
+       * @function startPopupOpenPoll
+       * @parent i2web/components/pairing/oauth-popup/
+       * @description start a polling function that monitors the open state of the popup
+       */
+      startPopupOpenPoll() {
+        // stop any existing poll
+        this.stopPopupOpenPoll();
+        // need to use a poll to track popup state
+        const poll = setInterval(() => {
+          if (this.popup.closed) {
+            this.attr('isPopupOpen', false);
+            this.stopPopupOpenPoll();
+          }
+        }, 333);
+        // store poll reference
+        this.attr('openStatePoll', poll);
+      },
+      /**
+       * @function stopPopupOpenPoll
+       * @parent i2web/components/pairing/oauth-popup/
+       * @description stop a polling function that monitors the open state of the popup
+       */
+      stopPopupOpenPoll() {
+        clearInterval(this.openStatePoll);
+      },
+    });
+  </view-model>
+  <events>
+    import Cornea from 'i2web/cornea/';
+    import { getRedirectionURL } from "i2web/helpers/global";
+
+    export default {
+      // on inserted, launch popup and start new device listener
+      inserted() {
+        this.viewModel.launchPopup();
+
+        this.newDeviceHandler = () => {
+          this.viewModel.attr('isDeviceFound', true);
+          this.viewModel.dispatch('success');
+        };
+
+        Cornea.addListener('dev base:Added', this.newDeviceHandler);
+      },
+      // on removed, close popup and stop new device listener
+      removed() {
+        this.viewModel.closePopup();
+
+        Cornea.removeListener('dev base:Added', this.newDeviceHandler);
+      },
+      // listen for a window message from the popup that it is complete and can be closed
+      '{window} message': function windowMessageHandler(src, event) {
+        if (event.data.type === 'arcus-oauth-popup-complete') {
+          this.viewModel.closePopup();
+        } else if (event.data.type === 'arcus-oauth-exit-to-catalog') {
+          this.viewModel.dispatch('exittocatalog'); // switch to kebab case after upgrading stache
+        } else if (event.data.type === 'arcus-oauth-exit-to-support') {
+          // popup has exited to support page, close auth popup and open another popup for the support page
+          this.viewModel.closePopup();
+          window.open(getRedirectionURL('support'), '_blank');
+        }
+      },
+      // listen for failure state change and dispatch failure event
+      '{viewModel} isAuthFailed': function authFailureChange(vm, ev, val) {
+        if (val === true) {
+          this.viewModel.dispatch('failure');
+        }
+      },
+      // listen for timeout state change and dispatch timeout event
+      '{viewModel} isAuthTimedOut': function timeoutChange(vm, ev, val) {
+        if (val === true) {
+          this.viewModel.closePopup();
+          this.viewModel.dispatch('timeout');
+        }
+      }
+    }
+  </events>
+</can-component>

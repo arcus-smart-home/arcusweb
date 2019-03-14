@@ -1,0 +1,54 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/staged-progress/" />
+
+<arcus-staged-progress build-profile in-progress />
+<h1>Billing Information</h1>
+<p class="instructions">
+  {{{instructionText}}}
+</p>
+<div class="stage-fields">
+  {{textInput('firstName', 'First Name')}}
+  {{textInput('lastName', 'Last Name')}}
+  {{textInput('cardNumber', 'Card Number', type='tel' attributes='autocomplete="cc-number" key-mask="9999-9999-9999-9999-9999"')}}
+  {{textInput('cvv', 'CVV / Security code', type='tel' attributes='autocomplete="cc-csc" key-mask="9999"')}}
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      {{#selectInput('expMonth', 'Expiration Month', attributes='autocomplete="cc-exp-month"' allowSearch=true placeholder='Month')}}
+        <option value="01">01-January</option>
+        <option value="02">02-February</option>
+        <option value="03">03-March</option>
+        <option value="04">04-April</option>
+        <option value="05">05-May</option>
+        <option value="06">06-June</option>
+        <option value="07">07-July</option>
+        <option value="08">08-August</option>
+        <option value="09">09-September</option>
+        <option value="10">10-October</option>
+        <option value="11">11-November</option>
+        <option value="12">12-December</option>
+      {{/selectInput}}
+    </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-5">
+      {{#selectInput('expYear', 'Expiration Year', attributes='autocomplete="cc-exp-year"' allowSearch=true placeholder='Year')}}
+        {{#each expirationYearOptions}}
+          <option value="{{.}}">{{.}}</option>
+        {{/each}}
+      {{/selectInput}}
+    </div>
+  </div>
+</div>

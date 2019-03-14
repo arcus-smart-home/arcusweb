@@ -1,0 +1,45 @@
+arcus-page-404 {
+  margin-bottom: @gutter*2;
+  display: flex;
+  flex-direction: column;
+  .content {
+    display: flex;
+    .breakpoint(md-down, {
+      flex-direction: column;
+    });
+  }
+  .left-wrapper,
+  .right-wrapper {
+    flex: 1 0 100%;
+    padding-top: @gutter;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    .breakpoint(md, {
+      max-width: 50%;
+      flex-basis: 50%;
+    });
+    h2 {
+      .breakpoint(md-down, {
+        margin-top: 0;
+      });
+    }
+  }
+  .right-wrapper {
+    display: flex;
+    align-self: center;
+    text-align: center;
+    &:before {
+      content: '';
+      height: @gutter*1.5;
+      width: 1px;
+      position: absolute;
+      background: @heron;
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }
+    .btn {
+      margin: @gutter/2 auto 0;
+    }
+  }
+}

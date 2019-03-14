@@ -1,0 +1,49 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="wizard">
+  <content></content>
+</div>
+{{#if activeStep}}
+  {{#unless activeStep.hasNoNav}}
+    <div class="button-panel">
+      {{#unless atFirstStep}}
+        {{#if activeStep.showPrevButton}}
+          <button type="button" class="btn-previous" ($click)="prev()" {{#if activeStep.disablePrevButton}}disabled{{/if}}>
+            {{{activeStep.prevButtonLabel}}}
+          </button>
+        {{/if}}
+      {{else}}
+        {{#if showLeaveAtFirstStep}}
+          <button type="button" class="btn-previous" ($click)="_leaveWizard()">
+            {{{activeStep.prevButtonLabel}}}
+          </button>
+        {{/if}}
+      {{/unless}}
+      {{#unless atLastStep}}
+        {{#if activeStep.showNextButton}}
+          <button type="button" class="btn-next {{#if loadingNext}}saving{{/if}}" ($click)="next()" {{#if activeStep.disableNextButton}}disabled{{/if}} {{#unless activeStep.isSatisfied}}disabled{{/unless}}>
+            {{#if loadingNext}}
+              <div class="loader"></div>{{{activeStep.nextButtonLoadingLabel}}}
+            {{else}}
+              {{{activeStep.nextButtonLabel}}}
+            {{/if}}
+          </button>
+        {{/if}}
+      {{/unless}}
+    </div>
+  {{/unless}}
+{{/if}}

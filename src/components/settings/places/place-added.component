@@ -1,0 +1,116 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-place-added">
+  <view>
+    <can-import from="i2web/components/animated/check.component"/>
+    <div class="modal-container">
+      <div class="modal-content">
+        <arcus-animated-check {checked}="checked" icon="icon-app-check" />
+        <h2>{{placeName}}</h2>
+        <p>has been added to your Arcus account!</p>
+        <hr/>
+        <p>
+          {{#if downgraded}}
+            By default, this place will be enrolled in the <strong>Premium Plan</strong> and
+            the payment method on file will be charged.
+          {{else}}
+            This place will have the <strong>same service plan</strong> as your other place, by default.
+          {{/if}}
+            To update your service plan in the Web Portal, click <a ($click)="switchPlaceAndReroute('service')">here</a>
+            or go to Settings > Service Plan > Edit.
+        </p>
+        <p>
+          <strong>To switch places, select <i class="icon-app-logout-1"></i> on the main navigation.</strong>
+        </p>
+        <hr/>
+        <a><button class="btn-primary" ($click)="switchPlaceAndReroute('dashboard')">Continue to Dashboard</button></a>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </view>
+  <script type="view-model">
+    import AppState from 'i2web/plugins/get-app-state';
+    import canMap from 'can-map';
+    import canRoute from 'can-route';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Person from 'i2web/models/person';
+    import PlaceManager from 'i2web/models/place-manager';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Boolean} downgraded
+         * @parent i2web/components/settings/places
+         * @description Indicates if a service level has been downgraded from Pro-monitored
+         */
+        downgraded: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {Person} person
+         * @parent i2web/components/settings/places
+         * @description Person currently logged in; required to switch places
+        */
+        person: {
+          Type: Person,
+        },
+        /**
+         * @property {String} placeId
+         * @parent i2web/components/settings/places
+         * @description The base id of the newly added place
+         */
+        placeId: {
+          type: 'string',
+        },
+        /**
+         * @property {String} placeName
+         * @parent i2web/components/settings/places
+         * @description The name of the newly added place
+         */
+        placeName: {
+          type: 'string',
+        },
+        /**
+         * @property {Boolean} showNewPlaceModal
+         * @parent i2web/components/settings/places
+         * @description Set to false when the user dismisses the modal
+         */
+        showNewPlaceModal: {
+          type: 'boolean',
+        },
+      },
+      /**
+       * @function switchPlaceAndReroute
+       * @parent i2web/components/settings/places
+       * @description Switch to the new place and re-route the user to the destination
+       */
+      switchPlaceAndReroute(destination) {
+        PlaceManager.setActivePlace(this.attr('placeId'), this.attr('person.base:id')).then((activePlaceId) => {
+          AppState().attr('placeId', activePlaceId);
+          this.attr('showNewPlaceModal', false);
+          if (destination === 'dashboard') {
+            canRoute.attr({ page: 'home', subpage: undefined, action: undefined });
+          } else {
+            canRoute.attr({ page: 'settings', subpage: 'service-plan', action: undefined });
+          }
+        }).catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+</can-component>

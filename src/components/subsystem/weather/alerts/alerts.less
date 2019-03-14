@@ -1,0 +1,55 @@
+arcus-subsystem-weather-alerts {
+  h3 {
+    .icon {
+      vertical-align: text-bottom;
+      font-size: 35px;
+    }
+  }
+  hr {
+    margin: @gutter/2 0;
+  }
+  .weather-alert {
+    margin-bottom: @gutter/1.5;
+    padding-bottom: @gutter/1.5;
+    border-bottom: @border;
+    p {
+      margin: 0;
+    }
+  }
+  .control-overview {
+    .icon-app-state {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .actions {
+    display: flex;
+    flex-direction: row;
+  }
+  .instructions {
+    padding-right: @gutter;
+    &+ hr {
+      margin-bottom: @gutter;
+    }
+  }
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+    border-left: @border;
+    padding-left: @gutter;
+    .tooltip-wrapper {
+      display: unset;
+      margin-bottom: 0;
+      margin-left: @gutter/3;
+    }
+  }
+  button {
+    &:first-of-type {
+      display: block;
+      margin-bottom: 0;
+    }
+    &:nth-child(2) {
+      margin: 0;
+    }
+  }
+}

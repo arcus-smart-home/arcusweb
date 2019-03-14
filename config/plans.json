@@ -1,0 +1,120 @@
+{
+  "plans": {
+    "BASIC": {
+      "price": 0,
+      "monthDisplayPrice": "Free",
+      "yearDisplayPrice": "Free",
+      "displayName": "Basic"
+    },
+    "PREMIUM_FREE": {
+      "price": 0,
+      "monthDisplayPrice": "Free",
+      "displayName": "Premium (Free)"
+    },
+    "PREMIUM": {
+      "price": 9.99,
+      "monthDisplayPrice": "9.99",
+      "displayName": "Premium"
+    },
+    "PREMIUM_ANNUAL": {
+      "price": 8.34,
+      "monthDisplayPrice": "8.34",
+      "yearDisplayPrice": "99.99",
+      "yearSavings": 19,
+      "displayName": "Premium"
+    },
+    "PREMIUM_PROMON": {
+      "price": 14.95,
+      "monthDisplayPrice": "14.95",
+      "displayName": "Professional Monitoring"
+    },
+    "PREMIUM_PROMON_ANNUAL": {
+      "price": 12.49,
+      "monthDisplayPrice": "12.49",
+      "yearDisplayPrice": "149.99",
+      "yearSavings": 29,
+      "displayName": "Professional Monitoring"
+    },
+    "PREMIUM_PROMON_MYPARTNER_DISCOUNT": {
+      "price": 13.46,
+      "monthDisplayPrice": "13.46",
+      "displayName": "Professional Monitoring"
+    },
+    "PREMIUM_PROMON_FREE": {
+      "price": 0,
+      "monthDisplayPrice": "Free",
+      "displayName": "Professional Monitoring (Free)"
+    },
+    "CELLBACKUP": {
+      "price": 7.99,
+      "monthDisplayPrice": "7.99",
+      "displayName": "Cellular Backup"
+    }
+  },
+  "yearlyDiscount": "16%",
+  "features": [{
+    "feature": "Add Unlimited Devices",
+    "tooltip": "Add an unlimited number of ‘Works with Arcus’ devices from over 30 top brands",
+    "plans": ["BASIC", "PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Free Mobile Apps & Web Portal",
+    "tooltip": "Conveniently control devices from anywhere using the Arcus iOS app, Android app, or Web Portal",
+    "plans": ["BASIC", "PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Voice Control Enabled",
+    "tooltip": "Control your devices with Google Assistant and Amazon Alexa",
+    "plans": ["BASIC", "PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Video Clip Storage",
+    "tooltip": "Unlimited video storage for a rolling time period, depending on your plan",
+    "plans": {
+      "BASIC": "1 day",
+      "PREMIUM": "30 days",
+      "PREMIUM_PROMON": "30 days"
+    }
+  }, {
+    "feature": "Alarm Notifications",
+    "tooltip": "Immediately receive notifications about what’s happening at home",
+    "plans": {
+      "BASIC": "1 person",
+      "PREMIUM": "6 people",
+      "PREMIUM_PROMON": "6 people"
+    }
+  }, {
+    "feature": "Rules, Scenes & Schedules",
+    "tooltip": "Save time during your busy day by automating your devices",
+    "plans": ["BASIC", "PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Favorite Devices",
+    "tooltip": "Have quick access to all your favorite devices",
+    "plans": ["BASIC", "PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "History Log",
+    "tooltip": "A record of all activity to understand what happens in your home",
+    "plans": {
+      "BASIC": "1 day",
+      "PREMIUM": "14 days",
+      "PREMIUM_PROMON": "14 days"
+    }
+  }, {
+    "feature": "Care Service",
+    "tooltip": "Get notified when a loved one’s daily routine has been disrupted, so you can take the necessary measures to keep them safe. A triggered Care behavior creates a silent alarm, notifying the whole family of events that are out of the ordinary",
+    "plans": ["PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Alarm Tracker",
+    "tooltip": "Real time visualization of alarm events in your home",
+    "plans": ["PREMIUM", "PREMIUM_PROMON"]
+  }, {
+    "feature": "Cellular Backup",
+    "tooltip": "Up to 7 days per month of continuous fast LTE service to keep you connected, even when your internet goes down. Requires 4G Modem. *Inactivity for more than 80 days will disable your cellular modem. Please refer to the Terms of Service for additional information",
+    "plans": {
+      "BASIC": 7.99,
+      "PREMIUM": 7.99,
+      "PREMIUM_PROMON": true
+    }
+  }, {
+    "feature": "24/7 Pro-Monitoring",
+    "tooltip": "Full-service professional monitoring for burglary, smoke, fire and carbon monoxide, as well as panic alarms. Provided by an accredited and certified professional central monitoring station",
+    "plans": ["PREMIUM_PROMON"]
+  }]
+}

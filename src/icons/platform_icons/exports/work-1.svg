@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="44px" height="38px" viewBox="0 0 44 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>work-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="work-1" fill="#000000">
+            <path d="M12,9 L32,9 L32,38 L12,38 L12,9 Z M34,9 L42.000385,9 C43.1047419,9 44,9.89971268 44,10.9932874 L44,36.0067126 C44,37.1075748 43.1125667,38 42.000385,38 L34,38 L34,9 Z M0,10.9932874 C0,9.89242519 0.88743329,9 1.99961498,9 L10,9 L10,38 L1.99961498,38 C0.895258123,38 0,37.1002873 0,36.0067126 L0,10.9932874 Z" id="Combined-Shape"></path>
+            <path d="M11,4.5 C11,2.01471863 13.0106748,0 15.505116,0 L28.494884,0 C30.9829909,0 33,2.01977567 33,4.5 L33,9 L11,9 L11,4.5 Z M12,5 C12,2.790861 13.7924676,1 15.99923,1 L28.00077,1 C30.2094838,1 32,2.79535615 32,5 L32,9 L12,9 L12,5 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

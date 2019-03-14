@@ -1,0 +1,59 @@
+@import "completed/completed.less";
+@import "contact-type/contact-type.less";
+@import "device/device.less";
+@import "favorite/favorite.less";
+@import "info/info.less";
+@import "irrigation-zone/irrigation-zone.less";
+@import "multi-button-assignment/multi-button-assignment.less";
+@import "name/name.less";
+@import "ota-upgrade/ota-upgrade.less";
+@import "presence-assignment/presence-assignment.less";
+@import "promon-alarm/promon-alarm.less";
+@import "room/room.less";
+@import "rule/rule.less";
+@import "schedule/schedule.less";
+@import "security-mode/security-mode.less";
+@import "state-county-select/state-county-select.less";
+@import "water-heater/water-heater.less";
+@import "weather-radio-station/weather-radio-station.less";
+
+arcus-pairing-customize-schedule, arcus-pairing-customize-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .box-gray-radius {
+    flex-wrap: wrap;
+    flex-direction: row;
+    min-height: 100px;
+    .breakpoint(sm, {
+      flex-wrap: nowrap;
+      width: @box-md;
+    });
+    .row-left-area {
+      display: block;
+    }
+  }
+}
+
+arcus-pairing-customize-rule + arcus-pairing-customize-schedule {
+  margin-top: @gutter/2;
+}
+
+arcus-pairing-customize-contact-test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .illustration {
+    width: 235px;
+    height: 235px;
+    margin-bottom: @gutter;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .missing-illustration {
+    display:none;
+  }
+}

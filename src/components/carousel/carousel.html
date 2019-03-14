@@ -1,0 +1,74 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-carousel>
+  {{#each devices}}
+    <div class="slider-item swiper-slide">
+      <arcus-device-card {device}="." />
+    </div>
+  {{/each}}
+  </arcus-carousel>
+  <button ($click)="addDevice()">+ Add Device</button>
+  <button ($click)="removeDevice()">Remove Device</button>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import canMap from 'can-map';
+  import canViewModel from 'can-view-model';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Device from 'i2web/models/device';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/carousel/';
+  import 'i2web/components/device/card/';
+
+  import buttonData from 'i2web/models/fixtures/data/device/buttons.json';
+  import dimmerData from 'i2web/models/fixtures/data/device/dimmers.json';
+  import lightData from 'i2web/models/fixtures/data/device/lights.json';
+  import switchData from 'i2web/models/fixtures/data/device/switches.json';
+  import tiltSensorData from 'i2web/models/fixtures/data/device/tilt_sensors.json';
+  import waterHeaterData from 'i2web/models/fixtures/data/device/water_heaters.json';
+  import unknownDeviceData from 'i2web/models/fixtures/data/device/unknowns.json';
+
+  const initialDevices = [].concat(buttonData, dimmerData, lightData).map((device) => {
+    return new Device(device);
+  });
+  const addlDevices = [].concat(switchData, tiltSensorData, waterHeaterData, unknownDeviceData).map((device) => {
+    return new Device(device);
+  });
+
+  let vm = new canMap({
+    devices: initialDevices,
+    addDevice() {
+      if (addlDevices.length) {
+        this.attr('devices').push(addlDevices.pop());
+      }
+    },
+    removeDevice() {
+      if (this.attr('devices').length) {
+        addlDevices.push(this.attr('devices').pop());
+      }
+    },
+  });
+
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-html',
+    scope: vm,
+    appScope: {},
+  });
+</script>

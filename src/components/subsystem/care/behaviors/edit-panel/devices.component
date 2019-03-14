@@ -1,0 +1,176 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-devices">
+  <template>
+    <h3>Select Participating Devices</h3>
+
+    <hr/>
+
+    {{#if isShowingSelectAll}}
+      <div class="radio-wrapper">
+        <input id="radio:limit:all" type="checkbox" class="radio-checkbox" {($checked)}="isSelectingAll" />
+        <div class="check"></div>
+        <label for="radio:limit:all">
+          Select All
+        </label>
+      </div>
+
+      <hr/>
+    {{/if}}
+
+    {{#each availableDevices}}
+      <div class="radio-wrapper">
+        <input type="checkbox" class="radio-checkbox"
+               id="radio:limit:{{device['base:address']}}"
+               {($checked)}="isSelected" />
+        <div class="check"></div>
+        <label for="radio:limit:{{device['base:address']}}">
+          <i class="{{device['web:icon:off']}}"></i>
+          <div class="text">
+            <div>{{device['dev:name']}}</div>
+            <small>{{device.product['product:vendor']}} {{device.product['product:shortName']}}</small>
+          </div>
+        </label>
+      </div>
+    {{/each}}
+
+    <hr/>
+
+    <div class="button-group">
+      <button ($click)="doneButtonClicked()" class="btn">Done</button>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import CanList from 'can-list';
+    import Device from 'i2web/models/device';
+    import every from 'lodash/every';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import includes from 'lodash/includes';
+    import intersectionBy from 'lodash/intersectionBy';
+    import 'can-map-define';
+    import CareBehavior from 'i2web/models/care-behavior';
+
+    const ExtendedDevice = CanMap.extend({
+      define: {
+        // the device being wrapped
+        device: { Type: Device },
+        // the behavior instance this is in the context of
+        behavior: { Type: CanMap },
+        // if the device is in the selected list
+        isSelected: {
+          get() {
+            this.attr('behavior.devices.length'); // make sure this updates on potential membership changes
+            return includes(this.attr('behavior.devices'), this.attr('device.base:address'));
+          },
+          set(newVal) {
+            const devices = this.attr('behavior.devices');
+            const address = this.attr('device.base:address');
+            if (newVal) {
+              devices.push(address);
+            } else {
+              devices.splice(devices.indexOf(address), 1);
+            }
+          },
+        },
+      },
+    });
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {CareBehavior} behavior
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel
+         * @description The associated careBehavior being edited
+         */
+        behavior: {
+          Type: CareBehavior,
+        },
+        /**
+         * @property {Function} doneButtonClicked
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel
+         * @description The function to be called when the DONE button is clicked
+         */
+        doneButtonClicked: {
+          Type: Function,
+        },
+        /**
+         * @property {Object} template
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel
+         * @description The template associated with the careBehavior being edited
+         */
+        template: {
+          type: '*',
+        },
+        /**
+         * @property {Array} values
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel
+         * @description Presented as a list of options for each device
+         */
+        values: {
+          get() {
+            return this.attr('template.fields.devicesOpenCount.value')
+              .map((v) => { return { value: v, label: v }; });
+          },
+        },
+        /**
+         * @property {CanList<Device>} availableDevices
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel
+         * @description the list of extended devices available to this behavior
+         */
+        availableDevices: {
+          Type: CanList,
+          get() {
+            const behavior = this.attr('behavior');
+
+            return new CanList(intersectionBy(
+              getAppState().attr('devices'),
+              this.attr('template.availableDevices'),
+              o => o['base:address'] || o,
+            ).map(device => new ExtendedDevice({ device, behavior })));
+          },
+        },
+        /**
+         * @property {boolean} isShowingSelectAll
+         * @parent i2web/components/subsystem/care/behaviors/edit
+         * @description if the select all radio should be shown
+         */
+        isShowingSelectAll: {
+          type: 'boolean',
+          get() {
+            return this.attr('availableDevices.length') > 1;
+          },
+        },
+        /**
+         * @property {boolean} isSelectingAll
+         * @parent i2web/components/subsystem/care/behaviors/edit
+         * @description if all the devices are selected in this behavior
+         */
+        isSelectingAll: {
+          get() {
+            return every(this.attr('availableDevices'), d => d.attr('isSelected'));
+          },
+          set(newVal) {
+            this.attr('availableDevices')
+              .filter(d => d.attr('isSelected') !== newVal) // avoid setter running more often than needed
+              .forEach(d => d.attr('isSelected', newVal));
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

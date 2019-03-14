@@ -1,0 +1,111 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-service-plans-basic-warning">
+  <view>
+    <div class="modal-container">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="font-demibold">Protecting your family is more affordable than you think</h2>
+          <p class="font-demibold">Premium &amp; Professional Monitoring plans cost less than 50 cents a day</p>
+        </div>
+        <div class="modal-body">
+          <h3 class="font-demibold">Don't miss out on the best Arcus features</h3>
+          <div class="features">
+            <div>
+              <img src="/src/images/emergencydispatch.png">
+              <p>24/7 Pro Monitoring with emergency dispatch</p>
+            </div>
+            <div>
+              <img src="/src/images/packagedelivery.png">
+              <p>Capture video clips of package deliveries or unexpected events</p>
+            </div>
+            <div>
+              <img src="/src/images/careservice.png">
+              <p>Care Services to help monitor loved ones</p>
+            </div>
+            <div>
+              <img src="/src/images/peaceofmind.png">
+              <p>Greater peace of mind when you're away from home<p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary-sclera" ($click)="hideModal()">
+            I want the best features to protect my home and family
+          </button>
+          <div>
+            <a class="basic-link" ($click)="hideAndSelect(Plans.SERVICELEVEL_BASIC)">
+              No thanks, I want Basic
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </view>
+  <script type="view-model">
+    import $ from 'jquery';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Plans from 'i2web/models/capability/Place';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Function} selectPlan
+         * @parent i2web/components/service-plans/basic-warning.component
+         * @description Call the parent's function when the User has selected a plan
+         */
+        selectPlan: {
+          Type: Function,
+        },
+        /**
+         * @property {Boolean} showModal
+         * @parent i2web/components/service-plans/basic-warning.component
+         * @description If the User clicks 'Skip this step' show a modal warning
+         * them what they are missing being on Basic
+         */
+        showModal: {
+          type: 'boolean',
+          value: false,
+          set(showModal) {
+            const fn = (showModal) ? 'addClass' : 'removeClass';
+            $('body')[fn]('modal-open');
+            return showModal;
+          },
+        },
+      },
+      Plans,
+      /**
+       * @function hideModal
+       * @parent i2web/components/service-plans/basic-warning.component
+       * @description Hide this modal so that the User can select from Premium
+       * or Pro-monitoring plans
+       */
+      hideModal() {
+        this.attr('showModal', false);
+      },
+      /**
+       * @function hideAndSelect
+       * @parent i2web/components/service-plans/basic-warning.component
+       * @description Hide this modal and select the Basic plan
+       */
+      hideAndSelect(plan) {
+        this.hideModal();
+        this.selectPlan(plan);
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,63 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/control-switch/" />
+<can-import from="i2web/components/rules/edit-panel/" />
+<can-import from="i2web/components/form/confirm-field/"/>
+<can-import from="i2web/components/schedule/icon.component" />
+
+{{#each rules}}
+	<div class="row panel-list-container {{^isActive}}disabled{{/isActive}}">
+    <div class="panel-primary-wrapper">
+      <div class="col-xs-12 col-md panel-information">
+        <div class="rule-information">
+          <arcus-form-confirm-field
+            {(model)}="."
+            field="rule:name"
+            field-description="Rule Name"
+            placeholder="Rule Name"
+            notify-on-save="true"
+            attributes="character-count='254'" />
+          <p class="rule-description" id="{{['base:id']}}">
+            {{{ruleDescription}}}
+          </p>
+          <small class="next-scheduled">{{nextScheduledEvent(.)}}</small>
+          <ul class="col-xs-12 col-md panel-options">
+            <li class="{{#unless isActive}}disabled{{/unless}}">
+              <arcus-schedule-icon {thing}="." />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="panel-secondary-wrapper">
+      <div class="col-md panel-action">
+        {{#if isActive}}
+          <p class="toggle-status">Active</p>
+        {{else}}
+          <p class="toggle-status">Inactive</p>
+        {{/if}}
+        <arcus-control-switch
+          {(is-on)}="isActive"
+          {toggle}="@toggleActive"
+          {is-disabled}="{{#if isResolved}}false{{else}}true{{/if}}" />
+      </div>
+      <div class="col-md panel-status">
+        <button class="btn-primary" ($click)="editRule(.)">Edit</button>
+      </div>
+    </div>
+  </div>
+{{/each}}

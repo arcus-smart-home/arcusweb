@@ -1,0 +1,102 @@
+@segmented-radial-diameter: 120px;
+@segment-border: 3px;
+
+arcus-segmented-radial {
+	display: block;
+  position: relative;
+  height: @segmented-radial-diameter;
+  width: @segmented-radial-diameter;
+  border-radius: 100%;
+  overflow: hidden;
+  z-index: 1;
+
+  .segmented-radial-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: @segmented-radial-diameter;
+    width: @segmented-radial-diameter;
+    border-radius: 100%;
+    &:after {
+      content: '';
+      display: block;
+      background: @body-bg;
+      border-radius: 100%;
+      height: @segmented-radial-diameter - (@segment-border*7);
+      width: @segmented-radial-diameter - (@segment-border*7);
+      position: relative;
+    }
+    &.off {
+      border: @border;
+      background-color: @pigeon;
+      &:after {
+        border: @border;
+      }
+      .segment-container {
+        display: none;
+      }
+    }
+    &.empty {
+      border: 2px dashed @swift;
+      &:after {
+        border: 2px dashed @swift;
+      }
+    }
+
+    .segment-container {
+      position: absolute;
+      top: -@segment-border;
+      left: @segment-border;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .segment-count {
+    .font-medium;
+    font-size: 1.95em;
+    position: relative;
+    text-align: center;
+    top: -(50%);
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0;
+
+    sup {
+      .font-regular;
+      font-size: 60%;
+      color: @coot;
+      margin-left: -5px;
+    }
+  }
+  .segment {
+    display: inline;
+    position: absolute;
+    height: calc((@segmented-radial-diameter / 2) + @segment-border);
+    width: calc((@segmented-radial-diameter / 2) + @segment-border); //(@segmented-radial-diameter / 2);
+    background-color: @heron;
+    border: @segment-border solid @body-bg;
+    transform-origin: bottom right;
+
+    &.single {
+      left: -@segment-border;
+      width: calc(100% + @segment-border);
+      height: calc(100% + @segment-border);
+      border: none;
+    }
+
+    &.double {
+      top: 0;
+      height: calc(100% + @segment-border);
+      border: none;
+
+      &.first {
+        left: -1.5 * @segment-border;
+        border-right: @segment-border solid @body-bg;
+      }
+      &.second {
+        right: -0.5 * @segment-border;
+        border-left: @segment-border solid @body-bg;
+      }
+    }
+  }
+}

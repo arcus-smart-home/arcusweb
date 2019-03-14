@@ -1,0 +1,52 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/wizard/" />
+<can-import from="i2web/pages/promonitoring/steps/additional-information/" />
+<can-import from="i2web/pages/promonitoring/steps/connection-test/" />
+<can-import from="i2web/pages/promonitoring/steps/getting-started/" />
+<can-import from="i2web/pages/promonitoring/steps/permit-required/" />
+<can-import from="i2web/pages/promonitoring/steps/review-your-information/" />
+<can-import from="i2web/pages/promonitoring/steps/welcome/" />
+<can-import from="i2web/pages/promonitoring/steps/your-alarms/" />
+{{#if isOwner}}
+  <arcus-wizard {on-leave-wizard}="@routeToServicePlanPage" {initial-step-index}="{{#if place.isPromon}}6{{else}}0{{/if}}">
+    <arcus-pro-monitoring-step-getting-started
+      {(promonitoring-settings)}="promonitoringSettings"
+      {(place)}="place" />
+    <arcus-pro-monitoring-step-your-alarms
+      {(promonitoring-settings)}="promonitoringSettings" />
+    <arcus-pro-monitoring-step-additional-information
+      {(promonitoring-settings)}="promonitoringSettings" />
+    <arcus-pro-monitoring-step-permit-required
+      {(promonitoring-settings)}="promonitoringSettings" />
+    <arcus-pro-monitoring-step-review-your-information
+      {annual-requested}="annualRequested"
+      {(promonitoring-settings)}="promonitoringSettings"
+      {(person)}="person"
+      {(place)}="place" />
+    <arcus-pro-monitoring-step-connection-test
+      {(promonitoring-settings)}="promonitoringSettings"
+      {(person)}="person" />
+    <arcus-pro-monitoring-step-welcome
+      {(place)}="place"
+      {(devices)}="devices"
+      {(people)}="people"
+      {(promonitoring-settings)}="promonitoringSettings" />
+  </arcus-wizard>
+{{else}}
+  <div class="loader">Loading...</div>
+{{/if}}

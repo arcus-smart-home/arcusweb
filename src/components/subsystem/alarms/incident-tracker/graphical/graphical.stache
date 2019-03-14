@@ -1,0 +1,81 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#if place.isPremium}}
+  {{#if isIncidentActive}}
+    <div class="trademark">
+      <p class="tracker-text">Alarm Tracker&trade;</p>
+      {{#if showPlaceName}}
+        {{#if place.isPromon}}
+          <span class="pro-badge">Pro</span>
+        {{/if}}
+      {{/if}}
+    </div>
+  {{/if}}
+{{/if}}
+{{#if showPlaceName}}
+  {{!-- https://eyeris.atlassian.net/browse/I2-5164 --}}
+  {{!-- parentClass wasn't bound, placed here to bind, but be a no-op --}}
+  {{!-- parentClass is applied to the element, should be bound to a top level element --}}
+  <div class="place {{parentClass}}">
+    <i class="icon-app-location-2"></i>
+    <span class="place-name">{{place['place:name']}}</span>
+  </div>
+{{/if}}
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    {{#each events as event}}
+      <div class="swiper-slide">
+        <arcus-subsubsystem-alarms-incident-tracker-graphical-event
+          class="{{#if isLastEvent(%index)}}active{{/if}}"
+          {event}="event"
+          {incident}="incident"
+          {is-active}="{{isActiveEvent(%index)}}"
+          {is-current}="{{isLastEvent(%index)}}"
+        />
+        {{#if isActiveEvent(%index)}}
+          <div class="event-accessories">
+            <h3 class="active-text">{{event.message}}</h3>
+            {{#if showConfirmButton}}
+              <button type="button" class="btn-alarm-confirm {{#if verifying}}verifying{{/if}}" {{#unless enableConfirmButton}}disabled{{/unless}} ($click)="verifyIncident">
+                {{#if verifying}}
+                  <div class="loader"></div> Confirming
+                {{else}}
+                  <i class="icon-alarm-state-dispatched"></i> Confirm
+                {{/if}}
+              </button>
+            {{/if}}
+            {{#if showCancelButton}}
+              <button type="button" class="btn-alarm-cancel {{#if cancelling}}cancelling{{/if}}" ($click)="cancelIncident">
+                {{#if cancelling}}
+                  <div class="loader"></div> Cancelling
+                {{else}}
+                  <i class="icon-alarm-state-cancelled"></i> Cancel
+                {{/if}}
+              </button>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="swiper-button-prev">
+    <i class="icon-app-chevron chevron-btn"></i>
+  </div>
+  <div class="swiper-button-next">
+    <i class="icon-app-chevron chevron-btn"></i>
+  </div>
+</div>

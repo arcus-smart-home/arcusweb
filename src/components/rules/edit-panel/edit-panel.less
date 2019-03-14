@@ -1,0 +1,118 @@
+arcus-rules-edit-panel {
+  display: block;
+
+  .input-wrapper {
+    margin-top: @gutter;
+    [input="text"] {
+      font-size: @font-size-h3;
+    }
+    label[for="rule-title"] {
+      bottom: 50px;
+    }
+  }
+
+  .rule-title {
+    font-size: @font-size-h2;
+    margin-top: 0;
+    margin-bottom: @gutter;
+  }
+
+  hr {
+    margin-bottom: @gutter;
+  }
+
+  .rule-description {
+    font-size: @font-size-large;
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+    [class^="btn"] {
+      margin-bottom: 5px;
+      line-height: initial;
+      + [class^="btn"] {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .btn-error {
+    .btn-cancel;
+  }
+
+  .instructions, .options {
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+
+    .btn {
+      margin-bottom: -@gutter;
+    }
+  }
+
+  .no-available-devices {
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+    color: @cardinal;
+  }
+
+  .option-title {
+    margin-bottom: @gutter;
+
+    .option-property {
+      text-transform: capitalize;
+    }
+  }
+
+  .option-list {
+    padding-left: 0;
+    margin-bottom: @gutter;
+  }
+
+  .error {
+    color: @cardinal;
+  }
+
+  .btn + hr {
+    margin-top: -@gutter;
+  }
+
+  .mixed-selectors {
+    .avatar {
+      width: 50px;
+    }
+    .icon {
+      width: 50px;
+      justify-content: center;
+    }
+  }
+
+  .delete-rule {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: -@gutter;
+
+    .delete-warning {
+      .font-medium-italic;
+      margin-top: @gutter;
+      margin-bottom: 0;
+      color: @cardinal;
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+    button {
+      margin-top: @gutter;
+    }
+    .inline-shop-button {
+      display:block;
+      padding: 3px @gutter/2 0 @gutter;
+      margin-top: @gutter;
+    }
+  }
+  arcus-rules-selectors-generic {
+    .ui.dropdown > .text, .dropdown-wrapper .ui.selection.dropdown .menu > .item {
+      text-transform: capitalize;
+    }
+  }
+  .check {
+    align-self: center !important;
+  }
+}

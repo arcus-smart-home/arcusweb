@@ -1,0 +1,43 @@
+arcus-subsystem-alarms-status-incident-list {
+  .arcus-event-list;
+  display: block;
+  padding-top: @gutter;
+  padding-bottom: @gutter;
+  .segment-btn {
+    text-align: center;
+    margin: @gutter 0;
+    justify-content: center;
+    i {
+      font-weight: bold;
+    }
+  }
+  .history-timestamp {
+    .breakpoint(sm-down, {
+      &:nth-of-type(n+2) {
+        display: flex;
+      }
+    });
+    &:first-of-type {
+      border-top: @border;
+    }
+  }
+  .event-item {
+    .breakpoint(sm-down, {
+      &:nth-of-type(n+5) {
+        display: flex;
+      }
+    });
+    &:only-of-type {
+      border-bottom: none;
+    }
+  }
+  .recent-activity {
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+    &.no {
+      color: @swift;
+      margin-left: @gutter/2;
+      margin-right: @gutter/2;
+    }
+  }
+}

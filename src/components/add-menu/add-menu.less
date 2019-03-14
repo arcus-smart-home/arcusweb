@@ -1,0 +1,72 @@
+arcus-add-menu {
+  display: block;
+  hr {
+    margin-top: 0px;
+    margin-bottom: @gutter;
+  }
+  ul {
+    border-top: @border;
+    border-bottom: @border;
+    padding: 0;
+    li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      a {
+        cursor: default;
+        &.clickable {
+          cursor: pointer;
+          &:hover {
+            .heading {
+              color: @peacock;
+            }
+          }
+        }
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    .name {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+    .icon {
+      color: @swift;
+      flex-shrink: 0;
+      font-size: 30px;
+      display: inline-block;
+      width: 40px;
+      text-align: center;
+      margin-right: @gutter/2;
+      text-decoration: none;
+    }
+    .icon-app-pencil-2 {
+      font-size: 24px;
+    }
+    h5 {
+      margin: 0;
+      padding: 20px 0 @gutter/2 0;
+      border-bottom: @border;
+      width: 100%;
+      .heading {
+        color: @headings-color;
+        font-weight: bold;
+      }
+      .caption {
+        color: @peacock;
+        font-size: 90%;
+        .font-medium;
+      }
+      .subheading {
+        font-size: 90%;
+        display: block;
+      }
+    }
+    .menu-item:last-of-type h5 {
+      border-bottom: 0;
+    }
+  }
+}

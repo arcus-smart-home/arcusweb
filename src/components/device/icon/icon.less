@@ -1,0 +1,241 @@
+  /**
+* @stylesheet devices.less Icon Animations
+* @parent styles.baseline-elements
+*
+* @description
+* Icons have several states. The default state needs no class. Other available states should be used as dictated in the [Device Controls Invision](https://projects.invisionapp.com/share/QW8636ZGJ#/screens) document.
+
+* @demo ./src/components/device/device.html
+*
+**/
+
+@circle-diameter: 80px;
+@circle-border-active: 3px;
+
+//global icon defaults
+.device-badge-icon {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  i {
+    position: absolute;
+    color: @swift;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%,-50%,0); /* Safari prefers this over translateXY  */
+    width: 100%;
+  }
+}
+.icon-app-state {
+  display: block;
+  position: relative;
+  width: @circle-diameter;
+  height: @circle-diameter;
+  border: 1px solid @swift;
+  border-radius: 100%;
+  flex-shrink: 0;
+  transition: border-color .3s linear, box-shadow .3s linear;
+  //for transitions
+  &:before {
+    content: '';
+    border: 0px @heron solid;
+    border-radius: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-3%) translateX(-50%) scale3d(1, 1, 1);
+    transition: transform .3s linear, border-width .3s linear;
+  }
+}
+.brightness-indicator {
+  display: none;
+}
+
+//states
+.device-badge-icon {
+  &.active, &.on {
+    .icon-app-state {
+      border-color: @link-color;
+      box-shadow: 0 0 10px @link-color, inset 0 0 10px @link-color;
+      transition: border-color .3s linear, box-shadow .3s linear;
+      border-width: 3px;
+      height: @circle-diameter - @circle-border-active;
+    }
+    i {
+      color: @link-color;
+      transition: color .3s linear;
+    }
+    &.is-light:not(.has-brightness) {
+      .icon-app-state {
+        border-color: @canary;
+        box-shadow: 0 0 10px @canary, inset 0 0 10px @canary;
+      }
+      i {
+        color: @canary;
+      }
+    }
+  }
+  &.loading {
+    .icon-app-state {
+      border: none;
+      .loader {
+        margin: 0;
+        top: 0;
+        left: 0;
+        width: @circle-diameter;
+        height: @circle-diameter;
+      }
+    }
+  }
+  &.offline {
+    .icon-app-state {
+      border-color: @grouse;
+    }
+    i {
+      color: @grouse;
+    }
+    p.icon-text {
+      display: none;
+    }
+  }
+  &.error {
+    p.icon-text {
+      display: none;
+    }
+  }
+  &[class*="waterheater-"] {
+    .icon-app-state {
+      z-index: @zindex-radio-button;
+      overflow: hidden;
+    }
+    .icon-platform-water-1,
+    .icon-text {
+      transition: transform .5s linear;
+    }
+  }
+  &.waterheater-high {
+    .icon-platform-water-1 {
+      transform: translateX(-50%) translateY(-110%) scale(2.2);
+    }
+  }
+  &.waterheater-med {
+    .icon-platform-water-1 {
+      transform: translateX(-50%) translateY(-30%) scale(2.2);
+    }
+    .icon-text {
+      transform: translateY(-104%);
+    }
+  }
+  &.waterheater-low {
+    .icon-platform-water-1 {
+      transform: translateX(-50%) translateY(30%) scale(2.2);
+    }
+  }
+  &.icon-platform-waterflow-2 {
+    transform: translateX(-75%) translateY(-50%) scale(2.5);
+  }
+  &.icon-platform-waterflow-1 {
+    transform: translateX(-50%) translateY(-15%) scale(2.2);
+  }
+  &.has-brightness {
+    &.active {
+      .base-icon {
+        color: @pigeon;
+      }
+      .brightness-indicator {
+        color: @canary;
+      }
+    }
+    .brightness-indicator {
+      display: block;
+      transition: color .5s linear, opacity 1s linear;
+    }
+    .radial {
+      background-color: @canary;
+    }
+  }
+  &.has-radial,
+  &.has-brightness {
+    .icon-app-state {
+      width: @circle-diameter;
+      height: @circle-diameter;
+      border: @circle-border-active solid @grouse;
+      border-radius: 100%;
+      box-shadow: none;
+      &:before { //mask for grey arc
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 10px;
+        background-color: @body-bg;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+      }
+    }
+  }
+
+  .radial-indicator { //main wrapper
+    position: absolute;
+    height: @circle-diameter;
+    width: @circle-diameter;
+    top: -(@circle-border-active);
+    left: -(@circle-border-active);
+    &:after {  //mask for ring effect
+      content: '';
+      background: @body-bg;
+      border-radius: 50%;
+      height: calc(~'100% -' (@circle-border-active * 2));
+      width: calc(~'100% -' (@circle-border-active * 2));
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+    }
+  }
+  .offline {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  .left-side,
+  .right-side {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    overflow: hidden;
+  }
+  .radial {
+    background: @link-color;
+    height: 100%;
+    width: 100%;
+  }
+  .right-side {
+    right: 0;
+    .radial {
+      transform: rotateZ(-180deg);
+      border-radius: 0 8rem 8rem 0;
+      transform-origin: left center;
+      left: 0;
+    }
+  }
+  .left-side {
+    .radial{
+      transform: rotateZ(-158deg);
+      border-radius: 8rem 0 0 8rem ;
+      transform-origin: right center;
+      right: 0;
+    }
+  }
+
+  .icon-text {
+    .font-regular;
+    font-size: @font-size-h3;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

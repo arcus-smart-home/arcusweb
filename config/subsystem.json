@@ -1,0 +1,150 @@
+{
+  "sublightsnswitches": {
+    "name": "Lights & Switches",
+    "preferenceName": "LIGHTS_N_SWITCHES",
+    "slug": "lights-switches",
+    "icon": "icon-platform-light-2",
+    "allDevices": ["switchDevices", "deviceGroups"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardslights",
+    "productsLinkKey": "p_lights"
+  },
+  "subalarm": {
+    "name": "Alarms",
+    "preferenceName": "ALARMS",
+    "slug": "alarms",
+    "icon": "icon-app-alarm-2",
+    "customComponent": "arcus-subsystem-alarms",
+    "customCard": "arcus-subsystem-card-alarms",
+    "allDevices": ["securityDevices"],
+    "visible": true,
+    "supported" : false,
+    "tag": "security",
+    "tutorialLinkKey": "s_cardsalarm",
+    "productsLinkKey": "p_security"
+  },
+  "subcameras": {
+    "name": "Cameras",
+    "preferenceName": "CAMERAS",
+    "slug": "cameras",
+    "icon": "icon-platform-camera-2",
+    "customComponent": "arcus-subsystem-cameras",
+    "customCard": "arcus-subsystem-card-cameras",
+    "allDevices": ["cameras"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardscamera",
+    "productsLinkKey": "p_cameras"
+  },
+  "subclimate": {
+    "name": "Climate",
+    "preferenceName": "CLIMATE",
+    "slug": "climate",
+    "icon": "icon-app-climate-1",
+    "customComponent": "arcus-subsystem-climate",
+    "customCard": "arcus-subsystem-card-climate",
+    "allDevices": ["controlDevices", "temperatureDevices", "humidityDevices"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardsclimate",
+    "productsLinkKey": "p_climate"
+  },
+  "subdoorsnlocks": {
+    "name": "Doors & Locks",
+    "preferenceName": "DOORS_N_LOCKS",
+    "slug": "doors-locks",
+    "icon": "icon-platform-lock-2",
+    "customComponent": "arcus-subsystem-doors-locks",
+    "allDevices": ["lockDevices", "motorizedDoorDevices", "contactSensorDevices", "petDoorDevices"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardsdoors",
+    "productsLinkKey": "p_doors"
+  },
+  "subspres": {
+    "name": "Home & Family",
+    "preferenceName": "HOME_N_FAMILY",
+    "slug": "home-family",
+    "icon": "icon-app-family-2",
+    "customComponent": "arcus-subsystem-home-family",
+    "customCard": "arcus-subsystem-card-home-family",
+    "allDevices": ["allDevices"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardshome",
+    "productsLinkKey": "p_home"
+  },
+  "subcare": {
+    "name": "Care",
+    "preferenceName": "CARE",
+    "slug": "care",
+    "icon": "icon-app-care-heart-2",
+    "customCard": "arcus-subsystem-card-care",
+    "customComponent": "arcus-subsystem-care",
+    "allDevices": ["careDevices"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardscare",
+    "productsLinkKey": "p_care"
+  },
+  "sublawnngarden": {
+    "name": "Lawn & Garden",
+    "preferenceName": "LAWN_N_GARDEN",
+    "slug": "lawn-garden",
+    "icon": "icon-app-lawn-1",
+    "customCard": "arcus-subsystem-card-lawn-garden",
+    "customComponent": "arcus-subsystem-lawn-garden",
+    "allDevices": ["controllers"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardslawn",
+    "productsLinkKey": "p_lawn"
+  },
+  "subwater": {
+    "name": "Water",
+    "preferenceName": "WATER",
+    "slug": "water",
+    "icon": "icon-platform-irrigation-2",
+    "customCard": "arcus-subsystem-water-card",
+    "allDevices": ["waterDevices"],
+    "visible": true,
+    "supported" : true,
+    "tutorialLinkKey": "s_cardswater",
+    "productsLinkKey": "p_water"
+  },
+  "subsafety": {
+    "name": "Safety Alarm",
+    "slug": "safety",
+    "icon": "icon-app-alarm-2",
+    "allDevices": ["totalDevices"],
+    "visible": false,
+    "supported" : false,
+    "productsLinkKey": "p_smoke"
+  },
+  "subsecurity": {
+    "name": "Security Alarm",
+    "slug": "security",
+    "icon": "icon-platform-security-1",
+    "allDevices": ["securityDevices"],
+    "visible": false,
+    "supported" : false,
+    "tutorialLinkKey": "s_cardsalarm",
+    "productsLinkKey": "p_security"
+  },
+  "subplacemonitor": {
+    "name": "Place Monitor",
+    "slug": "place-monitor",
+    "icon": "icon-app-favorites-3",
+    "allDevices": ["defaultRulesDevices"],
+    "visible": false,
+    "supported" : false
+  },
+  "cellbackup": {
+    "name": "Cell Backup",
+    "slug": "cell-backup",
+    "allDevices": [],
+    "visible": false,
+    "supported" : false
+  }
+}

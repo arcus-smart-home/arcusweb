@@ -1,0 +1,102 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-recharge-now">
+  <view>
+    <div class="content" ($click)="contentClicked">
+      <button class="btn-run {{#if isTransitioning}}saving{{/if}}" ($click)="rechargeNow" {{#if isDisabled}}disabled{{/if}}>
+        {{status}}
+      </button>
+    </div>
+  </view>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import WaterSoftenerCapability from 'i2web/models/capability/WaterSoftener';
+    import Errors from 'i2web/plugins/errors';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/actions/rechargeNow
+         * @description The water softener
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {Boolean} isDisabled
+         * @parent i2web/components/device/actions/rechargeNow
+         * @description Is the component either transitioning or the device recharging
+         */
+        isDisabled: {
+          get() {
+            const status = this.attr('device.watersoftener:rechargeStatus');
+            return this.attr('isTransitioning') ||
+              (status === WaterSoftenerCapability.RECHARGESTATUS_RECHARGING);
+          },
+        },
+        /**
+         * @property {Boolean} isTransitioning
+         * @parent i2web/components/device/actions/rechargeNow
+         * @description Made request to the platform and waiting on a response
+         */
+        isTransitioning: {
+          type: 'boolean',
+        },
+        /**
+         * @property {String} status
+         * @parent i2web/components/device/actions/rechargeNow
+         * @description The status text to display on the button
+         */
+        status: {
+          get() {
+            const status = this.attr('device.watersoftener:rechargeStatus');
+            return ([
+              WaterSoftenerCapability.RECHARGESTATUS_READY,
+              WaterSoftenerCapability.RECHARGESTATUS_RECHARGE_SCHEDULED,
+            ].includes(status)) ? 'Recharge Now' : 'Recharging';
+          },
+        },
+      },
+      /**
+       * @function contentClicked
+       * @description While the door is transitioning from open/close or vice versa, we do
+       * not want any click events on the disabled button to route the user to the devices page.
+       */
+      contentClicked(_, el, ev) {
+        if (this.attr('isTransitioning')) {
+          ev.stopPropagation();
+        }
+      },
+      /**
+       * @function rechargeNow
+       * @description Inform the device to start the salt recharge
+       */
+      rechargeNow() {
+        this.attr('isTransitioning', true);
+        this.attr('device').rechargeNow().then(() => {
+          this.attr('isTransitioning', false);
+        }).catch((e) => {
+          this.attr('isTransitioning', false);
+          Errors.log(e);
+        });
+      },
+    });
+  </script>
+</can-component>

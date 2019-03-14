@@ -1,0 +1,56 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="semantic-ui-dropdown-canjs"/>
+{{#if person}}
+  <h4>Contact Information</h4>
+  {{textInput('person.person:firstName', 'First Name')}}
+  {{textInput('person.person:lastName', 'Last Name')}}
+  {{textInput('person.person:email', 'Email', type="email")}}
+  {{textInput('confirmEmail', 'Confirm Email', type="email")}}
+  {{#eq accessType 'HOBBIT'}}
+    {{textInput('person.person:mobileNumber', 'Phone Number', attributes='key-mask="(999) 999-9999"')}}
+    <p class="small">
+      By entering a phone number you acknowledge that this person has agreed to receive phone calls from Arcus in the event of an alarm.
+    </p>
+  {{/eq}}
+  {{#if addingPerson}}
+    <h4>Relationship</h4>
+    <p>How do you know this person?</p>
+    {{#selectInput('relationship', '')}}
+      {{#each relationships}}
+        <option value="{{.}}">{{.}}</option>
+      {{/each}}
+    {{/selectInput}}
+    {{#eq relationship 'Other'}}
+      {{textInput('pleaseDescribe', 'Please Describe', class="describe-relationship")}}
+    {{/eq}}
+    {{#eq accessType 'FULL_ACCESS'}}
+      <h4>Personalize Your Invitation Message</h4>
+      <p>"{{invitationText}}"</p>
+      {{textArea('personalizedGreeting', '', class="more-invite-text" attributes="placeholder='Click here to add to the above message.' character-count='500'")}}
+      <p>Invitation will expire in 7 days.</p>
+    {{/eq}}
+  {{/if}}
+  {{#eq accessType 'HOBBIT'}}
+    <h4>PIN Code</h4>
+    <p>Assign a unique PIN Code to allow this person to arm and disarm Alarms as well as lock and unlock Locks.</p>
+    {{textInput('pinCode', 'PIN Code', class="pin-code" type="password" attributes='autocomplete="new-password"')}}
+    {{textInput('verifyPinCode', 'Verify PIN Code', type="password" attributes='autocomplete="new-password"')}}
+  {{/eq}}
+{{else}}
+  <div class="loader"></div>
+{{/if}}

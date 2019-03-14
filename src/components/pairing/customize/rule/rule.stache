@@ -1,0 +1,53 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/accordion/" />
+
+<div class="box-gray-radius">
+  <arcus-accordion>
+    <arcus-accordion-panel {enabled}="false" {active}="showSuggested">
+      <arcus-accordion-panel-heading>
+
+        <div class="row-left-area">
+          <h4>{{subtitle}}</h4>
+          {{#if description}}
+            {{#each description}}
+              <p>{{.}}</p>
+            {{/each}}
+          {{/if}}
+        </div>
+        <div class="row-right-area">
+          <div class="sub-right-area">
+            <button class="btn" ($click)="toggleSuggested"><i class="icon-app-pencil-1"></i> {{#if showSuggested}}Hide{{else}}Show{{/if}} Suggested</button>
+          </div>
+        </div>
+
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body >
+        {{#each templates}}
+        <div class="accordion-panel">
+          <i class="icon-app-add select-rule" title="choose this rule template" ($click)="addNewRule(.)">
+          </i>
+          <div class="accordion-panel-content {{#if isLastRule(%index)}}no-border{{/if}}">
+            <h3 class="panel-title">{{['ruletmpl:name']}}</h3>
+            <small>{{['ruletmpl:description']}}</small>
+          </div>
+        </div>
+        {{/each}}
+      </arcus-accordion-panel-body>
+    </arcus-accordion-panel>
+  </arcus-accordion>
+</div>

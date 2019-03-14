@@ -1,0 +1,56 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/staged-progress/" />
+<can-import from="i2web/components/tooltip/" />
+<arcus-staged-progress build-profile in-progress />
+
+<div class="address-confirmation" xmlns="http://www.w3.org/1999/html">
+  <div class="step-content">
+    <h2>Select The Correct Address.</h2>
+    <p class="instructions">
+      If none of these results match, go back the previous step to make sure your address
+      is typed in correctly.
+      <div class="tooltip-wrapper">
+        <button class="btn-small tooltip-trigger" type="button"><i>i</i></button>
+        <arcus-tooltip anchor="top-left">
+          If your address cannot be verified, please call Support for assistance at
+          <a href="tel:{{supportNumber}}">{{supportNumber}}</a>.
+        </arcus-tooltip>
+      </div>
+    </p>
+    {{#if formError}}
+      <p class="form-error">{{formError}}</p>
+    {{/if}}
+
+    <div class="suggestions">
+      <can-import from="i2web/components/selectors/generic.component" />
+      <arcus-generic-selector
+        {is-selected}="@isSuggestionSelected"
+        name-key="formattedAddress"
+        {(selected-thing)}="selectedSuggestion"
+        {things}="suggestedAddresses"
+      />
+    </div>
+    {{#if promonSelected}}
+      <div class="radio-wrapper" ($click)="togglePromonConfirmation">
+        <input type="checkbox" class="radio-checkbox" name="promon-confirmation" {($checked)}="promonConfirmed" />
+        <label for="promon-confirmation" class="no-text-transform">I confirm this is a residential property.</label>
+        <div class="check"></div>
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,169 @@
+arcus-camera {
+  display: inline-flex;
+  flex-direction: column;
+
+  img, video {
+    &.preview-only {
+      height: auto;
+      width: 160px;
+    }
+  }
+  video {
+    display: flex;
+    flex: 1 1 auto; //for IE
+    margin-top: auto;
+    width: 290px;
+    .breakpoint(md, {
+      width: 320px;
+    });
+  }
+  .full-screen {
+    &:focus {
+      outline: none;
+    }
+  }
+  .is-fullscreen {
+    height: 100%;
+    width: 100%;
+    img, video, arcus-lazy-image {
+      height: 100%;
+      width: 100%;
+      max-width: 100%;
+    }
+    arcus-lazy-image .placeholder {
+      width: 100%;
+    }
+  }
+  .camera-offline {
+    .lazy-image;
+    background-color: @swift;
+    flex-direction: column;
+    color: @crane;
+    align-items: center;
+    justify-content: center;
+    i {
+      font-size: 24px;
+    }
+  }
+  .video-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    justify-content: center;
+    background-color: @raven;
+    height: 254px;
+    .breakpoint(md, {
+      height: 276px;
+    });
+    #alttext-container {
+      border: none !important;
+    }
+    .dark-loader-container {
+      display: flex;
+      align-items: center;
+      width: 290px;
+      min-height: 218px;
+      .breakpoint(md, {
+        width: 320px;
+        min-height: 240px;
+      });
+      .dark-loader {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+  .video-buttons {
+    background-color: @swift;
+    width: 100%;
+    margin-top: auto;
+    .play-shape {
+      border-top: 10px solid transparent;
+      border-left: 20px solid @crane;
+      border-bottom: 10px solid transparent;
+    }
+    .loader {
+      height: 30px;
+      width: 30px;
+      margin: 0;
+      margin-right: 10px;
+    }
+  }
+  .placeholder.no-load {
+    .lazy-image .placeholder;
+    min-height: 218px;
+    width: 290px;
+    .breakpoint(md, {
+      width: 320px;
+      min-height: 240px;
+    });
+    button {
+      align-self: center;
+    }
+  }
+  .camera-info {
+    display: flex;
+    margin-top: @gutter/3;
+    margin-bottom: @gutter/2;
+  }
+  .camera-title,
+  .camera-options {
+    display: inline-flex;
+    .offline {
+      color: @cardinal;
+    }
+  }
+  .camera-title {
+    flex: 1 0 auto;
+    flex-direction: column;
+    max-width: 240px;
+    p {
+      color: @swift;
+      margin-top: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+  }
+  .camera-options {
+    flex: 1 0 auto;
+    justify-content: flex-end;
+    align-items: center;
+    a {
+      font-size: @font-size-h2;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    &.offline {
+      a {
+        color: @grouse;
+      }
+    }
+    .camera-settings {
+      padding-left: @gutter/3;
+    }
+  }
+}
+.panel-list-container .panel-action arcus-camera button {
+  margin-top: 0px;
+}
+
+.no-cameras {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  border: 2px dashed @swift;
+  height: 164px;
+  width: 290px;
+  padding: @gutter/2;
+  p {
+    width: 100%;
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "3d496bfc-1098-493e-afd4-7f56c12dbef6" : {
+    "scenes" : [
+      {
+        "base:address":"SERV:scene:3d496bfc-1098-493e-afd4-7f56c12dbef6.1",
+        "base:caps":["scene","base"],
+        "base:id":"3d496bfc-1098-493e-afd4-7f56c12dbef6.1",
+        "base:tags":["FAVORITE"],
+        "base:type":"scene",
+        "scene:actions":[
+          {
+            "context":{
+              "DRIV:dev:5038a8d6-a3fd-4598-b17b-27453df3cf75":{
+                "switch":"OFF"
+              },
+              "DRIV:dev:f836e4f2-f4d5-40bf-b09c-56e066395175":{
+                "switch":"OFF"
+              }
+            },
+            "name":"Turn Lights On or Off",
+            "template":"switches"
+          }
+        ],
+        "scene:created":1474905384821,
+        "scene:enabled":true,
+        "scene:firing":false,
+        "scene:lastFireTime":1476310200377,
+        "scene:modified":1476310200384,
+        "scene:name":"Time for Bed",
+        "scene:notification":false,
+        "scene:template":"night"
+      },
+      {
+        "base:address":"SERV:scene:3d496bfc-1098-493e-afd4-7f56c12dbef6.4",
+        "base:caps":["scene","base"],
+        "base:id":"3d496bfc-1098-493e-afd4-7f56c12dbef6.4",
+        "base:tags":["FAVORITE"],
+        "base:type":"scene",
+        "scene:actions":[
+          {
+            "context":{
+              "DRIV:dev:5038a8d6-a3fd-4598-b17b-27453df3cf75":{
+                "switch":"ON"
+              },
+              "DRIV:dev:f836e4f2-f4d5-40bf-b09c-56e066395175":{
+                "switch":"ON"
+              }
+            },
+            "name":"Turn Lights On or Off",
+            "template":"switches"
+          }
+        ],
+        "scene:created":1475245379336,
+        "scene:enabled":true,
+        "scene:firing":false,
+        "scene:lastFireTime":1476364800380,
+        "scene:modified":1476364800381,
+        "scene:name":"Let there be Light",
+        "scene:notification":false,
+        "scene:template":"custom"
+      },
+      {
+        "base:address":"SERV:scene:3d496bfc-1098-493e-afd4-7f56c12dbef6.9",
+        "base:caps":["scene","base"],
+        "base:id":"3d496bfc-1098-493e-afd4-7f56c12dbef6.9",
+        "base:tags":[],
+        "base:type":"scene",
+        "scene:actions":[
+          {
+            "context":{
+              "DRIV:dev:5038a8d6-a3fd-4598-b17b-27453df3cf75":{
+                "switch":"OFF"
+              },
+              "DRIV:dev:f836e4f2-f4d5-40bf-b09c-56e066395175":{
+                "switch":"OFF"
+              }
+            },
+            "name":"Turn Lights On or Off",
+            "template":"switches"
+          }
+        ],
+        "scene:created":1475702486576,
+        "scene:enabled":false,
+        "scene:firing":false,
+        "scene:modified":1475702486576,
+        "scene:name":"Vacation",
+        "scene:notification":false,
+        "scene:template":"vacation"
+      },
+      {
+        "base:address":"SERV:scene:3d496bfc-1098-493e-afd4-7f56c12dbef6.10",
+        "base:caps":["scene","base"],
+        "base:id":"3d496bfc-1098-493e-afd4-7f56c12dbef6.10",
+        "base:tags":[],
+        "base:type":"scene",
+        "scene:actions":[
+          {
+            "context":{
+              "DRIV:dev:5038a8d6-a3fd-4598-b17b-27453df3cf75":{
+                "switch":"ON"
+              },
+              "DRIV:dev:f836e4f2-f4d5-40bf-b09c-56e066395175":{
+                "switch":"ON"
+              }
+            },
+            "name":"Turn Lights On or Off",
+            "template":"switches"
+          }
+        ],
+        "scene:created":1475702491775,
+        "scene:enabled":false,
+        "scene:firing":false,
+        "scene:modified":1475702491775,
+        "scene:name":"Wake Up",
+        "scene:notification":false,
+        "scene:template":"morning"
+      }
+    ]
+  }
+}

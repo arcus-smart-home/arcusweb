@@ -1,0 +1,260 @@
+/**
+* @stylesheet panel-list-item.less Panel List Item
+* @parent styles.baseline-elements
+*
+* @description
+* This is a horizontal panel has a two and three column layout depending on state.  As seen on device and rules pages!
+*
+* Each column has a pattern for content that is styled by default.
+*
+* - The **first column** should have some combination of:
+*   + Item Name (device name, rule name)
+*   + Subtitle (device type, rule sentence)
+*   + Small Text (Next scheduled time)
+*   + Panel options triggering new views (scheduling, additional controls or information, favoriting the item)
+*
+* - **Second column**, if it's the middle of three:
+*   + A toggle or other quick control for a main action (turning a device or rule off/on)
+*
+* - **Second column**, if it's the last of two:
+*   +  An error or otherwise static message
+*   +  A button or link to take action to resolve the state
+*
+* - **Third column**:
+*   + A status update
+*   + Some secondary action (button to edit a rule)
+*
+* @demo ./src/styles/demos/panel-list-item.html
+*
+**/
+
+.panel-list-container {
+  padding: @gutter @gutter/2 @gutter/2;
+  border-bottom: @border;
+  flex-shrink: 0;
+  .breakpoint(md, {
+    padding: @gutter @gutter @gutter/2;
+  });
+  &.offline,
+  &.disabled {
+    *,
+    .panel-information h4, 
+    .panel-information h5 {
+      color: @grouse;
+      .btn-warning i{
+        color: @swift;
+      }
+    }
+  }
+  a {
+    line-height: 1;
+  }
+  .panel-primary-wrapper {
+    justify-content: center;
+    width: 100%;
+    .breakpoint(md, {
+      max-width: 50%;
+      flex-basis: 50%;
+      align-items: center;
+      align-self: center;
+    });
+  }
+  .panel-secondary-combined {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    [class^="btn"] {
+      margin: 0;
+      margin-bottom: @gutter/4;
+      margin-left: @gutter;
+      .breakpoint(md-down, {
+        margin-left: 0;
+        margin-right: @gutter/2;
+        &:last-child {
+          margin-right: 0;
+        }
+      });
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .panel-secondary-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+    max-width: 100%;
+    align-items: center;
+    position: relative;
+    .breakpoint(md-down, {
+      border-top: @border;
+    });
+    .breakpoint(md, {
+      max-width: 50%;
+      flex-basis: 50%;
+    });
+    &:before {
+      content: '';
+      height: @gutter*1.5;
+      width: 1px;
+      position: absolute;
+      background: @heron;
+      top: 50%;
+      transform: translateY(-50%);
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }
+  }
+  .panel-information {
+    display: flex;
+    margin-bottom: @gutter/2;
+    padding-right: @gutter/2;
+    &.panel-copy {
+      flex-direction: column;
+    }
+    .breakpoint(md, {
+      margin-bottom: 0;
+    });
+    h3 {
+      margin: 0;
+      margin-bottom: @line-height/3;
+      word-break: break-word;
+    }
+    h5 {
+      .font-medium-italic;
+      margin-top: 0;
+      margin-bottom: @line-height/3;
+      color: @coot;
+    }
+    small {
+      color: @grouse;
+    }
+  }
+  .panel-status,
+  .panel-action,
+  .panel-error {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    [class^="btn"] {
+      margin-bottom: 0;
+      margin-left: 0;
+    }
+  }
+  .panel-status {
+    flex: 1 1 auto;
+    height: 100%; //for IE11
+    padding-top: @gutter/4;
+    .breakpoint(lg, {
+      max-width: 60%;
+      flex-basis: 60%;
+    });
+    .breakpoint(md-down, {
+      min-height: 90px;
+    });
+  }
+  .panel-action {
+    flex-direction: column;
+    width: 50%;
+    flex: 0 0 50%;
+    min-height: 90px;
+    height: 100%; //for IE11
+    border-right: @border;
+    padding-top: @gutter/4;
+    .breakpoint(md, {
+      border-left: @border;
+      margin-top: 0;
+    });
+    button + button {
+      margin-top: @gutter/2;
+    }
+  }
+  .panel-error {
+    flex-direction: column;
+    margin: @gutter/2 auto;
+    .breakpoint(md, {
+      height: 80px;
+      border-left: @border;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-left: @gutter/2;
+      padding-right: @gutter/2;
+      width: 100%;
+    });
+  }
+  .panel-error {
+    p {
+      .font-demibold;
+      color: @cardinal;
+      margin-bottom: @gutter/2;
+      width: 100%;
+    }
+    button {
+      .btn-cancel;
+    }
+  }
+  .panel-options {
+    display: flex;
+    margin-top: @gutter/2;
+    margin-bottom: 0;
+    flex: 1 auto;
+    align-items: flex-start;
+    li {
+      display: inline-flex;
+      margin-right: @gutter/1.5;
+      list-style: none;
+      font-size: 23px;
+      a:hover {
+        text-decoration: none;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      &.disabled {
+        a {
+          cursor: default;
+          color: @grouse;
+        }
+      }
+    }
+  }
+}
+
+@indent-width: 106px;
+
+.nested-panel-list {
+  .panel-list-container;
+  flex: 1 1 100%;
+  border-bottom: none;
+  padding: 0;
+  .breakpoint(md, {
+    padding: 0;
+  });
+  &:last-of-type {
+    margin-bottom: @gutter/2;
+  }
+  .panel-primary-wrapper {
+    padding-left: @gutter;
+    .breakpoint(md, {
+      padding-left: @indent-width;
+    });
+    small {
+      .font-demibold;
+      color: @grouse;
+      font-size: @font-size-smaller;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+  .panel-secondary-wrapper {
+    .breakpoint(md-down, {
+      border-top: none;
+    });
+  }
+}

@@ -1,0 +1,504 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css!"/>
+  <can-import from="i2web/styles/global-styles.less!"/>
+  <can-import from="i2web/styles/demos/icon-styles.less!"/>
+  <ul class="icon-styles row">
+    <h2>UI &amp; Controls</h2>
+    <li class="col-xs-3">
+      <i class="icon-app-wi-fi-0"></i>
+      <code>.icon-app-wi-fi-0</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-wi-fi-1"></i>
+      <code>.icon-app-wi-fi-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-wi-fi-2"></i>
+      <code>.icon-app-wi-fi-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-wi-fi-3"></i>
+      <code>.icon-app-wi-fi-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-wi-fi-4"></i>
+      <code>.icon-app-wi-fi-4</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-photo-camera"></i>
+      <code>.icon-app-photo-camera</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-search-icon"></i>
+      <code>.icon-app-search-icon</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-play-w-circle"></i>
+      <code>.icon-app-play-w-circle</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-exit-pairing-1"></i>
+      <code>.icon-app-exit-pairing-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-get-support-1"></i>
+      <code>.icon-app-get-support-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-kit-1"></i>
+      <code>.icon-app-kit-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-kit-2"></i>
+      <code>.icon-app-kit-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-expand-1"></i>
+      <code>.icon-app-expand-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-expand-2"></i>
+      <code>.icon-app-expand-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-download-1"></i>
+      <code>.icon-app-download-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-download-2"></i>
+      <code>.icon-app-download-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-trashcan-1"></i>
+      <code>.icon-app-trashcan-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-trashcan-2"></i>
+      <code>.icon-app-trashcan-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-eye-1"></i>
+      <code>.icon-app-eye-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-user-1"></i>
+      <code>.icon-app-user-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-user-2"></i>
+      <code>.icon-app-user-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-user-3"></i>
+      <code>.icon-app-user-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-notification-1"></i>
+      <code>.icon-app-notification-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-notification-2"></i>
+      <code>.icon-app-notification-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-envelope-1"></i>
+      <code>.icon-app-envelope-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-envelope-2"></i>
+      <code>.icon-app-envelope-2</code>
+    </li>
+    <li class="col-xs-3">
+        <i class="icon-app-connect_spinner"></i>
+        <code>.icon-app-connect_spinner</code>
+      </li>
+    <li class="col-xs-3">
+      <i class="icon-app-refresh"></i>
+      <code>.icon-app-refresh</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sidebar-1"></i>
+      <code>.icon-app-sidebar-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sidebar-2"></i>
+      <code>.icon-app-sidebar-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-info"></i>
+      <code>.icon-app-info</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sunrise"></i>
+      <code>.icon-app-sunrise</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sunset"></i>
+      <code>.icon-app-sunset</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-logout-1"></i>
+      <code>.icon-app-logout-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-manual-1"></i>
+      <code>.icon-app-manual-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-manual-2"></i>
+      <code>.icon-app-manual-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-menu"></i>
+      <code>.icon-app-menu</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-add"></i>
+      <code>.icon-app-add</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-check"></i>
+      <code>.icon-app-check</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-chevron"></i>
+      <code>.icon-app-chevron</code>
+    </li>
+        <li class="col-xs-3">
+      <i class="icon-app-heart-1"></i>
+      <code>.icon-app-heart-1</code>
+    </li>
+        <li class="col-xs-3">
+      <i class="icon-app-heart-2"></i>
+      <code>.icon-app-heart-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pin-1"></i>
+      <code>.icon-app-pin-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pin-2"></i>
+      <code>.icon-app-pin-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-calendar-1"></i>
+      <code>.icon-app-calendar-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-calendar-2"></i>
+      <code>.icon-app-calendar-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-calendar-3"></i>
+      <code>.icon-app-calendar-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-controls-1"></i>
+      <code>.icon-app-controls-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-controls-2"></i>
+      <code>.icon-app-controls-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-more-1"></i>
+      <code>.icon-app-more-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-more-2"></i>
+      <code>.icon-app-more-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-invoice-1"></i>
+      <code>.icon-app-invoice-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-page-2"></i>
+      <code>.icon-app-page-2</code>
+    </li>
+        <li class="col-xs-3">
+      <i class="icon-app-phone-1"></i>
+      <code>.icon-app-phone-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-star-1"></i>
+      <code>.icon-app-star-1*</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-star-2"></i>
+      <code>.icon-app-star-2*</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-cart-1"></i>
+      <code>.icon-app-cart-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-cart-2"></i>
+      <code>.icon-app-cart-2</code>
+    </li>
+
+    <h2>Categories</h2>
+    <li class="col-xs-3">
+      <i class="icon-app-alarm-1"></i>
+      <code>.icon-app-alarm-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-alarm-2"></i>
+      <code>.icon-app-alarm-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-alarm-3"></i>
+      <code>.icon-app-alarm-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-clip-1"></i>
+      <code>.icon-app-clip-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-work-1"></i>
+      <code>.icon-app-work-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-work-2"></i>
+      <code>.icon-app-work-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-family-1"></i>
+      <code>.icon-app-family-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-family-2"></i>
+      <code>.icon-app-family-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-door-1"></i>
+      <code>.icon-app-door-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-door-2"></i>
+      <code>.icon-app-door-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-care-heart-1"></i>
+      <code>.icon-app-care-heart-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-care-heart-2"></i>
+      <code>.icon-app-care-heart-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pet-1"></i>
+      <code>.icon-app-pet-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pet-2"></i>
+      <code>.icon-app-pet-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-energy-1"></i>
+      <code>.icon-app-energy-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-lawn-1"></i>
+      <code>.icon-app-lawn-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-scene-1"></i>
+      <code>.icon-app-scene-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-scene-2"></i>
+      <code>.icon-app-scene-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-devices"></i>
+      <code>.icon-app-devices</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-history"></i>
+      <code>.icon-app-history</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-gear"></i>
+      <code>.icon-app-gear</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pencil-1"></i>
+      <code>.icon-app-pencil-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-pencil-2"></i>
+      <code>.icon-app-pencil-2</code>
+    </li>
+
+    <h2>Status Indicators</h2>
+    <li class="col-xs-3">
+      <i class="icon-app-badge-1"></i>
+      <code>.icon-app-badge-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-badge-2"></i>
+      <code>.icon-app-badge-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-location-1"></i>
+      <code>.icon-app-location-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-location-2"></i>
+      <code>.icon-app-location-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-shield-1"></i>
+      <code>.icon-app-shield-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-shield-2"></i>
+      <code>.icon-app-shield-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-shield-3"></i>
+      <code>.icon-app-shield-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-headset-1"></i>
+      <code>.icon-app-headset-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-clockhands-1"></i>
+      <code>.icon-app-clockhands-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-cloud-1"></i>
+      <code>.icon-app-cloud-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-cloud-2"></i>
+      <code>.icon-app-cloud-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sun-1"></i>
+      <code>.icon-app-sun-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-sun-2"></i>
+      <code>.icon-app-sun-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-night-1"></i>
+      <code>.icon-app-night-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-night-2"></i>
+      <code>.icon-app-night-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-temp-1"></i>
+      <code>.icon-app-temp-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-climate-1"></i>
+      <code>.icon-app-climate-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-air"></i>
+      <code>.icon-app-air</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-barometer"></i>
+      <code>.icon-app-barometer</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-flame"></i>
+      <code>.icon-app-flame</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-hot-water"></i>
+      <code>.icon-app-hot-water</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-snowflake"></i>
+      <code>.icon-app-snowflake</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-battery"></i>
+      <code>.icon-app-battery</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-thermometer"></i>
+      <code>.icon-app-thermometer</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-bolt"></i>
+      <code>.icon-app-bolt</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-device-found"></i>
+      <code>.icon-app-device-found</code>
+    </li>
+    <h2>Social Media</h2>
+    <li class="col-xs-3">
+      <i class="icon-app-facebook-1"></i>
+      <code>.icon-app-facebook-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-youtube-1"></i>
+      <code>.icon-app-youtube-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-app-twitter-1"></i>
+      <code>.icon-app-twitter-1</code>
+    </li>
+    <h2>Alarm States</h2>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-alert"></i>
+      <code>.icon-alarm-state-alert</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-cancelled"></i>
+      <code>.icon-alarm-state-cancelled</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-dispatched"></i>
+      <code>.icon-alarm-state-dispatched</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-dispatch-refused"></i>
+      <code>.icon-alarm-state-dispatch-refused</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-dispatch-failed"></i>
+      <code>.icon-alarm-state-dispatch-failed</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-dispatch-cancelled"></i>
+      <code>.icon-alarm-state-dispatch-cancelled</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-dispatching"></i>
+      <code>.icon-alarm-state-dispatching</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-alarm-state-prealert"></i>
+      <code>.icon-alarm-state-prealert</code>
+    </li>
+  </ul>
+</script>
+<script src="../../../node_modules/steal/steal.js"
+        main="can-view-autorender"></script>

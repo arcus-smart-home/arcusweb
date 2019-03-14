@@ -1,0 +1,68 @@
+arcus-subsystem-card-climate {
+  display: block;
+  .subsystem-card-title {
+    .breakpoint(sm, {
+      border-bottom: @inner-card-border;
+    });
+  }
+  .subsystem-card-contents {
+    padding-bottom: 0;
+    padding-left: @gutter*2.5;
+    .breakpoint(sm, {
+      display: flex;
+    });
+    .breakpoint(lg-down, {
+      padding-left: @gutter*1.5;
+    });
+    .subsystem-status-temperature,
+    .subsystem-status-humidity {
+      flex-direction: column;
+      flex-basis: 50%;
+      width: 50%;
+      padding-top: @gutter;
+      padding-bottom: @gutter;
+      .status-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        h3 {
+          margin-top: 0;
+          line-height: 30px;
+        }
+      }
+      p {
+        margin-bottom: 0;
+      }
+    }
+    .subsystem-status-temperature {
+      border-right: @inner-card-border;
+      padding-right: @gutter;
+    }
+    .subsystem-status-humidity {
+      padding-left: @gutter;
+      .breakpoint(md, {
+        padding: @gutter;
+        padding-right: 0;
+      });
+    }
+    .device-name {
+      color: @swift;
+    }
+    .climate-device-detail {
+      .font-regular;
+      font-size: @font-size-h3;
+      margin-left: auto;
+      margin-bottom: @line-height / 2; //matches h3 title
+      padding-right: 0;
+      i {
+        margin-right: 5px;
+      }
+      .btn {
+        margin-bottom: -(@line-height / 2);
+        .breakpoint(md-down, {
+          margin-right: @gutter/2;
+        });
+      }
+    }
+  }
+}

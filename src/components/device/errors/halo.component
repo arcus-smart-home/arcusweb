@@ -1,0 +1,139 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-errors-halo">
+  <template>
+    <can-import from="i2web/components/device/icon/" />
+    <can-import from="i2web/components/subsystem/weather/alerts/" />
+
+    {{#if showErrors}}
+      {{#each device.errors}}
+        <h3>{{.}}</h3>
+      {{/each}}
+    {{/if}}
+
+    {{#if showWarnings}}
+      {{#if alertingWeather}}
+        <arcus-subsystem-weather-alerts {device}="device" />
+      {{else}}
+        {{#if device.alertedState}}
+          <p><i class="icon-platform-warning-2" aria-hidden="true"></i>&nbsp;&nbsp;{{device.alertedState}}</p>
+        {{/if}}
+        {{#each device.warnings}}
+          <h3>{{.}}</h3>
+        {{/each}}
+        {{#if alertingPreSmoke}}
+          <div class="row">
+            <p>Last Alert: {{preSmokeAlertTime}}</p>
+          </div>
+          <div class="row">
+            <p>The following devices have a PreSmoke Alert:</p>
+          </div>
+          {{#each preSmokeDevices}}
+            <div class="row">
+              <i class="icon-platform-co-2"></i>
+              <p class="presmoke-alert">
+                {{.['dev:name']}}<br/>
+              </p>
+            </div>
+          {{/each}}
+          <p>If smoke levels increase, the Safety Alarm will trigger, and your Alarm Notification List will be contacted.</p>
+          <p>Silence the triggered device by pressing the center Halo button.</p>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+
+    {{#unless alertingWeather}}
+      <hr/>
+      <a href="{{redirectToUrl(supportLinkKey)}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+    {{/unless}}
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import AppState from 'i2web/plugins/get-app-state';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import { formatDate, formatTime } from 'i2web/helpers/global';
+    import HaloCapability from 'i2web/models/capability/Halo';
+
+    export default canMap.extend({
+      define: {
+        alertingPreSmoke: {
+          get() {
+            return this.attr('device.halo:devicestate') === HaloCapability.DEVICESTATE_PRE_SMOKE;
+          },
+        },
+        alertingWeather: {
+          get() {
+            return this.attr('device.halo:devicestate') === HaloCapability.DEVICESTATE_WEATHER;
+          },
+        },
+        device: {
+          Type: Device,
+        },
+        msgType: {
+          type: 'string',
+          value: 'error',
+        },
+        preSmokeAlertTime: {
+          get() {
+            if (this.attr('alertingPreSmoke')) {
+              const subsystems = AppState().attr('subsystems');
+              const safetySystem = subsystems && subsystems.findBySlug('safety');
+              const lastTime = safetySystem && safetySystem.attr('subsafety:lastSmokePreAlertTime');
+              if (lastTime) {
+                return `${formatDate(lastTime)} at ${formatTime(lastTime)}`;
+              }
+            }
+            return '';
+          },
+        },
+        preSmokeDevices: {
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            const safety = subsystems && subsystems.findBySlug('safety');
+
+            // in order to trigger this getter when the length of the
+            // collection changes
+            safety.attr('subsafety:smokePreAlertDevices.length');
+
+            const alertDevices = safety.attr('subsafety:smokePreAlertDevices');
+            return _.filter(AppState().attr('devices'), (d) => {
+              return _.includes(alertDevices, d.attr('base:address'));
+            });
+          },
+        },
+        showErrors: {
+          get() {
+            return this.attr('msgType') !== 'warn' && _.size(this.attr('device.errors')) > 0;
+          },
+        },
+        showWarnings: {
+          get() {
+            return this.attr('msgType') !== 'error' && (_.size(this.attr('device.warnings')) > 0 || this.attr('device.alertedState'));
+          },
+        },
+        supportLinkKey: {
+          get() {
+            // This may change based on type of warning or error
+            return this.attr('device.web:dev:supportLinkKey');
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

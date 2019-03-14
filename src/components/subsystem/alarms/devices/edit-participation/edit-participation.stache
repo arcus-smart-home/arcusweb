@@ -1,0 +1,91 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#unless forPairingCustomization}}
+  <h4>{{device.name}}</h4>
+  <ul class="edit-participation-list">
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isOn" id="isOn" />
+      <label for="isOn">On</label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isOnAndPartial" id="isOnAndPartial" />
+      <label for="isOnAndPartial">On &amp; Partial</label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isPartial" id="isPartial" />
+      <label for="isPartial">Partial</label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isNotParticipating" id="isNotParticipating" />
+      <label for="isNotParticipating">Not Participating</label>
+      <div class="check"></div>
+    </li>
+  </ul>
+  <hr />
+  <button class="btn{{#if saving}} saving disabled{{/if}}" ($click)="saveParticipation">
+    {{#if saving}}
+      <div class="loader"></div> Saving
+    {{else}}
+      Save
+    {{/if}}
+  </button>
+  <button class="btn-cancel" ($click)="_onCancel">Cancel</button>
+  <hr />
+
+  <p class="small">
+    <strong>On</strong> is ideal when no one is home, and you wish to secure your entire home.
+  </p>
+  <p class="small">
+    <strong>Partial</strong> is typically used when motion sensors are not participating so you can move around the house at night without triggering the alarm.
+  </p>
+  <p class="small">
+    Any changes you make will take effect the next time you arm your system.
+  </p>
+{{else}}
+  <ul class="edit-participation-list">
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isOn" id="isOn" />
+      <label for="isOn">
+        On<br/><small class="type">Ideal when no one is home, and you wish to secure your entire home.</small>
+      </label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isOnAndPartial" id="isOnAndPartial" />
+      <label for="isOnAndPartial">
+        On &amp; Partial<br/><small class="type">Device participates in both On and Partial Modes</small>
+      </label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isPartial" id="isPartial" />
+      <label for="isPartial">
+        Partial<br/><small class="type">Typically used when motion sensors are not participating so you can move around the house at night without triggering the alarm.</small></label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper">
+      <input type="radio" {($checked)}="isNotParticipating" id="isNotParticipating" />
+      <label for="isNotParticipating">
+        Not Participating<br/><small class="type">Devices will not participate in your Security Alarm system.</small>
+      </label>
+      <div class="check"></div>
+    </li>
+  </ul>
+{{/unless}}

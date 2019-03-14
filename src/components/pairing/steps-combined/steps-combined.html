@@ -1,0 +1,82 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <button ($click)="setContent(true)">Example 1 - All Platform</button>
+  <button ($click)="setContent(false)">Example 2 - Default Header/Footer</button>
+
+  <div class="step-container">
+    <div class="step-wrapper">
+      <arcus-pairing-steps-combined {pairing-type-steps}="pairingTypeSteps" {default-header}="defaultHeader" {default-footer}="defaultFooter"/>
+    </div>
+  </div>
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/steps-combined/';
+
+
+  const steps1 = [ {
+    "id": "reset/first",
+    "info":  "This is the text that appears below the instructions. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor dolore magna aliqua.",
+    "instructions": [ "Paragraph A of the first full instruction. This is to fill the rest of the box so you can see that content wraps.", "Paragraph B of the first instruction." ],
+    "order": 1,
+    "title": "This is the text that appears above the instructions.  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  }, {
+    "id": "reset/second",
+    "info": "This is the text that appears below the instructions.",
+    "instructions": [ "This is the second full instruction." ],
+    "order": 2,
+    "title": "This is the text that appears above the instructions."
+  } ];
+
+  const steps2 = [ {
+    "id": "reset/first",
+    "info":  null,
+    "instructions": [ "Paragraph A of the first full instruction. This is to fill the rest of the box so you can see that content wraps.", "Paragraph B of the first instruction." ],
+    "order": 1,
+    "title": null
+  }, {
+    "id": "reset/second",
+    "info": null,
+    "instructions": [ "This is the second full instruction." ],
+    "order": 2,
+    "title": null
+  } ];
+
+  const defaultHeader = 'This is a default header';
+  const defaultFooter = 'This is a default footer';
+  let appState;
+  const scope = new CanMap({
+    pairingTypeSteps: steps1,
+    defaultHeader,
+    defaultFooter,
+    setContent(hasData) {
+      scope.attr('pairingTypeSteps', hasData ? steps1 : steps2);
+    },
+  });
+  const appScope = new CanMap({});
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  }).then(({ appState }) => {
+    appState = appState;
+  });
+</script>

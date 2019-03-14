@@ -1,0 +1,34 @@
+arcus-hub-panel {
+  .panel-list-container {
+    &.offline {
+      .icon-app-state {
+        border-color: @grouse;
+      }
+    }
+    .panel-error {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+  .device-badge-icon {
+    margin-right: @gutter/2;
+  }
+  .device-information {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .device-status-detail {
+    &.wifi {
+      text-transform: capitalize;
+      i {
+        &.excellent, &.good {
+          color: @parakeet;
+        }
+        &.fair, &.weak {
+          color: @cardinal;
+        }
+      }
+    }
+  }
+}

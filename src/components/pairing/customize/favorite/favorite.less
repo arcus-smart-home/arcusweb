@@ -1,0 +1,40 @@
+/**
+* @stylesheet customize-favorite.less Favorite Customization
+* @parent i2web/components/pairing/customize
+*
+* @description
+* This defines the favorite status customization component
+*
+**/
+
+/**
+* @styles favorite Favorite Customization
+* @parent favorite.less 1
+*
+* @description
+* - Display a thin grey, rounded rectangle border around the component
+* - Display 'Add Your Device to Favorites' as the title
+* - Display 'Select heart to add or remove' as the subtitle
+* - Display a heart icon that serves as a toggle to favorite/unfavorite the device
+* - Display copy at the bottom: Favoriting a device makes it easily accessible from the Dashboard of both the Arcus Mobile app and Arcus Web Portal.
+*
+* @demo ./src/components/pairing/customize/favorite/favorite.html
+*
+**/
+arcus-pairing-customize-favorite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  arcus-favorite {
+    font-size: @font-size-h1;
+    width: 60px;
+    text-align: center;
+    align-self: center;
+    margin-top: @gutter/2;
+    margin-bottom: @gutter;
+    i {
+      display: inline-block; // remove underline from icon
+    }
+  }
+}

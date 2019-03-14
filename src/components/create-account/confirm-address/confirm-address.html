@@ -1,0 +1,54 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript" src="../../../../node_modules/steal/steal.js" data-main="@empty">
+  import 'i2web/components/create-account/confirm-address/';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/plugins/debug';
+  import stache from 'can-stache';
+  import CanMap from 'can-map';
+  import auth from 'i2web/models/auth';
+
+  const template = stache(`
+    <arcus-create-account-confirm-address
+      {(suggested-addresses)}="suggestions"
+      {promon-enabled}="promonEnabled"/>
+  `);
+
+  const vm = {
+    suggestions: [{
+      zip: '90210',
+      line1: '455 N Rexford Dr',
+      line2: 'Unit. 5, Basement',
+      city: 'Beverly Hills',
+      state: 'California'
+    }],
+    promonEnabled: true
+  };
+
+  document.body.appendChild(template(vm));
+</script>
+</body>
+</html>

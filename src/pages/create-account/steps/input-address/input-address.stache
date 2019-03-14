@@ -1,0 +1,49 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/create-account/input-address/" />
+<can-import from="i2web/components/create-account/not-available.component" />
+
+<div class="step {{activeStepClass}} create-account-step">
+  <div class="container">
+    <form class="create-account-stage">
+      {{#if place}}
+        <arcus-create-account-input-address
+          {place}="place"
+          {(city)}="place['place:city']"
+          {form-error}="formError"
+          {^@form-validates}="validateForm"
+          {^has-changes}="hasChanges"
+          {^@focus-on-first-error}="focusOnFirstError"
+          {(state)}="place['place:state']"
+          {(street-address)}="place['place:streetAddress1']"
+          {(street-address-optional-line)}="place['place:streetAddress2']"
+          {(zip-code)}="place['place:zipCode']"
+        />
+      {{/if}}
+      {{#if noMonitoringAvailable}}
+        <arcus-create-account-not-available
+          {completed-stages}="completedStages"
+          {(no-monitoring-available)}="noMonitoringAvailable"
+          {next}="@next"
+          {restart-wizard}="@restartWizard"
+          {record-progress}="@recordProgress"
+          {undo-progress}="@undoProgress"
+        />
+      {{/if}}
+    </form>
+  </div>
+</div>

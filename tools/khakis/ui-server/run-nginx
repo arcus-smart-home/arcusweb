@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CONF_DIR=/usr/share/nginx/html/build/dist/config/
+SERVER_CONF="$CONF_DIR/server.json"
+if [[ "${ARCUS_ENABLE_YEARLY_SUBSCRIPTION}" == "" ]]; then
+    ARCUS_ENABLE_YEARLY_SUBSCRIPTION="0"
+fi
+if [[ "${ARCUS_ENABLE_HUB_WIFI_SCAN}" == "" ]]; then
+    ARCUS_ENABLE_HUB_WIFI_SCAN="0"
+fi
+
+mkdir -p $CONF_DIR
+echo "{" >> $SERVER_CONF
+echo "   \"apiUrl\" : \"$ARCUS_HTTP_URI\"," >> $SERVER_CONF
+echo "   \"redirectUrl\" : \"$ARCUS_REDIRECT_URI\"," >> $SERVER_CONF
+echo "   \"wsUrl\"  : \"$ARCUS_WS_URI\","    >> $SERVER_CONF
+echo "   \"iosDownloadUrl\"  : \"$ARCUS_IOS_DOWNLOAD_URI\","    >> $SERVER_CONF
+echo "   \"androidDownloadUrl\"  : \"$ARCUS_ANDROID_DOWNLOAD_URI\","    >> $SERVER_CONF
+echo "   \"enableYearlySubscription\"  : $ARCUS_ENABLE_YEARLY_SUBSCRIPTION,"    >> $SERVER_CONF
+echo "   \"enableHubWifiScan\"  : $ARCUS_ENABLE_HUB_WIFI_SCAN"    >> $SERVER_CONF
+echo "}" >> $SERVER_CONF
+
+nginx -g 'daemon off;'

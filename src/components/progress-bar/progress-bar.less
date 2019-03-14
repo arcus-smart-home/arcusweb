@@ -1,0 +1,28 @@
+arcus-progress-bar {
+  width: 100%;
+  padding-left: @gutter * 2;
+  padding-right: @gutter * 2;
+  .progress-container {
+    border: @border;
+    background:  linear-gradient(to bottom,  @crane 0%, @pigeon 100%);
+    height: 30px;
+    border-radius: @border-radius;
+  }
+  .progress-usage {
+    box-sizing: content-box;
+    border: 0 solid @peacock;
+    width: 0;
+    background-color: @peacock;
+    border-radius: @border-radius;
+    height: 100%;
+    margin-left: -1px;
+    margin-top: -1px;
+    transition: width .3s linear;
+  }
+  .progress-label {
+    .font-regular-italic;
+    margin-top: @gutter/6;
+    text-align: center;
+    font-size: @font-size-smaller;
+  }
+}

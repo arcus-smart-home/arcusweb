@@ -1,0 +1,35 @@
+arcus-create-account-security-questions {
+  display: block;
+  .stage-fields {
+    .question-row {
+      align-items: center;
+      margin-top: 0px;
+    }
+    .input-wrapper {
+      margin-bottom: @gutter*1.5;
+    }
+  }
+  .add-question {
+    margin-top: @gutter / 2;
+  }
+  .btn-increment {
+    margin-right: @gutter/2;
+    .breakpoint(md, {
+      margin-left: -(@gutter*2);
+    });
+  }
+  .dropdown-wrapper {
+    margin-bottom: 0px;
+    width: calc(~'100% -' 55px); //minus button and margin
+    .breakpoint(md, {
+      width: 100%;
+    });
+  }
+}
+.create-account-step {
+  arcus-create-account-security-questions {
+    .stage-fields {
+      width: 100%; //silly specificity
+    }
+  }
+}

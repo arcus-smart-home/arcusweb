@@ -1,0 +1,178 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-irrigation-water-now">
+  <template>
+    <form ($submit)="saveConfiguration" autocomplete="off" {{#if saving}}disabled{{/if}}>
+      <span class="left-panel-buttons">
+        <button class="btn {{#if saving}}saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Saving
+          {{else}}
+            Save
+          {{/if}}
+        </button>
+        <button type="button" class="btn-cancel" ($click)="cancelAction()">
+          Cancel
+        </button>
+      </span>
+      <div class="panel-content">
+        <h3>{{device['name']}}</h3>
+        <div class="configurators-wrapper">
+          <div class="configurator">
+            <div class="configurator-header">
+              <h4 class="config-title">Water Now</h4>
+            </div>
+            {{#if showZoneNames}}
+              {{#selectInput('zone', 'Zone', allowSearch=true)}}
+                {{#each zoneNames}}
+                  <option value="{{.['value']}}">{{.['name']}}</option>
+                {{/each}}
+              {{/selectInput}}
+            {{/if}}
+            {{#selectInput('duration', 'Duration', allowSearch=true)}}
+              <option value="1">1 minute</option>
+              <option value="2">2 minutes</option>
+              <option value="3">3 minutes</option>
+              <option value="4">4 minutes</option>
+              <option value="5">5 minutes</option>
+              <option value="6">6 minutes</option>
+              <option value="7">7 minutes</option>
+              <option value="8">8 minutes</option>
+              <option value="9">9 minutes</option>
+              <option value="10">10 minutes</option>
+              <option value="11">11 minutes</option>
+              <option value="12">12 minutes</option>
+              <option value="13">13 minutes</option>
+              <option value="14">14 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="20">20 minutes</option>
+              <option value="25">25 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+              <option value="240">4 hours</option>
+            {{/selectInput}}
+          </div>
+        </div>
+      </div>
+    </form>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Device} device
+         * @parent i2web/components/device/actions/irrigation/waterNow
+         * @description The irrigation controller to start watering
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} duration
+         * @parent i2web/components/device/actions/irrigation/waterNow
+         * @description The duration to water the zone (of the form 'N m' or 'N h')
+         */
+        duration: {
+          type: 'string',
+        },
+        /**
+         * @property {String} zone
+         * @parent i2web/components/device/actions/irrigation/waterNow
+         * @description The zone selected by the User to water now
+         */
+        zone: {
+          type: 'string',
+        },
+        /**
+         * @property {Array<Object>} zoneNames
+         * @parent i2web/components/device/actions/irrigation/waterNow
+         * @description The names of all the zones for a particular controller
+         * sorted by the zone number
+         */
+        zoneNames: {
+          get() {
+            const zones = Object.keys(this.attr('device').attr()).filter((z) => {
+              return z.includes('irr:zonenum:');
+            });
+
+            const keys = zones.map((z) => {
+              const value = z.split(':')[2];
+              return {
+                name: this.attr(`device.irr:zonename:${value}`) || `Zone ${value.slice(1)}`,
+                value,
+              };
+            });
+            // sort the property keys by their zone number
+            // irr:zonename:z1 through irr:zonename:z12
+            keys.sort((a, b) => {
+              const aVal = Number(a.value.slice(1));
+              const bVal = Number(b.value.slice(1));
+              if (aVal < bVal) { return -1; }
+              if (bVal < aVal) { return 1; }
+              return 0;
+            });
+            return keys;
+          },
+        },
+        showZoneNames: {
+          get() {
+            return this.attr('zoneNames').length > 1;
+          },
+        },
+      },
+      /**
+       * @function cancelAction
+       * @parent i2web/components/device/actions/irrigation/waterNow
+       * @description Close the panel and call the afterCancelAction callback
+       */
+      cancelAction() {
+        SidePanel.close();
+        if (this.afterCancelAction) {
+          this.afterCancelAction();
+        }
+      },
+      /**
+       * @function saveConfiguration
+       * @parent i2web/components/device/actions/irrigation/waterNow
+       * @description Persist the waterNow configuration to the platform
+       */
+      saveConfiguration(vm, el, ev) {
+        ev.preventDefault();
+        const duration = parseInt(vm.attr('duration'), 10);
+        const zone = vm.attr('zone') || this.attr('zoneNames')[0].value;
+        vm.attr('device')
+          .WaterNowV2(zone, duration)
+          .then(() => {
+            SidePanel.closeRight();
+          })
+          .catch(e => Errors.log(e));
+        if (this.afterSaveAction) {
+          this.afterSaveAction();
+        }
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,98 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global"/>
+<can-import from="i2web/components/subsystem/alarms/no-devices.component" />
+
+{{#unless showNotificationList}}
+  <arcus-subsystem-alarms-no-devices />
+{{else}}
+  <div class="notification-container">
+    <h2>Notification List</h2>
+    {{#if place.isBasic}}
+      <p>A triggered alarm will notify you via push notification and a phone call.</p>
+    {{/if}}
+    {{#if place.isPremium}}
+      {{#if place.isPromon}}
+        <p>A triggered Alarm will result in a phone call from the Monitoring Station. Triggered Water Leaks will result in a push notification and automated phone call from Arcus.</p>
+        <p><strong>It is recommended to have at least 2 people on your Notification List.</strong> The Monitoring Station uses an Enhanced Call Verification technique to verify the alarm is real before dispatching the authorities. This is done to help reduce false alarms, avoid fines, and to increase the accuracy of information passed to the authorities.</p>
+      {{else}}
+        <p>A triggered Alarm will notify the people below in the order they are listed.</p>
+      {{/if}}
+    {{/if}}
+    <ul class="notification-list">
+      {{#each enabledCallTree}}
+        <li class="radio-wrapper enabled-person" >
+          {{^eq person.getPlaceRole(place['base:id']) 'OWNER'}}
+            <div class="buttons move-person">
+              {{^eq %index 1}}
+                <i class="icon-app-chevron chevron-btn up" ($click)="moveUp(., %event)"></i>
+              {{/eq}}
+              {{#unless isLastInList(%index, enabledCallTree)}}
+                <i class="icon-app-chevron chevron-btn down" ($click)="moveDown(., %event)"></i>
+              {{/unless}}
+            </div>
+          {{/eq}}
+          <label for="checkbox-regular" class="complex-label" ($click)="toggleFlag(., %event)">
+            <i class="icon-app-user-1 avatar"></i>
+            <span class="name">{{person['person:name']}}</span>
+          </label>
+          <input class="radio-checkbox" type="checkbox" id="checkbox-regular" {{#if enabled}}checked{{/if}}>
+          <div class="check{{#eq %index 0}} hidden{{/eq}}"></div>
+        </li>
+      {{/each}}
+      {{#unless place.isBasic}}
+        <li class="context-bar">
+          <h3>Add More People To Your Notification List</h3>
+        </li>
+      {{/unless}}
+      {{#each disabledCallTree}}
+        <li class="radio-wrapper" {{^eq enabledCallTree.length 6}}($click)="toggleFlag(., %event)"{{/eq}}>
+          <input class="radio-checkbox"
+              type="checkbox"
+              id="checkbox-regular"
+              {{#if enabled}}checked{{/if}}
+              {{#eq enabledCallTree.length 6}}disabled{{/eq}}>
+          <label for="checkbox-regular" class="complex-label">
+            <i class="icon-app-user-1 avatar"></i>
+            <span class="name">{{person['person:name']}}</span>
+          </label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+        {{#if place.isBasic}}
+        <li class="radio-wrapper add-person">
+          <label for="checkbox-regular" class="complex-label">
+            <i class="icon-app-user-3 avatar"></i>
+            <span class="name">Add up to 6 People<br />
+            <small>Requires a Premium or Professional Monitoring service plan</small></span>
+          </label>
+          <div class="add hidden"></div>
+        </li>
+        {{/if}}
+        {{#if place.isPremium}}
+        <li class="radio-wrapper add-person" ($click)="addPerson">
+          <label for="checkbox-regular" class="complex-label">
+            <i class="icon-app-user-3 avatar"></i>
+            <span class="name">Don't see the Person you are looking for? <br />
+            <small>Click the '+' sign to add a new person to your Notification List</small></span>
+          </label>
+          <div class="add"></div>
+        </li>
+        {{/if}}
+    </ul>
+  </div>
+{{/unless}}

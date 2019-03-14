@@ -1,0 +1,94 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-settings-profile-invoices">
+  <template>
+    <div class="panel-buttons">
+      {{close-button type="done"}}
+    </div>
+    <div class="panel-content">
+      <h3>Invoices</h3>
+      <hr />
+      {{#if invoices.length}}
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each invoices}}
+              <tr>
+                <td class="invoice-number">
+                  <a href="{{.['invoiceAddress']}}" target="_blank">
+                    {{invoiceNumber(.['invoiceAddress'])}}
+                  </a>
+                </td>
+                <td class="date">
+                  {{format-date .['invoiceDate'] 'MMM D YYYY'}}
+                </td>
+                <td class="amount">
+                  ${{format-price .['totalAmount']}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        {{#eq invoices.length 0}}
+          <div><p><em>You have no invoices.</em><p></div>
+        {{else}}
+          <div class="loader">Loading...</div>
+        {{/eq}}
+      {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Invoice from 'i2web/models/invoice';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Invoice.List} invoices
+         * @parent i2web/components/settings/profile/info.component
+         * @description A list of the account's invoices
+         */
+        invoices: {
+          Type: Invoice.List,
+        },
+      },
+      /**
+       * @function {String} invoiceNumber
+       * @param {String} address
+       * @description Grab the invoice number off of the URL
+       */
+      invoiceNumber(address) {
+        const params = {};
+        const query = address.split('?');
+        const parts = (query[1] && query[1].split('&')) || '';
+        parts.forEach((p) => {
+          const temp = p.split('=');
+          params[temp[0]] = temp[1];
+        });
+        return params.in || '';
+      },
+    });
+  </script>
+</can-component>

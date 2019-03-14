@@ -1,0 +1,55 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-lawn-garden-device-settings">
+  <template>
+    <can-import from="./controller-editor/" />
+
+    <div class="panel-list-container">
+      <h2>Manage Zones and Defaults</h2>
+      <p>Name zones and set default watering times.</p>
+    </div>
+
+    {{#each devices}}
+      <div class="panel-list-container segmented">
+        <div class="details">
+          <i class="base-icon {{.['web:icon:off']}}"></i>
+
+          <div class="text">
+            <h3>{{name}}</h3>
+            <div class="small">
+              {{.['irrcont:numZones']}} Zones
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" ($click)="openControllerEditor(.)">Edit</button>
+        </div>
+      </div>
+    {{/each}}
+  </template>
+  <view-model>
+    import SidePanel from 'i2web/plugins/side-panel';
+
+    export default {
+      openControllerEditor(device) {
+        // doing string concatenation here because otherwise .component files strip this tags & helpers out of the string :'|
+        SidePanel.right('{'+'{'+'close-button}}<'+'arcus-lawn-garden-controller-editor {device}="device" />', { device });
+      },
+    };
+  </view-model>
+</can-component>

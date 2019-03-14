@@ -1,0 +1,48 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-schedule-event {event}="event" {thing}="thing" />
+</script>
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Scene from 'i2web/models/scene';
+  import sceneData from 'i2web/models/fixtures/data/scene/scenes.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/schedule/event/';
+
+  const placeId = '3d496bfc-1098-493e-afd4-7f56c12dbef6';
+  const scene = new Scene(sceneData[placeId].scenes[0]);
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: {
+      event: {
+        attributes: {},
+        id: '12345', // set to null for new event UI
+        days: ['WED'],
+        messageType: 'scene:Fire',
+        mode: 'ABSOLUTE',
+        offsetMinutes: null,
+        scheduleId: 'FIRE', // RULES to test rule UI
+        time: '18:32:00',
+      },
+      thing: scene,
+    },
+    appScope: {},
+  });
+</script>

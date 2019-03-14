@@ -1,0 +1,66 @@
+arcus-zwave-tools-rebuild {
+  display: block;
+  text-align: center;
+  .modal-container {
+    @media only screen
+      and (min-width: 320px)
+      and (max-width: 667px)
+      and (orientation:landscape) {
+      p {
+        font-size: @font-size-small;
+      }
+    }
+  }
+  .modal-content {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    h4:first-child {
+      .font-medium;
+      margin: 0;
+    }
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  hr {
+    margin: @gutter/2 0;
+  }
+
+  arcus-progress-bar {
+    display: inline-block;
+    margin-bottom: @gutter/2;
+  }
+
+  .buttons {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    @media only screen
+      and (min-width: 320px)
+      and (max-width: 667px)
+      and (orientation:landscape) {
+      flex-direction: row;
+      [class^="btn"] {
+        margin: @gutter/2 @gutter/6 0;
+      }
+    }
+
+    [class^="btn"] {
+      margin: @gutter * (2/3) 0 0 0;
+      @media only screen
+      and (min-width: 320px)
+      and (max-width: 667px)
+      and (orientation:landscape) {
+        margin: @gutter @gutter/6 0;
+      }
+      &.disabled {
+        pointer-events: none;
+        .loader::after {
+          background-color: @heron;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,235 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-hub-configurator-connectivity-power">
+  <template>
+    <can-import from="i2web/helpers/device"/>
+    <hr/>
+    <h3>Connectivity &amp; Power</h3>
+
+    <h4>Status<br/>
+      <em>{{connectionStatus}}</em>
+    </h4>
+
+    <h4>{{connectionStatus}} Since<br/>
+      <em>{{connectionTime}}</em>
+    </h4>
+
+    <h4>Current Power Supply<br/>
+      <em>{{powerSource}}</em>
+    </h4>
+
+    <h4>Current Internet Connection<br/>
+      <em>{{hub.connectionType}}</em>
+    </h4>
+
+    {{#if showWifiSsid}}
+      <h4>Wi-Fi Network<br />
+        <em>{{displayAttribute('hubwifi:wifiSsid')}}</em>
+      </h4>
+    {{/if}}
+
+    {{#if showWifiStrength}}
+      <h4>Wi-Fi Signal Strength<br />
+        <i class="{{signal-strength-icon(hub['hubwifi:wifiRssi'])}}"></i>
+      </h4>
+    {{/if}}
+
+    {{#if showWifiWarning}}
+      <p class="error">
+        <i class="icon-platform-warning-2"></i>
+        To complete Wi-Fi setup, please unplug your Ethernet cable.
+      </p>
+    {{/if}}
+
+    {{#if hub['isConnectedWiFi']}}
+      <p class="info-wrapper">
+        <div><span class="info-label"><i class="icon-app-info"></i></span></div>
+        <div><em>If your Wi-Fi network isn't reliable, connect the Hub to your router using an Ethernet cable.</em></div>
+      </p>
+    {{/if}}
+
+    {{#if showSimDetails}}
+      <h4>IMEI<br/>
+        <em>{{displayAttribute('hub4g:imei')}}</em>
+      </h4>
+
+      <h4>SIM<br/>
+        <em>{{simInfo}}</em>
+      </h4>
+
+      <p class="error">
+        <i class="icon-platform-warning-2"></i>
+        Please reconnect to Ethernet or Wi-Fi when available.
+      </p>
+    {{/if}}
+
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Hub from 'i2web/models/hub';
+    import HubCapability from 'i2web/models/capability/Hub';
+    import HubPowerCapability from 'i2web/models/capability/HubPower';
+    import moment from 'moment';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} connectionStatus
+         * @parent i2web/components/hub/configurators/connectivity-power
+         * Connection status of current hub
+         */
+        connectionStatus: {
+          get() {
+            const hub = this.attr('hub');
+            return hub && hub.attr('isOffline') ? 'Offline' : 'Online';
+          },
+        },
+        /**
+         * @property {String} connectionTime
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Determines hub connectionTime string.
+         */
+        connectionTime: {
+          get() {
+            const hub = this.attr('hub');
+            if (hub && hub.attr('hubconn:lastchange')) {
+              const lastChange = moment(hub.attr('hubconn:lastchange'));
+              const duration = moment.duration(moment().diff(lastChange));
+              return `${lastChange.format('MMM DD, YYYY h:mm A')} (${duration.days()} d, ${duration.days()} hrs, ${duration.minutes()} mins)`;
+            }
+            return '-';
+          },
+        },
+        /**
+         * @property {Hub} hub
+         * @parent i2web/components/hub/configurators/connectivity-power
+         * Current hub
+         */
+        hub: {
+          Type: Hub,
+        },
+        /**
+         * @property {String} powerSource
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Determines hub powerSource string.
+         */
+        powerSource: {
+          get() {
+            const hub = this.attr('hub');
+            const powerSource = hub ? hub.attr('hubpow:source') : null;
+            if (powerSource) {
+              if (powerSource === HubPowerCapability.SOURCE_BATTERY) {
+                return `Battery ${hub.attr('hubpow:Battery')}%`;
+              }
+              return 'AC';
+            }
+            return '-';
+          },
+        },
+        /**
+         * @property {Boolean} showSimDetails
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Indicates if sim details should be shown
+         */
+        showSimDetails: {
+          get() {
+            const hub = this.attr('hub');
+            return hub
+              && hub.attr('currentState') !== HubCapability.STATE_DOWN
+              && hub.attr('isConnected4G');
+          },
+        },
+        /**
+         * @property {Boolean} showWifiSsid
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Indicates if WiFi SSID should be shown when WiFi is configured
+         */
+        showWifiSsid: {
+          get() {
+            const hub = this.attr('hub');
+            return hub
+              && hub.attr('hubwifi:wifiSsid')
+              && !hub.attr('isConnected4G');
+          },
+        },
+        /**
+         * @property {Boolean} showWifiStrength
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Indicates if WiFi Signal Strength should be shown
+         */
+        showWifiStrength: {
+          get() {
+            const hub = this.attr('hub');
+            return hub
+              && hub.attr('hubwifi:wifiSsid')
+              && hub.attr('isConnectedWiFi');
+          },
+        },
+        /**
+         * @property {Boolean} showWifiWarning
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Indicates if WiFi warning string should be shown when WiFi is configured, but hub is on Ethernet.
+         */
+        showWifiWarning: {
+          get() {
+            const hub = this.attr('hub');
+            return hub
+              && hub.attr('hubwifi:wifiSsid')
+              && hub.attr('isConnectedEthernet');
+          },
+        },
+        /**
+         * @property {String} simInfo
+         * @parent i2web/components/configurators/connectivity-power
+         *
+         * Determines SIM card info string.
+         */
+        simInfo: {
+          get() {
+            const hub = this.attr('hub');
+            return `${hub && hub.attr('hub4g:iccid') ? hub.attr('hub4g:iccid') : 'Not Provisioned'}`;
+          },
+        },
+      },
+      title: 'Connectivity & Power',
+      /**
+       * @function displayAttribute
+       * @parent i2web/components/configurators/connectivity-power
+       * @param {String} attribute
+       *
+       * @description
+       * Determines if the named attribute exists and returns its
+       * value; otherwise, returns '-'
+       *
+       * @return {String} The formatted attribute string to  display
+       */
+      displayAttribute(attribute) {
+        const hub = this.attr('hub');
+        return (hub && hub.attr(attribute)
+          ? hub.attr(attribute)
+          : '-');
+      },
+    });
+  </script>
+</can-component>

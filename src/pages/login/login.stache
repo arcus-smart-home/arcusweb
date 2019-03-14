@@ -1,0 +1,173 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache/helpers/route" />
+<can-import from="i2web/helpers/global"/>
+<can-import from="i2web/components/tooltip/" />
+
+<div class="login-wrapper col-xs-12 col-sm-8">
+  {{#if isIE11()}}
+    {{#matchRoute(subpage="create-account")}}
+      <div class="pro-marketing-copy">
+        <h3>Create an Account</h3>
+        <p>To create an account, use the latest Chrome or Firefox browser, or download the Arcus App on your phone or tablet and follow the account creation instructions. Then you can return to the previous screen to login with your information.</p>
+        <a href="{{routeUrl page="login"}}">
+          <button class="btn">Back</button>
+        </a>
+      </div>
+    {{/matchRoute}}
+  {{/if}}
+  {{#matchRoute(subpage="send-code")}}
+    <!-- RESET PASSWORD STEP 1 -->
+    <div class="forgot-password-1">
+      <h3>Forgot Password</h3>
+      <p>Don't worry, just enter the email address you registered with and we will send you instructions to reset your password.</p>
+      <p class="small">But hurry, the link will expire in 30 minutes.</p>
+      <div class="send-code">
+        {{textInput('emailAddress', 'Email Address', type='email')}}
+        <p class="sentence-link">
+          <a href="{{routeUrl page="login" subpage="reset-password"}}" ($click)="transitionTo(%event, 'login', 'reset-password')">Already have a code from Support? Click here.</a>
+        </p>
+        {{#if formError}}
+          <div class="login-error">
+            <p>{{formError}}</p>
+          </div>
+        {{/if}}
+        <button ($click)="sendCode" class="btn{{#unless sendCodeFormHasChanges}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Sending
+          {{else}}
+            Send Email
+          {{/if}}
+        </button>
+        <button ($click)="back()" class="btn">Back</button>
+      </div>
+
+    </div>
+  {{/matchRoute}}
+
+  {{#matchRoute(subpage="reset-password")}}
+    <!-- RESET PASSWORD STEP 2 -->
+    <div class="forgot-password-2">
+    {{#if resetFromSendCode}}
+      <h3>Check Your Inbox</h3>
+      <p>We've sent an email to {{emailAddress}} with a code to reset your password.</p>
+      <p>If you do not receive the password reset email within a few minutes, please check your spam
+        folder, and ensure the email you entered matches the email used for your Arcus account.</p>
+    {{else}}
+      <h3>Already have a code from Support?</h3>
+    {{/if}}
+      <form ($submit)="resetPassword">
+      {{#unless resetFromSendCode}}
+        {{textInput('emailAddress', 'Email Address', type='email')}}
+      {{/unless}}
+        {{textInput('code', 'Enter Code')}}
+        {{! https://eyeris.atlassian.net/browse/ITWO-9919 }}
+        {{! For Firefox, in order to prevent saved passwords from filling, we need to trap it in another }}
+        {{! hidden password field. Unforunately there is no better way of doing this at this time. }}
+        {{textInput('fakePassword', '', type='password' attributes='style="display: none;"')}}
+        {{textInput('newPassword', 'New Password', type='password')}}
+        {{textInput('confirmPassword', 'Confirm New Password', type='password')}}
+        <ul class="password-requirements">
+          <li>Password is case-sensitive</li>
+          <li>Must be at least 8 characters in length</li>
+          <li>Must have at least 1 letter &amp; 1 number</li>
+          <li>Cannot use spaces</li>
+          <li>Cannot be your email address</li>
+        </ul>
+        {{#if formError}}
+          <div class="login-error">
+            <p>{{formError}}</p>
+          </div>
+        {{/if}}
+        <div class="button-wrapper">
+          <button type="submit" class="btn{{#unless resetPasswordFormHasChanges}} disabled{{/unless}} {{#if saving}} saving{{/if}}">
+            {{#if saving}}
+              <div class="loader"></div> Saving Password
+            {{else}}
+              Reset Password
+            {{/if}}
+          </button>
+          <button class="btn" ($click)="back()">Back</button>
+        </div>
+      </form>
+    </div>
+  {{/matchRoute}}
+
+  {{#matchRoute(subpage="reset-confirmation")}}
+    <!-- FORGOT PASSWORD STEP 3 -->
+    <div class="forgot-password-3">
+      <h3>Password Reset</h3>
+      <p>Your password has successfully been reset.</p>
+      <a href="{{routeUrl page="login"}}" ($click)="transitionTo(%event, 'login')">
+        <button class="btn">Back to login</button>
+      </a>
+    </div>
+  {{/matchRoute}}
+
+  {{#if emailOrEmptySubpage}}
+    <form ($submit)="login" class="login-form">
+      {{#if sessionError}}
+        <div class="login-error">
+          <p>{{sessionError}}</p>
+        </div>
+      {{/if}}
+      {{textInput('emailAddress', 'Email', type='email')}}
+      {{textInput('password', 'Password', type='password')}}
+      <div class="radio-wrapper small-radio">
+        <label for="checkbox-public">
+          I am on a public computer
+          <button class="btn-small tooltip-trigger" type="button"><i>i</i></button>
+          <arcus-tooltip anchor="top-right">For your safety, your session will expire in 30 minutes if you indicate you're on a public computer.</arcus-tooltip>
+        </label>
+        <input class="radio-checkbox" type="checkbox" id="checkbox-public" {($checked)}="isPublic">
+        <div class="check"></div>
+      </div>
+      {{#if formError}}
+        <div class="login-error">
+          <p>{{formError}}</p>
+        </div>
+      {{/if}}
+      <div class="button-wrapper">
+        <button type="submit" class="btn{{#unless loginFormHasChanges}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+          {{#if saving}}
+            <div class="loader"></div> Logging In
+          {{else}}
+            Login
+          {{/if}}
+        </button>
+        {{#unless fromEmailLink}}
+          {{#if cannotRenderCreateAccount}}
+            <a class="create-account-link" href="{{routeUrl page="login" subpage="create-account"}}" ($click)="transitionTo(%event, 'login', 'create-account')">
+              <button class="btn">Create An Account</button>
+            </a>
+          {{else}}
+            <a class="create-account-link" href="{{routeUrl page="create-account"}}">
+              <button class="btn">Create An Account</button>
+            </a>
+          {{/if}}
+        {{/unless}}
+      </div>
+      <div hidden>
+        <input type="submit"/>
+      </div>
+      <div class="forgot-password-links">
+        <a href="{{routeUrl page="invite"}}">Use Invitation Code</a>
+        <a href="{{routeUrl page="login" subpage="send-code"}}" ($click)="transitionTo(%event, 'login', 'send-code')">Forgot Password?</a>
+      </div>
+    </form>
+  {{/if}}
+</div>

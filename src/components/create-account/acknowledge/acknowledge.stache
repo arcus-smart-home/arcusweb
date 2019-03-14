@@ -1,0 +1,34 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/staged-progress/" />
+
+<arcus-staged-progress build-profile in-progress />
+<h1>Great, we're almost there.</h1>
+<p>The next steps are essential to completing the Professional Monitoring sign up.
+  <strong>Until you complete these steps, your account will not be Professionally Monitored.</strong>
+</p>
+<div class="radio-wrapper">
+  <label for="checkbox-acknowledge">
+    I acknowledge the above statement
+  </label>
+  <input id="checkbox-acknowledge"
+    class="radio-checkbox"
+    type="checkbox"
+    {($checked)}="acknowledged"
+    {{#if acknowledged}}checked{{/if}}>
+  <div class="check"></div>
+</div>

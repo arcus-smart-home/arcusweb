@@ -1,0 +1,77 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/pairing/oauth-popup.component" />
+<can-import from="i2web/components/animated/searching.component" />
+<can-import from="i2web/components/pairing/device-state/" />
+
+{{#if isLoadingShown}}
+  <arcus-animated-searching icon="icon-app-cloud-1" />
+  <button class="btn" ($click)="focusPopup">Show {{vendor}} Login Window</button>
+{{/if}}
+
+<arcus-pairing-oauth-popup
+  {config}="pairingConfig"
+  {^@launch-popup}="launchPopup"
+  {^@focus-popup}="focusPopup"
+  {(is-popup-open)}=isPopupOpen"
+  {(is-auth-failed)}="isAuthFailed"
+  {(is-auth-timed-out)}="isAuthTimedOut"
+  (exittocatalog)="returnToCatalog"/>
+
+{{#if isAuthFailed}}
+  {{#if isAuthTimedOut}}
+    <!-- timeout failure message -->
+    <div class="box-gray-radius">
+      <h4>Do you want to return to the pairing steps and try again?</h4>
+      <hr/>
+      <p>
+        If you do not want to continue, you can exit pairing at the top of this page.
+      </p>
+    </div>
+    <button class="btn" ($click)="returnToSteps">
+      Show Steps
+    </button>
+  {{else}}
+    <!-- generic auth failure message -->
+    <div class="failed box-gray-radius">
+      <h4>{{vendor}} Login Window Closed</h4>
+      <hr/>
+      <p>
+        Do you want to try again? If not, you can exit pairing at the top of this page.
+      </p>
+    </div>
+    <button class="btn" ($click)="launchPopup">
+      Retry Login
+    </button>
+  {{/if}}
+{{/if}}
+
+{{#each pairingDevices}}
+  <arcus-pairing-device-state
+    {on-customize}="@onCustomize"
+    {on-remove}="@onRemove"
+    {on-try-again}="@onTryAgain"
+    {pairing-device}="." />
+{{/each}}
+
+<div class="buttons">
+  {{^if isAuthFailed}}
+    {{^if pairingDevices.length}}
+      <button class="btn" ($click)="returnToCatalog">Back</button>
+    {{/if}}
+  {{/if}}
+</div>

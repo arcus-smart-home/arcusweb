@@ -1,0 +1,58 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-reset-modal">
+  <template>
+    <div class="modal-container">
+    <div class="modal-content hub-offline">
+      <h4>The Hub will go into unpairing mode while you reset the device.</h4>
+      <p>
+        This will enable the device to cleanly pair to the Hub during the next pairing attempt. Select 'confirm' to acknowledge and continue.
+      </p>
+
+      <button class="btn" ($click)="onConfirmFactoryReset()">
+        Confirm
+      </button>
+      <br/>
+      <button class="btn btn-cancel" ($click)="onCancelFactoryReset()">
+        Cancel
+      </button>
+    </div>
+    <div class="modal-backdrop"></div>
+  </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Function} onConfirmFactoryReset
+         * @parent i2web/components/pairing/reset/modal
+         * @description Callback for starting the reset process
+         */
+        onConfirmFactoryReset: {},
+        /**
+         * @property {Function} onCancelFactoryReset
+         * @parent i2web/components/pairing/reset/modal
+         * @description Callback for cancelling the reset process
+         */
+        onCancelFactoryReset: {},
+      },
+    });
+  </script>
+</can-component>

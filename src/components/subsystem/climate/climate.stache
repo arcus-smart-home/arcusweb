@@ -1,0 +1,93 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/device/list/" />
+<can-import from="i2web/components/subsystem/climate/settings/" />
+<can-import from="i2web/components/subsystem/climate/no-devices.component" />
+
+<can-import from="i2web/helpers/global" />
+
+<arcus-context-bar>
+  <h2>
+    <i class="icon-app-climate-1"></i>
+    <span class="place-name">{{place['place:name']}}</span> Climate
+  </h2>
+</arcus-context-bar>
+<div class="climate-navigation">
+  <div class="segment-btn">
+    <button class="btn-primary {{#if climateDisplayedIs('status')}}active{{/if}}"
+      ($click)="changeClimateDisplay('status')">
+      Status
+    </button>
+    <button class="btn-primary {{#if climateDisplayedIs('temperature')}}active{{/if}}"
+      ($click)="changeClimateDisplay('temperature')">
+      Temperature
+    </button>
+    <button class="btn-primary {{#if climateDisplayedIs('settings')}}active{{/if}}"
+      ($click)="changeClimateDisplay('settings')">
+      More
+    </button>
+  </div>
+</div>
+<hr />
+{{#switch activeDisplay}}
+  {{#case 'status'}}
+    {{#if hasControlDevices}}
+      <arcus-device-list {(devices)}="subsystem['web:subclimate:controlDevices']" />
+    {{else}}
+      <arcus-subsystem-climate-no-devices />
+    {{/if}}
+  {{/case}}
+  {{#case 'temperature'}}
+    <div class="climate-temperature">
+      {{#if subsystem['web:subclimate:temperatureDevices.length']}}
+        {{#each subsystem['web:subclimate:temperatureDevices'] as device}}
+          <div class="row temperature-device">
+            <div class="device-name">
+              <i class="icon {{iconOf(device, 'class')}}"></i>
+              <h3>{{device['dev:name']}}</h3>
+            </div>
+
+            <div class="device-badges">
+              <span class="climate-device-detail">
+                <span class="value">{{format-temp(device['temp:temperature'], 'F')}}</span>
+                <sup class="value-unit">&deg;</sup>
+              </span>
+
+              {{#if device['humid:humidity']}}
+                <span class="climate-device-detail">
+                  <i class="icon-app-hot-water"></i>
+                  <span class="value">{{round(device['humid:humidity'])}}</span>
+                  <sup class="value-unit">%</sup>
+                </span>
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <arcus-subsystem-climate-no-devices />
+      {{/if}}
+    </div>
+  {{/case}}
+  {{#case 'settings'}}
+    {{#if subsystem['web:subclimate:temperatureDevices.length']}}
+      <arcus-subsystem-climate-settings {(subsystem)}="subsystem" />
+    {{else}}
+      <arcus-subsystem-climate-no-devices />
+    {{/if}}
+  {{/case}}
+{{/switch}}

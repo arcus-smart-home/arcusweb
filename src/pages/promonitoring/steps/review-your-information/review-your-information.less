@@ -1,0 +1,61 @@
+arcus-pro-monitoring-step-review-your-information {
+	arcus-mailing-address {
+		display: flex;
+		flex-direction: column;
+	}
+  .input-spacing {
+    margin-top: @gutter;
+    margin-bottom: @gutter/2;
+  }
+
+  arcus-form-confirm-field {
+    h3 {
+      border-bottom: @border;
+      padding-bottom: @gutter/4;
+    }
+  }
+
+  .pinCode {
+    .font-password;
+    -moz-appearance:textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  .pin-response, .phone-response {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: @gutter;
+    .breakpoint(sm, {
+      margin-bottom: 0;
+    });
+    .loader {
+      width: 30px;
+      height: 30px;
+    }
+    &.success {
+      .icon-success {
+        background-color: @peacock;
+        border-radius: 100%;
+        padding: 7px;
+        color: @crane;
+        margin-right: @gutter/2;
+        font-size: @font-size-small;
+      }
+    }
+    &.error {
+      color: @cardinal;
+      .icon-error {
+        transform: rotate(45deg);
+        background-color: @cardinal;
+        border-radius: 100%;
+        padding: 7px;
+        color: @crane;
+        margin-right: @gutter/2;
+        font-size: @font-size-small;
+      }
+    }
+  }
+}

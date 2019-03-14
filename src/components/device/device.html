@@ -1,0 +1,330 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" class="demo" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css"/>
+  <can-import from="i2web/app.less"/>
+  <style>
+    select {
+      margin: 10px 20px;
+      min-height: 20px;
+    }
+    arcus-device-card {
+      width: 200px;
+      height: 180px;
+    }
+  </style>
+
+  <label for="selectDevice">Device: </label>
+  <select id="selectDevice" {($value)}="selectedDeviceId" ($change)="loadNewDevice">
+  {{#each devices}}
+    <optgroup label="{{%key}}"></optgroup>
+    {{#each .}}
+      <option value="{{['base:address']'}}">{{['dev:name']'}}</option>
+    {{/each}}
+  {{/each}}
+  </select>
+  {{#if device['alert:state']}}
+    <label for="alertedState">Alerted State: </label>
+    <select id="alertedState" {($value)}="device['alert:state']'">
+      <option value="{{AlertCapability.STATE_QUIET}}">Quiet</option>
+      <option value="{{AlertCapability.STATE_ALERTING}}">Alerting</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['glass:break']}}
+    <label for="smokeDetection">Glass Break Detection: </label>
+    <select id="smokeDetection" {($value)}="device['glass:break']'">
+      <option value="{{GlassCapability.BREAK_SAFE}}">Safe</option>
+      <option value="{{GlassCapability.BREAK_DETECTED}}">Detected</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['smoke:smoke']}}
+    <label for="smokeDetection">Smoke Detection: </label>
+    <select id="smokeDetection" {($value)}="device['smoke:smoke']'">
+      <option value="{{SmokeDetectionCapability.SMOKE_SAFE}}">Safe</option>
+      <option value="{{SmokeDetectionCapability.SMOKE_DETECTED}}">Detected</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['co:co']}}
+    <label for="coDetection">Carbon Monoxide Detection: </label>
+    <select id="coDetection" {($value)}="device['co:co']'">
+      <option value="{{CarbonMonoxideDetectionCapability.CO_SAFE}}">Safe</option>
+      <option value="{{CarbonMonoxideDetectionCapability.CO_DETECTED}}">Detected</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['leakh2o:state']}}
+    <label for="leakDetection">Leak Detection: </label>
+    <select id="leakDetection" {($value)}="device['leakh2o:state']'">
+      <option value="{{LeakH2OCapability.STATE_SAFE}}">Safe</option>
+      <option value="{{LeakH2OCapability.STATE_LEAK}}">Detected</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['aosmithwaterheatercontroller:controlmode']}}
+    <label for="aoscontroller">Water Heater Mode: </label>
+    <select id="aoscontroller" {($value)}="device['aosmithwaterheatercontroller:controlmode']'">
+      <option value="{{AOSmithWaterHeaterControllerCapability.CONTROLMODE_STANDARD}}">Standard</option>
+      <option value="{{AOSmithWaterHeaterControllerCapability.CONTROLMODE_ENERGY_SMART}}">Energy Smart &reg;</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['therm:hvacmode']}}
+    <label for="hvaccontroller">HVAC Mode: </label>
+    <select id="hvaccontroller" {($value)}="device['therm:hvacmode']'">
+      <option value="{{ThermostatCapability.HVACMODE_HEAT}}">Heat</option>
+      <option value="{{ThermostatCapability.HVACMODE_COOL}}">Cool</option>
+      <option value="{{ThermostatCapability.HVACMODE_AUTO}}">{{{device['web:therm:autoDescription']}}}</option>
+      <option value="{{ThermostatCapability.HVACMODE_ECO}}">ECO</option>
+      <option value="{{ThermostatCapability.HVACMODE_OFF}}">Off</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['honeywelltcc:authorizationState']}}
+    <label for="tccauth">Honeywell TCC Authorization: </label>
+    <select id="tccauth" {($value)}="device['honeywelltcc:authorizationState']'">
+      <option value="{{HoneywellTCCCapability.AUTHORIZATIONSTATE_AUTHORIZED}}">Authorized</option>
+      <option value="{{HoneywellTCCCapability.AUTHORIZATIONSTATE_DEAUTHORIZED}}">Deauthorized</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['doorlock:lockstate']}}
+    <label for="lockstate">Lock State: </label>
+    <select id="lockstate" {($value)}="device['doorlock:lockstate']'">
+      <option value="{{DoorLockCapability.LOCKSTATE_LOCKED}}">Locked</option>
+      <option value="{{DoorLockCapability.LOCKSTATE_UNLOCKED}}">Unlocked</option>
+      <option value="{{DoorLockCapability.LOCKSTATE_LOCKING}}">Locking</option>
+      <option value="{{DoorLockCapability.LOCKSTATE_UNLOCKING}}">Unlocking</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['motdoor:doorstate']}}
+    <label for="doorstate">Door State: </label>
+    <select id="doorstate" {($value)}="device['motdoor:doorstate']'">
+      <option value="{{MotorizedDoorCapability.DOORSTATE_CLOSED}}">Closed</option>
+      <option value="{{MotorizedDoorCapability.DOORSTATE_OPENING}}">Opening</option>
+      <option value="{{MotorizedDoorCapability.DOORSTATE_OPEN}}">Open</option>
+      <option value="{{MotorizedDoorCapability.DOORSTATE_CLOSING}}">Closing</option>
+      <option value="{{MotorizedDoorCapability.DOORSTATE_OBSTRUCTION}}">Obstruction</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['valv:valvestate']}}
+    <label for="valvestate">Valve State: </label>
+    <select id="valvestate" {($value)}="device['valv:valvestate']'">
+      <option value="{{ValveCapability.VALVESTATE_CLOSED}}">Closed</option>
+      <option value="{{ValveCapability.VALVESTATE_OPENING}}">Opening</option>
+      <option value="{{ValveCapability.VALVESTATE_OPEN}}">Open</option>
+      <option value="{{ValveCapability.VALVESTATE_CLOSING}}">Closing</option>
+      <option value="{{ValveCapability.VALVESTATE_OBSTRUCTION}}">Obstruction</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['spaceheater:heatstate']}}
+    <label for="spaceHeaterState">Space Heater State: </label>
+    <select id="spaceHeaterState" {($value)}="device['spaceheater:heatstate']'">
+      <option value="{{SpaceHeaterCapability.HEATSTATE_ON}}">On</option>
+      <option value="{{SpaceHeaterCapability.HEATSTATE_OFF}}">Off</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['twinstar:ecomode']}}
+    <label for="ecoModeState">TwinStar Eco Mode: </label>
+    <select id="ecoModeState" {($value)}="device['twinstar:ecomode']'">
+      <option value="{{TwinStarCapability.ECOMODE_ENABLED}}">Enabled</option>
+      <option value="{{TwinStarCapability.ECOMODE_DISABLED}}">Disabled</option>
+    </select>
+    <br />
+  {{/if}}
+  {{#if device['glass:break']}}
+    <label for="smokeDetection">Glass Break Detection: </label>
+    <select id="smokeDetection" {($value)}="device['glass:break']'">
+      <option value="{{GlassCapability.BREAK_SAFE}}">Safe</option>
+      <option value="{{GlassCapability.BREAK_DETECTED}}">Detected</option>
+    </select>
+    <br />
+  {{/if}}
+  <label for="deviceConnectivity">Connectivity: </label>
+  <select id="deviceConnectivity" {($value)}="device['devconn:state']'">
+    <option value="{{DeviceConnectionCapability.STATE_ONLINE}}">Online</option>
+    <option value="{{DeviceConnectionCapability.STATE_OFFLINE}}">Offline</option>
+  </select>
+  <br />
+
+  <can-import from="i2web/components/device/card/"/>
+  <arcus-device-card {(device)}="device"></arcus-device-card>
+
+  <can-import from="i2web/components/device/panel/"/>
+  <arcus-device-panel {(device)}="device"></arcus-device-panel>
+
+  <can-import from="i2web/components/side-panel/" />
+  <arcus-side-panel class="is-right" {(content)}="content" />
+</script>
+<script src="../../../../node_modules/steal/steal.js" id="demo-source" main="can-view-autorender">
+  import $ from 'jquery';
+  import canMap from 'can-map';
+  import canViewModel from 'can-view-model';
+  import domData from 'can-util/dom/data/';
+  import each from 'can-util/js/each/';
+  import Device from 'i2web/models/device';
+  import AOSmithWaterHeaterControllerCapability from 'i2web/models/capability/AOSmithWaterHeaterController';
+  import AlertCapability from 'i2web/models/capability/Alert';
+  import DeviceConnectionCapability from 'i2web/models/capability/DeviceConnection';
+  import SmokeDetectionCapability from 'i2web/models/capability/Smoke';
+  import CarbonMonoxideDetectionCapability from 'i2web/models/capability/CarbonMonoxide';
+  import GlassCapability from 'i2web/models/capability/Glass';
+  import HueBridgeCapability from 'i2web/models/capability/HueBridge';
+  import LeakH2OCapability from 'i2web/models/capability/LeakH2O';
+  import LutronBridgeCapability from 'i2web/models/capability/LutronBridge';
+  import HaloCapability from 'i2web/models/capability/Halo';
+  import SpaceHeaterCapability from 'i2web/models/capability/SpaceHeater';
+  import TwinStarCapability from 'i2web/models/capability/TwinStar';
+  import NestThermostatCapability from 'i2web/models/capability/NestThermostat';
+  import HoneywellTCCCapability from 'i2web/models/capability/HoneywellTCC';
+  import ThermostatCapability from 'i2web/models/capability/Thermostat';
+  import DoorLockCapability from 'i2web/models/capability/DoorLock';
+  import MotorizedDoorCapability from 'i2web/models/capability/MotorizedDoor';
+  import ShadeCapability from 'i2web/models/capability/Shade';
+  import ValveCapability from 'i2web/models/capability/Valve';
+
+  // device data
+  import accessoryData from 'i2web/models/fixtures/data/device/accessories.json';
+  import buttonData from 'i2web/models/fixtures/data/device/buttons.json';
+  import contactSensorData from 'i2web/models/fixtures/data/device/contact_sensors.json';
+  import dimmerData from 'i2web/models/fixtures/data/device/dimmers.json';
+  import fanData from 'i2web/models/fixtures/data/device/fans.json';
+  import garageDoorData from 'i2web/models/fixtures/data/device/garage_doors.json';
+  import garagedoorControllerData from 'i2web/models/fixtures/data/device/garagedoor_controllers.json';
+  import glassBreakSensorData from 'i2web/models/fixtures/data/device/glass_break_sensors.json';
+  import hueBridgeData from 'i2web/models/fixtures/data/device/hue_bridges.json';
+  import haloData from 'i2web/models/fixtures/data/device/halos.json';
+  import keyFobData from 'i2web/models/fixtures/data/device/key_fobs.json';
+  import keypadData from 'i2web/models/fixtures/data/device/keypads.json';
+  import lightData from 'i2web/models/fixtures/data/device/lights.json';
+  import lockData from 'i2web/models/fixtures/data/device/locks.json';
+  import lutronBridgeData from 'i2web/models/fixtures/data/device/lutron_bridges.json';
+  import motionSensorData from 'i2web/models/fixtures/data/device/motion_sensors.json';
+  import nestThermostatData from 'i2web/models/fixtures/data/device/nest_thermostats.json';
+  import pendantData from 'i2web/models/fixtures/data/device/pendants.json';
+  import rangeExtenderData from 'i2web/models/fixtures/data/device/range_extenders.json';
+  import shadeData from 'i2web/models/fixtures/data/device/shades.json';
+  import sirenData from 'i2web/models/fixtures/data/device/sirens.json';
+  import smokeDetectorData from 'i2web/models/fixtures/data/device/smoke_detectors.json';
+  import spaceHeaterData from 'i2web/models/fixtures/data/device/spaceheaters.json';
+  import switchData from 'i2web/models/fixtures/data/device/switches.json';
+  import thermostatData from 'i2web/models/fixtures/data/device/thermostats.json';
+  import tccThermostatData from 'i2web/models/fixtures/data/device/tccthermostats.json';
+  import tiltSensorData from 'i2web/models/fixtures/data/device/tilt_sensors.json';
+  import ventData from 'i2web/models/fixtures/data/device/vents.json';
+  import waterHeaterData from 'i2web/models/fixtures/data/device/water_heaters.json';
+  import waterLeakData from 'i2web/models/fixtures/data/device/water_leaks.json';
+  import waterValveData from 'i2web/models/fixtures/data/device/water_valves.json';
+  import unknownDeviceData from 'i2web/models/fixtures/data/device/unknowns.json';
+
+  import placeData from 'i2web/models/fixtures/data/place/place.json';
+  import Place from 'i2web/models/place';
+
+  const allDeviceData = [].concat(accessoryData, buttonData, contactSensorData, dimmerData, fanData, garageDoorData, glassBreakSensorData, hueBridgeData, keyFobData, keypadData, haloData, lightData, lockData, lutronBridgeData, motionSensorData, nestThermostatData, pendantData, rangeExtenderData, shadeData, sirenData, smokeDetectorData, spaceHeaterData, switchData, thermostatData, tccThermostatData, tiltSensorData, ventData, waterHeaterData, waterLeakData, unknownDeviceData);
+  const allDevicesById = new canMap();
+  each(allDeviceData, (device) => {
+    allDevicesById.attr(device['base:address'], new Device(device));
+  });
+
+  // load the product catalog and attach it to the app viewModel
+  import productData from 'i2web/models/fixtures/data/product.json';
+
+  const productsById = new canMap({});
+  productData.forEach((product) => {
+    productsById.attr(product['product:id'], product);
+  });
+
+  domData.set.call($('html')[0], 'viewModel', new canMap({
+    products: productsById,
+    rightPanelContent: {},
+    notifications: [],
+    page: 'services',
+    subpage: 'lights-switches',
+    place: new Place(placeData[0]),
+  }));
+
+  const initialDevice = new Device(spaceHeaterData[0]);
+
+  // load the switch data
+  canViewModel($('.demo')[0], new canMap({
+    selectedDeviceId: initialDevice.attr('base:address'),
+    device: initialDevice,
+    devices: {
+      'Accessories': accessoryData,
+      'Buttons': buttonData,
+      'Contact Sensors': contactSensorData,
+      'Dimmers': dimmerData,
+      'Fans': fanData,
+      'Garage Doors': garageDoorData,
+      'Garage Door Controllers': garagedoorControllerData,
+      'Glass Break Sensors': glassBreakSensorData,
+      'Halos': haloData,
+      'Hue Bridges': hueBridgeData,
+      'Key Fobs': keyFobData,
+      'Keypads': keypadData,
+      'Lights': lightData,
+      'Locks': lockData,
+      'Lutron Bridges': lutronBridgeData,
+      'Motion Sensors': motionSensorData,
+      'Nest Thermostats': nestThermostatData,
+      'Pendants': pendantData,
+      'Range Extenders': rangeExtenderData,
+      'Shades': shadeData,
+      'Sirens': sirenData,
+      'Smoke/Co Detectors': smokeDetectorData,
+      'Space Heaters': spaceHeaterData,
+      'Switches': switchData,
+      'Thermostats': thermostatData,
+      'TCC Thermostats': tccThermostatData,
+      'Tilt Sensors': tiltSensorData,
+      'Vents': ventData,
+      'Water Heaters': waterHeaterData,
+      'Water Leak Detectors': waterLeakData,
+      'Water Valves': waterValveData,
+      'Unknown': unknownDeviceData,
+    },
+    content: domData.get.call($('html')[0], 'viewModel').compute('rightPanelContent'),
+    AOSmithWaterHeaterControllerCapability,
+    AlertCapability,
+    DeviceConnectionCapability,
+    GlassCapability,
+    SmokeDetectionCapability,
+    CarbonMonoxideDetectionCapability,
+    LeakH2OCapability,
+    HaloCapability,
+    HoneywellTCCCapability,
+    HueBridgeCapability,
+    LutronBridgeCapability,
+    NestThermostatCapability,
+    ThermostatCapability,
+    SpaceHeaterCapability,
+    TwinStarCapability,
+    DoorLockCapability,
+    MotorizedDoorCapability,
+    ShadeCapability,
+    ValveCapability,
+    loadNewDevice() {
+      this.attr('device', allDevicesById[this.attr('selectedDeviceId')]);
+    }
+  }));
+</script>

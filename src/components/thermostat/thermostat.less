@@ -1,0 +1,33 @@
+arcus-thermostat {
+  display: block;
+  .mode-wrapper {
+    &.active {
+      display: block;
+    }
+    &.not-active {
+      display: none;
+    }
+  }
+  .radio-wrapper {
+    &.has-configurator {
+      flex-wrap: wrap-reverse;
+    }
+  }
+  .spinner-wrapper {
+    display: flex;
+    max-width: 100%;
+    flex-basis: 100%;
+    justify-content: center;
+    align-items: center;
+    border-top: @border;
+    border-bottom: @border;
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+  }
+  .to {
+    color: @grouse;
+    font-size: @font-size-smaller;
+  }
+}

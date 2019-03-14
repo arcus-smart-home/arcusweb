@@ -1,0 +1,60 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/settings/people/contact-info-form/" />
+
+<form autocomplete="off" ($submit)="saveContactInfo">
+  <div class="panel-buttons">
+    {{#if hasFullAccess}}
+      {{close-button type="done"}}
+    {{else}}
+      {{close-button type="cancel"}}
+    {{/if}}
+    <button type="button" class="btn-delete remove-person" ($click)="removePerson">Remove Person</button>
+  </div>
+  <div class="panel-content">
+    {{#if initialPinError}}
+      <p class="form-error">{{initialPinError}}</p>
+    {{/if}}
+    {{#if hasFullAccess}}
+      <h3>Edit Contact Information</h3>
+      <p>
+        <span class="bold">{{person['person:name']}}</span> has Full Access to <span class="bold">{{place['place:name'}}</span>. People with Full Access manage their own Profile information.
+      </p>
+    {{else}}
+      <h3>Edit Guest Information</h3>
+      <arcus-settings-people-contact-info-form
+        {place}="place"
+        {(person)}="formPerson"
+        {access-type}="role"
+        {^pin-code}="pinCode"
+        {^has-changes}="hasChanges"
+        {^@form-validates}="formValidates" />
+      {{#if formError}}
+        <p class="form-error">{{formError}}</p>
+      {{/if}}
+    {{/if}}
+    {{#unless hasFullAccess}}
+      <button type="submit" class="btn {{#unless hasChanges}}disabled{{/unless}} {{#if saving}}saving{{/if}}">
+        {{#if saving}}
+          <div class="loader"></div> Saving
+        {{else}}
+          Save
+        {{/if}}
+      </button>
+    {{/unless}}
+  </div>
+</form>

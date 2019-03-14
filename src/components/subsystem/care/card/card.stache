@@ -1,0 +1,61 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/subsystem/care/status/active/" />
+<can-import from="i2web/components/event-list/" />
+
+<div class="subsystem-card-title">
+  <h3 class="supported">
+    <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}">
+    {{{iconOf(subsystem)}}}
+    {{subsystem.displayName}}
+    </a>
+  </h3>
+  <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}" class="subsystem-chevron">
+    <i class="icon-app-chevron"></i>
+  </a>
+</div>
+<div class="subsystem-card-contents">
+  {{#if careAlert}}
+    <div class="care-alarm">
+      <div class="care-alarm-icon">
+        <i class="icon-app-care-heart-1"></i>
+      </div>
+      <h3>Care Alarm Triggered</h3>
+      <p>{{careAlertName}}</p>
+      <button class="btn-primary active" ($click)="clearCareAlert()">
+        Cancel
+      </button>
+    </div>
+  {{else}}
+    <div class="left">
+      <arcus-subsystem-care-status-active {subsystem}="subsystem" />
+    </div>
+    <div class="right">
+      {{#if behaviors.length}}
+        <h3>Recent Activity</h3>
+        <arcus-event-list {retrieve-events}="@retrieveCareActivity" {(page)}="page" {place}="place" />
+      {{else}}
+        <div class="no-behaviors-wrapper">
+          <p>Care Behaviors help you monitor your loved one's daily routines and can trigger a Care Alarm if those routines are disrupted.</p>
+          <a href="{{routeUrl page='services' subpage='care' action='behaviors'}}">
+            <button class="btn-primary">+ Add Behavior</button>
+          </a>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

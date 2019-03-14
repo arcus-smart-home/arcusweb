@@ -1,0 +1,227 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-status-security-hub-offline">
+  <template>
+    <can-import from="i2web/components/shop-button.component" />
+    <can-import from="i2web/components/segmented-radial/" />
+    <can-import from="i2web/components/segmented-radial/segment/" />
+    <can-import from="i2web/components/subsystem/alarms/devices/security/" />
+    <can-import from="i2web/helpers/global" />
+
+      <div class="status-header">
+        <h2>
+          <i class="{{typeIcon}}"></i>
+          {{typeName}}
+        </h2>
+        {{#unless condensed}}
+          {{#if subsystem['alarm:monitored:SECURITY']}}
+            <span class="pro-badge">Pro</span>
+          {{/if}}
+        {{/unless}}
+      </div>
+      <div class="left-content">
+        <arcus-segmented-radial text="{{hubOfflineIcon}}">
+          {{#each securityDevices}}
+            <arcus-segmented-radial-segment state="alarming" />
+          {{/each}}
+        </arcus-segmented-radial>
+        <small class="error">Unable to Notify</small>
+        <a href="{{redirectToUrl('s_hub')}}" target="_blank"><button class="btn-cancel">Get Support</button></a>
+      </div>
+      <div class="right-content">
+        {{#if subsystem['alarm:monitored:SECURITY']}}
+          <p class="bold offline-critical">Call the local authorities if you are experiencing an emergency.</p>
+        {{/if}}
+        <p class="bold">
+          Arcus is unable to contact you because your Hub or Wi-Fi security device has lost connection to the internet.
+          This may be a router or service provider issue.
+        </p>
+        <div class="hub-offline-metadata">
+          {{#if hub}}
+            <p>Offline Since: <span class="font-regular-italic">{{formattedLastChangeTime}}</span></p>
+          {{/if}}
+          {{#if lastKnownMode}}
+            <p>Last Known Security Alarm Mode: <span class="font-regular-italic">{{lastKnownMode}}</span></p>
+          {{/if}}
+        </div>
+      </div>
+  </template>
+  <script type="view-model">
+    import canList from 'can-list';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import moment from 'moment';
+    import tz from 'jstz';
+    import AppState from 'i2web/plugins/get-app-state';
+    import AlarmSubsystemCapability from 'i2web/models/capability/AlarmSubsystem';
+    import Hub from 'i2web/models/hub';
+    import Subsystem from 'i2web/models/subsystem';
+    import AlarmsConfig from 'config/alarms.json';
+    import _uniq from 'lodash/uniq';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {htmlbool} condensed
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline-hub-offline
+         * @description If true this component is being rendered on the dashboard
+         */
+        condensed: {
+          type: 'htmlbool',
+          value: false,
+        },
+        /**
+         * @property {string} formattedLastChangeTime
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The last time the hub connectivity changed
+         */
+        formattedLastChangeTime: {
+          type: 'string',
+          get() {
+            const lastChangeTime = this.attr('hub.hubconn:lastchange');
+            return this.formatDateTime(lastChangeTime);
+          },
+        },
+        /**
+         * @property {Hub} hub
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The place's hub
+         */
+        hub: {
+          Type: Hub,
+          get() {
+            return AppState().attr('hub');
+          },
+        },
+        /**
+         * @property {string} hubOfflineIcon
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The HTML string for the hub offline icon
+         */
+        hubOfflineIcon: {
+          type: 'string',
+          get() {
+            return '<i class="icon-platform-hub-offline-1"></i>';
+          },
+        },
+        /**
+         * @property {string} lastKnownMode
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The last known mode for the alarm system
+         */
+        lastKnownMode: {
+          type: 'string',
+          get() {
+            const mode = this.attr('subsystem.subalarm:securityMode');
+            if (mode === AlarmSubsystemCapability.SECURITYMODE_DISARMED) {
+              return 'Off';
+            } else if (mode === AlarmSubsystemCapability.SECURITYMODE_ON) {
+              return 'On';
+            } else if (mode === AlarmSubsystemCapability.SECURITYMODE_PARTIAL) {
+              return 'Partial';
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {List} securityDevices
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The security devices list that controls the number of segments shown in the radial
+         */
+        securityDevices: {
+          Type: canList,
+          get() {
+            const securitySubsystem = this.attr('securitySubsystem');
+            if (securitySubsystem) {
+              const onDevices = securitySubsystem.attr('subsecuritymode:devices:ON');
+              const partialDevices = securitySubsystem.attr('subsecuritymode:devices:PARTIAL');
+              const mode = this.attr('subsystem.subalarm:securityMode');
+              if (mode === AlarmSubsystemCapability.SECURITYMODE_DISARMED) {
+                return _uniq([...onDevices, ...partialDevices]);
+              } else if (mode === AlarmSubsystemCapability.SECURITYMODE_ON) {
+                return onDevices;
+              } else if (mode === AlarmSubsystemCapability.SECURITYMODE_PARTIAL) {
+                return partialDevices;
+              }
+            }
+            return new canList(['DRIV:dev:00000000-0000-0000-0000-000000000000']);
+          },
+        },
+        /**
+         * @property {Subsystem} securitySubsystem
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The security subsystem
+         */
+        securitySubsystem: {
+          Type: Subsystem,
+          get() {
+            const subsystems = AppState().attr('subsystems');
+            return subsystems && subsystems.findByName('subsecurity');
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The alarm subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {string} type
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The icon for the alarm type; smoke / co / water
+         */
+        typeIcon: {
+          type: 'string',
+          get() {
+            return AlarmsConfig.security.icon;
+          },
+        },
+        /**
+         * @property {string} typeName
+         * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+         * @description The name of the alarm type that will be displayed
+         */
+        typeName: {
+          type: 'string',
+          get() {
+            return AlarmsConfig.security.displayName;
+          },
+        },
+      },
+      /**
+       * @function formatDateTime
+       * @parent i2web/components/subsystem/alarms/status/security-hub-offline
+       * @param {string} datetime epoch string
+       * @description Format the date and time of the offline timestamp
+       */
+      formatDateTime(datetime) {
+        const time = moment.tz(datetime, tz.determine().name());
+        const today = moment();
+        if (time.isSame(today, 'day')) {
+          return `Today ${time.format('h:mm A')}`;
+        }
+        const nextWeek = moment().add(1, 'week');
+        if (time.isBefore(nextWeek, 'week')) {
+          return time.format('ddd h:mm A');
+        }
+        return time.format('ddd MMM D h:mm A');
+      },
+    });
+  </script>
+</can-component>

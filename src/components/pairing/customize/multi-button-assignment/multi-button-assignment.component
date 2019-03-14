@@ -1,0 +1,95 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-multi-button-assignment">
+  <template>
+    <can-import from="i2web/components/device/configurators/assign-buttons.component" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr/>
+      <arcus-device-configurator-assign-buttons {device}="device" for-pairing-customization {on-button-assigned}="@onButtonAssigned" />
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/multi-button-assignment
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/multi-button-assignment
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/multi-button-assignment
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'What would you like each button to do?';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/multi-button-assignment
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Customize Device';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/multi-button-assignment
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the multi-button assignment is changed
+         */
+        whenComplete: {
+          type: '*',
+        },
+      },
+      /**
+       * @function buttonAssigned
+       * @parent i2web/components/pairing/customize/multi-button-assignment
+       * Called when a button is assigned a different rule
+       */
+      onButtonAssigned() {
+        if (this.attr('whenComplete')) {
+          this.attr('whenComplete')('MULTI_BUTTON_ASSIGNMENT');
+        }
+      },
+    });
+  </script>
+</can-component>

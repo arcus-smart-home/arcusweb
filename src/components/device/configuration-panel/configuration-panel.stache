@@ -1,0 +1,49 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/"/>
+<can-import from="../configurators/"/>
+<can-import from="../icon/"/>
+<can-import from="i2web/components/accordion/" />
+
+<div class="panel-content">
+  <h3>{{device['name']}} Settings</h3>
+  <div class="control-overview">
+    <div class="icon-wrapper">
+      <arcus-device-icon {(device)}="device"></arcus-device-icon>
+    </div>
+    <div class="col-sm instructions"><p>View or edit the device configuration(s) below.</p></div>
+  </div>
+
+  {{#switch device['dev:devtypehint']}}
+    {{#case 'Camera'}}
+      <arcus-accordion class="configurators-wrapper">
+        {{#each configurators}}
+          {{device-configurator-accordion-panel(device, ., @index)}}
+        {{/each}}
+      </arcus-accordion>
+    {{/case}}
+    {{#default}}
+      <div class="configurators-wrapper">
+      {{#each configurators}}
+        <div class="configurator">
+          {{device-configurator(device, .)}}
+        </div>
+      {{/each}}
+      </div>
+    {{/default}}
+  {{/switch}}
+</div>

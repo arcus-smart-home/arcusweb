@@ -1,0 +1,233 @@
+[{
+  "base:address": "SERV:incident:8eb886a0-205b-11e7-b337-897ca9ce9f13",
+  "base:caps": ["incident", "base"],
+  "base:id": "8eb886a0-205b-11e7-b337-897ca9ce9f13",
+  "base:type": "incident",
+  "incident:additionalAlerts": [],
+  "incident:alert": "SECURITY",
+  "incident:alertState": "COMPLETE",
+  "incident:cancelled": true,
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "incident:confirmed": false,
+  "incident:endTime": 1492097289671,
+  "incident:monitored": true,
+  "incident:monitoringState": "FAILED",
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:prealertEndtime": 1492096339647,
+  "incident:startTime": 1492096326666,
+  "incident:tracker": [{
+    "key": "security.prealert",
+    "message": "Grace Period Countdown",
+    "state": "PREALERT",
+    "time": 1492096326664
+  }, {
+    "key": "security.alert",
+    "message": "Alarm Triggered",
+    "state": "ALERT",
+    "time": 1492096339655
+  }, {
+    "key": "security.dispatching",
+    "message": "Monitoring Station Alerted",
+    "state": "DISPATCHING",
+    "time": 1492096355098
+  }, {
+    "key": "security.dispatch_failed",
+    "message": "Monitoring Station Unavailable",
+    "state": "DISPATCH_FAILED",
+    "time": 1492097260104
+  }, {
+    "key": "security.cancelled",
+    "message": "",
+    "state": "CANCELLED",
+    "time": 1492097289671
+  }]
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492200832346,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "security.alert"
+  }, {
+    "time": 1492200982803,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "security.cancelled"
+  }],
+  "incident:endTime": 1492200982803,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "28f208ce-f721-4080-9658-c029ed171082",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:28f208ce-f721-4080-9658-c029ed171082",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492200832348,
+  "incident:alert": "SECURITY"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "panic.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "panic.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "c69a7507-ad10-448e-9c6b-3bbca9e3081f",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:c69a7507-ad10-448e-9c6b-3bbca9e3081f",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "PANIC"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "smoke.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "smoke.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "657f9ad9-1f2d-40ff-8b16-bbf72b6c907a",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:657f9ad9-1f2d-40ff-8b16-bbf72b6c907a",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "SMOKE"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "co.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "co.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "2f85bba7-6bb9-46fe-8f3f-a690c6304357",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:2f85bba7-6bb9-46fe-8f3f-a690c6304357",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "CO"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "water.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "water.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "6cb1ba96-8d22-4a5b-bc1b-5ee36bde267c",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:6cb1ba96-8d22-4a5b-bc1b-5ee36bde267c",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "WATER"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "care.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "care.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "37e0e007-970f-458d-b830-76c70ac2f353",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:37e0e007-970f-458d-b830-76c70ac2f353",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "CARE"
+}, {
+  "base:caps": ["incident", "base"],
+  "incident:tracker": [{
+    "time": 1492199911741,
+    "state": "ALERT",
+    "message": "Alarm Triggered",
+    "key": "weather.alert"
+  }, {
+    "time": 1492200559560,
+    "state": "CANCELLED",
+    "message": "",
+    "key": "weather.cancelled"
+  }],
+  "incident:endTime": 1492200559560,
+  "incident:placeId": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "incident:cancelledBy": "SERV:person:96fc8c89-5ee1-4c0a-8158-56fe4036b0bd",
+  "base:id": "07773958-9aa7-480a-b4da-ce4318a913dd",
+  "incident:additionalAlerts": [],
+  "base:address": "SERV:incident:07773958-9aa7-480a-b4da-ce4318a913dd",
+  "incident:confirmed": true,
+  "incident:monitored": false,
+  "incident:alertState": "COMPLETE",
+  "base:type": "incident",
+  "incident:monitoringState": "NONE",
+  "incident:cancelled": true,
+  "incident:startTime": 1492199911743,
+  "incident:alert": "WEATHER"
+}]

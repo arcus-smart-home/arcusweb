@@ -1,0 +1,33 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="device-badge-icon {{stateClass}}">
+  <div class="icon-app-state">
+    {{#if hasRadial}}
+      <div class="{{#unless device.isOffline}}radial-indicator{{/unless}} offline">
+        <div class="right-side">
+          <div class="radial" style="{{rightStyles}}"></div>
+        </div>
+        <div class="left-side">
+          <div class="radial" style="{{leftStyles}}"></div>
+        </div>
+      </div>
+    {{/if}}
+    <i class="base-icon {{iconClass}}"></i>
+    <p class="icon-text">{{device-template-to-string(device, 'web:icon:onText')}}</p>
+    <i class="brightness-indicator {{iconClass}}" style="{{iconStyles}}"></i>
+  </div>
+</div>

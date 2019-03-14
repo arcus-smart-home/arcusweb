@@ -1,0 +1,337 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/tooltip/" />
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/service-plans/basic-warning.component" />
+
+<div class="wrapper">
+  {{#if displayStickyHeader}}
+    <div class="plans-sticky {{#if updatingExisting}}plans-sticky-lower{{/if}}">
+      <div class="plan plan-{{#if updatingExisting}}3{{else}}2{{/if}} {{#eq monitoringAvailable 'NONE'}}plan-unavailable{{/eq}}">
+        <div>
+          <h3>Pro-Monitoring</h3>
+          <p>
+            {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM_PROMON)}}
+              {{#eq monitoringAvailable 'NONE'}}
+                Unavailable in your Area
+              {{else}}
+                Current Plan
+              {{/eq}}
+            {{else}}
+              {{monthlyPriceFor(Plans.SERVICELEVEL_PREMIUM_PROMON)}}
+            {{/if}}
+          </p>
+        </div>
+        <div>
+          <button class="btn-primary pro
+            {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM_PROMON)}}disabled{{/if}}"
+            ($click)="planButtonClicked(Plans.SERVICELEVEL_PREMIUM_PROMON, %event)">
+            <i class="icon-app-chevron"></i>
+          </button>
+        </div>
+      </div>
+      <div class="plan plan-{{#if updatingExisting}}3{{else}}2{{/if}} {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM)}}current-plan{{/if}}">
+        <div>
+          <h3>Premium</h3>
+          <p>
+            {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM)}}
+              Current Plan
+            {{else}}
+              {{monthlyPriceFor(Plans.SERVICELEVEL_PREMIUM)}}
+            {{/if}}
+          </p>
+        </div>
+        <div>
+          <button class="btn-primary premium
+            {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM)}}disabled{{/if}}"
+            ($click)="planButtonClicked(Plans.SERVICELEVEL_PREMIUM, %event)">
+            <i class="icon-app-chevron"></i>
+          </button>
+        </div>
+      </div>
+      {{#if updatingExisting}}
+        <div class="plan plan-3 {{#if planButtonDisabled(Plans.SERVICELEVEL_BASIC)}}current-plan{{/if}}">
+          <div>
+            <h3>Basic</h3>
+            <p>
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_BASIC)}}
+              Current Plan
+              {{else}}
+              {{monthlyPriceFor(Plans.SERVICELEVEL_BASIC)}}
+              {{/if}}
+            </p>
+          </div>
+          <div>
+            <button class="btn-primary basic
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_BASIC)}}disabled{{/if}}"
+                    ($click)="planButtonClicked(Plans.SERVICELEVEL_BASIC, %event)">
+              <i class="icon-app-chevron"></i>
+            </button>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{#unless updatingExisting}}
+    <h1>Smart Plans Tailored to You</h1>
+    <p>Easy DIY installation. No activation fees.</p>
+  {{/unless}}
+
+  {{#if enableYearlySubscription}}
+    <div class="billing-toggle">
+      <span class="term {{#unless annualBilling}}bold{{/unless}}">Monthly</span>
+      <div class="toggle-container">
+        <input type="checkbox"
+          id="monthly-annual"
+          class="toggle-control"
+          {{#if annualBilling}}checked{{/if}}
+          ($click)="toggleBilling()"
+        />
+        <label for="monthly-annual"class="checkbox-label"></label>
+      </div>
+      <span class="term {{#if annualBilling}}bold{{/if}}">Annual</span>
+      <span class="savings font-demibold">(Save {{yearlyDiscount}})</span>
+    </div>
+  {{/if}}
+  <div class="plans">
+    <div>
+      <div class="plan-container {{#eq monitoringAvailable 'NONE'}}plan-unavailable{{/eq}}">
+        <div class="plan-header">
+          <h2>Pro Monitoring</h2>
+          <h3>{{monthlyPriceFor(Plans.SERVICELEVEL_PREMIUM_PROMON)}}</h3>
+          {{#if annualBilling}}
+            <p>{{annualSavingsFor(Plans.SERVICELEVEL_PREMIUM_PROMON_ANNUAL)}}</p>
+          {{else}}
+            <p>No long-term contract</p>
+          {{/if}}
+          <div class="plan-badge">
+            <span>Best Value</span>
+            <i class="icon-app-badge-1"></i>
+          </div>
+        </div>
+        <div class="plan-content">
+          <div class="plan-highlights">
+            <p>This all-inclusive plan features everything you'd want for your smart home,
+            along with 24/7 professional monitoring for burglary, smoke, CO, and panic alarms.
+            Cellular backup included.</p>
+          </div>
+          <div class="plan-actions">
+            <button class="btn-primary pro
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM_PROMON)}}disabled{{/if}}"
+              ($click)="planButtonClicked(Plans.SERVICELEVEL_PREMIUM_PROMON, %event)"
+            >
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM_PROMON)}}
+                {{#eq monitoringAvailable 'NONE'}}
+                  Unavailable in your Area
+                {{else}}
+                  Current Plan
+                {{/eq}}
+              {{else}}
+                Choose Pro-Monitoring
+              {{/if}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="billed-annually">
+        {{#if annualBilling}}
+          {{annualPriceFor(Plans.SERVICELEVEL_PREMIUM_PROMON_ANNUAL)}}
+        {{/if}}
+      </div>
+    </div>
+    <div>
+      <div class="plan-container">
+        <div class="plan-header">
+          <h2>Premium</h2>
+          <h3>{{monthlyPriceFor(Plans.SERVICELEVEL_PREMIUM)}}</h3>
+          {{#if annualBilling}}
+            <p>{{annualSavingsFor(Plans.SERVICELEVEL_PREMIUM_ANNUAL)}}</p>
+          {{else}}
+            <p>No long-term contract</p>
+          {{/if}}
+        </div>
+        <div class="plan-content">
+          <div class="plan-highlights">
+            <p>Perfect for the self-monitoring user who wants to feel safer,
+            have the best features, and is looking to monitor loved ones.</p>
+          </div>
+          <div class="plan-actions">
+            <button class="btn-primary premium
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM)}}disabled{{/if}}"
+              ($click)="planButtonClicked(Plans.SERVICELEVEL_PREMIUM, %event)"
+            >
+              {{#if planButtonDisabled(Plans.SERVICELEVEL_PREMIUM)}}
+                Current Plan
+              {{else}}
+                Choose Premium
+              {{/if}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="billed-annually">
+        {{#if annualBilling}}
+          {{annualPriceFor(Plans.SERVICELEVEL_PREMIUM_ANNUAL)}}
+        {{/if}}
+      </div>
+    </div>
+    {{#if updatingExisting}}
+      <div>
+        <div class="plan-container">
+          <div class="plan-content">
+            <div class="plan-header">
+              <h2>Basic</h2>
+              <h3>{{monthlyPriceFor(Plans.SERVICELEVEL_BASIC)}}</h3>
+            </div>
+            <div class="plan-highlights">
+              <p>The essentials to control and self-monitor your home.</p>
+            </div>
+            <div class="plan-actions">
+              <button class="btn-primary basic
+                {{#if planButtonDisabled(Plans.SERVICELEVEL_BASIC)}}disabled{{/if}}"
+                      ($click)="planButtonClicked(Plans.SERVICELEVEL_BASIC, %event)"
+              >
+                {{#if planButtonDisabled(Plans.SERVICELEVEL_BASIC)}}
+                  Current Plan
+                {{else}}
+                  Choose Basic
+                {{/if}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{#if displayCellBackup}}
+    <div class="cellular-backup">
+      <a href="#"($click)="clickCellularBackup(%event)">
+        {{#if hasCellBackup}}
+          Remove Cellular Backup
+        {{else}}
+          Add Cellular Backup
+        {{/if}}
+      </a>
+    </div>
+  {{/if}}
+  {{#unless updatingExisting}}
+    <div class="plans-toggle">
+      <a href="#" ($click)="toggleFeatures(%event)">
+        Compare Key Features
+        {{#if displayFeatures}}
+          <span class="toggle-down">
+            <i class="icon-app-chevron"></i>
+          </span>
+        {{else}}
+          <span class="toggle-up">
+            <i class="icon-app-chevron"></i>
+          </span>
+        {{/if}}
+      </a>
+    </div>
+  {{/unless}}
+  {{#if displayFeatures}}
+    {{#unless updatingExisting}}
+      <hr />
+    {{/unless}}
+    <div class="features">
+      {{#if updatingExisting}}
+        <h1>Compare Key Features</h1>
+      {{else}}
+        <h1>Key Features</h1>
+      {{/if}}
+      <div class="mobile">
+        {{#each features}}
+          <div class="feature-container">
+            <div class="feature">
+              <h4>{{feature}}</h4>
+              <p>{{tooltip}}.</p>
+            </div>
+            <div class="feature-support">
+              <div class="plan-{{#if updatingExisting}}3{{else}}2{{/if}}">
+                <h4>Pro-Mon</h4>
+                <span>{{{featureSupport(Plans.SERVICELEVEL_PREMIUM_PROMON, .)}}}</span>
+              </div>
+              <div class="plan-{{#if updatingExisting}}3{{else}}2{{/if}}">
+                <h4>Premium</h4>
+                <span>{{{featureSupport(Plans.SERVICELEVEL_PREMIUM, .)}}}</span>
+              </div>
+              {{#if updatingExisting}}
+                <div class="plan-3">
+                  <h4>Basic</h4>
+                  <span>{{{featureSupport(Plans.SERVICELEVEL_BASIC, .)}}}</span>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <div class="desktop">
+        <div class="features-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Features</th>
+                <th>Pro-Monitoring</th>
+                <th>Premium</th>
+                {{#if updatingExisting}}
+                  <th>Basic</th>
+                {{/if}}
+              </tr>
+            </thead>
+            <tbody>
+              {{#each features}}
+              <tr>
+                <td>
+                  <div class="tooltip-wrapper">
+                    <p>{{feature}}</p>
+                    <button class="btn-small tooltip-trigger" type="button" tabindex="5">
+                      <i>i</i>
+                    </button>
+                    <arcus-tooltip anchor="top-left">
+                      {{tooltip}}
+                    </arcus-tooltip>
+                  </div>
+                </td>
+                <td>{{{featureSupport(Plans.SERVICELEVEL_PREMIUM_PROMON, .)}}}</td>
+                <td>{{{featureSupport(Plans.SERVICELEVEL_PREMIUM, .)}}}</td>
+                {{#if updatingExisting}}
+                  <td>{{{featureSupport(Plans.SERVICELEVEL_BASIC, .)}}}</td>
+                {{/if}}
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+  {{#unless updatingExisting}}
+    <div class="skip-plan-selection">
+      <a href="#" ($click)="planButtonClicked(Plans.SERVICELEVEL_BASIC, %event)">
+        <small>Skip this Step</small>
+      </a>
+    </div>
+    {{#if showBasicWarningModal}}
+      <arcus-service-plans-basic-warning
+        {select-plan}="@selectPlan"
+        {(show-modal)}="showBasicWarningModal"
+      />
+    {{/if}}
+  {{/unless}}
+</div>

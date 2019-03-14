@@ -1,0 +1,24 @@
+{
+  "name": "js-definition-generator",
+  "version": "0.0.1",
+  "description": "Create can.Map from Capability/Service/Type XML definition files",
+  "main": "lib/index.js",
+  "bin": {
+    "js-model-gen": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "bin/cli.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "fs-extra": "^0.30.0",
+    "handlebars": "^4.0.5",
+    "js-beautify": "^1.6.3",
+    "q": "^1.4.1",
+    "xml2js": "^0.4.17",
+    "yargs": "^4.8.0"
+  }
+}

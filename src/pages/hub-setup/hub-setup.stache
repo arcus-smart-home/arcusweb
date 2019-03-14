@@ -1,0 +1,85 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="step-container">
+  <div class="step-header">
+
+    <header class="app-header">
+      <a class="logo-link" ($click)="routeToDashboard()">
+        <img class="arcus-logo" src="/src/images/logo.svg" alt="Arcus Logo">
+      </a>
+      <a class="exit-pairing-link" ($click)="routeToDashboard()">
+        Go to Dashboard
+      </a>
+    </header>
+    {{#if currentIncident}}
+      <div class="alarm-banner">
+        <h2>
+          <i class="icon-platform-security-1"></i>
+          Security Alarm
+        </h2>
+      </div>
+    {{/if}}
+    <div class="pairing-title">
+      <h2 class="font-medium">{{title}}</h2>
+    </div>
+  </div>
+
+  {{#eq activeDisplay 'yes-no'}}
+    <div class="product-container">
+      <div class="product-content">
+        <p>The Hub is the heart of the Arcus network, but not all devices require a Hub.</p>
+        <img src="{{productImageBaseURL}}/o/products/dee000/choosehub_large_color-web.png" title="{{title}}">
+        <div class="product-actions">
+          <button class="btn" ($click)="routeToProductCatalog()">No</button>
+          <button class="btn" ($click)="routeToProductGroups()">Yes</button>
+        </div>
+      </div>
+    </div>
+  {{else}}
+
+    <p>Which Arcus Hub or Starter Kit would you like to add?</p>
+
+    <div class="product-container">
+
+      {{#each productGroups}}
+
+        <div class="product-group">
+          <div class="product-heading">
+            <h3>{{groupName}}</h3>
+          </div>
+          {{#each ['products']}}
+            <div class="product-listing" ($click)="selectProduct('{{productId}}')">
+              <div class="product-photo">
+                <img src="{{productImageBaseURL}}/o/products/{{productId}}/product_large_color-web.png" title="{{productName}}">
+              </div>
+              <div class="product-title">
+                <h3>{{productName}}</h3>
+              </div>
+            </div>
+            <hr />
+          {{/each}}
+        </div>
+
+      {{/each}}
+    </div>
+
+    <div class="back-button">
+      <button class="btn" ($click)="routeBackFromProductGroups()">Back</button>
+    </div>
+
+  {{/eq}}
+</div>

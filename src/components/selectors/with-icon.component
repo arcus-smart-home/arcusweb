@@ -1,0 +1,43 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-selector-with-icon">
+  <template>
+    <ul>
+      <li class="radio-wrapper">
+        <input type="radio" id="device-1" name="devicename" can-value="" value="">
+          <label for="device-1" class="complex-label">
+            <i class="icon-platform-light-2 icon"></i> 
+            <span class="name">Kitchen Light <br/>
+            <small class="type">Arcus Smart Bulb</small>
+            </span>
+          </label>
+        </input>
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper">
+        <input type="radio" id="device-2" name="devicename" can-value="" value="">
+          <label for="device-2" class="complex-label">
+            <i class="icon-app-night-2 icon"></i> 
+            <span class="name">Night
+            </span>
+          </label>
+        </input>
+        <div class="check"></div>
+      </li>
+    </ul>
+  </template>
+</can-component>

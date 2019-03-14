@@ -1,0 +1,46 @@
+arcus-pairing-customize-device {
+  display: block;
+  arcus-pairing-customize-name, arcus-pairing-customize-favorite {
+    .box-gray-radius {
+      align-self: stretch;
+      margin-bottom: 0;
+
+    }
+  }
+  arcus-pairing-customize-name + arcus-pairing-customize-favorite {
+    .box-gray-radius {
+      margin-top: @gutter/2;
+      margin-left: @gutter/2;
+      .breakpoint-custom(1116px, {
+        margin-top: 0;
+        margin-left: 0;
+      });
+    }
+  }
+  .customization-steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 90vw; //  Needed for IE11 - a width needs to be defined to wrap
+    &.vertical {
+      flex-direction: column;
+    }
+    &.horizontal {
+      flex-direction: row;
+    }
+
+    .box-gray-radius {
+      p {
+        width: 100%;
+      }
+    }
+  }
+  .customization-container {
+    text-align: center;
+    margin-top: @gutter;
+  }
+  .btn {
+    margin-bottom: 0px;
+  }
+}

@@ -1,0 +1,211 @@
+@import '../../../../../node_modules/nouislider/src/nouislider';
+
+@track-height: 10px;
+@thumb-size: 26px;
+
+arcus-device-action-thermostat-slider {
+  display: block;
+  position: relative;
+  
+  .loader-wrapper {
+    min-height: 114px;
+  }
+  
+  .slider {
+    text-align: center;
+    margin: 0 8px;
+  }
+
+  .controls {
+    position: absolute;
+    left: 50%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 28px 0 0 calc(-50%);
+    &.single-handle {
+      .mid-text {
+        .font-regular;
+        font-size: 20px;
+        padding: 0;
+      }
+    }
+
+    [class^='btn'] {
+      letter-spacing: 0;
+      &[class^='btn'] {
+        margin-top: 0;
+      }
+      &:first-child {
+        margin-right: 20px;
+      }
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
+    .mid-text {
+      font-size: @font-size-smaller;
+      padding-left: @gutter/3;
+      padding-right: @gutter/3;
+    }
+
+    .btn-value {
+      .font-regular;
+      width: 46px;
+      height: 36px;
+      // min dimensions needed as IE11 bug workaround :'(
+      min-width: 46px;
+      min-height: 36px;
+      font-size: @font-size-large;
+      padding: 0;
+    }
+  }
+
+  // current temperature indicator
+  .current-temp {
+    position: absolute;
+    z-index: 1;
+    top: -14px;
+    width: 2px;
+    height: 38px;
+    background: @coot;
+    box-shadow: none;
+    border: none;
+    border-radius: 1px;
+
+    .tooltip {
+      .font-regular;
+      display: block;
+      position: absolute;
+      bottom: 120%;
+      height: 30px;
+      font-size: 14px;
+      color: @coot;
+      background: @pigeon;
+      border: 1px solid @coot;
+      border-radius: @border-radius;
+      padding: 5px 8px;
+      transform: translateX(-20%);
+      text-align: center;
+      white-space: nowrap;
+
+      // tooltip arrow bit
+      &:after, &:before {
+        top: 100%;
+        left: 20%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      &:before {
+        border-color: rgba(255, 255, 255, 0);
+        border-top-color: @coot;
+        border-width: 6px;
+        margin-left: -6px;
+      }
+      &:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-top-color: @pigeon;
+        border-width: 5px;
+        margin-left: -5px;
+      }
+    }
+  }
+  .current-temp-connect {
+    position: absolute;
+    top:0;
+    bottom:0;
+  }
+  .heat-gradient {
+    background-image: linear-gradient(to right, #F58D3D, #EE5738);
+  }
+  .cool-gradient {
+    background-image: linear-gradient(to left, #9BD3EC, #28A7DF);
+  }
+
+  // lock point styles
+  .temp-lock {
+    position: absolute;
+    width: @track-height;
+    height: @track-height;
+    margin-left: -@track-height / 2;
+    background: @coot;
+    border-radius: 50%;
+  }
+
+  // backup component styles
+  .width-backup {
+    display: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  // noUiSlider overrides
+  .noUi-base {
+    // needed to prevent .noUi-base from creating stacking context
+    // this allows current-temp to appear over .noUi-connect but below handle
+    z-index: auto;
+    transform: none;
+  }
+  .noUi-target {
+    border: none;
+    box-shadow: none;
+    background-image: linear-gradient(to bottom, @pigeon, @heron);
+  }
+  .noUi-horizontal {
+    height: @track-height;
+  }
+  .noUi-origin {
+    .noUi-handle {
+      width: @thumb-size;
+      height: @thumb-size;
+      border-radius: 50%;
+      top: -8px;
+      left: -12px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      outline: none;
+
+      &:before, &:after {
+        display: none;
+      }
+      &.active, &.noUi-active {
+        border: 2px solid @peacock;
+      }
+    }
+  }
+  .noUi-connect {
+    background: @grouse;
+  }
+}
+
+//dealing with device panel, and the control swap to the simpler spinner on smaller screens
+.panel-action > arcus-device-action-thermostat-slider:not(.controls-disabled) {
+  .breakpoint(lg, {
+    width: 100%;
+    max-width: 246px;
+    margin-top: 50px;
+    margin-bottom: 81px;
+  });
+
+  .width-backup {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    .breakpoint(lg, {
+      display: none;
+    });
+  }
+  .controls, 
+  .slider {
+    display: none;
+    .breakpoint(lg, {
+      display: flex;
+    });
+  }
+}

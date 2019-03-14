@@ -1,0 +1,67 @@
+/**
+* @stylesheet layout.less Layout
+* @parent styles.baseline-elements
+*
+**/
+
+/**
+* @styles grid Grid
+* @parent layout.less 0
+*
+* For the most part we are using pure Flexbox for layout [CSSTricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) has a great resource guide for Flexbox.  
+* **NOTE**: In some older pages we used [Flexbox Grid](http://flexboxgrid.com/) as the basis for our grid system for some original items. This code still exists out there and works fine along with pure Flexbox, but **we should continue to use pure Flexbox and update older pages away from FlexBox Grid as we find them**.
+**/
+
+/**
+* @styles utilities Utilities
+* @parent layout.less 1
+*
+* These are variables used to define common gutters, border radius size, z-indexes,
+* and such.  
+* Standizing these kinds of elements is important to both maintaining an orderly layout
+* across your application, and being able to make quick but thorough adjustments to spacing.
+* Currently defined variables are listed below:
+* ```
+* @@gutter (40px)
+* @@border-radius (4px)
+* @@border (1px solid @heron)
+* ---
+* In order from bottom to top:
+* @@zindex-radio-button
+* @@zindex-navbar
+* @@zindex-dropdown
+* @@zindex-popover
+* @@zindex-tooltip
+* @@zindex-modal-background
+* @@zindex-modal
+* ```
+**/
+
+/**
+* @styles gutters Uniform Gutter Sizes
+* @parent layout.less 2
+*
+* Please use the following maths to to keep gutter usage across the application:
+* ```
+* @@gutter/6 (5px)
+* @@gutter/3 (10px)
+* @@gutter/2 (15px)
+* @@gutter*(2/3) (20px)
+* @@gutter (30px)
+* @@gutter*1.5 (45px)
+* @@gutter*2 (60px)
+* ```
+**/
+
+@gutter:               30px;
+@border-radius:        4px;
+@border:               1px solid @heron;
+@inner-card-border:          1px solid @pigeon;
+
+@zindex-radio-button:       500;
+@zindex-navbar:            1000;
+@zindex-dropdown:          1010;
+@zindex-popover:           1030;
+@zindex-tooltip:           1030;
+@zindex-modal-background:  1070;
+@zindex-modal:             1080;

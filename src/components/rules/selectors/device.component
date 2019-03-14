@@ -1,0 +1,124 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-rules-selectors-device">
+	<template>
+    <h3 class="option-title">Choose Device</h3>
+    <ul class="option-list">
+      {{#each devices}}
+        <li class="radio-wrapper" ($click)="selectOption(.)">
+          <input type="radio" id="device-{{%index}}" name="device" {$checked}="isSelectedContext(.)" />
+          <label for="device-{{%index}}" class="complex-label">
+            {{{iconOf(.)}}
+            <span class="name">
+              {{['dev:name']}}
+              <br/>
+              {{#productName}}<small class="type">{{productName}}</small>{{/productName}}
+            </span>
+          </label>
+          <div class="check"></div>
+        </li>
+      {{/each}}
+		</ul>
+	</template>
+  <script type="view-model">
+    import $ from 'jquery';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import 'i2web/helpers/global';
+    import Device from 'i2web/models/device';
+    import Rule from 'i2web/models/rule';
+    import findOptions from './find-options';
+
+    export default canMap.extend({
+      define: {
+       /**
+        * @property {Map} chosen
+        * @parent i2web/components/rules/selectors/device
+        * @description The key value pairs chosen by the User to satisfy this particular rule
+        */
+        chosen: {
+          Type: canMap,
+        },
+        /**
+         * @property {Device.List} devices
+         * @parent i2web/components/rules/selectors/device
+         * @description The list of devices that will be displayed for the User to select
+         */
+        devices: {
+          Type: Device.List,
+        },
+        /**
+         * @property {Map} options
+         * @parent i2web/components/rules/selectors/device
+         * @description The raw options available to the User, used to retrieve the list of Devices
+         */
+        options: {
+          Type: canMap,
+        },
+        /**
+         * @property {String} property
+         * @parent i2web/components/rules/selectors/property
+         * @description The property name from the template to match up against the Rule context
+         */
+        property: {
+          type: 'string',
+        },
+        /**
+         * @property {Rule} rule
+         * @parent i2web/components/rules/selectors/device
+         * @description The Rule that we are editing. This will be null, if we are creating a
+         * new Rule.
+         */
+        rule: {
+          Type: Rule,
+        },
+      },
+      init() {
+        const devices = findOptions(this.attr('options'), 'devices', 'base:address');
+        this.attr('devices', devices);
+      },
+      /**
+        * @function isSelectedContext
+        * @param {Object} current The current option
+        * If there is not a rule, none should be selected by default. If there is a rule
+        * We should select the option that is equal to the context. If there is an option
+        * in chosen we should use that value.
+        *
+        * @return {Boolean} Whether the current option is the selected option
+        */
+      isSelectedContext(current) {
+        const chosenProperty = this.attr(`chosen.${this.attr('property')}`);
+        let value = '';
+        if (this.attr('rule') && !chosenProperty) {
+          value = this.attr(`rule.rule:context.${this.attr('property')}`);
+        }
+        if (chosenProperty) {
+          value = chosenProperty;
+        }
+        return value === current['base:address'];
+      },
+      /**
+       * @function selectOption
+       * @param {Map} selected The selected item
+       */
+      selectOption(selected) {
+        this.attr(`chosen.${this.attr('property')}`, selected.attr('base:address'));
+        $(`button[id="${this.attr('property')}"]`).text(selected.attr('dev:name'));
+      },
+    });
+  </script>
+</can-component>

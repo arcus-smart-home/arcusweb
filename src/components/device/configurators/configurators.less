@@ -1,0 +1,257 @@
+@import 'wifiScan/wifiScan.less';
+@import 'noaa-location/noaa-location.less';
+@import 'noaa-radio/noaa-radio.less';
+@import 'noaa-weather-alerts/noaa-weather-alerts.less';
+@import 'irrigation-mode/irrigation-mode.less';
+@import 'motion-sensitivity/motion-sensitivity.less';
+
+@hue-gradient:  linear-gradient(to left, rgb(220, 76, 124) 0%, rgb(184, 76, 220) 20%, rgb(76, 129, 220) 35%, rgb(76, 220, 184) 56%, rgb(105, 220, 76) 63%, rgb(220, 220, 76) 82%, rgb(220, 134, 76) 90%, rgb(220, 76, 76) 100%);
+@temp-gradient:  linear-gradient(to right, rgba(235,167,73,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 51%, rgba(142,206,232,1) 100%);
+@brightness-gradient: linear-gradient(to right, rgba(71,71,71,1) 0%, rgba(255,255,255,1) 100%);
+
+.hue-control {
+  input[type="range"] {
+   .custom-range-styles(@track-color: @hue-gradient);
+  }
+}
+.brightness-control {
+  input[type="range"] {
+   .custom-range-styles(@track-color: @brightness-gradient);
+  }
+}
+.temp-control {
+  input[type="range"] {
+   .custom-range-styles(@track-color: @temp-gradient);
+  }
+}
+.vent-level-control {
+  input[type="range"] {
+    .custom-range-styles(@track-color: @peacock)
+  }
+}
+
+.option-list {
+  .radio-wrapper {
+    margin-bottom: @gutter;
+  }
+}
+arcus-device-configurator-assign-buttons,
+arcus-device-configurator-assign-button {
+  display: block;
+  align-self: stretch;
+  .radio-wrapper {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .complex-label {
+    h5 {
+      font-size: 19px;
+      text-align: left;
+      margin: 0;
+    }
+  }
+  .fob-button-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid @raven;
+    border-radius: 100%;
+    color: @raven;
+    margin-right: @gutter*(2/3);
+  }
+}
+arcus-device-configurator-assign-device {
+  display: block;
+  margin-bottom: @gutter;
+  .option-list {
+    .avatar {
+      font-size: 30px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+arcus-device-configurator-color-or-colortemp {
+  .configurator-header {
+    padding-left: 60px; //make room for checkbox
+  }
+  .config-title.instructions{
+    margin-bottom: @gutter/2;
+    margin-top: -(@gutter/2);
+  }
+  .radio-wrapper {
+    align-items: flex-start;
+    label {
+      padding-left: @gutter/2;
+      .range-wrapper {
+        label {
+          font-size: initial;
+          width: auto;
+        }
+      }
+    }
+    .check {
+      top: 31px; //I tried to do nice math, but something wasn't working
+    }
+  }
+  input[type="range"] {
+    padding-left: 3px;
+  }
+}
+
+arcus-device-configurator-petdoor-smartkeys {
+  .petdoor-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: @border;
+    &.with-padding {
+      padding: @gutter/2 0;
+    }
+    .petdoor-left {
+      width: 50%;
+    }
+    .petdoor-right {
+      width: 40%;
+      border-left: @border;
+      button {
+        margin-top: @gutter/5;
+        margin-bottom: @gutter/5;
+        margin-left: @gutter;
+      }
+    }
+    .input-wrapper {
+      margin-top: @gutter/1.5;
+      label {
+        bottom: 40px;
+        cursor: default;
+        font-size: @font-size-smaller;
+      }
+    }
+  }
+  .notes {
+    .font-regular-italic;
+    margin-top: @gutter;
+  }
+  .form-error {
+    margin-top: @gutter/2;
+    button {
+      margin-top: @gutter/2;
+    }
+  }
+}
+arcus-device-configurator-petdoor-add-smartkey {
+  h3 {
+    margin-bottom: @gutter/1.5;
+  }
+  .box-gray-radius {
+    margin-left: 0 !important;
+  }
+}
+
+arcus-device-configurator-water-hardness,
+arcus-device-configurator-water-salt-type {
+  p:last-of-type {
+    margin-bottom: @gutter;
+  }
+}
+
+arcus-device-configurator-garage-door-controller {
+  .garage-door-list {
+    padding-left: @gutter;
+  }
+}
+
+arcus-device-configurator-water-flow {
+  .configurator-wrapper {
+    padding: 0 @gutter;
+  }
+  h5 {
+    .font-medium
+  }
+  .water-flow-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .breakpoint(xs, {
+      flex-wrap: wrap;
+    });
+
+    arcus-control-switch {
+      margin-left: @gutter/2;
+      .breakpoint(xs, {
+        margin-left: 0;
+      });
+    }
+  }
+}
+
+arcus-device-configurator-water-saver {
+  .content-component-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .input-wrapper {
+    display: inline-flex;
+    margin-bottom: 0;
+    flex-direction: column;
+    margin-top: 0;
+    padding-right: @gutter/2;
+    padding-left: @gutter/2;
+    &.wider-wrapper {
+      width: 75%;
+    }
+    &:first-of-type {
+      border-right: 1px solid @heron;
+      padding-left: 0;
+    }
+    &:not(:first-of-type) {
+      margin: 0 auto;
+    }
+    .head-tooltip-wrap {
+      display: inline-flex;
+      align-items: baseline;
+    }
+    h4 {
+      position: unset;
+      margin-top: 0;
+    }
+    .tooltip-wrapper {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: @gutter/2;
+      .breakpoint(md, {
+        margin-left:0;
+      });
+    }
+    .value {
+      margin-right: @gutter/6;
+      text-align: right;
+      justify-content: flex-end;
+      flex-grow: 1;
+    }
+    arcus-spinner {
+      width: @gutter*3;
+    }
+  }
+}
+
+arcus-device-configurator-somfy-customization {
+  .configurator-header:last-of-type {
+    border-top: 0px;
+    padding-top: 0px;
+  }
+}
+
+arcus-device-configurator-somfy-reversed {
+  .configurator-header:last-of-type {
+    padding-bottom: @gutter;
+  }
+}

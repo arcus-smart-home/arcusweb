@@ -1,0 +1,44 @@
+@infinite-footer-height: 91px;
+arcus-infinite-scroll {
+	display: block;
+
+  ul{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: calc(~'100% -' @infinite-footer-height);
+    position: relative;
+    contain: layout;
+    will-change: transform;  
+
+    li {
+      display: flex;
+      padding: 10px 0;
+      width: 100%;
+      contain: layout;
+      will-change: transform;
+
+      &.invisible {
+        display: none;
+      }
+    }
+  }
+
+  .runway {
+    position: absolute;
+    height: 1px;
+    transition: transform .8s ease-out; 
+    width: 1px;
+  }
+
+  .infinite-footer {
+    position: relative;
+    bottom: 0;
+    background-color: @body-bg;
+    width: 100%;
+    height: @infinite-footer-height;
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "Water": {
+    "icon": "icon-platform-irrigation-2",
+    "title": "Water",
+    "premium": false
+  },
+  "Lights & Switches": {
+    "icon": "icon-platform-light-2",
+    "title": "Lights & Switches",
+    "premium": false
+  },
+  "Climate": {
+    "icon": "icon-app-climate-1",
+    "title": "Climate",
+    "premium": false
+  },
+  "Security Alarm": {
+    "icon": "icon-app-alarm-2",
+    "title": "Security Alarm",
+    "premium": false
+  },
+  "Home & Family": {
+    "icon": "icon-app-family-2",
+    "title": "Home & Family",
+    "premium": false
+  },
+  "Cameras & Sensors": {
+    "icon": "icon-platform-camera-2",
+    "title": "Cameras & Sensors",
+    "premium": true
+  },
+  "Smoke & CO": {
+    "icon": "icon-platform-co-2",
+    "title": "Smoke & CO",
+    "premium": false
+  },
+  "Buttons & Fobs": {
+    "icon": "icon-platform-button-2",
+    "title": "Buttons & Fobs",
+    "premium": false
+  },
+  "Lawn & Garden": {
+    "icon": "icon-app-lawn-1",
+    "title": "Lawn & Garden",
+    "premium": false
+  },
+  "Scene": {
+    "icon": "icon-app-scene-2",
+    "title": "Scene",
+    "premium": false
+  },
+  "Care": {
+    "icon": "icon-app-care-heart-2",
+    "title": "Care",
+    "premium": false
+  },
+  "Windows & Blinds": {
+    "icon": "icon-platform-blinds-1",
+    "title": "Windows & Blinds",
+    "premium": false
+  },
+  "Doors & Locks": {
+    "icon": "icon-platform-lock-2",
+    "title": "Doors & Locks",
+    "premium": false
+  },
+  "Energy": {
+    "icon": "icon-app-energy-1",
+    "title": "Energy",
+    "premium": false
+  },
+  "Notifications": {
+    "icon": "icon-app-notification-2",
+    "title": "Notifications",
+    "premium": false
+  },
+  "Other": {
+    "title": "Other",
+    "premium": false
+  }
+}

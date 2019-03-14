@@ -1,0 +1,99 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-thermostat-mode">
+  <template>
+    <div class="configurator-header">
+      <h4 class="config-title" id="configuration-title-orientation">Choose A Mode</h4>
+    </div>
+    <ul>
+      <li class="radio-wrapper" ($click)="modeChanged(ThermostatCapability.HVACMODE_HEAT)">
+        <input type="radio" id="heat" name="mode" {$checked}="isRightMode(ThermostatCapability.HVACMODE_HEAT)" />
+        <label for="heat">
+          Heat
+        </label>
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper" ($click)="modeChanged(ThermostatCapability.HVACMODE_COOL)">
+        <input type="radio" id="cool" name="mode" {$checked}="isRightMode(ThermostatCapability.HVACMODE_COOL)" />
+        <label for="cool">
+          Cool
+        </label>
+        <div class="check"></div>
+      </li>
+      {{#if device['web:therm:autoSupported']}}
+        <li class="radio-wrapper" ($click)="modeChanged(ThermostatCapability.HVACMODE_AUTO)">
+          <input type="radio" id="auto" name="mode" {$checked}="isRightMode(ThermostatCapability.HVACMODE_AUTO)" />
+          <label for="auto">
+            {{{device['web:therm:autoDescription']}}}
+          </label>
+          <div class="check"></div>
+        </li>
+      {{/if}}
+      {{#if device['web:therm:ecoSupported']}}
+        <li class="radio-wrapper" ($click)="modeChanged(ThermostatCapability.HVACMODE_ECO)">
+          <input type="radio" id="eco" name="mode" {$checked}="isRightMode(ThermostatCapability.HVACMODE_ECO)" />
+          <label for="eco">
+            ECO
+          </label>
+          <div class="check"></div>
+        </li>
+      {{/if}}
+      <li class="radio-wrapper" ($click)="modeChanged(ThermostatCapability.HVACMODE_OFF)">
+        <input type="radio" id="off" name="mode" {$checked}="isRightMode(ThermostatCapability.HVACMODE_OFF)" />
+        <label for="off">
+          Off
+        </label>
+        <div class="check"></div>
+      </li>
+    </ul>
+    {{#unless device['web:therm:autoSupported']}}
+      {{#eq device['dev:devtypehint'] 'TCCThermostat'}}
+        <div class="configurator-footer no-border">
+          <h4 class="config-title">{{{device['web:therm:autoDescription']}}} Mode</h4>
+          <p>To use {{{device['web:therm:autoDescription']}}} mode on your thermostat, Honeywell requires you to first enable the {{device['web:therm:autoDescription']}} mode setting on the device. Check the Honeywell owner's manual for details.</p>
+        </div>
+      {{/eq}}
+    {{/unless}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import ThermostatCapability from 'i2web/models/capability/Thermostat';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+      },
+      ThermostatCapability,
+      modeChanged(mode) {
+        const device = this.attr('device');
+
+        device.attr('therm:hvacmode', mode);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+
+      isRightMode(mode) {
+        return this.attr('device.therm:hvacmode') === mode;
+      },
+    });
+  </script>
+</can-component>

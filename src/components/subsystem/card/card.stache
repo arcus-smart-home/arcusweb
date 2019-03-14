@@ -1,0 +1,79 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache/helpers/route" />
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/helpers/subsystem" />
+<can-import from="i2web/components/device/card/" />
+<can-import from="i2web/components/subsystem/status/" />
+<can-import from="i2web/components/subsystem/alarms/card/" />
+<can-import from="i2web/components/subsystem/cameras/card/" />
+<can-import from="i2web/components/subsystem/care/card/" />
+<can-import from="i2web/components/subsystem/climate/card/"/>
+<can-import from="i2web/components/subsystem/home-family/card/" />
+<can-import from="i2web/components/subsystem/lawn-garden/card/" />
+<can-import from="i2web/components/subsystem/water/card/" />
+<can-import from="i2web/components/carousel/" />
+
+{{#if renderCustomCard(subsystem)}}
+  {{subsystem-card(subsystem)}}
+{{else}}
+  <div class="row">
+    <div class="subsystem-card-title">
+      {{#if manageOnMobile}}
+        <h3>
+          {{{iconOf(subsystem)}}}
+          {{subsystem.displayName}}
+        </h3>
+      {{else}}
+        <h3 class="supported">
+          <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}">
+            {{{iconOf(subsystem)}}}
+            {{subsystem.displayName}}
+          </a>
+        </h3>
+        <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}" class="subsystem-chevron">
+          <i class="icon-app-chevron"></i>
+        </a>
+        <div class="subsystem-status">
+          {{#if subsystem.available}}
+            {{subsystem-status(subsystem)}}
+          {{else}}
+            <a data-analytics="dashboard.{{subsystem.analyticsTag}}.info" href="{{ routeUrl(page="services" subpage=subsystem.slug action="status") }}" target="_blank">
+              Learn More
+            </a>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+    {{#if showDeviceList}}
+      <div class="subsystem-card-contents">
+        <arcus-carousel {nav}="false">
+          {{#each subsystem.allDevices}}
+            <div class="slider-item swiper-slide">
+              <arcus-device-card {(device)}="." {source-subsystem}="subsystem"></arcus-device-card>
+            </div>
+          {{/each}}
+        </arcus-carousel>
+      </div>
+    {{/if}}
+    {{#if manageOnMobile}}
+      <div class="subsystem-unsupported-card-contents">
+        <p class="not-supported">Manage this service using the Mobile app.</p>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

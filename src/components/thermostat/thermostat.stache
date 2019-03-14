@@ -1,0 +1,74 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/global" />
+<can-import from="i2web/components/control-switch/" />
+{{#if device['web:dev:scheduleConfig']}}
+  <div class="switch-value mode" {{#if scheduleEnabled}}not-active{{else}}active{{/if}}>
+    <p>Follow Schedule</p>
+    <arcus-control-switch {is-on}="equal(scheduleEnabled, true)" {toggle}="@toggleSwitchOnOff" />
+  </div>
+{{/if}}
+<div class="mode-wrapper {{#if scheduleEnabled}}not-active{{else}}active{{/if}}">
+  <ul>
+    <li class="radio-wrapper has-configurator">
+      {{#eq mode 'HEAT'}}
+        <div class="spinner-wrapper large-spinner">
+          <arcus-spinner {formatter}="@formatter" {(value)}="heatSetpoint" {min}="minSetpoint" {max}="maxSetpoint" />
+        </div>
+      {{/eq}}
+      <input type="radio" id="heat-{{uniqueId}}" name="mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.HVACMODE_HEAT)">
+      <label for="heat-{{uniqueId}}">Heat</label>
+      <div class="check"></div>
+    </li>
+    <li class="radio-wrapper has-configurator">
+      {{#eq mode 'COOL'}}
+        <div class="spinner-wrapper large-spinner">
+          <arcus-spinner {formatter}="@formatter" {(value)}="coolSetpoint" {min}="minSetpoint" {max}="maxSetpoint" />
+        </div>
+      {{/eq}}
+      <input type="radio" id="cool-{{uniqueId}}" name="mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.HVACMODE_COOL)">
+      <label for="cool-{{uniqueId}}">Cool</label>
+      <div class="check"></div>
+    </li>
+    {{#if autoSupported}}
+      <li class="radio-wrapper has-configurator">
+        {{#eq mode 'AUTO'}}
+          <div class="spinner-wrapper large-spinner">
+            <arcus-spinner {formatter}="@formatter" {(value)}="heatSetpoint" {min}="minSetpoint" {max}="maxHeatSetpoint" />
+            <span class="to">TO</span>
+            <arcus-spinner {formatter}="@formatter" {(value)}="coolSetpoint" {min}="minCoolSetpoint" {max}="maxSetpoint" />
+          </div>
+        {{/eq}}
+        <input type="radio" id="auto-{{uniqueId}}" name="mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.HVACMODE_AUTO)">
+        <label for="auto-{{uniqueId}}">{{{device['web:therm:autoDescription']}}}</label>
+        <div class="check"></div>
+      </li>
+    {{/if}}
+    {{#if device['web:therm:ecoSupported']}}
+      <li class="radio-wrapper has-configurator">
+        <input type="radio" id="eco-{{uniqueId}}" name="mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.HVACMODE_ECO)">
+        <label for="eco-{{uniqueId}}">ECO</label>
+        <div class="check"></div>
+      </li>
+    {{/if}}
+    <li class="radio-wrapper">
+      <input type="radio" id="off-{{uniqueId}}" name="mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.HVACMODE_OFF)">
+      <label for="off-{{uniqueId}}">Off</label>
+      <div class="check"></div>
+    </li>
+  </ul>
+</div>

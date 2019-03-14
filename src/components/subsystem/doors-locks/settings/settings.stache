@@ -1,0 +1,57 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+{{#if hasConfigurableDevices}}
+  <div class="row panel-list-container">
+    <div class="col-xs-12">
+      <h2 class="setting-header">Chime Hub</h2>
+        <p>Chime hub if a contact sensor or hinge is opened</p>
+      </h2>
+    </div>
+  </div>
+  {{#each devices}}
+    <div class="row panel-list-container">
+      <div class="panel-primary-wrapper">
+        <div class="col-xs-12 col-md panel-information">
+          <h3>
+            <i class="base-icon {{device['web:icon:off']}}"></i>
+            {{device['name']}}
+          </h3>
+        </div>
+      </div>
+      <div class="panel-secondary-wrapper">
+        <div class="col-md panel-secondary-combined">
+          <arcus-control-switch
+            {is-on}=enabled
+            toggle-attribute={.}
+            {toggle}="@toggleState" />
+        </div>
+      </div>
+    </div>
+  {{/each}}
+{{else}}
+  <div class="no-devices">
+    <div class="left-wrapper">
+      <h3>Do More With Your Doors</h3>
+      <p>Add contact sensors to your doors to configure the hub and keypad to beep when doors are opened.</p>
+    </div>
+    <div class="right-wrapper">
+      <arcus-shop-button href="{{redirectToUrl('p_doors')}}" expanded>
+        Shop Devices
+      </arcus-shop-button>
+    </div>
+  </div>
+{{/if}}

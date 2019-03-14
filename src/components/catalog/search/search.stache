@@ -1,0 +1,49 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/helpers/form-fields" />
+
+<div class="catalog-search-container box-gray-radius darken-bg thin">
+  <div class="filter-selection">
+    <div><span class="button-badge {{#is filterMode 'all'}}active{{/is}}"
+               ($click)='setFilterMode("all")'>
+      All
+    </span></div>
+    <div class="divider"></div>
+    <div><span class="button-badge {{#is filterMode 'hub-required'}}active{{/is}}"
+               ($click)='setFilterMode("hub-required")'>
+      Hub Required
+    </span></div>
+    <div><span class="button-badge {{#is filterMode 'no-hub-required'}}active{{/is}}"
+               ($click)='setFilterMode("no-hub-required")'>
+      No Hub Required
+    </span></div>
+  </div>
+
+  <div class="search-container">
+    <div class="prepend-icon">
+      <i class="icon-app-search-icon"></i>
+    </div>
+    {{#selectInput('selectedProductAddress', '', allowSearch=true placeholder='Search for Device')}}
+      {{#if searchResults.length}}
+        {{#each searchResults}}
+          <option value="{{.['base:address']}}">{{getProductTitle(.)}}</option>
+        {{/each}}
+      {{/if}}
+    {{/selectInput}}
+    </div>
+  </div>
+</div>

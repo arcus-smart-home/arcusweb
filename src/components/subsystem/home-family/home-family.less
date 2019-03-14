@@ -1,0 +1,80 @@
+@import 'card/card.less';
+
+arcus-subsystem-home-family {
+  @avatar-width: 80px;
+
+	display: block;
+  .category-header {
+    border-top: @border;
+    border-bottom: @border;
+    padding: @gutter/2;
+    width: 100%;
+    margin-top: -1px; //hides double borders
+    .breakpoint(md, {
+      padding-left: @gutter;
+      padding-right: @gutter;
+    });
+    .icon-app-door-2 {
+      display: inline-block;
+      vertical-align: bottom; //fixing optical illusion
+    }
+  }
+  .category-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    &:last-of-type {
+      position: relative;
+      bottom: -1px; //hides bottom double border
+    }
+  }
+  .presence-item {
+    display: flex;
+    border-bottom: @border;
+    padding: @gutter/2;
+    .breakpoint(sm-down, {
+      flex: 1 0 100%;
+    });
+    .breakpoint(sm, {
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: 50%;
+      max-width: 50%; //IE11
+      &:nth-of-type(odd) {
+        border-right: @border;
+      }
+    });
+    .breakpoint(md, {
+      flex-basis: 33.3%;
+      max-width: 33.3%; //IE11
+      padding: @gutter;
+      &:nth-of-type(odd) {
+        border-right: none;
+      }
+      &:not(:nth-of-type(3n)) {
+        border-right: @border;
+      }
+    });
+    .avatar {
+      font-size: 32px;
+      height: @avatar-width;
+      width: @avatar-width;
+    }
+    .name {
+      flex-basis: calc(~'100% -' (@avatar-width + (@gutter/2)));
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .btn {
+      align-self: flex-start;
+      margin-bottom: 0;
+      margin-top: @gutter/2;
+    }
+  }
+  .empty-message {
+    margin-top: @gutter/2;
+    margin-bottom: @gutter/2;
+    padding-left: @gutter;
+    padding-right: @gutter;
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "writeableAttributes": ["sched:enabled:FIRE"],
+  "base:caps": ["scheduler", "base"],
+  "base:instances": {
+    "FIRE": ["sched", "schedweek"]
+  },
+  "schedweek:mon:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["THU", "WED", "MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    }, {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["TUE", "MON"],
+      "attributes": {},
+      "id": "6fc4424f-3f7e-43f1-b62c-be5f87c8732e",
+      "time": "9:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "sched:group:FIRE": "FIRE",
+  "base:id": "093d4134-b92a-43c0-84bb-c99f291e791e",
+  "sched:nextFireTime:FIRE": 1483621200001,
+  "base:address": "SERV:scheduler:093d4134-b92a-43c0-84bb-c99f291e791e",
+  "scheduler:nextFireTime": 1483621200001,
+  "scheduler:commands": {
+    "524a0b26-d240-42a4-8ff8-7ea86960d281": {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["FRI", "WED", "MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    },
+    "524a0b26-d240-42a4-8ff8-7ea86960d282": {
+      "mode": "SUNRISE",
+      "offsetMinutes": 20,
+      "messageType": "scene:Fire",
+      "days": ["MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    },
+    "524a0b26-d240-42a4-8ff8-7ea86960d283": {
+      "mode": "SUNSET",
+      "offsetMinutes": -15,
+      "messageType": "scene:Fire",
+      "days": ["WED", "MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    },
+    "12f9ca20-dbb4-4127-9660-b75de211646c": {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["TUE", "FRI"],
+      "attributes": {},
+      "id": "12f9ca20-dbb4-4127-9660-b75de211646c",
+      "time": "14:00:00",
+      "scheduleId": "FIRE"
+    },
+    "6fc4424f-3f7e-43f1-b62c-be5f87c8732e": {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["FRI", "SUN", "WED"],
+      "attributes": {},
+      "id": "6fc4424f-3f7e-43f1-b62c-be5f87c8732e",
+      "time": "11:00:00",
+      "scheduleId": "FIRE"
+    }
+  },
+  "scheduler:target": "SERV:scene:3d496bfc-1098-493e-afd4-7f56c12dbef6",
+  "base:tags": [],
+  "schedweek:sun:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["SUN", "SAT"],
+      "attributes": {},
+      "id": "12f9ca20-dbb4-4127-9660-b75de211646c",
+      "time": "10:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "base:type": "scheduler",
+  "sched:nextFireCommand:FIRE": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+  "schedweek:tue:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["TUE", "MON"],
+      "attributes": {},
+      "id": "6fc4424f-3f7e-43f1-b62c-be5f87c8732e",
+      "time": "9:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "scheduler:placeId": "89be2ebb-0e1f-43bc-89c7-4eb7fe54137d",
+  "sched:enabled:FIRE": true,
+  "schedweek:fri:FIRE": [],
+  "schedweek:sat:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["SUN", "SAT"],
+      "attributes": {},
+      "id": "12f9ca20-dbb4-4127-9660-b75de211646c",
+      "time": "10:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "schedweek:wed:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["THU", "WED", "MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "schedweek:thu:FIRE": [
+    {
+      "mode": "ABSOLUTE",
+      "offsetMinutes": null,
+      "messageType": "scene:Fire",
+      "days": ["THU", "WED", "MON"],
+      "attributes": {},
+      "id": "524a0b26-d240-42a4-8ff8-7ea86960d281",
+      "time": "8:00:00",
+      "scheduleId": "FIRE"
+    }
+  ],
+  "scheduler:nextFireSchedule": "FIRE"
+}

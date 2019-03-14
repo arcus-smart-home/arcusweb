@@ -1,0 +1,109 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-climate">
+  <template>
+    <h4>Select a state for <strong>{{thing['dev:name']}}</strong></h4>
+    <div class="configurator">
+      <div class="configurator-header">
+        <h4 class="config-title">Open</h4>
+        <span class="config-value">
+          {{level}}
+          <span class="value-unit">%</span>
+        </span>
+      </div>
+      <div class="range-wrapper vent-level-control">
+        {{#isIE}}
+          <input type="range"
+            {$value}="{{level}}"
+            ($change)="adjustLevel(%event)"
+            min="0"
+            max="100"
+            step="10"
+            aria-valuenow="{{level}}"
+            aria-valuemin="0"
+            aria-valuemax="100" />
+        {{else}}
+          <input type="range"
+            {$value}="{{level}}"
+            ($input)="adjustLevel(%event)"
+            min="0"
+            max="100"
+            step="10"
+            aria-valuenow="{{level}}"
+            aria-valuemin="0"
+            aria-valuemax="100" />
+        {{/isIE}}
+      </div>
+    </div>
+    <hr />
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/climate
+         * @description The device attributes used for displaying the configurator
+         */
+        attributes: {
+          type: '*',
+          set(attributes) {
+            const level = attributes.attr('vent:level');
+            if (level !== undefined) {
+              this.attr('level', level);
+            }
+            return attributes;
+          },
+        },
+        /**
+         * @property {Number} level
+         * @parent i2web/components/schedule/device-configurators/climate
+         * @description Rounded (to the nearest 10) openess level
+         */
+        level: {
+          get(currentVal) {
+            const level = currentVal !== undefined ? currentVal : this.attr('thing.vent:level');
+            return Math.round(level / 10) * 10;
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/climate
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+      },
+      /**
+       * @function adjustLevel
+       * @param {Object} event
+       * @parent i2web/components/schedule/device-configurators/climate
+       * @description Sets the openess level to the new value captured in the event
+       */
+      adjustLevel(event) {
+        this.attr('level', +event.target.value);
+        this.attr('attributes.vent:level', this.attr('level'));
+      },
+    });
+  </script>
+</can-component>

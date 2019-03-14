@@ -1,0 +1,209 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-hub-configurator-wifi-scan">
+  <template>
+    <can-import from="i2web/components/wifi-scan/"/>
+
+    <hr/>
+    <h3>{{title}}</h3>
+
+    {{#switch currentView}}
+      {{#case 'initial'}}
+        <div class="instructions">
+          <p {{#if hub.isOffline}}class="error"{{/if}} >{{summary}}</p>
+        </div>
+        {{#unless hub.isOffline}}
+          <button type="button" class="btn-scan{{#unless scanEnabled}} disabled{{/unless}}{{#if scanningForNetworks}} saving{{/if}}" ($click)="scanForNetworks">
+            {{#if scanningForNetworks}}<div class="loader"></div> Scanning{{else}}Scan{{/if}}
+          </button>
+        {{/unless}}
+      {{/case}}
+      {{#case 'waitingForSelection'}}
+        <arcus-wifi-scan
+          {(thing)}="hub"
+          {networks}="networks"
+          {form-error-message}="formErrorMessage"
+          {on-connect}="@onConnect"
+          {support-link-key}="supportLinkKey" />
+      {{/case}}
+    {{/switch}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Cornea from 'i2web/cornea/';
+    import Hub from 'i2web/models/hub';
+    import _orderBy from 'lodash/orderBy';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Boolean} autoScan
+         * @parent i2web/components/hub/configurators/wifi-scan
+         *
+         * Indicates if the wifi scan should be automatically started on component inserted event.
+         */
+        autoScan: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {String} currentView
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description current view of configurator; values include 'initial' and 'waitingForSelection'
+         */
+        currentView: {
+          type: 'string',
+          value: 'initial',
+        },
+        /**
+         * @property {String} formErrorMessage
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description Error message associated with failed connection
+         */
+        formErrorMessage: {
+          get() {
+            return `Your device failed to connect. Please check the information in the 'Connect Hub to Wi-Fi' section to make sure it is accurate.<br/><br/>Also, ensure your Router and Modem are plugged in and working.`;
+          },
+        },
+        /**
+         * @property {Hub} hub
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description Current hub
+         */
+        hub: {
+          Type: Hub,
+        },
+        /**
+         * @property {Array<Object>} networks
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description list of networks fetched in the scan
+         */
+        networks: {
+          value: [],
+        },
+        /**
+         * @property {boolean} scanningForNetworks
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description component state - whether we are scanning for networks or not currently
+         */
+        scanningForNetworks: {
+          value: false,
+        },
+        /**
+         * @property {boolean} scanEnabled
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description component state - whether we can scan for networks
+         */
+        scanEnabled: {
+          get() {
+            return (!this.attr('scanningForNetworks') && this.attr('hub.isConnectedEthernet'));
+          },
+        },
+        /**
+         * @property {boolean} scanVisible
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description component state - whether the scan button is even visible
+         */
+        scanVisible: {
+          get() {
+            return (this.attr('scanningForNetworks') ||
+              !this.attr('networks') || this.attr('networks').attr('length') === 0);
+          },
+        },
+        /**
+         * @property {String} summary
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description The summary of instructions for the configurator
+         */
+        summary: {
+          get() {
+            if (this.attr('hub.isOffline')) {
+              return 'Hub disconnected. Ensure the Ethernet cable is inserted into your Hub. It may take a few minutes to reconnect once the cable is reinserted.';
+            } else if (this.attr('hub.isConnected4G')) {
+              return 'You are on Cellular Backup because there may be an issue with your connection. Ensure the Ethernet cable is plugged into the Hub once the issue is resolved.';
+            } else if (this.attr('hub.hubwifi:wifiSsid')) {
+              return 'If you need to change Wi-Fi networks, make sure your Ethernet cable is plugged in, and Scan again.';
+            }
+            return 'To get started, scan for available Wi-Fi networks and then select the one you want to use. Ensure the Ethernet cable stays inserted into your Hub until the Wi-Fi setup is finished.';
+          },
+        },
+        /**
+         * @property {Boolean} supportLinkKey
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description key to use on the link for Don't See your Network
+         */
+        supportLinkKey: {
+          type: 'string',
+          value: 's_v3_hub_wifi_need_help',
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/hub/configurators/wifi-scan
+         * @description The title for the configurator
+         */
+        title: {
+          get() {
+            if (this.attr('hub.isConnected4G')) {
+              return 'Connect Hub to Ethernet or Wi-Fi';
+            } else if (this.attr('hub.hubwifi:wifiSsid') && !this.attr('hub.isOffline')) {
+              return 'Update Wi-Fi';
+            }
+            return 'Connect Hub to Wi-Fi';
+          },
+        },
+      },
+      /**
+       * @function onConnect
+       * @parent i2web/components/configurators/wifi-scan
+       * @param success should be set to true for a successful connection
+       * @description Callback for successful or failed connection
+       */
+      onConnect(success) {
+        if (success) {
+          this.attr('currentView', 'initial');
+        }
+      },
+      /**
+       * @function scanForNetworks
+       * @parent i2web/components/configurators/wifi-scan
+       * @description Initializes a scan for wireless networks
+       */
+      scanForNetworks() {
+        this.attr('currentView', 'initial');
+        this.attr('scanningForNetworks', true);
+        this.attr('hub').WiFiStartScan(30);
+
+        Cornea.on('hub hubwifi:WiFiScanResults', ({ scanResults }) => {
+          const sortedResults = _orderBy(scanResults, 'signal', 'desc');
+          this.attr('networks', sortedResults);
+          this.attr('scanningForNetworks', false);
+          this.attr('currentView', 'waitingForSelection');
+        });
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      inserted() {
+        if (!this.viewModel.attr('hub.isOffline') && this.viewModel.attr('autoScan')) {
+          this.viewModel.scanForNetworks();
+        }
+      },
+    };
+  </script>
+</can-component>

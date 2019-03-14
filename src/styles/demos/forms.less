@@ -1,0 +1,16 @@
+@import 'locate://i2web/styles/global-styles.less';
+
+@hue-gradient:  linear-gradient(to left, rgb(220, 76, 124) 0%, rgb(184, 76, 220) 20%, rgb(76, 129, 220) 35%, rgb(76, 220, 184) 56%, rgb(105, 220, 76) 63%, rgb(220, 220, 76) 82%, rgb(220, 134, 76) 90%, rgb(220, 76, 76) 100%);
+@temp-gradient:  linear-gradient(to right, rgba(235,167,73,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 51%, rgba(142,206,232,1) 100%);
+
+
+.hue-control {
+  input[type="range"] {
+   .custom-range-styles(@track-color: @hue-gradient);
+  }
+}
+.temp-control {
+  input[type="range"] {
+   .custom-range-styles(@track-color: @temp-gradient);
+  }
+}

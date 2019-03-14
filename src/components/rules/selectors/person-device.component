@@ -1,0 +1,159 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-rules-selectors-person-device">
+  <template>
+    <h3 class="option-title">Choose a Person or Device</h3>
+    <div class="mixed-selectors">
+      <ul class="option-list">
+        {{#each persons}}
+          <li class="radio-wrapper" ($click)="selectOption(.)">
+            <input type="radio" id="person-{{%index}}" name="thing" {$checked}="isSelectedContext(.)" />
+            <label for="person-{{%index}}" class="complex-label">
+              {{{iconOf(.)}}}
+              <span class="name">{{['person:firstName']}}</span>
+            </label>
+            <div class="check"></div>
+          </li>
+        {{/each}}
+        {{#each devices}}
+          <li class="radio-wrapper" ($click)="selectOption(.)">
+            <input type="radio" id="device-{{%index}}" name="thing" {$checked}="isSelectedContext(.)" />
+            <label for="device-{{%index}}" class="complex-label">
+              {{{iconOf(.)}}
+              <span class="name">
+                {{['dev:name']}}
+                <br/>
+                {{#productName}}<small class="type">{{productName}}</small>{{/productName}}
+              </span>
+            </label>
+            <div class="check"></div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </template>
+  <script type="view-model">
+    import $ from 'jquery';
+    import _ from 'lodash';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import 'i2web/helpers/global';
+    import Device from 'i2web/models/device';
+    import Person from 'i2web/models/person';
+    import Rule from 'i2web/models/rule';
+    import findOptions from './find-options';
+
+    export default canMap.extend({
+      define: {
+       /**
+        * @property {Map} chosen
+        * @parent i2web/components/rules/selectors/person-device
+        * @description The key value pairs chosen by the User to satisfy this particular rule
+        */
+        chosen: {
+          Type: canMap,
+        },
+        /**
+         * @property {Device.List} devices
+         * @parent i2web/components/rules/selectors/person-device
+         * @description The list of devices that will be displayed for the User to select
+         */
+        devices: {
+          Type: Device.List,
+        },
+        /**
+          * @property {Map} options
+          * @parent i2web/components/rules/selectors/person-device
+          * @description The list of people that will be displayed for the User to select
+          */
+        options: {
+          Type: canMap,
+        },
+        /**
+         * @property {Device.List} persons
+         * @parent i2web/components/rules/selectors/person-device
+         * @description The list of persons that will be displayed for the User to select
+         */
+        persons: {
+          Type: Person.List,
+        },
+        /**
+         * @property {String} property
+         * @parent i2web/components/rules/selectors/property
+         * @description The property name from the template to match up against the Rule context
+         */
+        property: {
+          type: 'string',
+        },
+        /**
+         * @property {Rule} rule
+         * @parent i2web/components/rules/selectors/device
+         * @description The Rule that we are editing. This will be null, if we are creating a
+         * new Rule.
+         */
+        rule: {
+          Type: Rule,
+        },
+      },
+      init() {
+        const result = _.partition(this.attr('options'), (opt) => {
+          return opt[1].split(':')[1] === 'person';
+        });
+
+        const people = findOptions(result[0], 'people', 'base:address');
+        this.attr('persons', people);
+
+        const devices = findOptions(result[1], 'devices', 'base:address');
+        this.attr('devices', devices);
+      },
+      /**
+        * @function isSelectedContext
+        * @param {Object} current The current option
+        * If there is not a rule, none should be selected by default. If there is a rule
+        * We should select the option that is equal to the context. If there is an option
+        * in chosen we should use that value.
+        *
+        * @return {Boolean} Whether the current option is the selected option
+        */
+      isSelectedContext(current) {
+        const chosenProperty = this.attr(`chosen.${this.attr('property')}`);
+        let value = '';
+        if (this.attr('rule') && !chosenProperty) {
+          value = this.attr(`rule.rule:context.${this.attr('property')}`);
+        }
+        if (chosenProperty) {
+          value = chosenProperty;
+        }
+        return value === current['base:address'];
+      },
+      /**
+       * @function selectOption
+       * @param {Map} selected Assign the User selected option with property name
+       * as the key on the 'chosen' object.
+       */
+      selectOption(selected) {
+        const address = selected.attr('base:address');
+        this.attr(`chosen.${this.attr('property')}`, address);
+
+        const text = (address.split(':')[1] === 'dev')
+          ? selected.attr('dev:name')
+          : selected.attr('person:firstName');
+        $(`button[id="${this.attr('property')}"`).text(text);
+      },
+    });
+  </script>
+</can-component>

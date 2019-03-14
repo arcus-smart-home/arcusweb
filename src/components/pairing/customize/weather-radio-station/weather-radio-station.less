@@ -1,0 +1,77 @@
+arcus-pairing-customize-weather-radio-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .box-gray-radius {
+    .toggle-stations {
+      color: @link-color;
+      margin-bottom: @gutter/2;
+      &:hover {
+        opacity: 0.75;
+        cursor: pointer;
+      }
+    }
+    .loader {
+      margin: @gutter/2 auto 0;
+    }
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding-left: 0;
+      margin-top: @gutter/2;
+      margin-right: 0;
+      margin-bottom: @gutter/2;
+      margin-left: 0;
+      .radio-wrapper {
+        border-top: 1px solid @heron;
+        margin: 0;
+        padding-top: @gutter/2;
+        padding-bottom: @gutter/2;
+        &:last-of-type {
+          border-bottom: 1px solid @heron;
+        }
+      }
+      .complex-label {
+        flex-direction: column;
+        align-items: flex-start;
+        .radio-station {
+          margin-bottom: @gutter/5;
+        }
+      }
+      .start-playing,
+      .stop-playing {
+        background: transparent;
+        border: 0;
+        outline: none;
+      }
+    }
+    .play-wrapper, .stop-wrapper {
+      border: 1px solid @peacock;
+      border-radius: 100%;
+      padding: 10px;
+      background: @crane;
+    }
+    .stop-wrapper {
+      background: @peacock;
+    }
+    .play-shape {
+      position: relative;
+      width: @gutter/2;
+      height: @gutter/2;
+      left: 2px;
+      border-top: @gutter/4 solid transparent;
+      border-left: @gutter/2 solid @peacock;
+      border-bottom: @gutter/4 solid transparent;
+    }
+    .stop-shape {
+      width: @gutter/2;
+      height: @gutter/2;
+      background: @crane;
+    }
+    .btn-scanning {
+      margin-top: @gutter !important;
+      margin-bottom: @gutter/2;
+    }
+  }
+}

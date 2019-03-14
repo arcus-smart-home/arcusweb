@@ -1,0 +1,70 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/tooltip/" />
+
+{{#if weatherAlerts.length}}
+  <h3><i class="icon-platform-weather-alert icon"></i> Weather Radio Alert</h3>
+  <hr/>
+  {{#each weatherAlerts}}
+    <div class="weather-alert">
+      <p>
+        <strong>{{description}} Issued<br>
+          {{issuedAt}}</strong>
+      </p>
+      <div class="control-overview">
+        <div class="icon-wrapper">
+          <div class="device-badge-icon">
+            <div class="icon-app-state">
+              <i class="icon-platform-co-2"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <p>
+            <strong>{{deviceName}}<br>
+            {{county}} County, {{state}}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+
+  <div class="actions">
+    <div class="instructions">
+      <p>Tap Snooze to stop the audible notifications.</p>
+      <p>
+        <em>
+          If anything changes about this alert (i.e. end time, type of alert), the
+          device's speaker will let you know.
+        </em>
+      </p>
+    </div>
+    <div class="button-wrapper">
+      <button class="btn" ($click)="snoozeAlerts()">Snooze</button>
+      <div class="tooltip-wrapper">
+        <button class="btn-small tooltip-trigger" type="button"><i>i</i></button>
+        <arcus-tooltip anchor="top-right">
+          To unsubscribe from this weather alert, find Halo under
+          Devices and click the Settings and Configuration icon.
+        </arcus-tooltip>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <p>Pressing the center Halo button will also<br>snooze the device.</p>
+{{/if}}

@@ -1,0 +1,79 @@
+arcus-page-settings {
+  display: flex;
+  flex-direction: column;
+  .settings-navigation {
+    display: flex;
+    flex-direction: column;
+    margin: @gutter/2 @gutter/2 0;
+    .breakpoint(md, {
+      flex-direction: row;
+      margin: @gutter;
+    });
+    button {
+      .breakpoint(md, {
+        margin-bottom: 0;
+      });
+    }
+    .settings-add {
+      .breakpoint(md, {
+        margin-left: auto;
+      });
+    }
+  }
+  arcus-accordion {
+    border-top: @border;
+  }
+  arcus-accordion-panel {
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  .invitation {
+    .avatar;
+    font-size: 20px;
+  }
+  .email {
+    word-break: break-all;
+    + p {
+      margin-top: -(@line-height/2);
+    }
+  }
+  .modal-content {
+    text-align: center;
+    background-color: @crane;
+    h2 {
+      .font-demibold;
+    }
+    hr {
+      margin: @gutter/2 0;
+    }
+    .btn-primary {
+      margin-top: @gutter/2;
+      margin-bottom: 0;
+    }
+    arcus-animated-check {
+      display: flex;
+      justify-content: center;
+      margin-bottom: @gutter/2;
+      .success-base  {
+        background-color: @parakeet;
+        border: 3px solid @pigeon;
+        box-shadow: none;
+        width: 50px;
+        height: 50px;
+        i {
+          color: @crane;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  .invitation-code,
+  .profile {
+    border-top: @border;
+    &.panel-list-container {
+      padding-top: @gutter/2;
+      border-bottom: 0;
+    }
+  }
+}

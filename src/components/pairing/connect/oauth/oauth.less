@@ -1,0 +1,26 @@
+arcus-pairing-connect-oauth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  arcus-animated-searching .searching-base i.icon-app-cloud-1 {
+    font-size: 35px;
+  }
+
+  .searching-base {
+    margin-top: @gutter*2.5;
+    margin-bottom: @gutter*3;
+  }
+
+  arcus-pairing-device-state {
+    margin-top: @gutter;
+
+    &:last-of-type {
+      margin-bottom: @gutter;
+    }
+  }
+
+  > .box-gray-radius {
+    margin: @gutter;
+  }
+}

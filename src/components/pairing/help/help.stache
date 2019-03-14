@@ -1,0 +1,45 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="header-content">
+  <h2>Hmm... This is taking longer than expected.</h2>
+  <p>Check out our tips for assistance with device detection.</p>
+</div>
+
+{{#each helpSteps}}
+  <div class="box-gray-radius darken-bg step-box">
+    <div class="row-left-area">
+      <span class="step-count">{{order}}</span>
+      <div class="row-message">
+        <p>{{message}}</p>
+        {{#eq action "LINK"}}
+          <p><a href="{{linkUrl}}" target="_blank">{{linkText}}</a></p>
+        {{/eq}}
+      </div>
+    </div>
+    {{#if buttonAction(.)}}
+      {{#with buttonAction(.)}}
+        <div class="row-right-area">
+          <div class="sub-right-area with-button">
+            <button id="{{../['action']}}" class="{{class}}" ($click)="actionClick(../['action'])">
+              {{text}}
+            </button>
+          </div>
+        </div>
+      {{/with}}
+    {{/if}}
+  </div>
+{{/each}}

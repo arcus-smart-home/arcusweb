@@ -1,0 +1,175 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-alarms-bypass-confirm">
+  <template>
+    <div class="panel-buttons">
+      {{close-button type="cancel"}}
+    </div>
+    <div class="panel-content">
+    {{#if errorCodeIs('insufficientDevices')}}
+      <h3>Unable to Arm</h3>
+      <p>There are too many devices open or offline. Review these devices or adjust your Alarm Requirements.</p>
+      <hr />
+      <button type="button" class="btn-primary" ($click)="manageDevices()">Manage Security Devices</button>
+    {{/if}}
+    {{#if errorCodeIs('invalidState')}}
+      <h3>Unable to Arm</h3>
+      {{#if isPromonitored}}
+        <p>The Monitoring Station has an alarm event in progress at your place that must be resolved before you can re-arm.</p>
+        <p class="bold">To resolve this event, call the Monitoring Station at {{monitoringStationNumber}}.</p>
+      {{else}}
+        <p>Please try again in a few seconds.</p>
+      {{/if}}
+    {{/if}}
+    {{#if errorCodeIs('hubDisarming')}}
+      <h3>Unable to Arm</h3>
+      <p>Please try again in a few seconds.</p>
+    {{/if}}
+    {{#if errorCodeIs('triggeredDevices')}}
+      {{#is offlineDevices.length devices.length}}
+        <h3>Offline Device(s)</h3>
+        <p><span class="error">Offline</span> devices will not participate in monitoring.</p>
+      {{else}}
+        {{#if offlineDevices.length}}
+          <h3>Bypassed & Offline Device(s)</h3>
+          <p>The following device(s) will be bypassed but will participate in monitoring when motion is no longer detected or closed.</p>
+          <p><span class="error">Offline</span> devices will not participate in monitoring.</p>
+        {{else}}
+          <h3>Bypass Device(s)</h3>
+          <p>The following device(s) will be bypassed but will participate in monitoring when motion is no longer detected or closed.</p>
+        {{/if}}
+      {{/is}}
+      <hr />
+      <div class="device-list">
+        {{#each onlineDevices}}
+          <p>
+            <i class="{{.['web:icon:off']}}"></i>
+            {{.['dev:name']}}
+          </p>
+        {{/each}}
+        {{#each offlineDevices}}
+          <p>
+            <i class="{{.['web:icon:off']}}"></i>
+            <span class="error">{{.['dev:name']}}</span>
+          </p>
+        {{/each}}
+      </div>
+      <hr/>
+      <button type="button" class="btn-primary" ($click)="continueToArm(mode, true)">Continue To Arm</button>
+    {{/if}}
+    </div>
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import AppState from 'i2web/plugins/get-app-state';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Array<string>} addresses
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The list of device addresses returned by 'triggeredDevices' error
+         */
+        addresses: {
+          set(addresses) {
+            const devices = AppState().attr('devices').filter((device) => {
+              return _.includes(addresses, device.attr('base:address'));
+            });
+            this.attr('devices', devices);
+          },
+        },
+        /**
+         * @property {boolean} isPromonitored
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description Indicates if the place is promonitored
+         */
+        isPromonitored: {
+          type: 'boolean',
+        },
+        /**
+         * @property {Array<Device>} offlineDevices
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The list of bypassed devices that are offline
+         */
+        offlineDevices: {
+          get() {
+            return this.attr('devices').filter((device) => {
+              return device.attr('isOffline');
+            });
+          },
+        },
+        onlineDevices: {
+          get() {
+            return this.attr('devices').filter((device) => {
+              return !device.attr('isOffline');
+            });
+          },
+        },
+        /**
+         * @property {string} code
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The error code returned from the platform when attempting to arm
+         */
+        code: {
+          type: 'string',
+        },
+        /**
+         * @property {Device.List} devices
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The list of device objects returned by 'triggeredDevices' error
+         */
+        devices: {
+          Type: Device.List,
+        },
+        /**
+         * @property {string} mode
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The arming mode of the alarm, either 'ON' or 'PARTIAL'
+         */
+        mode: {
+          type: 'string',
+        },
+        /**
+         * @property {string} monitoringStationNumber
+         * @parent i2web/components/subsystem/alarms/bypass-confirm
+         * @description The phone number for the monitoring station
+         */
+        monitoringStationNumber: {
+          value() {
+            return AppState().attr('monitoringStationNumber');
+          },
+        },
+      },
+      /**
+       * @function errorCodeIs
+       * @param {string} description The error code (insufficientDevices, triggeredDevices)
+       * @return {boolean}
+       * @description If the error code is equivalent to the code argument
+       */
+      errorCodeIs(description) {
+        const code = this.attr('code');
+        if (code && code.includes('.')) {
+          return code.split('.')[1] === description;
+        }
+        return false;
+      },
+    });
+  </script>
+</can-component>

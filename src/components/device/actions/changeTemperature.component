@@ -1,0 +1,300 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-changeTemperature">
+  <template>
+    {{#if disableControls}}
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+        {{#if isHoneywellTCC}}<p>Waiting on Honeywell</p>{{/if}}
+      </div>
+    {{else}}
+      <can-import from="i2web/components/spinner/" />
+      <div class="range">
+        {{#if shouldShowHeat}}
+          <arcus-spinner {formatter}="@formatter"
+            {(value)}="heatSetPoint"
+            {min}="minSetPoint"
+            {max}="heatMaxSetPoint" />
+        {{/if}}
+        {{#eq device['therm:hvacmode'] ThermostatCapability.HVACMODE_AUTO}}
+          <span>to</span>
+        {{/eq}}
+        {{#if shouldShowCool}}
+          <arcus-spinner {formatter}="@formatter"
+            {(value)}="coolSetPoint"
+            {min}="coolMinSetPoint"
+            {max}="maxSetPoint" />
+        {{/if}}
+      </div>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+    import temperatureConverter from 'i2web/plugins/temperature-converter';
+    import ThermostatCapability from 'i2web/models/capability/Thermostat';
+    import _ from 'lodash';
+
+    const saveDebounceTime = 1000;
+    const longSaveDebounceTime = 2000; // used for thermostats with throttled or slow backends
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        shouldDisableControlsOnSave: {
+          type: 'boolean',
+          get() {
+            return this.attr('isHoneywellTCC');
+          },
+        },
+        disableControls: {
+          type: 'boolean',
+          value: false,
+        },
+        shouldShowHeat: {
+          type: 'boolean',
+          get() {
+            const device = this.attr('device');
+            const hvacMode = device.attr('therm:hvacmode');
+
+            return hvacMode === ThermostatCapability.HVACMODE_AUTO ||
+              hvacMode === ThermostatCapability.HVACMODE_HEAT ||
+              hvacMode === ThermostatCapability.HVACMODE_ECO;
+          },
+        },
+        shouldShowCool: {
+          type: 'boolean',
+          get() {
+            const device = this.attr('device');
+            const hvacMode = device.attr('therm:hvacmode');
+
+            return hvacMode === ThermostatCapability.HVACMODE_AUTO ||
+              hvacMode === ThermostatCapability.HVACMODE_COOL ||
+              hvacMode === ThermostatCapability.HVACMODE_ECO;
+          },
+        },
+        coolSetPoint: {
+          type: 'number',
+          get() {
+            const device = this.attr('device');
+
+            return temperatureConverter(device.attr('therm:coolsetpoint'), 'F');
+          },
+          set(coolSetPoint) {
+            this.attr('device.therm:coolsetpoint', temperatureConverter(coolSetPoint, 'C'));
+
+            return coolSetPoint;
+          },
+        },
+        heatSetPoint: {
+          type: 'number',
+          get() {
+            const device = this.attr('device');
+
+            return temperatureConverter(device.attr('therm:heatsetpoint'), 'F');
+          },
+          set(heatSetPoint) {
+            this.attr('device.therm:heatsetpoint', temperatureConverter(heatSetPoint, 'C'));
+
+            return heatSetPoint;
+          },
+        },
+        minSetPoint: {
+          get() {
+            const device = this.attr('device');
+            const isLockedNest = this.attr('isNest') && this.attr('device.nesttherm:locked');
+
+            if (isLockedNest) {
+              return temperatureConverter(device.attr('nesttherm:lockedtempmin'), 'F');
+            }
+
+            if (device && device.attr('therm:minsetpoint')) {
+              return temperatureConverter(device.attr('therm:minsetpoint'), 'F');
+            }
+            return 45;
+          },
+        },
+        maxSetPoint: {
+          get() {
+            const device = this.attr('device');
+            const isLockedNest = this.attr('isNest') && this.attr('device.nesttherm:locked');
+
+            if (isLockedNest) {
+              return temperatureConverter(device.attr('nesttherm:lockedtempmax'), 'F');
+            }
+
+            if (device && device.attr('therm:maxsetpoint')) {
+              return temperatureConverter(device.attr('therm:maxsetpoint'), 'F');
+            }
+            return 95;
+          },
+        },
+        setPointSeparation: {
+          get() {
+            const device = this.attr('device');
+            const setpointseparation = device.attr('therm:setpointseparation');
+            if (setpointseparation) {
+              return temperatureConverter(setpointseparation, 'F') - 32;
+            }
+            return 3;
+          },
+        },
+        coolMinSetPoint: {
+          get() {
+            const device = this.attr('device');
+            const hvacMode = device.attr('therm:hvacmode');
+            const minSetPoint = this.attr('minSetPoint');
+
+            if (hvacMode === ThermostatCapability.HVACMODE_AUTO) {
+              return minSetPoint + this.attr('setPointSeparation');
+            }
+
+            return minSetPoint;
+          },
+        },
+        heatMaxSetPoint: {
+          get() {
+            const device = this.attr('device');
+            const hvacMode = device.attr('therm:hvacmode');
+            const maxSetPoint = this.attr('maxSetPoint');
+
+            if (hvacMode === ThermostatCapability.HVACMODE_AUTO) {
+              return maxSetPoint - this.attr('setPointSeparation');
+            }
+            return maxSetPoint;
+          },
+        },
+        /**
+         * @property {boolean} preventSave
+         * @parent i2web/components/device/actions/thermostat-slider/
+         * @description used when rendered alongside another component which will be responsible for saving the device
+         */
+        preventSave: {
+          type: 'boolean',
+          value: false,
+        },
+        isNest: {
+          get() {
+            return this.attr('device.web:dev:devtypehint') === 'nestthermostat';
+          },
+        },
+        isHoneywellTCC: {
+          get() {
+            return this.attr('device').hasCapability('honeywelltcc');
+          },
+        },
+        /**
+         * @property {function} saveDevice
+         * @parent i2web/components/device/actions/thermostat-slider/
+         * @description function that saves the device view model after an amount of time has elapsed since the last
+         * call to this function. In Nest thermostats this time to wait is higher since the Nest only allows 5 updates to
+         * a thermostat per-hour.
+         */
+        saveDevice: {
+          get() {
+            const useLongDebounce = this.attr('isNest') || this.attr('isHoneywellTCC');
+
+            return _.debounce(() => {
+              // we disable the control for some devices while waiting for the platform to respond
+              if (this.attr('shouldDisableControlsOnSave')) {
+                this.attr('disableControls', true);
+              }
+
+              this.attr('device').strictSave().catch((e) => {
+                this.attr('disableControls', false);
+                if (e !== 'no changes to save') { Errors.log(e, true); }
+              });
+            }, useLongDebounce ? longSaveDebounceTime : saveDebounceTime);
+          },
+        },
+      },
+      formatter(val) {
+        return `${val.toFixed(0)}<span class="value-unit">&deg;</span>`;
+      },
+      ThermostatCapability,
+    });
+  </script>
+  <script type="events">
+    import ThermostatCapability from 'i2web/models/capability/Thermostat';
+
+    export default {
+      setPointChange(vm, ev) {
+        const settingCool = ev.type === 'coolSetPoint';
+        const highValue = vm.attr('coolSetPoint');
+        const lowValue = vm.attr('heatSetPoint');
+        const separation = vm.attr('setPointSeparation');
+
+        // if this setpoint change makes values less than separation apart, move the other set point to be the minimum distance away
+        if ((highValue - lowValue) < separation) {
+          if (settingCool) {
+            vm.attr('heatSetPoint', highValue - separation);
+          } else {
+            vm.attr('coolSetPoint', lowValue + separation);
+          }
+        }
+      },
+      deviceSetPointChange() {
+        if (!this.viewModel.attr('preventSave')) {
+          this.viewModel.attr('saveDevice')();
+        }
+      },
+      '{viewModel} heatSetPoint': 'setPointChange',
+      '{viewModel} coolSetPoint': 'setPointChange',
+      '{viewModel} disableControls': function disableControlsChange(vm, ev, newValue) {
+        if (newValue === true) {
+          // only disable controls for a maximum of two minutes
+          const disableControlsFallback = setTimeout(() => { this.viewModel.attr('disableControls', false); }, 120000);
+          this.viewModel.attr('_disableControlsFallback', disableControlsFallback);
+        } else {
+          // cleanup fallback timeout
+          clearTimeout(this.viewModel.attr('_disableControlsFallback'));
+          this.viewModel.removeAttr('_disableControlsFallback');
+        }
+      },
+      '{viewModel.device} base:ValueChange': function updateMessageReceived(vm, ev, updateMessage) {
+        // unlock controls if the platform has accepted a setpoint update by responding with a 'base:ValueChange' for a setpoint
+        if (this.viewModel.attr('disableControls') && ('therm:heatsetpoint' in updateMessage || 'therm:coolsetpoint' in updateMessage)) {
+          this.viewModel.attr('disableControls', false);
+        }
+      },
+      '{viewModel.device} therm:heatsetpoint': 'deviceSetPointChange',
+      '{viewModel.device} therm:coolsetpoint': 'deviceSetPointChange',
+      '{viewModel.device} therm:hvacmode': function onHVACModeChange(device, ev, newVal) {
+        if (newVal === ThermostatCapability.HVACMODE_AUTO || newVal === ThermostatCapability.HVACMODE_ECO) {
+          const coolSetPoint = this.viewModel.attr('coolSetPoint');
+          const heatSetPoint = this.viewModel.attr('heatSetPoint');
+          const maxSetPoint = this.viewModel.attr('maxSetPoint');
+          const minSetPoint = this.viewModel.attr('minSetPoint');
+
+          if (coolSetPoint > maxSetPoint) {
+            this.viewModel.attr('coolSetPoint', maxSetPoint);
+          } else if (heatSetPoint < minSetPoint) {
+            this.viewModel.attr('heatSetPoint', minSetPoint);
+          }
+        }
+      },
+      // this listener is needed to prevent the saveDevice function from being recalculated more often than it should.
+      // computes are recalculated on every read unless they are bound to. this event creates a binding.
+      // TODO: eventually remove this and base saveDevice on an event stream instead of an observable since it will only recalculate when the stream changes
+      '{viewModel} saveDevice': function noOpListener() {},
+    };
+  </script>
+</can-component>

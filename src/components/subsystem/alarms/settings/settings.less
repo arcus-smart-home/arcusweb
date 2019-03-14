@@ -1,0 +1,75 @@
+arcus-subsystem-alarms-settings {
+  display: block;
+  arcus-accordion:last-child > arcus-accordion-panel {
+    border-bottom: 0;
+  }
+  arcus-accordion-panel-body {
+    arcus-shop-button {
+      display: flex;
+    }
+    .accordion-panel-content {
+      padding-left: 0;
+      .breakpoint(md, {
+        padding-left: @gutter;
+        flex-basis: 50%;
+      });
+    }
+    .accordion-panel-action {
+      .breakpoint(md, {
+        flex-basis: 50%;
+      });
+      .breakpoint(md-down, {
+        padding-bottom: 0;
+      });
+      .accordion-buttons {
+        .toggle-container {
+          .breakpoint(md-down, {
+            margin-left: 0;
+          });
+        }
+      }
+    }
+  }
+  .toggle-container {
+    margin-left: @gutter;
+  }
+  arcus-accordion-panel:last-of-type {
+    border-bottom: none;
+  }
+}
+arcus-subsystem-alarms-settings-delays {
+  arcus-accordion {
+    arcus-accordion-panel > li {
+      padding-left: 0;
+    }
+  }
+}
+arcus-subsystem-alarms-settings-requirements {
+  arcus-accordion-panel {
+    arcus-accordion-panel-body {
+      margin-top: @gutter;
+      padding-top: @gutter;
+    }
+    arcus-accordion-panel-heading {
+      h3 {
+        margin: 0;
+      }
+      .item-count {
+        margin-right: -5px;
+      }
+    }
+    arcus-accordion-panel-body {
+      border-top: @border;
+      justify-content: center;
+    }
+  }
+}
+arcus-subsystem-alarms-settings-timer {
+  display: flex;
+  flex: 1;
+  .timer-spinners {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+}

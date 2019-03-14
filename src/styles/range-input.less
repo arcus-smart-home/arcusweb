@@ -1,0 +1,161 @@
+/**
+* @styles range-input Range Inputs
+* @parent forms.less 1
+*
+* @description
+* Custom ranges are a special form input. This one is a series of mixins allowing for stil-to-come unified browser standards/syntax, and also for the customization of background appearance.
+*
+* >Note: the intensity slider has styles embedded in the template (`components/devices/configurators/color.component`), so any changes to the background of the track need to be updated there as well.
+* 
+* If you'd like to change the background, you'll want to redefine the mixin `custom-range-styles` with the appropriate color (or gradient).
+*
+* Example LESS:
+* ```
+.hue-control {
+    input[type="range"] {
+      .custom-range-styles(@@track-color: @@hue-gradient);
+    }
+}
+```
+* That code is what is driving the hue variation below.
+*
+* @iframe ./src/styles/demos/range-input.html
+*
+**/
+//Todo: that iframe should be a demo, but it won't render right now!
+
+@thumb-color: @crane;
+@thumb-color-disabled: fade(@pigeon, 90%);
+@thumb-shadow: 2px 5px 6px fade(@heron, 70%);
+@thumb-radius: 100%;
+@thumb-height: 38px;
+@thumb-width: 38px;
+
+@track-color-disabled: linear-gradient(to right, rgba(210,210,210,.5) 0%, rgba(210,210,210,.5) 100%);
+@track-shadow: inset 0 1px 6px fade(@swift, 60%), inset 0px 0px 2px fade(@swift, 10%);
+@track-shadow-disabled: inset 0 1px 6px fade(@grouse, 60%), inset 0px 0px 2px fade(@grouse, 10%);
+@track-width: 100%;
+@track-height: 10px;
+@track-border-width: 1px;
+@track-radius: 5px;
+
+.track() {
+  width: @track-width;
+  height: @track-height;
+  cursor: pointer;
+}
+.thumb() {
+  box-shadow: @thumb-shadow;
+  border: 1px solid @pigeon;
+  height: @thumb-height;
+  width: @thumb-width;
+  border-radius: @thumb-radius;
+  background: @thumb-color;
+  cursor: pointer;
+}
+
+.custom-range-styles(@track-color: transparent) {
+  -webkit-appearance: none;
+  margin: @thumb-height/2 0;
+  width: @track-width;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    .track();
+    box-shadow: @track-shadow;
+    background: @track-color;
+    border-radius: @track-radius;
+  }
+  &::-webkit-slider-thumb {
+    .thumb();
+    -webkit-appearance: none;
+    margin-top: (@track-height / 2) - (@thumb-height / 2);
+  }
+  &:focus::-webkit-slider-runnable-track {
+    background: @track-color;
+  }
+
+  &::-moz-range-track {
+    .track();
+    box-shadow: @track-shadow;
+    background: @track-color;
+    border-radius: @track-radius;
+  }
+  &::-moz-range-thumb {
+     .thumb();
+  }
+  &::-moz-focus-outer {
+    border: 0;
+  }
+
+  &::-ms-track {
+    .track();
+    background: @track-color;
+    color: transparent;
+    border-color: @crane;
+    border-top-width: @track-height + (@thumb-height / 2 - @track-height);
+    border-bottom-width: @track-height + ((@thumb-height / 2 - @track-height) + 3px); //the 3 is from the thumb shadow offset
+  }
+  &::-ms-fill-lower,
+  &::-ms-fill-upper {
+    background: transparent;
+    border-radius: @track-radius*2;
+    box-shadow: @track-shadow;
+  }
+  &::-ms-thumb {
+    .thumb();
+  }
+
+  &[disabled] {
+    &::-webkit-slider-thumb {
+      background-color: @thumb-color-disabled;
+      cursor: default;
+    }
+    &::-webkit-slider-runnable-track {
+      background: @track-color-disabled, @track-color;
+      box-shadow: @track-shadow-disabled;
+      cursor: default;
+    }
+
+    &::-moz-range-thumb {
+      background-color: @thumb-color-disabled;
+      cursor: default;
+    }
+    &::-moz-range-track {
+      background: @track-color-disabled, @track-color;
+      box-shadow: @track-shadow-disabled;
+      cursor: default;
+    }
+
+    &::-ms-thumb {
+      background-color: @thumb-color-disabled;
+      cursor: default;
+    }
+    &::-ms-track {
+       background: @track-color-disabled, @track-color;
+    }
+    &::-ms-fill-lower,
+    &::-ms-fill-upper {
+      box-shadow: @track-shadow-disabled;
+    }
+  }
+}
+
+.range-wrapper {
+  margin-bottom: @gutter/2;
+  text-align: right;
+  input[type="range"]{
+   .custom-range-styles(@track-color: transparent);
+  }
+  label {
+    font-size: @font-size-smaller;
+    letter-spacing: 1px;
+    color: @grouse;
+    text-transform: uppercase;
+    padding-top: 5px;
+
+  }
+}

@@ -1,0 +1,21 @@
+arcus-subsystem-care-status-active {
+  display: flex;
+  flex-direction: column;
+  h3 {
+    margin: @gutter 0;
+  }
+  .radial-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+  }
+  .activate-buttons {
+    height: 40px;
+    margin-top: @gutter/2;
+    margin-bottom: @gutter;
+    .breakpoint(md-down, {
+      margin-bottom: 0;
+    });
+  }
+}

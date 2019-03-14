@@ -1,0 +1,114 @@
+@import 'thermostat-slider/thermostat-slider.less';
+
+arcus-device-action-stream-record {
+  .video-wrapper.is-fullscreen.webkit-fake-fullscreen {
+    position: fixed;
+    display: block;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    visibility: visible;
+    opacity: 1;
+    z-index: @zindex-modal;
+  }
+  .faux-hidden {
+    display:block;
+    height:1px;
+    width:1px;
+    padding:1px;
+    overflow:hidden;
+  }
+}
+arcus-device-action-halo-toggle-light-play-stop {
+  arcus-device-action-toggle-on-off {
+    margin-bottom: @gutter/2;
+  }
+}
+
+arcus-device-action-irrigation-nowstopskip,
+arcus-device-action-changetemperature,
+arcus-device-action-thermostat-slider {
+  .range {
+    span {
+      .font-regular;
+    }
+  }
+  .loader {
+    margin-bottom: @gutter/2;
+    margin-top: @gutter/2;
+  }
+}
+
+arcus-device-action-toggle-on-off {
+  display: block;
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > label {
+      color: @coot;
+      font-size: 14px;
+      margin-left: 10px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+arcus-device-action-changeTemperature {
+  .range {
+    display: flex;
+    align-items: center;
+  }
+}
+
+arcus-device-action-changeWaterHeaterTemperature {
+  .energy-saver {
+    .font-demibold;
+    color: @grouse;
+    line-height: 1.5;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: @font-size-base;
+  }
+}
+
+arcus-device-action-irrigation-nowstopskip,
+arcus-device-action-lock-unlock,
+arcus-device-action-lock-unlock-auto-petdoor,
+arcus-device-action-open-close-door,
+arcus-device-action-open-close-valve,
+arcus-device-action-stream-record,
+arcus-firmware-updating {
+  display: block;
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+arcus-device-action-open-close-door,
+arcus-device-action-open-close-valve {
+  .content {
+    .btn {
+      margin: 0 0 5px 0;
+    }
+  }
+}
+
+arcus-device-action-changeblindstate {
+  .content {
+    .btn-run {
+      display: flex;
+      text-align: center;
+      margin: 0 auto @gutter/2 auto !important;
+      &:first-child {
+        margin-bottom: @gutter/2 !important;
+      }
+    }
+  }
+}

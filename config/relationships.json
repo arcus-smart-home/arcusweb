@@ -1,0 +1,114 @@
+[
+  {
+    "display": "Spouse/Partner",
+    "tag": "people_family_spouse"
+  },
+  {
+    "display": "Child (Lives at home)",
+    "tag": "people_family_child_home"
+  },
+  {
+    "display": "Child (Doesn't Live at home)",
+    "tag": "people_family_child_not_home"
+  },
+  {
+    "display": "Mother",
+    "tag": "people_family_mother"
+  },
+  {
+    "display": "Father",
+    "tag": "people_family_father"
+  },
+  {
+    "display": "Grandmother",
+    "tag": "people_family_grandmother"
+  },
+  {
+    "display": "Grandfather",
+    "tag": "people_family_grandfather"
+  },
+  {
+    "display": "Aunt",
+    "tag": "people_family_aunt"
+  },
+  {
+    "display": "Uncle",
+    "tag": "people_family_uncle"
+  },
+  {
+    "display": "Cousin",
+    "tag": "people_family_cousin"
+  },
+  {
+    "display": "Friend",
+    "tag": "people_other_friend"
+  },
+  {
+    "display": "Guest",
+    "tag": "people_other_guest"
+  },
+  {
+    "display": "Neighbor",
+    "tag": "people_other_neighbor"
+  },
+  {
+    "display": "Landlord",
+    "tag": "people_other_landlord"
+  },
+  {
+    "display": "Renter",
+    "tag": "people_other_renter"
+  },
+  {
+    "display": "Roommate",
+    "tag": "people_other_roommate"
+  },
+  {
+    "display": "Babysitter (Nanny)",
+    "tag": "people_service_babysitter"
+  },
+  {
+    "display": "Dog Walker",
+    "tag": "people_service_dogwalker"
+  },
+  {
+    "display": "Electrician",
+    "tag": "people_service_electrician"
+  },
+  {
+    "display": "Handyman",
+    "tag": "people_service_handyman"
+  },
+  {
+    "display": "Home Cleaner (Maid)",
+    "tag": "people_service_homecleaner"
+  },
+  {
+    "display": "HVAC Specialist",
+    "tag": "people_service_hvac"
+  },
+  {
+    "display": "Landscaper",
+    "tag": "people_service_landscaper"
+  },
+  {
+    "display": "Nurse",
+    "tag": "people_service_nurse"
+  },
+  {
+    "display": "Painter",
+    "tag": "people_service_painter"
+  },
+  {
+    "display": "Pest Control",
+    "tag": "people_service_pestcontrol"
+  },
+  {
+    "display": "Plumber",
+    "tag": "people_service_plumber"
+  },
+  {
+    "display": "Other",
+    "tag": "people_service_other"
+  }
+]

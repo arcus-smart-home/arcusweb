@@ -1,0 +1,125 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/shop-button.component" />
+
+<div class="subsystem-card-title">
+  <h3>
+    <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug) }}">
+      {{{iconOf(subsystem)}}} {{subsystem.displayName}}
+    </a>
+  </h3>
+  <a data-analytics="dashboard.{{subsystem.analyticsTag}}" href="{{ routeUrl(page="services" subpage=subsystem.slug) }}" class="subsystem-chevron">
+    <i class="icon-app-chevron"></i>
+  </a>
+  <div class="total-count"><p>{{deviceCount}} <span>Total</span></p></div>
+</div>
+
+<div class="subsystem-card-contents">
+  {{#if showShutOff}}
+  <div class="subsystem-status-shut-off">
+    <div class="status-header">
+      <h3>Water Shut-Off Valve</h3>
+      {{#if showShutOffDetail}}
+      <span class="water-device-detail">
+        {{#if shutOffDeviceClosed}}Shut-Off{{else}}Open{{/if}}
+      </span>
+      {{/if}}
+      {{^if shutOffDevice}}
+        <arcus-shop-button href="{{redirectToUrl('p_water')}}" />
+      {{/if}}
+    </div>
+    {{#if shutOffDevice}}
+      <p class="device-name">{{shutOffDevice.name}}</p>
+    {{else}}
+      <small>0 Devices Paired</small>
+    {{/if}}
+    {{#if hasErrors(shutOffDevice)}}
+      <small class="error">{{errorText(shutOffDevice)}}</small>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if showSoftener}}
+  <div class="subsystem-status-soft">
+    <div class="status-header">
+      <h3>Water Softness</h3>
+      {{#if softenerDevice}}
+        <span class="water-device-detail">
+          {{^if hasErrors(softenerDevice)}}
+          {{#eq softenerDevice['watersoftener:rechargeStatus'] WaterSoftenerCapability.RECHARGESTATUS_RECHARGING}}
+            <span>{{softenerDevice['web:watersoftener:formattedRechargeTime']}}</span> <sup class="value-unit">Left</sup>
+          {{else}}
+            <span class="icon-platform-softener-2"></span>
+            <span>{{softenerDevice['web:watersoftener:saltLevel']}}<sup class="value-unit">%</sup></span>
+          {{/eq}}
+          {{/if}}
+        </span>
+      {{else}}
+        <arcus-shop-button href="{{redirectToUrl('p_water')}}" />
+      {{/if}}
+    </div>
+    {{#if softenerDevice}}
+      <p class="device-name">{{softenerDevice.name}}</p>
+    {{else}}
+        <small>0 Devices Paired</small>
+    {{/if}}
+    {{#if hasErrors(softenerDevice)}}
+      <small class="error">{{errorText(softenerDevice)}}</small>
+    {{else}}
+      {{#eq softenerDevice['watersoftener:rechargeStatus'] WaterSoftenerCapability.RECHARGESTATUS_RECHARGING}}
+        <small>Recharging</small>
+      {{else}}
+        {{#if softenerDevice['web:watersoftener:lowOnSalt']}}
+          <small><span class="icon-platform-warning-2"></span> Low Salt Level</small>
+        {{/if}}
+      {{/eq}}
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if showHeater}}
+  <div class="subsystem-heater">
+    <div class="status-header">
+      <h3>Water Temperature</h3>
+      {{#if heaterDevice}}
+        {{^if heaterDevice.isOffline}}
+          <span class="water-device-detail">
+            {{#if heaterDevice['waterheater:heatingstate']}}<span class="icon-app-flame"></span>{{/if}}
+            <span>{{format-temp(heaterDevice['waterheater:setpoint'], 'F')}}<sup class="value-unit">&deg;</sup></span>
+          </span>
+        {{/if}}
+      {{else}}
+        <arcus-shop-button href="{{redirectToUrl('p_water')}}" />
+      {{/if}}
+    </div>
+    {{#if heaterDevice}}
+      <p class="device-name">{{heaterDevice.name}}</p>
+    {{else}}
+      <small>0 Devices Paired</small>
+    {{/if}}
+    {{#if hasErrors(heaterDevice)}}
+      <small class="error">{{errorText(heaterDevice)}}</small>
+    {{else}}
+      {{#if heaterDevice['web:waterheater:lowHeatTargetDescription']}}
+        <small>{{heaterDevice['web:waterheater:lowHeatTargetDescription']}}</small>
+      {{else}}
+        <small>{{heaterDevice['web:waterheater:hotwaterlevelDescription']}}</small>
+      {{/if}}
+    {{/if}}
+  </div>
+  {{/if}}
+</div>

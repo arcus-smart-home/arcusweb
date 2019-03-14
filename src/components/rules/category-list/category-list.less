@@ -1,0 +1,36 @@
+arcus-rules-category-list {
+	display: block;
+  .accordion-panel {
+    display: flex;
+    cursor: pointer;
+    
+    &.satisfied-divider {
+      background-color: @pigeon;
+      padding: @gutter/2;
+      margin-top: -1px;
+      .breakpoint(xs, {
+        margin-left: -(@gutter/3);
+        margin-right: -(@gutter/3);
+      });
+
+      h3 {
+        padding-left: @gutter/2;
+        margin-bottom: 0;
+        margin-top: 0;
+        line-height: 1.5;
+      }
+    }
+  }
+  arcus-accordion-panel-body {
+    flex-direction: column;
+  }
+  .empty-satisfiable-list {
+    margin-left: @gutter;
+    margin-bottom: @gutter;
+    margin-top: @gutter/2;
+    padding-left: @gutter/6;
+    .breakpoint(xs, {
+      margin-left: 0;
+    });
+  }
+}

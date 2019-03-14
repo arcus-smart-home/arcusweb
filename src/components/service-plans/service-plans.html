@@ -1,0 +1,127 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <h4>
+    {{#if selectedPlan}}
+      {{selectedPlan}}
+    {{else}}
+      NO PLAN SELECTED
+    {{/if}}
+  </h4>
+  <br />
+  <span>Current Plan ({{place['place:serviceLevel']}}):</span>
+  <button ($click)="setCurrentPlan('NONE')">None</button>
+  <button ($click)="setCurrentPlan('BASIC')">Basic</button>
+  <button ($click)="setCurrentPlan('PREMIUM')">Premium</button>
+  <button ($click)="setCurrentPlan('PREMIUM_PROMON')">Pro-Monitoring</button>
+  <br />
+  <br />
+  <span>Monitoring Available ({{#eq monitoringAvailable 'NONE'}}No{{else}}Yes{{/eq}}):</span>
+  <button ($click)="toggleMontoringAvailable()">
+    {{#eq monitoringAvailable 'NONE'}}
+      Monitoring
+    {{else}}
+      No Monitoring
+    {{/eq}}
+  </button>
+  <br />
+  <br />
+  <span>Where to be shown ({{#unless updatingExisting}}Account Creation{{else}}Settings{{/if}}):</span>
+  <button ($click)="featuresOpenByDefault()">
+    {{#unless updatingExisting}}
+      Settings
+    {{else}}
+      Account Creation
+    {{/if}}
+  </button>
+  <arcus-service-plans
+    {updating-existing}="updatingExisting"
+    {place}="place"
+    {monitoring-available}="monitoringAvailable"
+    {select-plan}="@selectPlan"
+  />
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Place from 'i2web/models/place';
+  import Plans from 'i2web/models/capability/Place';
+  import PlaceData from 'i2web/models/fixtures/data/place/place.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/service-plans/';
+
+  let app;
+
+  const BasicPlace = new Place(PlaceData[2])
+  const PremiumPlace = new Place(PlaceData[0])
+  const ProMonPlace = new Place(PlaceData[3])
+  const NewPlace = new Place(PlaceData[4])
+
+  loginAndRender({
+    template: '#demo-html',
+    scope: {
+      updatingExisting: false,
+      monitoringAvailable: undefined,
+      place: NewPlace,
+      selectedPlan: '',
+      featuresOpenByDefault() {
+        this.attr('updatingExisting', !this.attr('updatingExisting'));
+      },
+      setCurrentPlan(plan) {
+        switch (plan) {
+          case 'BASIC':
+            this.attr('place', BasicPlace);
+            break;
+          case 'PREMIUM':
+            if (this.attr('annualBilling')) {
+              PremiumPlace.attr('place:serviceLevel', Plans.SERVICELEVEL_PREMIUM_ANNUAL)
+            } else {
+              PremiumPlace.attr('place:serviceLevel', Plans.SERVICELEVEL_PREMIUM)
+            }
+            this.attr('place', PremiumPlace);
+            break;
+          case 'PREMIUM_PROMON':
+            if (this.attr('annualBilling')) {
+              ProMonPlace.attr('place:serviceLevel', Plans.SERVICELEVEL_PREMIUM_PROMON_ANNUAL)
+            } else {
+              ProMonPlace.attr('place:serviceLevel', Plans.SERVICELEVEL_PREMIUM_PROMON)
+            }
+            this.attr('place', ProMonPlace);
+            break;
+          default:
+            this.attr('place', NewPlace);
+            break;
+        }
+        this.attr('selectedPlan', this.attr('place.place:serviceLevel'));
+      },
+      selectPlan(plan) {
+        this.attr('selectedPlan', plan)
+        this.setCurrentPlan(plan)
+      },
+      toggleMontoringAvailable() {
+        this.attr('monitoringAvailable',
+          this.attr('monitoringAvailable') === 'NONE' ? 'FULL' : 'NONE');
+      },
+    },
+    appScope: {
+
+    },
+  }).then(({ appState }) => {
+    app = appState;
+  });
+</script>

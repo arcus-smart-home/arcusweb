@@ -1,0 +1,101 @@
+arcus-subsystem-card-alarms {
+  display: block;
+  @card-border: 1px solid @pigeon;
+
+  .pro-badge {
+    transform: scale(1.5);
+    display: inline-block;
+    align-self: flex-end;
+    margin-left: @gutter/2;
+    padding-top: 4px;
+  }
+  .status-header {
+    h2 {
+      margin-top: @gutter/2;
+    }
+  }
+  .subsystem-card-contents {
+    display: flex;
+    flex: 1 0 auto;
+    padding: 0;
+    border-top: @card-border;
+    .breakpoint(lg-down, {
+      flex-direction: column;
+    });
+  }
+  .subsystem-alarms-card-suspended {
+    padding: @gutter;
+    .breakpoint(md-down, {
+      padding-left: 0;
+      padding-right: 0;
+    });
+  }
+  .not-supported {
+    margin-bottom: 0;
+  }
+
+  arcus-subsystem-alarms-status-security,
+  .sensors {
+    width: 50%;
+    flex-basis: 50%;
+    .breakpoint(lg-down, {
+      width: 100%;
+      flex-basis: 100%;
+    });
+  }
+  arcus-subsystem-alarms-status-security {
+    flex-direction: column;
+    align-items: center;
+    border-bottom: @card-border;
+    justify-content: flex-start;
+    flex: 1 0 auto;
+    .breakpoint(lg, {
+      border-bottom: none;
+      border-right: @card-border;
+    });
+    arcus-segmented-radial {
+      margin-top: @gutter/2;
+    }
+    .alarm-state-buttons {
+      text-align: center;
+    }
+    h2 {
+      i {
+        display: inline-block;
+        width: 40px;
+        text-align: center;
+        padding-right: 0 !important;
+      }
+    }
+    p {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .sensors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1 0 auto;
+
+    arcus-subsystem-alarms-status-generic {
+      border-bottom: @card-border;
+      padding-bottom: @gutter;
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+    h4 {
+      margin-bottom: 0;
+    }
+    small {
+      margin-left: 46px; //offsetting the size of icons
+    }
+    sup {
+      color: @grouse;
+    }
+  }
+  arcus-subsystem-alarms-status-security-hub-offline {
+    border-top: @border;
+  }
+}

@@ -1,0 +1,62 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-edit-panel-weekday-toggle">
+  <template>
+    <button class="btn{{#if selected}} active{{/if}}" ($click)="toggleWeekday(%event)">{{dayFormatted}}</button>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        days: {},
+        day: {},
+        dayFormatted: {
+          get() {
+            return this.attr('day').charAt(0);
+          },
+        },
+        dayIndex: {
+          get() {
+            return this.attr('days') && this.attr('days').indexOf(this.attr('day'));
+          },
+        },
+        propagateSelection: {
+          type: 'htmlbool',
+          value: false,
+        },
+        selected: {
+          get() {
+            return (this.attr('dayIndex') !== -1);
+          },
+        },
+      },
+      toggleWeekday(ev) {
+        ev.preventDefault();
+        if (!this.attr('propagateSelection')) {
+          ev.stopPropagation();
+        }
+        if (this.attr('selected')) {
+          this.attr('days').splice(this.attr('dayIndex'), 1);
+        } else {
+          this.attr('days').push(this.attr('day'));
+        }
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,79 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-reset-device">
+  <template>
+    <can-import from="i2web/components/pairing/steps-combined/" />
+    <div>
+      <arcus-pairing-steps-combined
+        {default-header}="defaultHeader"
+        {pairing-type-steps}="resetSteps"
+      />
+    </div>
+    <button class="btn" ($click)="onPairDeviceAfterReset()">Pair Device</button>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {String} defaultHeader
+         * @parent i2web/components/pairing/reset/device
+         * @description If the 0th reset step doesn't have a title, use this one
+         */
+        defaultHeader: {
+          get() {
+            return 'Do not use other Arcus devices while resetting. You may unintentionally remove other devices in the process.';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/reset/device
+         * @description Title for the pairing step
+         */
+        title: {
+          get() {
+            const product = this.attr('product');
+            if (product) {
+              return `Reset ${product.attr('product:vendor')} ${product.attr('product:name')}`;
+            }
+            return 'Reset Device';
+          },
+        },
+        /**
+         * @property {Product} product
+         * @parent i2web/components/pairing/reset/device
+         * @description the product currently being paired. Derived from the state of the pairingDevice.
+        */
+        product: {},
+        /**
+         * @property {Array} resetSteps
+         * @parent i2web/components/pairing/reset/device
+         * @description List of reset steps returned by the server
+        */
+        resetSteps: {},
+        /**
+         * @property {Function} onPairDeviceAfterReset
+         * @parent i2web/components/pairing/reset/device
+         * @description callback function that restarts the pairing process
+        */
+        onPairDeviceAfterReset: {},
+      },
+    });
+  </script>
+</can-component>

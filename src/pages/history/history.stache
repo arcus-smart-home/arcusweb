@@ -1,0 +1,93 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="semantic-ui-dropdown-canjs"/>
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/event-list/" />
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/accordion/panel/" />
+<can-import from="i2web/helpers/global"/>
+<arcus-context-bar>
+  <h2><i class="icon-app-history"></i> History</h2>
+</arcus-context-bar>
+<div class="row content">
+  <div class="sidebar filters">
+    <ul class="panel-menu">
+      <li class="radio-wrapper" ($click)="checkRadio('clear')">
+        <input type="radio" id="clear" name="filterRadio" {{#eq checkedRadio 'clear'}}checked{{/eq}}>
+        <div class="radio-dropdown-wrapper">
+          <label for="clear">Show All History</label>
+          <div class="dropdown-wrapper">
+          </div>
+        </div>
+        <div class="check"></div>
+      </li>
+      {{#if place.isPremium}}
+      {{#if eventDates}}
+      <li class="radio-wrapper" ($click)="checkRadio('day')">
+        <input type="radio" id="day" name="filterRadio"  {{#eq checkedRadio 'day'}}checked{{/eq}}>
+        <div class="radio-dropdown-wrapper">
+          <label for="day">By Day</label>
+          <div class="dropdown-wrapper {{#eq checkedRadio 'day'}}checked{{/eq}}">
+            <div class="ui search selection dropdown" semantic-dropdown>
+              <input type="hidden" {($value)}="day">
+              <i class="dropdown icon"></i>
+              <div class="default text">Choose a Day</div>
+              <div class="menu">
+                {{#each eventDates}}
+                  <div class="item" data-value="{{.}}">{{format-date(.)}}</div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="check"></div>
+      </li>
+      {{/if}}
+      {{/if}}
+      {{#if devices}}
+      <li class="radio-wrapper" ($click)="checkRadio('device')" >
+        <input type="radio" id="device" name="filterRadio" {{#eq checkedRadio 'device'}}checked{{/eq}}>
+        <div class="radio-dropdown-wrapper">
+          <label for="device">By Device</label>
+          <div class="dropdown-wrapper {{#eq checkedRadio 'device'}}checked{{/eq}}">
+            <div class="ui search selection dropdown" semantic-dropdown>
+              <input type="hidden" {($value)}="device">
+              <i class="dropdown icon"></i>
+              <div class="default text">Choose a Device</div>
+              <div class="menu">
+                {{#each devices}}
+                <div class="item" data-value="{{.['base:id']}}">
+                  <p class="item-name">{{.['dev:name'}}</p>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="check"></div>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+  <div class="event-listing">
+    <div ($click)="refreshHistory()" class="history-refresh">
+      <span class="sr-only">Refresh History</span>
+      <i class="icon-app-refresh"></i>
+    </div>
+    <arcus-infinite-scroll {(source)}="historySource" header-data-attribute="date" no-items-message="No recent activity." />
+  </div>
+</div>

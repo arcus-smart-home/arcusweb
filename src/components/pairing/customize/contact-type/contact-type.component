@@ -1,0 +1,144 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-contact-type">
+  <template>
+    <can-import from="i2web/components/selectors/generic.component" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr>
+      <arcus-generic-selector {things}="options" {is-selected}="@isSelected" {select-option}="@selectOption" />
+    </div>
+  </template>
+  <script type="view-model">
+    import canList from 'can-list';
+    import CanMap from 'can-map';
+    import ContactCapability from 'i2web/models/capability/Contact';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/contact-type
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/contact-type
+         * @description Device model relevant to the customization info
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+        * @property {CanList} options
+        * @parent i2web/components/pairing/customize/contact-type
+        * @description Options to display in list of radio buttons
+        */
+        options: {
+          Type: canList,
+          value() {
+            const options = new canList([{
+              name: 'Door',
+              value: ContactCapability.USEHINT_DOOR,
+            }, {
+              name: 'Window',
+              value: ContactCapability.USEHINT_WINDOW,
+            }, {
+              name: 'Other',
+              value: ContactCapability.USEHINT_OTHER,
+            }]);
+            return options;
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/contact-type
+         * @description Title field from the customization step, to be displayed in the
+         * title area inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Will this contact sensor be used on a door or a window?';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/contact-type
+         * @description Header field from the customization step, to be displayed as the primary
+         * title  directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Customize Device';
+          },
+        },
+        /**
+         * @property {function} whenComplete
+         * @parent i2web/components/pairing/customize/contact-type
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the contact type is changed
+         */
+        whenComplete: {},
+      },
+      /**
+      * @function isSelected
+      * @parent i2web/components/pairing/customize/contact-type
+      * @description Indicates if a particular option is selected
+      */
+      isSelected(option) {
+        return this.attr('device.cont:usehint') === option.value;
+      },
+      /**
+      * @function selectOption
+      * @parent i2web/components/pairing/customize/contact-type
+      * @description Selects an option
+      */
+      selectOption(option) {
+        const device = this.attr('device');
+        device.attr('cont:usehint', option.value);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+  <script type="events">
+    import ContactCapability from 'i2web/models/capability/Contact';
+
+    export default {
+      inserted() {
+        const device = this.viewModel.attr('device');
+        if (device && device.attr('cont:usehint') === ContactCapability.USEHINT_UNKNOWN) {
+          const defaultOption = this.viewModel.attr('options.0');
+          this.viewModel.selectOption(defaultOption);
+        }
+      },
+      '{viewModel.device} cont:usehint': function valueChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('CONTACT_TYPE');
+        }
+      },
+    };
+  </script>
+</can-component>

@@ -1,0 +1,65 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/accordion/" />
+<can-import from="i2web/components/rules/edit-panel/" />
+
+<arcus-accordion {on-panel-activation}="@onCategoryActivation">
+  {{#each sortedCategories}}
+    <arcus-accordion-panel scroll-timeout="250">
+      <arcus-accordion-panel-heading itemcount="{{count}}" >
+        <i class="panel-icon {{icon}}"></i>
+        <h2>{{title}}</h2>
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body>
+        {{#each templates.satisfiable}}
+          <div class="accordion-panel" ($click)="addNewRule(.)">
+            <i class="icon-app-add select-rule"
+              title="choose this rule template">
+            </i>
+            <div class="accordion-panel-content">
+              <h3 class="panel-title">{{['ruletmpl:name']}}</h3>
+              <small>{{['ruletmpl:description']}}</small>
+            </div>
+          </div>
+        {{/each}}
+        {{#is templates.satisfiable.length 0}}
+        <div class="accordion-panel">
+          <p class="empty-satisfiable-list">{{unsatisfiableTextFor(.)}}</p>
+        </div>
+        {{/is}}
+        {{#is templates.unsatisfiable.length 0}}
+        {{else}}
+          <div class="accordion-panel satisfied-divider">
+            <h3>More Rules (Additional Service or Devices Required)</h3>
+          </div>
+          {{#each templates.unsatisfiable}}
+            <div class="accordion-panel">
+              <i class="icon-app-add select-rule"
+                title="choose this rule template"
+                ($click)="addNewRule(.)">
+              </i>
+              <div class="accordion-panel-content">
+                <h3>{{['ruletmpl:name']}}</h3>
+                <small>{{['ruletmpl:description']}}</small>
+              </div>
+            </div>
+          {{/each}}
+        {{/is}}
+      </arcus-accordion-panel-body>
+    </arcus-accordion-panel>
+  {{/each}}
+</arcus-accordion>

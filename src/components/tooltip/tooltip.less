@@ -1,0 +1,84 @@
+arcus-tooltip {
+  display: inline-block;
+  position: fixed; // position fixed while hidden for measurement benefits
+  top: 0;
+  left: 0;
+  z-index: @zindex-tooltip;
+  max-width: 295px;
+  padding: @gutter/4 @gutter/2;
+  opacity: 0;
+  visibility: hidden;
+  color: @crane;
+  background-color: @peacock;
+  border: 1px solid @peacock;
+  border-radius: @border-radius;
+  font-size: @font-size-small;
+  transition: opacity .3s linear;
+  // TODO: add indirect tooltip targeting and remove this or move to usage-specific stylesheet
+  // required due to having to work when placed inside a label element
+  white-space: normal;
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  @tooltip-arrow-width: 10px;
+  .tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 0 @tooltip-arrow-width;
+  }
+  &[anchor^="top"], &[anchor$="top"]  {
+    .tooltip-arrow {
+      border-bottom-color: @peacock;
+      border-bottom-width: @tooltip-arrow-width;
+    }
+  }
+  &[anchor^="bottom"], &[anchor="bottom"] {
+    .tooltip-arrow {
+      border-top-color: @peacock;
+      border-top-width: @tooltip-arrow-width;
+    }
+  }
+  a {
+    color: @link-color-dark;
+    text-decoration: underline;
+    .breakpoint(md, {
+      text-decoration: none;
+    });
+  }
+}
+
+.tooltip-trigger {
+  position: relative;
+  &.btn-small {
+    margin-top: 0 !important;
+    margin-right: @gutter/5;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    font-size: @font-size-small;
+    .font-serif !important;
+    font-weight: bold;
+    font-style: italic;
+    text-transform: none;
+    .breakpoint(md, {
+      margin-left: @gutter/3;
+    });
+  }
+}
+
+.tooltip-wrapper { //for easier placement with inputs
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: @gutter/2;
+  margin-bottom: @gutter/2;
+  .btn-small {
+    margin-bottom: @gutter/2;
+    flex-shrink: 0;
+  }
+}

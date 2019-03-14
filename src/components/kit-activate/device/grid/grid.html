@@ -1,0 +1,172 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <button ($click)="resetAll()">Reset All</button>
+  {{#each demoStates}}
+    <button ($click)="changeStateOf(%index)">{{%index}}: {{.}}</button>
+  {{/each}}
+  <arcus-kit-activate-device-grid
+    {kit-devices}="kitDevices"
+    {hub}="hub"
+    {pairing-devices}="pairingDevices"
+    {subsystem}="subsystem"
+  />
+</script>
+<script src="/node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanList from 'can-list';
+  import CanMap from 'can-map';
+  import 'can-map-define';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/kit-activate/device/grid/';
+  import HubData from 'i2web/models/fixtures/data/hub.json';
+  import SubsystemData from 'i2web/models/fixtures/data/subsystem.json';
+  import ProductData from 'i2web/models/fixtures/data/product.json';
+  import DeviceData from 'i2web/models/fixtures/data/device';
+  import PairingDeviceCaps from 'i2web/models/capability/PairingDevice';
+  import Hub from 'i2web/models/hub';
+  import PairingDevice from 'i2web/models/pairing-device';
+  import Subsystem from 'i2web/models/subsystem';
+
+  const Subsystems =
+    new Subsystem.List(SubsystemData["3d496bfc-1098-493e-afd4-7f56c12dbef6"].subsystems);
+  const PairingSubsystem = Subsystems.findByName('subpairing');
+
+  const devices = DeviceData.filter((d) => {
+    const ids = [
+      '179291ab-1099-46ae-97fa-f76696096e89', // contact
+      'c3df5d96-7fc5-42f2-91a0-b9b5cf58a864', // smart plug
+    ];
+    if (ids.includes(d['base:id'])) {
+      d['devadv:protocolid'] = d['base:id'];
+      return true;
+    }
+    return false;
+  });
+
+  const products = ProductData.filter((p) => {
+    const ids = [
+      '4dd18a',
+      'd9ac87',
+    ];
+    return ids.includes(p['base:id']);
+  });
+
+  const productsByID = new CanMap({});
+  products.forEach((p) => {
+    productsByID.attr(p['product:id'], p);
+  });
+
+  const pairingDevices = [{
+    'pairdev:protocolId': '179291ab-1099-46ae-97fa-f76696096e89',
+    'pairdev:pairingState': PairingDeviceCaps.PAIRINGSTATE_PAIRED,
+  },{
+    'pairdev:protocolId': 'c3df5d96-7fc5-42f2-91a0-b9b5cf58a864',
+    'pairdev:pairingState': PairingDeviceCaps.PAIRINGSTATE_PAIRED,
+  }];
+
+  const kitDevices = [
+    { productId: '4dd18a', protocolAddress: '179291ab-1099-46ae-97fa-f76696096e89' },
+    { productId: 'd9ac87', protocolAddress: 'c3df5d96-7fc5-42f2-91a0-b9b5cf58a864' },
+  ];
+
+  const demoStates = [
+    'Inactive',
+    'Inactive',
+  ];
+
+  const renderedDevices = new CanList([]);
+  const renderedPairingDevices = new CanList(pairingDevices);
+  let appScope;
+
+  const scope = new CanMap({
+    kitDevices: new CanList(kitDevices),
+    hub: new Hub(HubData),
+    pairingDevices: renderedPairingDevices,
+    subsystem: PairingSubsystem,
+    demoStates: demoStates,
+    changeStateOf(i) {
+      const states = this.attr('demoStates');
+      switch (states.attr(i)) {
+        case 'Inactive':
+          states.attr(i, 'Customize');
+          break;
+        case 'Customize':
+          states.attr(i, 'Active');
+          break;
+        case 'Active':
+          states.attr(i, 'Mispaired');
+          break;
+        case 'Mispaired':
+          states.attr(i, 'Inactive');
+          break;
+        default:
+          states.attr(i, 'Inactive');
+          break;
+      }
+      this.recaculateState();
+    },
+    recaculateState() {
+      this.resetState();
+      const devs = appScope.attr('devices');
+      const pairing = this.attr('pairingDevices');
+      this.attr('demoStates').forEach((s, i) => {
+        if (s === 'Inactive') {
+          pairing.push(pairingDevices[i]);
+        }
+        if (s === 'Customize') {
+          pairing.push(pairingDevices[i]);
+          devs.push(devices[i]);
+        }
+        if (s === 'Active') {
+          devs.push(devices[i]);
+        }
+        if (s === 'Mispaired') {
+          const pairingDev = pairingDevices[i];
+          pairingDev['pairdev:pairingState'] = PairingDeviceCaps.PAIRINGSTATE_MISPAIRED;
+          pairing.push(pairingDev);
+        }
+      });
+    },
+    resetAll() {
+      this.resetState();
+      this.attr('demoStates').replace(demoStates);
+    },
+    resetState() {
+      this.attr('pairingDevices').replace([]);
+      appScope.attr('devices').replace([]);
+      pairingDevices.forEach((p) => {
+        p['pairdev:pairingState'] = PairingDeviceCaps.PAIRINGSTATE_PAIRED;
+      });
+    },
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope: {
+      devices: renderedDevices,
+      products: productsByID,
+      session: {
+        secureStaticResourceBaseUrl: "https://ssr.arcus.com"
+      }
+    },
+  }).then(({ appState }) => {
+    appScope = appState;
+  });
+</script>

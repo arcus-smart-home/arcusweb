@@ -1,0 +1,606 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css!"/>
+  <can-import from="i2web/styles/global-styles.less!"/>
+  <can-import from="i2web/styles/demos/icon-styles.less!"/>
+  <ul class="icon-styles row">
+    <li class="col-xs-3">
+      <i class="icon-platform-nest-leaf"></i>
+      <code>.icon-platform-nest-leaf</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hub-1"></i>
+      <code>.icon-platform-hub-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hub-offline-1"></i>
+      <code>.icon-platform-hub-offline-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-warning-1"></i>
+      <code>.icon-platform-warning-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-warning-2"></i>
+      <code>.icon-platform-warning-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hub-v3-1"></i>
+      <code>.icon-platform-hub-v3-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hub-v3-2"></i>
+      <code>.icon-platform-hub-v3-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-keypad-1"></i>
+      <code>.icon-platform-gs-keypad-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-keypad-2"></i>
+      <code>.icon-platform-gs-keypad-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-contact-sensor-1"></i>
+      <code>.icon-platform-gs-contact-sensor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-opencontact-sensor-1"></i>
+      <code>.icon-platform-gs-opencontact-sensor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-contact-sensor-2"></i>
+      <code>.icon-platform-gs-contact-sensor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-opencontact-sensor-2"></i>
+      <code>.icon-platform-gs-opencontact-sensor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-motion-sensor-1"></i>
+      <code>.icon-platform-gs-motion-sensor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-openmotion-sensor-1"></i>
+      <code>.icon-platform-gs-openmotion-sensor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-motion-sensor-2"></i>
+      <code>.icon-platform-gs-motion-sensor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-openmotion-sensor-2"></i>
+      <code>.icon-platform-gs-openmotion-sensor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-wifi-smart-plug-indoor-1"></i>
+      <code>.icon-platform-gs-wifi-smart-plug-indoor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-wifi-smart-plug-indoor-2"></i>
+      <code>.icon-platform-gs-wifi-smart-plug-indoor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-wifi-smart-plug-outdoor-1"></i>
+      <code>.icon-platform-gs-wifi-smart-plug-outdoor-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-wifi-smart-plug-outdoor-2"></i>
+      <code>.icon-platform-gs-wifi-smart-plug-outdoor-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-zigbee-smart-plug-1"></i>
+      <code>.icon-platform-gs-zigbee-smart-plug-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-gs-zigbee-smart-plug-2"></i>
+      <code>.icon-platform-gs-zigbee-smart-plug-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-swann-camera-1"></i>
+      <code>.icon-platform-swann-camera-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-swann-camera-2"></i>
+      <code>.icon-platform-swann-camera-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-swann-wifi-smart-switch-1"></i>
+      <code>.icon-platform-swann-wifi-smart-switch-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-swann-wifi-smart-switch-2"></i>
+      <code>.icon-platform-swann-wifi-smart-switch-2</code>
+    </li>
+    <h2>Lights &amp; Switches</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-light-switch-1"></i>
+      <code>.icon-platform-light-switch-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-light-switch-2"></i>
+      <code>.icon-platform-light-switch-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-dimmer-1"></i>
+      <code>.icon-platform-dimmer-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-dimmer-2"></i>
+      <code>.icon-platform-dimmer-2</code>
+    </li>
+        <li class="col-xs-3">
+      <i class="icon-platform-light-1"></i>
+      <code>.icon-platform-light-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-light-2"></i>
+      <code>.icon-platform-light-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-walloutlet-1"></i>
+      <code>.icon-platform-walloutlet-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-walloutlet-2"></i>
+      <code>.icon-platform-walloutlet-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-outlet-1"></i>
+      <code>.icon-platform-outlet-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-outlet-2"></i>
+      <code>.icon-platform-outlet-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-button-1"></i>
+      <code>.icon-platform-button-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-button-2"></i>
+      <code>.icon-platform-button-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-symbolpad-1"></i>
+      <code>.icon-platform-symbolpad-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-symbolpad-2"></i>
+      <code>.icon-platform-symbolpad-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keypad-1"></i>
+      <code>.icon-platform-keypad-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keypad-2"></i>
+      <code>.icon-platform-keypad-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-1"></i>
+      <code>.icon-platform-keyfob-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-2"></i>
+      <code>.icon-platform-keyfob-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-numberpad-1"></i>
+      <code>.icon-platform-numberpad-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-numberpad-2"></i>
+      <code>.icon-platform-numberpad-2</code>
+    </li>
+    <h2>Alarm</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-weather-alert"></i>
+      <code>.icon-platform-weather-alert</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-co-smoke-1"></i>
+      <code>.icon-platform-co-smoke-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-co-smoke-2"></i>
+      <code>.icon-platform-co-smoke-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-smoke-1"></i>
+      <code>.icon-platform-smoke-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-smoke-2"></i>
+      <code>.icon-platform-smoke-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-water-leak-1"></i>
+      <code>.icon-platform-water-leak-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-water-leak-2"></i>
+      <code>.icon-platform-water-leak-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-security-1"></i>
+      <code>.icon-platform-security-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-glass-break-2"></i>
+      <code>.icon-platform-glass-break-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-siren-1"></i>
+      <code>.icon-platform-siren-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-siren-2"></i>
+      <code>.icon-platform-siren-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-tilt-1"></i>
+      <code>.icon-platform-tilt-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-tilt-2"></i>
+      <code>.icon-platform-tilt-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-co-1"></i>
+      <code>.icon-platform-co-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-co-2"></i>
+      <code>.icon-platform-co-2</code>
+    </li>
+
+
+  <h2>Climate</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-flame-1"></i>
+      <code>.icon-platform-flame-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-flame-2"></i>
+      <code>.icon-platform-flame-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-vent-1"></i>
+      <code>.icon-platform-vent-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-vent-2"></i>
+      <code>.icon-platform-vent-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-fan-1"></i>
+      <code>.icon-platform-fan-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-fan-2"></i>
+      <code>.icon-platform-fan-2</code>
+    </li>
+
+
+  <h2>Doors &amp; Locks</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-hinge-2"></i>
+      <code>.icon-platform-hinge-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-opencontact-1"></i>
+      <code>.icon-platform-opencontact-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-opencontact-2"></i>
+      <code>.icon-platform-opencontact-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-contact-1"></i>
+      <code>.icon-platform-contact-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-contact-2"></i>
+      <code>.icon-platform-contact-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-lock-1"></i>
+      <code>.icon-platform-lock-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-lock-2"></i>
+      <code>.icon-platform-lock-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-unlock-1"></i>
+      <code>.icon-platform-unlock-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-unlock-2"></i>
+      <code>.icon-platform-unlock-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-garage-1"></i>
+      <code>.icon-platform-garage-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-garage-2"></i>
+      <code>.icon-platform-garage-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-garage-3"></i>
+      <code>.icon-platform-garage-3</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-petdoor-1"></i>
+      <code>.icon-platform-petdoor-1</code>
+    </li>
+
+
+  <h2>Care</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-hexagon"></i>
+      <code>.icon-platform-keyfob-hexagon</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-square"></i>
+      <code>.icon-platform-keyfob-square</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-diamond"></i>
+      <code>.icon-platform-keyfob-diamond</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-circle"></i>
+      <code>.icon-platform-keyfob-circle</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-away"></i>
+      <code>.icon-platform-keyfob-away</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-home"></i>
+      <code>.icon-platform-keyfob-home</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-a"></i>
+      <code>.icon-platform-keyfob-a</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-keyfob-b"></i>
+      <code>.icon-platform-keyfob-b</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-care-pendant-1"></i>
+      <code>.icon-platform-care-pendant-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-care-pendant-2"></i>
+      <code>.icon-platform-care-pendant-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-care-1"></i>
+      <code>.icon-platform-care-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-care-2"></i>
+      <code>.icon-platform-care-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-carep-1"></i>
+      <code>.icon-platform-carep-1</code>
+    </li>
+
+
+  <h2>Home &amp; Family</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-home-1"></i>
+      <code>.icon-platform-home-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-home-2"></i>
+      <code>.icon-platform-home-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-home-energy"></i>
+      <code>.icon-platform-home-energy</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-voice-assistant"></i>
+      <code>.icon-platform-voice-assistant</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-range-extender-1"></i>
+      <code>.icon-platform-range-extender-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-range-extender-2"></i>
+      <code>.icon-platform-range-extender-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-garage-bridge-1"></i>
+      <code>.icon-platform-garage-bridge-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-garage-bridge-2"></i>
+      <code>.icon-platform-garage-bridge-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-speaker-1"></i>
+      <code>.icon-platform-speaker-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-remote-1"></i>
+      <code>.icon-platform-remote-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-remote-2"></i>
+      <code>.icon-platform-remote-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-router-1"></i>
+      <code>.icon-platform-router-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-router-2"></i>
+      <code>.icon-platform-router-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-signal-1"></i>
+      <code>.icon-platform-signal-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-fridge-1"></i>
+      <code>.icon-platform-fridge-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-fridge-2"></i>
+      <code>.icon-platform-fridge-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-blinds-1"></i>
+      <code>.icon-platform-blinds-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-pair-1"></i>
+      <code>.icon-platform-pair-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-pair-2"></i>
+      <code>.icon-platform-pair-2</code>
+    </li>
+
+
+  <h2>Cameras</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-camera-1"></i>
+      <code>.icon-platform-camera-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-camera-2"></i>
+      <code>.icon-platform-camera-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-camera-3"></i>
+      <code>.icon-platform-camera-3</code>
+    </li>
+
+  <h2>Lawn &amp; Garden</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-irrigation-1"></i>
+      <code>.icon-platform-irrigation-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-irrigation-2"></i>
+      <code>.icon-platform-irrigation-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-sprinkler-1"></i>
+      <code>.icon-platform-sprinkler-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-sprinkler-2"></i>
+      <code>.icon-platform-sprinkler-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hoseend-1"></i>
+      <code>.icon-platform-hoseend-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hoseend-2"></i>
+      <code>.icon-platform-hoseend-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hoseend-timer-1"></i>
+      <code>.icon-platform-hoseend-timer-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-hoseend-timer-2"></i>
+      <code>.icon-platform-hoseend-timer-2</code>
+    </li>
+
+
+  <h2>Water</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-drain-1"></i>
+      <code>.icon-platform-drain-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-drain-2"></i>
+      <code>.icon-platform-drain-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-leak-1"></i>
+      <code>.icon-platform-leak-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-leak-2"></i>
+      <code>.icon-platform-leak-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-softener-1"></i>
+      <code>.icon-platform-softener-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-softener-2"></i>
+      <code>.icon-platform-softener-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-waterheater-1"></i>
+      <code>.icon-platform-waterheater-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-waterheater-2"></i>
+      <code>.icon-platform-waterheater-2</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-water-1"></i>
+      <code>.icon-platform-water-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-water-valve-1"></i>
+      <code>.icon-platform-water-valve-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-water-valve-2"></i>
+      <code>.icon-platform-water-valve-2</code>
+    </li>
+
+    <h3>Aliased from the App Icon Font</h3>
+    <li class="col-xs-3">
+      <i class="icon-platform-unknown-1"></i>
+      <code>.icon-platform-unknown-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-unknown-2"></i>
+      <code>.icon-platform-unknown-2</code>
+    </li>
+
+    <h2>Depreciated Icons</h2>
+    <li class="col-xs-3">
+      <i class="icon-platform-waterflow-1"></i>
+      <code>.icon-platform-waterflow-1</code>
+    </li>
+    <li class="col-xs-3">
+      <i class="icon-platform-waterflow-2"></i>
+      <code>.icon-platform-waterflow-2</code>
+    </li>
+  </ul>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender/"></script>

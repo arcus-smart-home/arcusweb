@@ -1,0 +1,101 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/device/icon/" />
+<can-import from="i2web/components/shop-button.component" />
+
+<arcus-context-bar>
+  <h2>
+    <i class="icon-app-family-2"></i>
+    {{subsystem.displayName}}
+  </h2>
+</arcus-context-bar>
+
+{{#unless allDevices.length}}
+  <div class="no-devices">
+    <div class="left-wrapper">
+      <h3>Keeping Track of Home &amp; Family</h3>
+      <p>Use the Arcus Web Portal to see who's currently at home at a quick glance or assign one your care pendants or smart fobs to one of your contacts.</p>
+    </div>
+    <div class="right-wrapper">
+      <arcus-shop-button href="{{redirectToUrl('p_home')}}" expanded>
+        Shop Devices
+      </arcus-shop-button>
+    </div>
+  </div>
+{{else}}
+  <div class="category-header">
+    <h2>
+      <i class="icon-platform-home-2"></i>
+       Home
+    </h2>
+  </div>
+  <div class="category-content">
+    {{#is atHomeCount 0}}
+      <p class="empty-message">Everyone is away.</p>
+    {{else}}
+      {{#each peopleAtHome as person}}
+        <div class="presence-item">
+          <i class="icon-app-user-1 avatar"></i>
+          <div>
+            <h3 class="name">{{person['person:name']}}</h3>
+            <button class="btn" ($click)="toggleAssignmentPanel(person)">Edit</button>
+          </div>
+        </div>
+      {{/each}}
+      {{#each devicesAtHome as device}}
+        <div class="presence-item">
+          <i class="{{device['web:icon:on']}} avatar"></i>
+          <div>
+            <h3 class="name">{{device['dev:name']}}</h3>
+            <button class="btn" ($click)="toggleAssignmentPanel(device)">Edit</button>
+          </div>
+        </div>
+      {{/each}}
+    {{/is}}
+  </div>
+  <div class="category-header">
+    <h2>
+      <i class="icon-app-door-2"></i>
+       Away
+    </h2>
+  </div>
+  <div class="category-content">
+    {{#is awayCount 0}}
+        <p class="empty-message">Everyone is home.</p>
+    {{else}}
+      {{#each peopleAway as person}}
+        <div class="presence-item">
+          <i class="icon-app-user-1 avatar"></i>
+          <div>
+            <h3 class="name">{{person['person:name']}}</h3>
+            <button class="btn" ($click)="toggleAssignmentPanel(person)">Edit</button>
+          </div>
+        </div>
+      {{/each}}
+      {{#each devicesAway as device}}
+        <div class="presence-item">
+          <i class="{{device['web:icon:on']}} avatar"></i>
+          <div>
+            <h3 class="name">{{device['dev:name']}}</h3>
+            <button class="btn" ($click)="toggleAssignmentPanel(device)">Edit</button>
+          </div>
+        </div>
+      {{/each}}
+    {{/is}}
+  </div>
+{{/unless}}

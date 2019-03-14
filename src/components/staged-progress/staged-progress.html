@@ -1,0 +1,78 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+arcus-staged-progress {
+  margin: 30px;
+}
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="viewAccountCreation">Account Creation</button>
+  <button ($click)="viewDevicePairing">Device Pairing</button>
+
+  <arcus-staged-progress {stages}="stages" {{stage}} {{#if inProgress}}in-progress{{/if}} />
+
+  {{#each stages}}
+    <button ($click)="setStageTo(.)">{{.}}</button>
+  {{/each}}
+  <br />
+  <br />
+  <div>
+    <input type="checkbox" id="in-progress" name="in-progress" {($checked)}="inProgress">
+    <label for="in-progress">In Progress</label>
+  </div>
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/staged-progress/';
+
+  const scope = new CanMap({
+    stage: 'select-plan',
+    stages: [
+      'select-plan',
+      'create-login',
+      'build-profile',
+    ],
+    inProgress: true,
+    setStageTo(stage) {
+      this.attr('stage', stage);
+    },
+    viewAccountCreation() {
+      this.attr('stages', [
+        'select-plan',
+        'create-login',
+        'build-profile',
+      ]);
+    },
+    viewDevicePairing() {
+      this.attr('stages', [
+        'discover',
+        'connect',
+        'configure',
+      ]);
+    },
+  });
+
+  const appScope = new CanMap({});
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

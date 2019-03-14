@@ -1,0 +1,105 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/progress-bar/" />
+<can-import from="i2web/components/support-number.component" />
+<div class="pairing-content-wrapper">
+  {{#switch registrationState}}
+    {{#case 'requires.new.id'}}
+      <p class="font-demibold error">
+        <i class="icon-platform-warning-2"></i>
+        Your Hub{{hubIDText}}is reporting error code E01.
+      </p>
+      <p>
+        Please make sure your Hub ID was entered correctly. If the issue persists,
+        call <arcus-support-number use-link /> to speak with our Support team.
+      </p>
+    {{/case}}
+    {{#case 'timed.out'}}
+      <p>
+        Hub ID {{hubIDText}} is taking longer than expected to connect to the Arcus Cloud
+        Platform. Please make sure your Hub ID was entered correctly.
+      </p>
+    {{/case}}
+    {{#case 'error.register.orphanedhub'}}
+        <p class="font-demibold line-height-double error">
+          <i class="icon-platform-warning-2"></i>
+          Your Hub{{hubIDText}}is reporting error code E02.
+        </p>
+        <p>{{resetInstructions}}</p>
+        {{#if isV2Hub}}
+          <a ($click)="resetToPairingSteps()" class="btn">Back to Pairing Steps</a>
+        {{else}}
+          {{#unless isV3HubReEntry}}
+            <a ($click)="resetToIdEntry()" class="btn">Re-enter ID</a>
+          {{/unless}}
+        {{/if}}
+    {{/case}}
+    {{#case 'error.fwupgrade.failed'}}
+      <p>There was an issue updating the Hub's firmware.</p>
+      <p>Call <span class="font-demibold"><arcus-support-number use-link /></span> for support.</p>
+    {{/case}}
+    {{#case 'DOWNLOADING'}}
+      <p>
+        Your Smart Hub is downloading the latest firmware. This may take 5-10 minutes
+        depending on the speed of your internet connection. Once the update is
+        installed, the Hub will reboot automatically.
+      </p>
+    {{/case}}
+    {{#case 'APPLYING'}}
+      <p>
+        Your Smart Hub is applying the latest firmware. This may take a few minutes and
+        it will reboot. It is normal for the Hub to flash several lights during the
+        reboot process.
+      </p>
+    {{/case}}
+    {{#default}}
+      <p>
+        It may take 5-10 minutes to connect your Hub to the Arcus Cloud
+        Platform. Depending on your Hub type, your light will either blink or
+        rotate while connecting.
+      </p>
+    {{/default}}
+  {{/switch}}
+  {{#if showProgressBar}}
+    <div class="box-gray-radius">
+      <arcus-progress-bar {percent-complete}="progressDisplayed" />
+    </div>
+  {{/if}}
+  {{#if showIDForm}}
+    <div class="box-gray-radius">
+      <h4>Wrong Hub ID? Re-enter the ID and continue.</h4>
+      <div class="input-wrapper">
+        <input
+          type="text"
+          id="hub-id-entry"
+          key-mask="AAA-9999"
+          {$value}="formValues['hub-id']"
+          ($change)="onHubIdChange(%event)"
+        >
+        <label for="hub-id-entry">Hub ID</label>
+      </div>
+      <a ($click)="registerHub()" class="btn">Continue</a>
+    </div>
+  {{/if}}
+  {{#eq registrationState 'error.register.orphanedhub'}}
+    {{#unless isV2Hub}}
+      <p>
+        <a href="{{redirectToUrl('s_hub_factory_reset')}}" class="instructions-link" target="_blank">Factory Reset Steps</a>
+      </p>
+    {{/unless}}
+  {{/eq}}
+</div>

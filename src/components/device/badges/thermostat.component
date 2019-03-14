@@ -1,0 +1,55 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-badge-thermostat">
+  <template>
+    {{#switch device['therm:hvacmode']}}
+      {{#case ThermostatCapability.HVACMODE_ECO}}
+        <span class="device-status-detail">ECO</span>
+      {{/case}}
+      {{#case ThermostatCapability.HVACMODE_AUTO}}
+        <span class="device-status-detail"><i class="icon-app-temp-1"></i>&nbsp;{{{device['web:therm:autoDescription']}}}</span>
+      {{/case}}
+      {{#case ThermostatCapability.HVACMODE_COOL}}
+        <span class="device-status-detail"><i class="icon-app-snowflake"></i>&nbsp;Cool</span>
+      {{/case}}
+      {{#case ThermostatCapability.HVACMODE_HEAT}}
+        <span class="device-status-detail"><i class="icon-app-flame"></i>&nbsp;Heat</span>
+      {{/case}}
+      {{#case ThermostatCapability.HVACMODE_OFF}}
+        <span class="device-status-detail">Off</span>
+      {{/case}}
+    {{/switch}}
+    {{#eq device['therm:active'] ThermostatCapability.ACTIVE_RUNNING}}
+      <span class="device-status-detail"><i class="icon-app-air"></i></span>
+    {{/eq}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import ThermostatCapability from 'i2web/models/capability/Thermostat.js';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+      },
+      ThermostatCapability,
+    });
+  </script>
+</can-component>

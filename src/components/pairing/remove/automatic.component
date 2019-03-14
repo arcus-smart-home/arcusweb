@@ -1,0 +1,219 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-remove-automatic">
+  <template>
+    {{#switch removalState}}
+      {{#case 'removeFailed'}}
+        <div class="box-gray-radius">
+          <h4>Removal was unsuccessful.</h4>
+          <hr>
+          <p>
+            Force remove will delete the device from the Hub.
+          </p>
+        </div>
+        <button class="btn" ($click)="forceRemove(pairingDevice)">
+          Force Remove
+        </button>
+      {{/case}}
+      {{#case 'removing'}}
+        <div class="box-gray-radius">
+          <h4>Removing...</h4>
+          <hr>
+          <p>{{stepInfo}}</p>
+        </div>
+      {{/case}}
+      {{#default}}
+        <div class="box-gray-radius">
+          {{#eq removalState 'forceRemoved'}}
+            <h4>Force Remove was successful!</h4>
+          {{else}}
+            <h4>Remove was successful!</h4>
+          {{/eq}}
+          <hr>
+          <p>
+            Your device has been successfully removed from the Hub.<br/>Select 'Pair Device' to pair again.
+          </p>
+        </div>
+        <button class="btn" ($click)="onPairRemovedDevice(pairingDevice)"
+          {{#unless deviceRemoved}}disabled{{/unless}}>
+          Pair Device
+        </button>
+      {{/default}}
+    {{/switch}}
+  </template>
+  <script type="view-model">
+    import Analytics from 'i2web/plugins/analytics';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import PairingDevice from 'i2web/models/pairing-device';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Boolean} deviceName
+         * @parent i2web/components/pairing/remove/automatic
+         * @description Then name of the device
+         */
+        deviceName: {
+          get() {
+            const product = this.attr('product');
+            if (product) {
+              return `${product.attr('product:vendor')} ${product.attr('product:name')}`;
+            }
+            return 'Device';
+          },
+        },
+        /**
+         * @property {Boolean} deviceRemoved
+         * @parent i2web/components/pairing/remove/automatic
+         * @description The device has been successfully deleted
+         */
+        deviceRemoved: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {Boolean} forceRemoved
+         * @parent i2web/components/pairing/remove/automatic
+         * @description Device has been forceRemoved
+         */
+        forceRemoved: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {Function} onPairRemovedDevice
+         * @parent i2web/components/pairing/remove/automatic
+         * @description Call when the User wishes to re-pair another of the
+         *   PairingDevice
+         */
+        onPairRemovedDevice: {
+          Type: Function,
+        },
+        /**
+         * @property {PairingDevice} pairingDevice
+         * @parent i2web/components/pairing/remove/automatic
+         * @description The PairingDevice being removed
+         */
+        pairingDevice: {
+          Type: PairingDevice,
+        },
+        /**
+         * @property {Object} product
+         * @parent i2web/components/pairing/remove/automatic
+         * @description Specific product from the product catalog. Used when pairing devices.
+         */
+        product: {
+          Type: CanMap,
+        },
+        /**
+         * @property {Array<Object>} removalSteps
+         * @parent i2web/components/pairing/remove/automatic
+         * @description The device removal steps
+         */
+        removalSteps: {
+          Type: Array,
+        },
+        /**
+         * @property {String} removalState
+         * @parent i2web/components/pairing/remove/automatic
+         * @description The current state of the PairingDevice removal process
+         */
+        removalState: {
+          get() {
+            if (this.attr('removeFailed')) {
+              return (this.attr('forceRemoved')) ? 'forceRemoved' : 'removeFailed';
+            } else if (this.attr('deviceRemoved')) {
+              return 'deviceRemoved';
+            }
+            return 'removing';
+          },
+        },
+        /**
+         * @property {Boolean} removeFailed
+         * @parent i2web/components/pairing/remove/automatic
+         * @description We have not received a base:Deleted event within the timeout
+         * so it is assumed that PairingDevice removal has failed
+         */
+        removeFailed: {
+          type: 'boolean',
+          value: false,
+        },
+        /**
+         * @property {String} stepInfo
+         * @parent i2web/components/pairing/remove/automatic
+         * @description Removal displayed to the User during the process
+         */
+        stepInfo: {
+          get() {
+            const steps = this.attr('removalSteps');
+            return (steps && steps.length > 0)
+              ? steps[0].info
+              : 'The Hub will beep when the device has been removed.';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/remove/automatic
+         * @description The pairing page title
+         */
+        title: {
+          get() {
+            return (this.attr('removeFailed'))
+              ? 'Remove Device' : `Remove ${this.attr('deviceName')}`;
+          },
+        },
+      },
+      /**
+       * @function forceRemove
+       * @parent i2web/components/pairing/remove/automatic
+       * @description Force remove the PairingDevice
+       */
+      forceRemove(device) {
+        Analytics.tag('device.pairing.forceremove');
+        device.ForceRemove()
+          .then(() => this.attr('forceRemoved', true))
+          .catch(e => Errors.log(e));
+      },
+    });
+  </script>
+  <script type="events">
+    import Analytics from 'i2web/plugins/analytics';
+    import Errors from 'i2web/plugins/errors';
+    import Notifications from 'i2web/plugins/notifications';
+
+    const REMOVE_TIMEOUT = 10 * 60 * 1000; // 10 minutes
+
+    export default {
+      inserted() {
+        Analytics.tag('device.pairing.remove');
+        this.viewModel.attr('pairingDevice').Remove().then(({ steps }) => {
+          this.viewModel.attr('removalSteps', steps);
+          this.viewModel.attr('timeoutCallback', setTimeout(() => {
+            this.viewModel.attr('removeFailed', true);
+          }, REMOVE_TIMEOUT));
+        }).catch(e => Errors.log(e));
+      },
+      '{viewModel.pairingDevice} base:Deleted': function deviceRemoved() {
+        clearTimeout(this.viewModel.attr('timeoutCallback'));
+        this.viewModel.attr('deviceRemoved', true);
+        Notifications.success(`Device has been removed.`);
+      },
+    };
+  </script>
+</can-component>

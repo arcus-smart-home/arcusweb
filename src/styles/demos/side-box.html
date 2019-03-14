@@ -1,0 +1,50 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="i2web/styles/global-styles.less!"/>
+  <style>
+  .wrapper { 
+    display: flex;
+  }
+  .main-content {
+    flex: 1 1 auto;
+    padding: 20px 40px 40px;
+  }
+  </style>
+  <div class="wrapper"> <!--This is the wrapper that needs to be set to flex -->
+    <div class="main-content">
+      <h3>This is a heading</h3>
+      <p>Example copy here will fill most of the space on the page. The demo in the docs atm is so narrow, it's always in mobile mode so I removed the responsive style suggestion in the code box above.</p>
+
+      <hr />
+      <h3>This is a heading</h3>
+      <p>Example copy here will fill most of the space on the page. Flexbox enables the layout changes and is pretty great. Further copy and such to fill some room.</p>
+      <p>I've put a horizontal rule in to help show that the content here is going all the way across.</p>
+    </div>
+
+    <div class="side-box">
+      <h4 class="side-box-title">Side Box Title</h4>
+      <p>This is content in the side box. It can continue on and will wrap, maxing the width out at 360px.</p>
+      <p>There's even as much height as needed for the content!</p>
+    </div>
+  </div>
+
+
+
+</script>
+<script src="../../../node_modules/steal/steal.js"
+        main="can-view-autorender"></script>

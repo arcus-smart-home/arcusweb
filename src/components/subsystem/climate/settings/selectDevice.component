@@ -1,0 +1,167 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-climate-settings-select-device">
+  <template>
+    <form ($submit)="saveSetting" autocomplete="off" {{#if saving}}disabled{{/if}}>
+      <button type="submit" class="btn-save {{#if saving}}saving{{/if}}" {{#unless selectedChanged}}disabled{{/unless}}>
+        {{#if saving}}
+          <div class="loader"></div> Saving
+        {{else}}
+          Save
+        {{/if}}
+      </button>
+      {{close-button type="cancel"}}
+      <div class="panel-content">
+        <h3>{{deviceType}} Devices</h3>
+        <p>
+          This device's {{deviceType}} will be shown on the Dashboard.
+        </p>
+        <can-import from="semantic-ui-dropdown-canjs"/>
+        <div class="dropdown-wrapper">
+          <label for="climate-device">Choose a Device</label>
+          <div class="ui selection dropdown" semantic-dropdown>
+            <input type="hidden" {($value)}="clonedSubsystem['subclimate:primary{{deviceType}}Device']" id="climate-device">
+            <i class="dropdown icon"></i>
+            <div class="default text"></div>
+            <div class="menu">
+              {{#each selectableDevices}}
+                <div class="item" data-value="{{['base:address']}}">
+                  {{.['dev:name']}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </template>
+  <script type="view-model">
+    import _ from 'lodash';
+    import canMap from 'can-map';
+    import canDev from 'can-util/js/dev/';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Subsystem from 'i2web/models/subsystem';
+    import SidePanel from 'i2web/plugins/side-panel';
+    import Errors from 'i2web/plugins/errors';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import _startCase from 'lodash/startCase';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Subsystem} clonedSubsystem
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description The clone of the climate subsystem
+         */
+        clonedSubsystem: {
+          Type: Subsystem,
+        },
+        /**
+         * @property {String} deviceType
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description The device type, appropriately styled for titles and specific attribute access.
+         */
+        deviceType: {
+          type: 'string',
+          set(value) {
+            return _startCase(value.toLowerCase());
+          },
+        },
+        /**
+         * @property {Device.List} selectableDevices
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description The list of devices that are available for selection
+         */
+        selectableDevices: {
+          Type: Device.List,
+          value: [],
+          get(lastSetVal) {
+            const deviceType = this.attr('deviceType').toLowerCase();
+            const selectableDevices = this.attr(`subsystem.web:subclimate:${deviceType}Devices`);
+            return lastSetVal.replace(selectableDevices);
+          },
+        },
+        /**
+         * @property {String} selectedChanged
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description Required to enable the 'Save' button
+         */
+        selectedChanged: {
+          get() {
+            const subsysID =
+              this.attr(`subsystem.subclimate:primary${this.attr('deviceType')}Device`);
+            const clonedID =
+              this.attr(`clonedSubsystem.subclimate:primary${this.attr('deviceType')}Device`);
+            return subsysID !== clonedID;
+          },
+        },
+        /**
+         * @property {Device} selectedDevice
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description The device selected to indicate dashboard status
+         */
+        selectedDevice: {
+          Type: Device,
+          get() {
+            const deviceId = this.attr(`subsystem.subclimate:primary${this.attr('deviceType')}Device`);
+            if (deviceId) {
+              const allDevices = getAppState().attr('devices');
+              return _.find(allDevices, d => d['base:address'] === deviceId);
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {Subsystem} subsystem
+         * @parent i2web/components/subsystem/climate/settings/selectDevice
+         * @description The climate subsystem
+         */
+        subsystem: {
+          Type: Subsystem,
+          set(subsystem) {
+            if (!subsystem.hasCapability('subclimate')) {
+              canDev.warn(`Subsystem does not have subclimate capability - perhaps subsystem instantiated incorrectly?`);
+            }
+            this.attr('clonedSubsystem', subsystem.clone());
+            return subsystem;
+          },
+        },
+      },
+      saving: false,
+      /**
+       * @function saveSetting
+       * @parent i2web/components/subsystem/climate/settings/selectDevice
+       * @param {canMap} vm
+       * @param {Element} el
+       * @param {Event} ev
+       * @description Event handler for saving the setting on the subsystem
+       */
+      saveSetting(vm, el, ev) {
+        ev.preventDefault();
+        this.attr('saving', true);
+        this.attr('clonedSubsystem').save().then(() => {
+          this.attr('saving', false);
+          SidePanel.close();
+        }).catch((e) => {
+          this.attr('saving', false);
+          Errors.log(e);
+        });
+      },
+    });
+  </script>
+</can-component>

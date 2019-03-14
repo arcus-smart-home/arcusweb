@@ -1,0 +1,87 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <button ($click)="setContent(true)">Example 1-Platform Content</button>
+  <button ($click)="setContent(false)">Example 2-Local Defaults</button>
+  <div class="pairing-title" style="text-align:center;">{{title}}</div>
+
+  <arcus-pairing-customize-multi-button-assignment {customization-step}="step" {device}="device" {^title}="title"/>
+
+</script>
+
+<script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/pairing/customize/multi-button-assignment/multi-button-assignment.component';
+  import Device from 'i2web/models/device';
+  import DeviceData from 'i2web/models/fixtures/data/device/key_fobs.json';
+  import Place from 'i2web/models/place';
+  import PlaceData from 'i2web/models/fixtures/data/place/place.json';
+  import RulesData from 'i2web/models/fixtures/data/rule/rules.json';
+  import RulesTemplatesData from 'i2web/models/fixtures/data/rule/templates.json';
+
+  const steps = [{
+    "action": "MULTI_BUTTON_ASSIGNMENT",
+    "addedAlarms": null,
+    "description": null,
+    "header": "Platform Page Title Header",
+    "id": "customize/multi-button-assignment",
+    "info": null,
+    "linkText": null,
+    "linkUrl": null,
+    "order": null,
+    "rules": null,
+    "title": "Platform Subtitle"
+  },{
+    "action": "MULTI_BUTTON_ASSIGNMENT",
+    "addedAlarms": null,
+    "description": null,
+    "header": null,
+    "id": "customize/multi-button-assignment",
+    "info": null,
+    "linkText": null,
+    "linkUrl": null,
+    "order": null,
+    "rules": null,
+    "title": null
+  }];
+  const place = new Place(PlaceData[0]);
+  const rules = RulesData['3d496bfc-1098-493e-afd4-7f56c12dbef6'].rules;
+  const ruleTemplates = RulesTemplatesData['3d496bfc-1098-493e-afd4-7f56c12dbef6'].ruleTemplates;
+  const title = "Page Title";
+  const scope = new CanMap({
+    device: (new Device(DeviceData[0])),
+    step: steps[0],
+    title,
+    setContent(toggle) {
+      scope.attr('step', toggle ? steps[0] : steps[1]);
+    },
+  });
+  const appScope = new CanMap({
+    place,
+    rules,
+    ruleTemplates,
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

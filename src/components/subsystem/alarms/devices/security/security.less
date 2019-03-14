@@ -1,0 +1,60 @@
+arcus-subsystem-alarms-devices-security {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .left-content,
+  .right-content {
+    overflow-y: scroll;
+  }
+  .panel-header {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .content-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    .left-content {
+      border-top: @border;
+      padding-top: 0;
+      padding-right: @gutter/6;
+    }
+    .right-content {
+      border-top: @border;
+    }
+  }
+  .device-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+    border-bottom: @border;
+    h4 {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      margin-right: @gutter/3;
+    }
+  }
+  .device-row {
+    &:last-of-type {
+      padding-bottom: @gutter*2;
+    }
+    .breakpoint(md, {
+      padding-left: @gutter;
+    });
+    .device-name {
+      margin-right: @gutter/2;
+    }
+    .device-activity {
+      small {
+        text-align: right;
+      }
+    }
+    + .device-header {
+      border-top: @border;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" can-autorender>
+  <can-import from="i2web/pages/promonitoring/"/>
+  <can-import from="i2web/components/side-panel/"/>
+  <arcus-page-promonitoring
+    {(place)}="place"
+    {(person)}="person"
+    {(promonitoring-settings)}="promonitoringSettings">
+  </arcus-page-promonitoring>
+  <arcus-side-panel class="is-right" {(content)}="content" />
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="can-view-autorender" id="demo-source">
+
+  import $ from 'jquery';
+  import domData from 'can-util/dom/data/';
+  import canMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import Device from 'i2web/models/device';
+  import ProMonitoringSettings from 'i2web/models/pro-monitoring-settings';
+  import Place from 'i2web/models/place';
+  import Person from 'i2web/models/person';
+  import promonSettings from 'i2web/models/fixtures/data/pro-monitoring-settings.json';
+  import places from 'i2web/models/fixtures/data/place/place.json';
+  import persons from 'i2web/models/fixtures/data/person.json';
+  import glassBreakData from 'i2web/models/fixtures/data/device/glass_break_sensors.json';
+  import sensorData from 'i2web/models/fixtures/data/device/contact_sensors.json';
+  import 'flexboxgrid/dist/flexboxgrid.min.css!';
+  import 'i2web/app.less!';
+  import 'i2web/pages/promonitoring/';
+  import 'i2web/components/side-panel/';
+
+  const sampleDevices = new Device.List();
+  sampleDevices.push(sensorData[0]);
+  sampleDevices.push(sensorData[1]);
+  sampleDevices.push(glassBreakData[0]);
+  domData.set.call($('html')[0], 'viewModel', new canMap({
+    rightPanelContent: {},
+  }));
+
+  domData.set.call($('#demo-html')[0], 'viewModel', new canMap({
+    people: new Person.List(persons),
+    place: new Place(places[0]),
+    person: new Person(persons[0]),
+    promonitoringSettings: new ProMonitoringSettings(promonSettings[0]),
+    devices: sampleDevices,
+    content: domData.get.call($('html')[0], 'viewModel').compute('rightPanelContent'),
+  }));
+</script>

@@ -1,0 +1,61 @@
+arcus-subsystem-cameras-storage {
+  .storage-wrapper {
+    margin-bottom: @gutter;
+    white-space: nowrap;
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+    .breakpoint(md, {
+      padding-left: @gutter;
+      padding-right: @gutter;
+    });
+    h2 {
+      margin-top: 0;
+      margin-bottom: @gutter;
+    }
+  }
+  .left-content,
+  .right-content {
+    padding-right: @gutter;
+    white-space: normal;
+    vertical-align: top;
+    .breakpoint(md, { 
+      display: inline-block;
+      width: 50%; 
+    });
+  }
+  .left-content {
+    .breakpoint(md-down, { 
+      margin-bottom: @gutter;
+    });
+  }
+  .right-content { 
+    .breakpoint(md, {
+      border-left: @border;
+      padding-left: @gutter;
+    });
+    [class^='btn'] {
+      margin-bottom: @gutter/3;
+    }
+    .small {
+      margin-bottom: @gutter;
+    }
+    arcus-storage-capacity {
+      display: block;
+      margin-bottom: @gutter;
+    }
+  }
+  .delete-confirm {
+    border-top: @border;
+    padding-top: @gutter/2;
+    margin-top: @gutter/2;
+  }
+  .no-devices {
+    .left-wrapper {
+      padding-top: 0;
+      padding-left: 0;
+    }
+    .right-wrapper {
+      padding-top: 0;
+    }
+  }
+}

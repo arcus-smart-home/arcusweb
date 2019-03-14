@@ -1,0 +1,191 @@
+arcus-catalog-selectable {
+  @animation-duration: .15s;
+  display: inline-flex;
+  align-items: flex-start;
+
+  .selectable-container {
+    display: flex;
+    flex-direction: column;
+    margin: @gutter/4;
+    width: 200px;
+    border-radius: @border-radius;
+    box-shadow: 0 0 0 2px @heron;
+    overflow: hidden;
+    cursor: pointer;
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+      background-color: @pigeon;
+      padding: @gutter / 4;
+
+      img {
+        height: auto;
+        max-width: 190px;
+        max-height: 100%;
+      }
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      height: 85px;
+      padding: @gutter / 3;
+      color: @raven;
+      background-color: @crane;
+      border-top: 2px solid @heron;
+
+      span {
+        width: 100%;
+      }
+
+      img {
+        height: 100%;
+      }
+      .no-image {
+        display: none;
+      }
+
+      .icon-base {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        box-shadow: 0 0 0 1px @raven;
+        height: 60px;
+        width: 60px;
+        i {
+          font-size: 30px;
+        }
+      }
+      .coming-soon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        width: 180px;
+        div {
+          font-size: @font-size-smaller;
+        }
+        i {
+          font-size: 30px;
+        }
+      }
+      .no-icon {
+        display: none;
+      }
+
+      .overlay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0 @gutter;
+        color: @pigeon;
+        font-size: 12px;
+        font-style: italic;
+        text-align: center;
+        animation: slide-up @animation-duration forwards ease-in-out;
+
+        > span:first-child {
+          .font-demibold;
+        }
+
+        .btn {
+          display: inline-block;
+          margin-bottom: 0;
+          margin-top: 6px;
+          font-style: normal;
+          background: @crane;
+          color: @peacock;
+        }
+
+        @keyframes slide-up {
+          0% {
+            top: 100%;
+            opacity: 0;
+            background: rgba(0,0,0,0);
+          }
+          100% {
+            top: 0;
+            opacity: 1;
+            background: rgba(0,0,0,.8);
+          }
+        }
+      }
+    }
+
+    .bottom-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-transform: capitalize;
+      position: relative;
+      height: 50px;
+      background-color: @honeycreeper;
+      transition: background-color @animation-duration ease-in-out;
+      color: @crane;
+      font-size: @font-size-smaller;
+      padding-right: @gutter*(2/3);
+      padding-left: @gutter*(2/3);
+
+      &.unpairable {
+        background: @canary;
+        color: @swift;
+      }
+
+      &.offline {
+        background: @cardinal;
+      }
+    }
+
+    &:hover {
+      .bottom-container:not(.unpairable):not(.offline) {
+        background: @peacock;
+      }
+    }
+
+    &.brand-only {
+      box-shadow: 0 0 0 2px @heron;
+      transition: all @animation-duration ease-in-out;
+      -webkit-backface-visibility: hidden;
+      &:hover {
+        box-shadow: 0 0 0 6px @peacock;
+      }
+      .logo-container {
+        background: @crane;
+      }
+      .main-container, .bottom-container {
+        display: none;
+      }
+    }
+
+    &.no-brand {
+      .logo-container {
+        display: none;
+      }
+      .main-container {
+        border-top: none;
+      }
+      .bottom-container {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    &.has-error {
+      cursor: default;
+    }
+  }
+}

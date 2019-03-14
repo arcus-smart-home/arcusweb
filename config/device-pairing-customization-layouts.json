@@ -1,0 +1,70 @@
+[
+  {
+    "steps": ["NAME", "FAVORITE"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["RULES", "SCHEDULE"],
+    "orientation": "vertical"
+  },
+  {
+    "steps": ["CONTACT_TYPE"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["CONTACT_TEST"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["PROMON_ALARM"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["INFO"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["BUTTON_ASSIGNMENT"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["MULTI_BUTTON_ASSIGNMENT"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["PRESENCE_ASSIGNMENT"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["SECURITY_MODE"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["OTA_UPGRADE"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["ROOM"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["STATE_COUNTY_SELECT"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["WEATHER_RADIO_STATION"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["WATER_HEATER"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["IRRIGATION_ZONE"],
+    "orientation": "horizontal"
+  },
+  {
+    "steps": ["MULTI_IRRIGATION_ZONE"],
+    "orientation": "horizontal"
+  }
+]

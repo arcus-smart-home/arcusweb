@@ -1,0 +1,37 @@
+arcus-scenes-card {
+  display: block;
+  height: 150px;
+  .scene-badge {
+    color: @swift;
+    border-color: @swift;
+    &:hover {
+      cursor: pointer;
+    }
+    .details {
+      height: 100%;
+      margin-top: @gutter/3;
+    }
+    &.notFiring {
+      transition: color .2s linear, border-color .2s linear;
+    }
+    &.firing {
+      .icon-state {
+        animation-name: pushDown;
+        animation-duration: .5s;
+        color: @link-color;
+        border-color: @link-color;
+        transition: color .2s linear, border-color .2s linear;
+      }
+    }
+  }
+  p {
+    color: @swift;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    margin-bottom: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}

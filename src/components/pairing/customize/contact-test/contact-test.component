@@ -1,0 +1,162 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-contact-test">
+  <template>
+    <div class="illustration">
+      <img src="{{imageUrl}}"/>
+    </div>
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr />
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <a href="{{link.url}}" target="_blank">{{link.text}}</a>
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import ContactCapability from 'i2web/models/capability/Contact';
+    import Device from 'i2web/models/device';
+    import getAppState from 'i2web/plugins/get-app-state';
+    import { getRedirectionURL } from 'i2web/helpers/global';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Array} description
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Description field from the customization step, to be displayed on screen
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return ['Separate the Contact Sensor from the magnet to see the device\'s open and close status update.'];
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Device model relevant to the customization
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {string} imageUrl
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Image URL for illustration
+         */
+        imageUrl: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.id) {
+              const baseURL = getAppState().attr('session.secureStaticResourceBaseUrl');
+              const stepId = step.id;
+              const normalizedId = stepId.replace(/(_|-)+/g, '').toLowerCase();
+              const contactState = this.attr('device.cont:contact');
+              const lightState = this.attr('lightState');
+              return `${baseURL}/o/${normalizedId}-${contactState === ContactCapability.CONTACT_CLOSED ? 'closed' : 'open'}-${lightState}-ios-2x.png`;
+            }
+            return undefined;
+          },
+        },
+        /**
+         * @property {String} lightState
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description The light state to be displayed in the contact sensor image
+         */
+        lightState: {
+          type: 'string',
+          value: 'off',
+        },
+        /**
+         * @property {Number} lightTimer
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description The timeout used for blinking the contact sensor light via image changes
+         */
+        lightTimer: {
+          type: 'number',
+        },
+        /**
+         * @property {Object} link
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description The link to be displayed
+         */
+        link: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.linkText && step.linkUrl) {
+              return { text: step.linkText, url: step.linkUrl };
+            }
+            return {
+              text: 'Test didn\'t work?',
+              url: getRedirectionURL('s_contact_sensor_test'),
+            };
+          },
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Title field from the customization step, to be displayed in the
+         * title area inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Test Your Contact Sensor';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/contact-test
+         * @description Header field from the customization step, to be displayed as the primary
+         * title  directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Attention';
+          },
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} cont:contact': function valueUpdated() {
+        const vm = this.viewModel;
+        vm.attr('lightState', 'on');
+        if (vm.attr('lightTimer')) {
+          clearTimeout(vm.attr('lightTimer'));
+        }
+        vm.attr('lightTimer', setTimeout(() => { this.viewModel.attr('lightState', 'off'); }, 2000));
+      },
+    };
+  </script>
+</can-component>

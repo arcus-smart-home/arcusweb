@@ -1,0 +1,48 @@
+@import "step/step.less";
+
+arcus-wizard {
+  display: block;
+  .step.active {
+    display: block;
+  }
+  .step.inactive {
+    display: none;
+  }
+  ul.wizard {
+    list-style: none;
+  }
+  .button-panel {
+    width: 100%;
+    border-top: 1px solid @heron;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: @gutter/2 @gutter;
+    .breakpoint(sm-down, {
+      justify-content: space-between;
+    });
+    [class^="btn"] {
+      margin-bottom: 0;
+    }
+  }
+  .btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      width: 15px;
+      transform: rotateZ(-90deg);
+      font-size: 8px;
+    }
+  }
+  .btn-previous {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      width: 15px;
+      transform: rotateZ(90deg) translateX(1px);
+      font-size: 8px;
+    }
+  }
+}

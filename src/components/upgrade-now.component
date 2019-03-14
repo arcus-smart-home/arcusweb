@@ -1,0 +1,43 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-upgrade-now">
+  <view>
+    {{#if isOwner}}
+      <a href="{{routeUrl page="settings" subpage="service-plan"}}">
+        <button class="btn">Upgrade Now</button>
+      </a>
+    {{else}}
+      <button class="btn btn-disabled" disabled>Upgrade Now</button>
+    {{/if}}
+  </view>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    export default canMap.extend({
+      define: {
+        isOwner: {
+          get() {
+            const appState = AppState();
+            return appState.attr('person.base:id') === appState.attr('account.account:owner');
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

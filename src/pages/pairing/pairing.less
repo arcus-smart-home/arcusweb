@@ -1,0 +1,172 @@
+arcus-page-pairing {
+  display: block;
+}
+
+arcus-pairing-steps,
+arcus-pairing-connect-device,
+arcus-pairing-connect-hub,
+arcus-pairing-customize-device,
+arcus-pairing-customize-device-completed,
+arcus-pairing-hub-unavailable {
+  margin-top: @gutter;
+  margin-bottom: @gutter;
+}
+
+.app-header { // blue header bar
+  background-color: @peacock;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: @gutter;
+  padding-right: @gutter;
+  height: 68px;
+  .breakpoint(xs, {
+    padding-left: @gutter/2;
+    padding-right: @gutter/2;
+  });
+  .arcus-logo {
+    width: 60px;
+    height: 100%;
+  }
+  .logo-link {
+    flex-shrink: 0;
+    align-self: normal;
+    &:hover,
+    &:active {
+      opacity: 0.75;
+      border-bottom: none;
+    }
+  }
+  .exit-pairing-link {
+    opacity: 0.75;
+    color: @link-color-dark;
+    font-size: @font-size-large;
+    text-decoration: none;
+    &:hover {
+      opacity: 1;
+      color: @link-hover-color-dark;
+      border-bottom: 3px solid @link-hover-color-dark;
+    }
+  }
+}
+
+.alarm-banner { // Alarm banner
+  position: absolute;
+  background-color: @police;
+  display: flex;
+  align-items: center;
+  padding-left: @gutter;
+  padding-right: @gutter;
+  width: 100%;
+  height: 68px;
+  z-index: 100;
+  h2 {
+    color: @crane;
+    font-weight: bold;
+    margin: 0;
+    i {
+      padding-right: @gutter/3;
+    }
+  }
+}
+
+// In 2.10 move lines 14 to 48 to product-catagory.less line 57, within the component header so these styles do not leak upward to be global styles
+.step-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.step-wrapper {
+  flex: 1 0 auto;
+  align-self: center;
+}
+.staged-progress {
+  padding: @gutter/2 @gutter;
+}
+.pairing-title {
+  padding: @gutter/2 @gutter;
+  background-color: @pigeon;
+  width: 100%;
+  border-top: 1px solid @heron;
+  border-bottom: 1px solid @heron;
+  h2 {
+    .font-medium;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.modal-content { // All pairing modals
+  z-index: 1080;
+  .breakpoint(sm-down, {
+    border-radius: 0;
+  });
+  a:hover {
+    text-decoration: none;
+  }
+  .exit-pairing {
+    display: flex;
+    margin: 0 auto;
+    i {
+      margin-right: @gutter / 6;
+      line-height: unset;
+    }
+  }
+}
+
+arcus-pairing-hub-unavailable {
+  display: flex;
+  .hub-offline {
+    .error-badge {
+      margin-top: @gutter/2;
+      padding: @gutter/3;
+    }
+    a {
+      display: flex;
+      justify-content: center;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    p {
+      text-align: center;
+      margin-bottom: @gutter/3;
+    }
+  }
+}
+
+arcus-pairing-reset-modal { // Hub offline modal
+  .hub-offline {
+    .error-badge {
+      .large-badge;
+      justify-content: space-around;
+    }
+    a {
+      display: flex;
+      justify-content: center;
+    }
+    p {
+      text-align: center;
+      margin-bottom: @gutter;
+    }
+  }
+}
+
+arcus-pairing-firmware-exit { // Firmware update modal
+  .modal-content {
+    text-align: center;
+    h3 {
+      margin-top: 0;
+    }
+    hr {
+      margin: @gutter/2 0;
+    }
+  }
+  .buttons {
+    margin-top: @gutter/1.5;
+    button {
+      margin-bottom: 0;
+    }
+  }
+}

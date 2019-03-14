@@ -1,0 +1,135 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-schedule-device-configurators-climate-spaceheater">
+  <template>
+    <can-import from="i2web/components/control-switch/" />
+    <can-import from="i2web/components/spinner/" />
+    <div class="select-heat-state">
+      <h4>Select State</h4>
+      <arcus-control-switch {is-on}="equal(~heatState, 'ON')" {toggle}="@toggleOnOff" />
+    </div>
+    {{#if showEcoMode}}
+      <small>If you have your device set in ECOMODE at the time of the scheduled event, the temperature chosen for this event will override the current ECOMODE setting.</small>
+    {{/if}}
+    <hr />
+    {{#eq heatState 'ON'}}
+      <arcus-spinner {formatter}="@formatter" {(value)}="setPoint" {min}="50" {max}="97" {step}="1" />
+      <hr />
+    {{/eq}}
+    <h4>Select a Time</h4>
+    <hr />
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import temperatureConverter from 'i2web/plugins/temperature-converter';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {canMap} attributes
+         * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+         * @description The device attributes used for editing the configurator
+         */
+        attributes: {
+          type: '*',
+          set(attributes) {
+            const heatState = attributes.attr('spaceheater:heatstate');
+            const setPoint = attributes.attr('spaceheater:setpoint');
+
+            this.attr('heatState', heatState);
+            this.attr('setPoint', temperatureConverter(setPoint, 'F'));
+
+            return attributes;
+          },
+        },
+        /**
+         * @property {Device} thing
+         * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+         * @description The device being scheduled
+         */
+        thing: {
+          type: '*',
+        },
+
+        /**
+         * @property {number} fanSpeed
+         * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+         * @description The heat set point of the space heater
+         */
+        setPoint: {
+          type: 'number',
+          value: 75,
+          set(setPoint) {
+            if (this.attr('attributes')) {
+              this.attr('attributes.spaceheater:setpoint', temperatureConverter(setPoint, 'C'));
+            }
+
+            return setPoint;
+          },
+        },
+
+        /**
+         * @property {string} heatState
+         * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+         * @description The on/off state of the space heater
+         */
+        heatState: {
+          type: 'string',
+          value: 'ON',
+          set(heatState) {
+            if (this.attr('attributes')) {
+              this.attr('attributes.spaceheater:heatstate', heatState);
+            }
+
+            return heatState;
+          },
+        },
+
+        /**
+         * @property {boolean} showEcoMode
+         * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+         * @description Whether or not to show ECOMODE text. True if on and a twinstar device
+         */
+        showEcoMode: {
+          get() {
+            const heatState = this.attr('heatState');
+            const caps = this.attr('attributes.base:caps');
+
+            return (heatState === 'ON' && caps.indexOf('twinstar') !== -1);
+          },
+        },
+      },
+      /**
+       * @function formatter
+       * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+       * @description Formatter to apply to the set point
+       */
+      formatter(value) {
+        return `${value} <sup>&deg;</sup>`;
+      },
+      /**
+       * @function toggleOnOff
+       * @parent i2web/components/schedule/device-configurators/climate-spaceheater
+       * @description Toggles the heat state to ON or OFF
+       */
+      toggleOnOff() {
+        this.attr('heatState', this.attr('heatState') === 'ON' ? 'OFF' : 'ON');
+      },
+    });
+  </script>
+</can-component>

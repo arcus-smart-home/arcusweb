@@ -1,0 +1,64 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-accordion-panel-heading">
+  <template>
+    {{#if radioName}}
+      <div class="radio-wrapper">
+        <input class="radio-checkbox" type="checkbox" id="{{radioName}}" name="{{radioName}}" {($checked)}="radioChecked" ($click)="radioClick" />
+        <label for="{{radioName}}" class="complex-label">
+          <content></content>
+        </label>
+        <div class="check"></div>
+      </div>
+    {{else}}
+      <content></content>
+    {{/if}}
+    {{^eq itemCount undefined}}<span class="item-count">{{{itemCount}}}</span>{{/eq}}
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {String} itemCount
+         * @parent i2web/components/accordion/panel
+         * @description Count of number of items
+         */
+        itemCount: {},
+        /**
+         * @property {Boolean} radioChecked
+         * @parent i2web/components/accordion/panel
+         * @description If using a radio button, is it checked?
+         */
+        radioChecked: {},
+        /**
+         * @property {String} radioName
+         * @parent i2web/components/accordion/panel
+         * @description If set, will add a radio button, and will be named/IDed with this string
+         */
+        radioName: {},
+        /**
+         * @property {Function} radioClick
+         * @parent i2web/components/accordion/panel
+         * @description Click function that will fire if the user checks the radio button
+         */
+        radioClick: {},
+      },
+    });
+  </script>
+</can-component>

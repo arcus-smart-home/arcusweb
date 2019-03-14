@@ -1,0 +1,15 @@
+{
+  "name": "license-files",
+  "version": "0.1.0",
+  "description": "\"Prepend license information to each file\"",
+  "main": "license-files.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "file": "^0.2.2",
+    "prepend": "^1.0.2"
+  }
+}

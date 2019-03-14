@@ -1,0 +1,134 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-ota-upgrade">
+  <template>
+    <can-import from="i2web/components/progress-bar/" />
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr>
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <hr/>
+      <arcus-progress-bar {percent-complete}="progress" />
+      <p class="font-regular-italic">
+        {{info}}
+      </p>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /* @property {Array} description
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Description field from the customization step, to be displayed in paragraphs
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            if (step && step.description && step.description.length > 0) {
+              return step.description;
+            }
+            return ['Updates to your recently paired devices may take a few minutes, during which your device may not be controllable or work optimally.', 'Please do not remove power or any ethernet cords (if applicable) from the device until the firmware update is complete.'];
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Title field from the customization step, to be displayed as the
+         * title inside the box-gray-radius
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title ? step.title : 'Firmware Upgrade Needed';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Header field from the customization step, to be displayed as the primary
+         * title directly below the staged progress bar.
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header ? step.header : 'Attention';
+          },
+        },
+        /**
+         * @property {String} info
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Info field from the customization step, to be displayed at the
+         * inside bottom of the box-gray-radius
+         */
+        info: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.info ? step.info : 'Select the button below to continue setting up your device. The update will continue in the background.';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/ota-upgrade
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the presence assignment is changed
+         */
+        whenComplete: {
+          type: '*',
+        },
+        /**
+        * @property {Number} progress
+        * @parent i2web/components/pairing/customization/ota-upgrade
+        * @description The actual percentage complete in current timeout cycle
+        */
+        progress: {
+          type: 'number',
+          value: 0,
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    export default {
+      '{viewModel.device} devota:progressPercent': function valueChanged() {
+        const vm = this.viewModel;
+        vm.attr('progress', this.attr('device.devota:progressPercent'));
+      },
+    };
+  </script>
+</can-component>

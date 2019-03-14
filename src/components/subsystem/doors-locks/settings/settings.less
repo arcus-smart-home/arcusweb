@@ -1,0 +1,46 @@
+arcus-subsystem-doors-locks-settings {
+  display: block;
+  h2 {
+    margin-top: 0;
+  }
+  h3 {
+    i {
+      font-size: @gutter;
+      margin-right: @gutter/2;
+    }
+  }
+  arcus-control-switch {
+    margin-left: @gutter;
+    .breakpoint(md-down, {
+      margin-left: 0;
+    });
+  }
+  .panel-list-container {
+    margin: 0 @gutter;
+    padding: @gutter;
+    &:first-of-type {
+      margin: 0;
+      padding-bottom: @gutter/2;
+    }
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+  .breakpoint(md-down, {
+    .toggle-container {
+      margin-top: @gutter;
+    }
+  });
+  .breakpoint(sm-down, {
+    .panel-list-container {
+      margin: 0;
+      padding: @gutter/2;
+    }
+    .panel-secondary-wrapper {
+      padding-top: @gutter/2;
+    }
+    .toggle-container {
+      margin-top: 0;
+    }
+  });
+}

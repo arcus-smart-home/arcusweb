@@ -1,0 +1,56 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/form/change-pin/change-pin" />
+
+{{#switch activeDisplay}}
+  {{#case 'enterInviteCode'}}
+    <form class="enter-invite-code">
+      <div class="panel-buttons">
+        <button type="button" class="btn-cancel" ($click)="closePanel()">Cancel</button>
+      </div>
+      <div class="panel-content">
+        <h3>Invitation</h3>
+        <hr>
+        <h3>Enter Code &amp; Email Address</h3>
+        <p>
+          To accept your invitation to someone's place, enter the invitation code
+          and the email address it was sent to.
+        </p>
+        {{textInput('model.code', 'Invitation Code')}}
+        {{textInput('model.email', 'Email Address')}}
+        {{#if acceptInvitationError}}
+          <p class="form-error">{{acceptInvitationError}}</p>
+        {{/if}}
+        <br>
+        <button type="button" class="btn-submit" ($click)="handleInviteCodeSubmit(%event)">
+          Submit
+        </button>
+      </div>
+    </form>
+  {{/case}}
+  {{#case 'enterPinCode'}}
+    <arcus-form-change-pin
+      hide-cancel-button
+      header="Invitation"
+      subheader="Create a PIN Code"
+      description="This PIN code will only be used for this place and will be used to disarm the alarm, unlock locks, and more."
+      {place-id}="placeId"
+      {person}="person"
+      {on-save}="@onPinCodeCreated"
+    />
+  {{/case}}
+{{/switch}}

@@ -1,0 +1,56 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/accordion/" />
+
+{{#if sceneDevices}}
+  <arcus-accordion>
+  {{#each sceneDevices as sceneDevice}}
+    {{#if sceneDevice.device}}
+      <arcus-accordion-panel {enabled}="equal(~sceneDevice.hasValues, true)">
+        <arcus-accordion-panel-heading
+          {radio-checked}="~sceneDevice.hasValues"
+          {radio-click}="sceneDevice@toggleDefaults"
+          radio-name="{{sceneDevice.device['base:id']}}"
+        >
+          {{#if sceneDevice}}
+            <i class="panel-icon {{iconOf(sceneDevice.device, 'class')}}"></i>
+            <span class="name">{{#if sceneDevice.device.displayName}}{{sceneDevice.device.displayName}}{{else}}{{sceneDevice.device.name}}{{/if}}<br />
+            <small class="type">{{{sceneDevice.valueDescription}}}</small></span>
+          {{/if}}
+        </arcus-accordion-panel-heading>
+        <arcus-accordion-panel-body>
+          <div class="accordion-panel-content">
+            <div class="row selector-wrapper">
+              <ul class="col-xs-12">
+              {{#each sceneDevice.selectors as selector}}
+                {{#if sceneDevice.hasValues}}
+                  <li class="col-xs-12">
+                    <arcus-scenes-device-configurator {selector}="selector" {(scene-device)}="sceneDevice" class="parent-device-configurator" />
+                  </li>
+                {{/if}}
+              {{/each}}
+              </ul>
+            </div>
+          </div>
+        </arcus-accordion-panel-body>
+      </arcus-accordion-panel>
+    {{else}}
+      <div class="loader"> Loading...</div>
+    {{/if}}
+  {{/each}}
+  </arcus-accordion>
+{{/if}}

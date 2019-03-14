@@ -1,0 +1,141 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-time-windows">
+  <template>
+    <can-import from="i2web/components/accordion/" />
+    <can-import from="i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel.component" />
+
+    <h3>Select Days &amp; Times to Monitor</h3>
+    <hr />
+    <small>
+      {{#if behavior.timeWindows.length}}
+        Delete all events to return to 24/7 monitoring.
+      {{else}}
+        Without any events, this Behavior will monitor 24/7.
+      {{/if}}
+    </small>
+    <hr />
+    <div class="events-header">
+      <h3>Events</h3>
+      <button class="btn-primary {{#unless showDoneButton}}disabled{{/}}" ($click)="addNewEvent()">
+        + Add Event
+      </button>
+    </div>
+    <hr />
+    {{#if showEvents}}
+      <arcus-accordion no-auto-activate {^active}="activatedEvent">
+        {{#if newEvent}}
+          <arcus-subsystem-care-behaviors-edit-time-windows-panel new-event
+            {(time-window)}="newEvent"
+            {time-windows}="behavior.timeWindows"
+          />
+        {{/if}}
+        {{#each behavior.timeWindows}}
+          <arcus-subsystem-care-behaviors-edit-time-windows-panel
+            {(time-window)}="."
+            {time-windows}="behavior.timeWindows"
+          />
+        {{/each}}
+      </arcus-accordion>
+    {{else}}
+      <small>No Events Scheduled</small>
+      <hr />
+    {{/if}}
+    {{#if showDoneButton}}
+      <div class="button-group">
+        <button ($click)="doneButtonClicked()" class="btn">Done</button>
+      </div>
+    {{/if}}
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import moment from 'moment';
+    import CareBehavior from 'i2web/models/care-behavior';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {Object} activatedEvent
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+         * @description Will be defined and non-null only when an event is actively being edited
+         */
+        activatedEvent: {
+          type: '*',
+          set(value) {
+            // The accordion component sets the activated event panel explicitly to null after everything is collapsed
+            if (value === null && this.attr('newEvent')) {
+              this.removeAttr('newEvent');
+            }
+            return value;
+          },
+        },
+        /**
+         * @property {CareBehavior} behavior
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+         * @description The associated careBehavior being edited
+         */
+        behavior: {
+          Type: CareBehavior,
+        },
+        /**
+         * @property {Function} doneButtonClicked
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+         * @description The function to be called when the DONE button is clicked
+         */
+        doneButtonClicked: {
+          Type: Function,
+        },
+        /**
+         * @property {Boolean} showDoneButton
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+         * @description Indicates if the Done button should be shown
+         */
+        showDoneButton: {
+          type: 'boolean',
+          get() {
+            return !this.attr('activatedEvent') || !this.attr('showEvents');
+          },
+        },
+        /**
+         * @property {Boolean} showEvents
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+         * @description Are there events to show, either from timeWindows or newEvent
+         * properties
+         */
+        showEvents: {
+          get() {
+            return this.attr('behavior.timeWindows.length')
+              || this.attr('newEvent');
+          },
+        },
+      },
+      /**
+       * @function deleteEvent
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows
+       * @description Create a new event and populate it with dummy data
+       */
+      addNewEvent() {
+        this.attr('newEvent', {
+          day: moment().format('dddd'),
+          durationSecs: 60 * 60,
+          startTime: moment(new Date()).subtract(1, 'hour').format('HH:00:00'),
+        });
+      },
+    });
+  </script>
+</can-component>

@@ -1,0 +1,102 @@
+{
+  "3d496bfc-1098-493e-afd4-7f56c12dbef6": {
+    "sceneTemplates": [
+      {
+        "base:address": "SERV:scenetmpl:home",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "home",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": false,
+        "scenetmpl:description": "Wherever you go, receive a warm welcome when you return.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "I'm Home"
+      },
+      {
+        "base:address": "SERV:scenetmpl:away",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "away",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": false,
+        "scenetmpl:description": "Leave a safer, more efficient home every time you walk out the door.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "Away"
+      },
+      {
+        "base:address": "SERV:scenetmpl:night",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "night",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": false,
+        "scenetmpl:description": "Turn in for the night by automating your nightly tasks.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "Good Night"
+      },
+      {
+        "base:address": "SERV:scenetmpl:vacation",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "vacation",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": false,
+        "scenetmpl:description": "More fun. Less worry. Monitor an energy efficient home when you're on vacation.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "Vacation"
+      },
+      {
+        "base:address": "SERV:scenetmpl:morning",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "morning",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": false,
+        "scenetmpl:description": "Good morning. Automate your morning routine with ease.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "Wake Up"
+      },
+      {
+        "base:address": "SERV:scenetmpl:custom",
+        "base:caps": [
+          "scenetmpl",
+          "base"
+        ],
+        "base:id": "custom",
+        "base:images": {},
+        "base:tags": [],
+        "base:type": "scenetmpl",
+        "scenetmpl:available": true,
+        "scenetmpl:custom": true,
+        "scenetmpl:description": "Create a custom scene.",
+        "scenetmpl:modified": 1476217079011,
+        "scenetmpl:name": "Custom"
+      }
+    ]
+  }
+}

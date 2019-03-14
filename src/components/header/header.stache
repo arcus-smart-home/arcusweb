@@ -1,0 +1,91 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="can-stache/helpers/route" />
+<can-import from="i2web/helpers/global" />
+
+<h1 class="sr-only">Arcus</h1>
+<header class="app-header {{#isAccountLoading}}disabled{{/isAccountLoading}}">
+  <a href="#" class="icon-menu" ($click)="toggleNavigation()">
+    <span class="sr-only">Menu</span>
+    <i class="icon-app-menu"></i>
+  </a>
+
+  <a data-analytics="nav.dashboard" href="{{routeUrl page="home"}}"{{#matchRoute(page="home")}} {{/matchRoute}} class="logo-link">
+    <img data-analytics="nav.dashboard" class="arcus-logo" src="/src/images/logo.svg" alt="Arcus Logo"/>
+  </a>
+
+  <nav class="hide mobile-navigation">
+    <ul>
+      <li>
+        <a class="header-route" data-analytics="nav.dashboard" href="{{routeUrl page="home"}}"{{#matchRoute(page="home")}} class="current-page"{{/matchRoute}}>Dashboard</a>
+      </li>
+      <li>
+        <a class="header-route" data-analytics="nav.scenes" href="{{routeUrl page="scenes"}}"{{#matchRoute(page="scenes")}} class="current-page"{{/matchRoute}}>Scenes</a>
+      </li>
+      <li>
+        <a class="header-route" data-analytics="nav.rules" href="{{routeUrl page="rules" subpage="my"}}"{{#matchRoute(page="rules")}} class="current-page"{{/matchRoute}}>Rules</a>
+      </li>
+      <li>
+        <a class="header-route" data-analytics="nav.devices" href="{{routeUrl page="devices" subpage="list"}}"{{#matchRoute(page="devices")}} class="current-page"{{/matchRoute}}>Devices</a>
+      </li>
+      <li>
+        <a class="header-route" data-analytics="nav.settings" href="{{routeUrl page="settings" subpage="profile" action="contact-info"}}"{{#matchRoute(page="settings")}} class="current-page"{{/matchRoute}}>Settings</a>
+      </li>
+    </ul>
+  </nav>
+  <nav class="right-utilities">
+    <ul>
+      {{#if person['person:firstName']}}
+        <li>
+          <span class="introduction">Hello, {{person['person:firstName']}}</span>
+        </li>
+      {{/if}}
+      <li>
+        <a class="icon-link" ($click)="showPlaceSelector()">
+          <span class="sr-only">Logout</span>
+          <i class="icon-app-logout-1"></i>
+        </a>
+      </li>
+      <li>
+        <a class="icon-link" ($click)="showAddMenu()">
+          <span class="sr-only">Add</span>
+          <i class="icon-app-add"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<nav class="navigation-container col-xs-12 col-sm-5 col-md-4  {{^showNavigation}}hidden{{/showNavigation}}">
+  <button type="button" class="navigation-toggle" ($click)="toggleNavigation()">&#x00D7;</button>
+  <ul class="navigation-menu">
+    <li>
+      <a data-analytics="nav.dashboard" href="{{routeUrl page="home"}}"{{#matchRoute(page="home")}} class="current-page"{{/matchRoute}} ($click)="toggleNavigation()">Dashboard</a>
+    </li>
+    <li>
+      <a data-analytics="nav.scenes" href="{{routeUrl page="scenes"}}"{{#matchRoute(page="scenes")}} class="current-page"{{/matchRoute}} ($click)="toggleNavigation()">Scenes</a>
+    </li>
+    <li>
+      <a data-analytics="nav.rules" href="{{routeUrl page="rules"}}"{{#matchRoute(page="rules")}} class="current-page"{{/matchRoute}} ($click)="toggleNavigation()">Rules</a>
+    </li>
+    <li>
+      <a data-analytics="nav.devices" href="{{routeUrl page="devices"}}"{{#matchRoute(page="devices")}} class="current-page"{{/matchRoute}} ($click)="toggleNavigation()">Devices</a>
+    </li>
+    <li>
+      <a data-analytics="nav.settings" href="{{routeUrl page="settings"}}"{{#matchRoute(page="settings")}} class="current-page"{{/matchRoute}} ($click)="toggleNavigation()">Settings</a>
+    </li>
+  </ul>
+</nav>

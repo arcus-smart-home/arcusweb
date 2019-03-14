@@ -1,0 +1,67 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-configurator-camera-rotation">
+  <template>
+    <div class="configurator-header">
+      <span class="config-control-switch">
+        <arcus-control-switch {is-on}="rotated" {toggle}="@toggleRotation" />
+      </span>
+    </div>
+    <p>If your picture is upside down, then turn on this feature to rotate the orientation of the camera 180&deg;.
+    Typically this feature is used when the camera has been mounted upside down.</p>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+    import Errors from 'i2web/plugins/errors';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+        isSwannCamera: {
+          get() {
+            const device = this.attr('device');
+            return !!device.attr('swannbatterycamera:sn');
+          },
+        },
+        rotated: {
+          get() {
+            const device = this.attr('device');
+            return (this.attr('isSwannCamera'))
+              ? !!device.attr('camera:flip')
+              : !!device.attr('camera:flip') && !!device.attr('camera:mirror');
+          },
+        },
+      },
+      title: 'Rotate Camera 180&deg;',
+      toggleRotation(context, el, ev) {
+        if (ev) ev.stopImmediatePropagation();
+        const device = this.attr('device');
+        const stateToBe = !this.attr('rotated');
+        const attrs = (this.attr('isSwannCamera'))
+          ? { 'camera:flip': stateToBe }
+          : { 'camera:flip': stateToBe, 'camera:mirror': stateToBe };
+        device.attr(attrs);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
+    });
+  </script>
+</can-component>

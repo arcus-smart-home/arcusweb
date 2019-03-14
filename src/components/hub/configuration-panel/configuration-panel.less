@@ -1,0 +1,101 @@
+arcus-hub-configuration-panel {
+  display: block;
+  .icon-wrapper {
+    flex-grow: 0;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  h3 + h4 {
+    margin-top: @gutter;
+  }
+  h4 {
+    margin-bottom: @gutter;
+    em {
+      display: block;
+      margin-top: @gutter/5;
+    }
+  }
+}
+
+.control-overview {
+  padding-top: @gutter/2;
+  display: flex;
+  align-items: center;
+  .icon-wrapper {
+    flex-grow: 0;
+    margin-right: @gutter/2;
+    padding-left: @gutter/6;
+  }
+}
+.configurators-wrapper {
+  padding-right: 5px; //shadow space because of y-scrolling
+  margin-top: @gutter;
+  margin-bottom: @gutter*2;
+}
+.configurator {
+  ul {
+    padding-left: 0;
+  }
+  .configurator-header, .configurator-footer {
+    padding-top: @gutter/2;
+    padding-bottom: @gutter/2;
+    border-top: @border;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &.no-border {
+      border-top: none;
+    }
+  }
+  .configurator-footer {
+    display: block;
+  }
+  .config-title {
+    font-size: @font-size-h3;
+    font-weight: @headings-font-weight;
+    display: inline-flex;
+    text-transform: capitalize;
+    margin-bottom: 0;
+    padding-top: 5px;
+    + .config-control-switch {
+      margin-top: @gutter/2;
+    }
+  }
+  .config-value {
+    font-size: @font-size-h4;
+    display: inline-flex;
+    align-self: flex-end;
+  }
+  .value-unit {
+    color: @grouse;
+    font-size: (@font-size-h4 * .7px);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .range-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .error {
+    margin-top: -@gutter/2;
+  }
+  .wi-fi {
+    display: block;
+    font-size: 28px;
+    margin-top: @gutter/6;
+  }
+  .info-wrapper {
+    display: flex;
+  }
+  .info-label {
+    background-color: @pigeon;
+    border: @border;
+    border-radius: @border-radius;
+    color: @grouse;
+    font-size: 12px;
+    margin-right: @gutter/3;
+    padding: 4px;
+  }
+}
+
+

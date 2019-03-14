@@ -1,0 +1,39 @@
+[
+  {
+    "base:address": "DRIV:dev:e8af2e0e-f02e-4163-99cb-a7fcc8a9e1e3",
+    "base:caps": [
+      "dev",
+      "devadv",
+      "devconn",
+      "devpow",
+      "base"
+    ],
+    "base:id": "e8af2e0e-f02e-4163-99cb-a7fcc8a9e1e3",
+    "base:images": {},
+    "base:instances": {},
+    "base:tags": [],
+    "base:type": "dev",
+    "dev:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+    "dev:devtypehint": "Accessory",
+    "dev:model": "VC1",
+    "dev:name": "Springs Window Fashions Remote 1",
+    "dev:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+    "dev:productId": "b1d292",
+    "dev:vendor": "Springs Window Fashions",
+    "devadv:added": 1490019145761,
+    "devadv:drivercommit": "bc6eecfc373216df5a40464386060c5ced93f7b0",
+    "devadv:driverhash": "b5pT6d1UPo10lsygE/gRuuxZD60",
+    "devadv:drivername": "ZWSpringsVCZ1RemoteDriver",
+    "devadv:driverversion": "1.0",
+    "devadv:firmwareVersion": "4.33.11.0",
+    "devadv:protocol": "ZWAV",
+    "devadv:protocolid": "EUxXRC0xOTAx0qiV/hEAAAAAAAA=",
+    "devconn:lastchange": 1490019145786,
+    "devconn:state": "ONLINE",
+    "devpow:backupbatterycapable": false,
+    "devpow:battery": 20,
+    "devpow:linecapable": false,
+    "devpow:source": "BATTERY",
+    "devpow:sourcechanged": 1490019145761
+  }
+]

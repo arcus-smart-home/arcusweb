@@ -1,0 +1,75 @@
+/**
+* @stylesheet corner-tag.less Corner Tag
+* @parent styles.baseline-elements
+*
+* @description
+* Little triangular indicator that the site or feature is in beta. The wrapper it's placed in may need to be made `position: relative` to keep the absolute positioning contained.
+*
+* ### Usage
+* This is a "deluxe" mixin. The html in the demo below needs to be included just under the main wrapper, and then the mixin needs to be called in the less, like so:
+```
+arcus-component-tag {
+  .corner-tag-mixin;
+}
+```
+*
+* The available options for the mixin are `@tag-height`, which controls the height and width of the triangle (and is set in ems), and `@tag-bg` which controls the ... tag background color. These can be listed in order when you call the mixin, like so:
+```
+arcus-component-tag {
+  .corner-tag-mixin(2em, @pigeon);
+}
+```
+* 
+*
+* @demo ./src/styles/demos/corner-tag.html
+*
+**/
+
+.corner-tag-mixin(@tag-height: 4em, @tag-bg: @body-bg) {
+  .corner-tag {
+    .font-demibold;
+    position: absolute;
+    color: @link-color;
+    width: 0;
+    height: 0;
+    border-top: @tag-height solid @tag-bg;
+    border-right: @tag-height solid transparent;
+    z-index: @zindex-popover;
+    &:hover {
+      border-top-color: @bluejay;
+      color: @link-color-dark;
+      a {
+        color: @link-color-dark;
+        text-decoration: none;
+      }
+    }
+    &:after {
+      content: '';
+      position: relative;
+      width: 1px;
+      height: @tag-height*1.45;
+      background-color: @heron;
+      display: block;
+      transform: rotate3d(0,0,1,45deg);
+      margin-top: -(@tag-height*1.22);
+      margin-left: @tag-height/2;
+    }
+    a {
+      position: absolute;
+      display: block;
+      top: -(@tag-height/1.1);
+      left: @tag-height/6;
+      transition: none;
+      font-size: @font-size-small;
+      &.rotated {
+        transform: rotate(-45deg);
+        top: -(@tag-height);
+        left: @tag-height/10;
+      }
+      &:hover {
+        color: @link-color-dark;
+        text-decoration: none;
+      }
+    }
+  }
+}

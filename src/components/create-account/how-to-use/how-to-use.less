@@ -1,0 +1,59 @@
+arcus-create-account-how-to-use {
+  display: block;
+  .how-to-use {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: @gutter/1.5 0;
+    text-align: left;
+    .breakpoint(sm-down, {
+      margin-top: 0;
+    });
+    &:hover {
+      h2 {
+        color: @link-color;
+      }
+    }
+    .icon-app-chevron {
+      font-size: 25px;
+      color: @link-color;
+      margin: 0 0 0 @gutter*1.5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotate(-90deg) translateX(0px);
+      .breakpoint(sm-down, {
+        margin-left: @gutter/2;
+      });
+    }
+    h2 {
+      .font-demibold;
+    }
+    p {
+      color: @grouse;
+    }
+  }
+  img.use-security,
+  img.use-switch {
+    cursor: pointer;
+    width: 320px;
+    .breakpoint(sm-down, {
+      width: 300px;
+    });
+  }
+  .divider {
+    border-bottom: @border;
+    width: 60%;
+    height: 43px;
+    margin-bottom: @gutter/2;
+    .breakpoint(sm-down, {
+      width: 100%;
+    });
+    div {
+      display: inline-block;
+      color: @grouse;
+      background-color: @crane;
+      padding: @gutter;
+    }
+  }
+}

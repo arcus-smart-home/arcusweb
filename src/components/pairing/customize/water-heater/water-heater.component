@@ -1,0 +1,121 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-pairing-customize-water-heater">
+  <template>
+    <div class="box-gray-radius">
+      <h4>{{subtitle}}</h4>
+      <hr>
+      {{#each description}}
+        <p>{{.}}</p>
+      {{/each}}
+      <hr>
+      {{textInput('device.aosmithwaterheatercontroller:modelnumber', 'Model Number (Optional)'}}
+      {{textInput('device.aosmithwaterheatercontroller:serialnumber', 'Serial Number (Optional)'}}
+    </div>
+  </template>
+  <script type="view-model">
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Device from 'i2web/models/device';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Object} customizationStep
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description Customization step that contains display text
+         */
+        customizationStep: {
+          type: '*',
+        },
+        /**
+         * @property {Array} description
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description Description field from the customization step
+         */
+        description: {
+          get() {
+            const step = this.attr('customizationStep');
+            return (step && step.description && step.description.length > 0)
+              ? step.description
+              : ['Should your water heater ever have a problem, this information will be passed along to the Contact Center.', 'This information is typically found on the water heater\'s data plate.'];
+          },
+        },
+        /**
+         * @property {Device} device
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description The device being customized
+         */
+        device: {
+          Type: Device,
+        },
+        /**
+         * @property {String} subtitle
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description Title field from the customization step, to be displayed
+         * as the title inside the box-gray-radius, at the top of the box
+         */
+        subtitle: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.title
+              ? step.title
+              : 'Water Heater Assistance';
+          },
+        },
+        /**
+         * @property {String} title
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description Header field from the customization step
+         */
+        title: {
+          get() {
+            const step = this.attr('customizationStep');
+            return step && step.header
+              ? step.header
+              : 'Water Heater';
+          },
+        },
+        /**
+         * @property {*} whenComplete
+         * @parent i2web/components/pairing/customize/water-heater
+         * @description Accept a whenComplete method as an optional parameter for the component;
+         * if specified, invoke this method when the water-heater attributes change
+         */
+        whenComplete: {
+          type: '*',
+        },
+      },
+    });
+  </script>
+  <script type="events">
+    import Errors from 'i2web/plugins/errors';
+
+    export default {
+      '{element} input change': function numberChanged() {
+        const vm = this.viewModel;
+        vm.attr('device').save().catch(e => Errors.log(e, true));
+      },
+      '{viewModel.device} aosmithwaterheatercontroller:modelnumber': function valueChanged() {
+        const vm = this.viewModel;
+        if (vm.attr('whenComplete')) {
+          vm.attr('whenComplete')('WATER_HEATER');
+        }
+      },
+    };
+  </script>
+</can-component>

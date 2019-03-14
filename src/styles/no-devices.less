@@ -1,0 +1,50 @@
+.no-devices {
+  display: block;
+  margin-bottom: @gutter;
+  white-space: nowrap;
+  .breakpoint(md-down, {
+    text-align: center;
+  });
+  .left-wrapper {
+    p {
+      &:first-of-type {
+        margin-top: @gutter/3;
+      }
+      &:last-of-type {
+        margin-bottom: @gutter;
+      }
+    }
+  }
+  .left-wrapper,
+  .right-wrapper {
+    display: block;
+    padding-top: @gutter;
+    padding-left: @gutter;
+    padding-right: @gutter;
+    white-space: normal;
+    vertical-align: middle;
+    .breakpoint(md, { 
+      display: inline-block;
+      width: 49%; 
+    });
+  }
+  .right-wrapper {
+    &:before {
+      content: '';
+      display: block;
+      height: @gutter*1.5;
+      width: 1px;
+      position: relative;
+      margin-bottom: -35px; //centers the line
+      right: 30px;
+      background: @heron;
+      .breakpoint(md-down, {
+        display: none;
+      });
+    }    
+    arcus-shop-button {
+      display: block;
+      margin: 0 auto @gutter;
+    }
+  }
+}

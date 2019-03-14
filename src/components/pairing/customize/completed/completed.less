@@ -1,0 +1,96 @@
+arcus-pairing-customize-completed-device,
+arcus-pairing-customize-completed-hub {
+  display: block;
+  text-align: center;
+  margin: @gutter auto;
+  h3 {
+    margin-bottom: @gutter;
+  }
+  arcus-animated-check {
+    margin-bottom: @gutter;
+    .success-base {
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+}
+
+arcus-pairing-customize-completed-hub {
+  max-width: 480px;
+  p:last-of-type {
+    margin-bottom: @gutter;
+  }
+  .circle {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto @gutter/1.5 auto;
+  }
+  .wifi-icon {
+    padding: 18px;
+    border: 2px solid @swift;
+    border-radius: 100%;
+    margin: auto;
+    i {
+      font-size: 60px;
+    }
+  }
+  .check {
+    font-size: 16px;
+    background-color: @parakeet;
+    border: 3px solid @crane;
+    border-radius: 100%;
+    color: @crane;
+    margin: auto;
+    padding: 9px;
+    position: relative;
+    top: 35px;
+    right: 35px;
+    height: 40px;
+    z-index: 10;
+  }
+}
+
+arcus-pairing-customize-completed-device {
+  arcus-pairing-device-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 480px;
+    & + arcus-pairing-device-state {
+      margin-top: @gutter/2;
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    .box-gray-radius {
+      .row-right-area {
+      .breakpoint(sm-down, {
+          display: block;
+        });
+      }
+    }
+    .sub-left-area {
+      text-align: left;
+      width: 100%;
+    }
+    .sub-right-area {
+      flex-basis: 100%;
+    }
+    .device-subtext {
+      white-space: nowrap;
+    }
+  }
+
+  .ready-customize {
+    margin-bottom: @gutter/2;
+  }
+  .state-list {
+    margin-bottom: @gutter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

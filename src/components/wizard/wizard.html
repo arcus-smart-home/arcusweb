@@ -1,0 +1,50 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-wizard {initial-step}="1">
+    <arcus-wizard-step header="Professional Monitoring Signup" {is-satisfied}="true" {next-button-label}="'Begin'">
+      This is the content for step 1.
+  	</arcus-wizard-step>
+    <arcus-wizard-step header="Confirm Your Address" {is-satisfied}="step2Complete" {next-button-label}="'Next'" {prev-button-label}="'Prev'">
+      <input type="checkbox" id="confirmAddress" {($checked)}="equal(~step2Complete, true)">
+      <label for="confirmAddress">I confirm the address above is a residential property.</label>
+  	</arcus-wizard-step>
+    <arcus-wizard-step header="Congratulations, You're Done!" {has-no-nav}="true">
+      This is the content for step 3.
+  	</arcus-wizard-step>
+  </arcus-wizard>
+</script>
+<script src="../../../node_modules/steal/steal.js" id="demo-source" main="@empty">
+  import $ from 'jquery';
+  import canList from 'can-list';
+  import 'can-stache-converters';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/wizard/';
+
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-html',
+    scope: {
+      step2Complete: false,
+    },
+    appScope: {},
+  }).then(() => {
+    let vm = canViewModel($('arcus-wizard')[0]);
+  });
+</script>

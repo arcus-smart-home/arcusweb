@@ -1,0 +1,79 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-context-bar>
+    <h2>
+      <i class="icon-app-scene-2"></i>
+      With an INCIDENT render the provided `content`
+    </h2>
+  </arcus-context-bar>
+  <div style="margin-top:20px;">
+    <button id="no-incident">No Incident</button>
+    <button id="security">Security</button>
+    <button id="panic">Panic</button>
+    <button id="smoke">Smoke</button>
+    <button id="co">CO</button>
+    <button id="water">Water Leak</button>
+    <button id="care">Care</button>
+    <button id="hub-offline">Hub Offline</button>
+  </div>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import $ from 'jquery';
+  import canMap from 'can-map';
+  import canList from 'can-list';
+  import canViewModel from 'can-view-model';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/context-bar/';
+  import IncidentData from 'i2web/models/fixtures/data/incident/incident.json';
+
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-html',
+    scope: { },
+    appScope: {
+      careAlarmState: 'READY',
+      currentIncident: undefined,
+    },
+  }).then(() => {
+    const appState = canViewModel('html');
+    $('#no-incident').click(() => {
+      appState.removeAttr('currentIncident');
+      appState.attr('careAlarmState', 'READY');
+    });
+    $('#security').click(() => {
+      appState.attr('currentIncident', IncidentData[0]);
+    });
+    $('#panic').click(() => {
+      appState.attr('currentIncident', IncidentData[2]);
+    });
+    $('#smoke').click(() => {
+      appState.attr('currentIncident', IncidentData[3]);
+    });
+    $('#co').click(() => {
+      appState.attr('currentIncident', IncidentData[4]);
+    });
+    $('#water').click(() => {
+      appState.attr('currentIncident', IncidentData[5]);
+    });
+    $('#care').click(() => {
+      appState.attr('careAlarmState', 'ALERT');
+    });
+  });
+</script>

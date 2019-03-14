@@ -1,0 +1,330 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #wrapper {
+      margin: 100px auto;
+      border: 1px solid #cccccc;
+    }
+    ul.controls {
+      list-style-type: none;
+    }
+    ul.controls li:first-child {
+      margin-top: 10px;
+    }
+    ul.controls li {
+      margin-bottom: 10px;
+    }
+  </style>
+  <title>Lawn &amp; Garden Dashboard Card</title>
+</head>
+<body>
+  <ul class="controls" style="display: none;">
+    <li><button id="off">All Devices Offline</button></li>
+    <li><button id="nono">Nothing watering and nothing scheduled</button></li>
+    <li><button id="noso">Nothing watering and something scheduled</button></li>
+    <li><button id="sono">Something watering and nothing scheduled</button></li>
+    <li><button id="soso">Something watering and something scheduled</button></li>
+    <li><button id="twoso">Two zones watering and something scheduled</button></li>
+    <li><button id="more">More than two zones watering and something scheduled</button></li>
+  </ul>
+
+  <script type="text/stache" id="demo-html">
+    <div class="row content">
+      <arcus-subsystem-card id="wrapper">
+        <arcus-subsystem-card-lawn-garden {subsystem}="subsystem" {app-state}="appState" />
+      </arcus-subsystem-card>
+    </div>
+  </script>
+
+  <script src="../../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+    import CanMap from 'can-map';
+    import canViewModel from 'can-view-model';
+    import Device from 'i2web/models/device';
+    import { cloneDeep, first } from 'lodash';
+    import 'flexboxgrid/dist/flexboxgrid.min.css';
+    import 'i2web/app.less';
+    import 'i2web/components/subsystem/lawn-garden/card/';
+    import stache from 'can-stache';
+    import Subsystem from 'i2web/models/subsystem';
+    import subsystemsFixture from 'i2web/models/fixtures/data/subsystem.json';
+    import hoseTimerFixture from 'i2web/models/fixtures/data/device/orbit_hose_timer_mock.json';
+
+    window.canViewModel = canViewModel;
+    document.querySelector('.controls').style = '';
+
+    const subsystemsId = Object.keys(subsystemsFixture)[0];
+    const lawnAndGardenFixture = first(subsystemsFixture[subsystemsId]
+      .subsystems
+      .filter(function isLawnAndGarden(subsystem) {
+        return subsystem["subs:name"] === "LawnNGardenSubsystem";
+      }));
+
+    const deviceAddress = hoseTimerFixture['base:address'];
+    const template = stache(document.querySelector('#demo-html').innerHTML);
+
+    // remove component from the DOM if already rendered
+    const cleanup = () => {
+      const container = document.querySelector('.content');
+      if (container) container.remove();
+    };
+
+    document.querySelector('#off').onclick = function() {
+      cleanup();
+
+      // add device to subsystem
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers']= [deviceAddress];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {};
+
+      // ...and make sure something is watering, otherwise the "nothing watering,
+      // nothing" scheduled screen would be rendered
+      subsystemFixture['sublawnngarden:zonesWatering'] = {
+        [deviceAddress]: {
+          "controller": deviceAddress,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z1"
+        }
+      };
+
+      // set device to offline
+      const device = cloneDeep(hoseTimerFixture);
+      device['devconn:state'] = 'OFFLINE';
+
+      // render component
+      const appState = new CanMap({ devices: new Device.List([device]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#nono').onclick = function() {
+      cleanup();
+
+      // add device to subsystem
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers'] = [deviceAddress];
+      subsystemFixture['sublawnngarden:nextEvent'] = null;
+
+      const device = cloneDeep(hoseTimerFixture);
+      const appState = new CanMap({ devices: new Device.List([device]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#noso').onclick = function() {
+      cleanup();
+      // add device to subsystem and a scheduled event
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers'] = [deviceAddress];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {};
+      subsystemFixture['sublawnngarden:nextEvent'] = {
+        "controller": deviceAddress,
+        "duration": 1,
+        "retryCount": 0,
+        "startTime": 1522321200000,
+        "status": "PENDING",
+        "timeOfDay": "6:00:00",
+        "zone": "z1"
+      };
+
+      // simulate a device with an unnamed zone
+      const device = cloneDeep(hoseTimerFixture);
+      device['irr:zonename:z1'] = null;
+      device['irr:zonenum:z1'] = 1;
+
+      const appState = new CanMap({ devices: new Device.List([device]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#sono').onclick = function() {
+      cleanup();
+      // add device to subsystem and watering zone
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers'] = [deviceAddress];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {
+        [deviceAddress]: {
+          "controller": deviceAddress,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z1"
+        }
+      };
+      subsystemFixture['sublawnngarden:nextEvent'] = null;
+      const device = cloneDeep(hoseTimerFixture);
+      const appState = new CanMap({ devices: new Device.List([device]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#soso').onclick = function() {
+      cleanup();
+      // add device to subsystem and a scheduled event
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers'] = [deviceAddress];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {
+        [deviceAddress]: {
+          "controller": deviceAddress,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z1"
+        }
+      };
+      subsystemFixture['sublawnngarden:nextEvent'] = {
+        "controller": deviceAddress,
+        "duration": 1,
+        "retryCount": 0,
+        "startTime": 1522321200000,
+        "status": "PENDING",
+        "timeOfDay": "6:00:00",
+        "zone": "z1"
+      };
+      const device = cloneDeep(hoseTimerFixture);
+      const appState = new CanMap({ devices: new Device.List([device]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#twoso').onclick = function () {
+      cleanup();
+
+      // "mock" a second device
+      const deviceAddress2 = 'DRIV:dev:26ba6a41-48e0-490f-9f01-2499674fb6f1';
+      const device2 = cloneDeep(hoseTimerFixture);
+      device2['base:address'] = deviceAddress2;
+      device2['irr:zonename:z1'] = null;
+      device2['irr:zonename:z2'] = 'Veggie Garden';
+
+      // add devices to subsystem and a scheduled event
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers'] = [
+        deviceAddress,
+        deviceAddress2
+      ];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {
+        [deviceAddress]: {
+          "controller": deviceAddress,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z1"
+        },
+        [deviceAddress2]: {
+          "controller": deviceAddress2,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z2"
+        },
+      };
+      subsystemFixture['sublawnngarden:nextEvent'] = {
+        "controller": deviceAddress,
+        "duration": 1,
+        "retryCount": 0,
+        "startTime": 1522321200000,
+        "status": "PENDING",
+        "timeOfDay": "6:00:00",
+        "zone": "z1"
+      };
+      const device = cloneDeep(hoseTimerFixture);
+      const appState = new CanMap({ devices: new Device.List([device, device2]) });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+
+    document.querySelector('#more').onclick = function () {
+      cleanup();
+
+      // "mock" a second device
+      const deviceAddress2 = 'DRIV:dev:26ba6a41-48e0-490f-9f01-2499674fb6f1';
+      const device2 = cloneDeep(hoseTimerFixture);
+      device2['base:address'] = deviceAddress2;
+      device2['irr:zonename:z1'] = null;
+      device2['irr:zonename:z2'] = 'Veggie Garden';
+
+      // "mock" a third device
+      const deviceAddress3 = 'DRIV:dev:01b611cd-0f4b-43cc-aa26-3a457e0bc149';
+      const device3 = cloneDeep(hoseTimerFixture);
+      device3['base:address'] = deviceAddress3;
+      device3['irr:zonename:z1'] = null;
+      device3['irr:zonename:z3'] = 'Garden Boxes';
+
+      // add devices to subsystem and a scheduled event
+      const subsystemFixture = cloneDeep(lawnAndGardenFixture);
+      subsystemFixture['sublawnngarden:controllers']= [
+        deviceAddress,
+        deviceAddress2,
+        deviceAddress3
+      ];
+      subsystemFixture['sublawnngarden:zonesWatering'] = {
+        [deviceAddress]: {
+          "controller": deviceAddress,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z1"
+        },
+        [deviceAddress2]: {
+          "controller": deviceAddress2,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z2"
+        },
+        [deviceAddress3]: {
+          "controller": deviceAddress3,
+          "duration": 1,
+          "startTime": 1522267356177,
+          "trigger": "MANUAL",
+          "zone": "z3"
+        },
+      };
+      subsystemFixture['sublawnngarden:nextEvent'] = {
+        "controller": deviceAddress2,
+        "duration": 1,
+        "retryCount": 0,
+        "startTime": 1522321200000,
+        "status": "PENDING",
+        "timeOfDay": "6:00:00",
+        "zone": "z2"
+      };
+      const device = cloneDeep(hoseTimerFixture);
+      const appState = new CanMap({
+        devices: new Device.List([device, device2, device3])
+      });
+      const subsystem = new Subsystem(subsystemFixture);
+      const scope = new CanMap({ subsystem, appState });
+      document.body.appendChild(template(scope));
+    };
+  </script>
+</body>
+</html>

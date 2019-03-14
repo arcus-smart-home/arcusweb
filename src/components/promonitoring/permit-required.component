@@ -1,0 +1,52 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-promonitoring-permit-required">
+  <template>
+    <p>Local emergency responders {{#unless permitRequired}} may {{/unless}} require you to have a dispatch permit on file.</p>
+    {{textInput('promonSettings.promon:permitNumber', 'Enter Permit Code')}}
+    <p>{{#if permitRequired}}The{{else}}If required, the {{/if}} authorities will ask for your permit number during the dispatch process.
+      Failure to obtain and enter permit information may result in fines, and emergency responders may not respond.</p>
+    <p>Contact your local city office {{#unless permitRequired}} to see if a permit is required and {{/unless}} to request your dispatch permit.</p>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import ProMonitoringSettings from 'i2web/models/pro-monitoring-settings';
+
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {ProMonitoringSettings} promonSettings
+         * @parent i2web/components/promonitoring/permit-required
+         * @description View model copy of promonitoring settings config to use for Save operation
+         */
+        promonSettings: {
+          Type: ProMonitoringSettings,
+        },
+        /**
+         * @property {Boolean} permitRequired
+         * @parent i2web/components/promonitoring/permit-required
+         * @description Should permit information panel indicate if permit is or may be required
+        */
+        permitRequired: {
+          get() {
+            return !!this.attr('promonSettings.promon:permitRequired');
+          },
+        },
+      },
+    });
+  </script>
+</can-component>

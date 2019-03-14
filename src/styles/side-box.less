@@ -1,0 +1,61 @@
+/**
+* @stylesheet side-box.less Side Box
+* @parent styles.baseline-elements
+*
+* @description
+* This is a dark blue aside wrapper used primarily in Pro-Monitoring flows. It should sit on the upper right corner of the main content area and draws attention to personalized information.
+*
+* > NOTE: The content wrapper needs to be set to flex, and the main content needs a flex-basis to let this box sit in the proper space.
+*
+* Example:
+```
+arcus-pro-monitoring-step-permit-required { //this is an element using side-box markup
+  display: flex;
+  flex-direction: column; //this puts the side box and content area stacked and full width on small screens
+  .breakpoint(md, { 
+    flex-direction: row;
+  });
+  .main-content { //this is what goes to the left of the side-box
+    flex: 1 1 auto;
+  }
+}
+```
+* @demo ./src/styles/demos/side-box.html
+*
+**/
+
+.side-box {
+  background-color: @bluejay;
+  color: @pigeon;
+  padding: @gutter;
+  flex: 1 0 auto;
+  min-width: 300px;
+  .breakpoint(md, {
+    align-self: flex-start;
+    margin-left: auto;
+    max-width: 360px;
+  });
+  h2, h3 {
+    color: @pigeon;
+  }
+  p {
+    color: @pigeon;
+    line-height: 1.5em;
+  }
+  hr {
+    border-color: fade(@pigeon, 50%);
+  }
+  [class^="btn"] {
+    .button-colors(@color: @crane, @border: @crane, @hover: @bluejay);
+  }
+}
+
+.side-box-title {
+  .font-demibold;
+  font-size: @font-size-small;
+  text-transform: uppercase;
+  color: fade(@crane, 70%); 
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: @gutter;
+}

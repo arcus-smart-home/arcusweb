@@ -1,0 +1,50 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/components/support-number.component" />
+<div class="step {{activeStepClass}}">
+  <arcus-context-bar>
+    <h2>Professional Monitoring Signup: Connection Test</h2>
+  </arcus-context-bar>
+  <div class="container">
+    {{#eq promonitoringSettings['promon:testCallStatus'] ProMonitoringSettingsCapability.TESTCALLSTATUS_SUCCEEDED}}
+      <div class="loader"></div>
+    {{else}}
+      <div class="main-content">
+        {{^eq promonitoringSettings['promon:testCallStatus'] ProMonitoringSettingsCapability.TESTCALLSTATUS_FAILED}}
+          <img class="test-call-image" src="/src/images/test-call-icon.gif"/>
+        {{/eq}}
+        <p>Arcus will contact you at {{person['person:mobileNumber']}} to verify your phone
+           number is accurate. Please answer the incoming phone call from 1-866-958-4450
+           and do not navigate away from this page. After the call is confirmed, this page will
+           automatically update.
+        </p>
+        {{#eq promonitoringSettings['promon:testCallStatus'] ProMonitoringSettingsCapability.TESTCALLSTATUS_FAILED}}
+          <p class="error">There was a problem completing the Test Call. Verify the above phone number is correct.
+            You may update your phone number by hitting Back. If it is correct, please retry the test.
+            If this issue persists, please call the Arcus Support Team at <arcus-support-number use-link="true" />.</p>
+          <button class="btn-delete" ($click)="retry(%event)">Retry</button>
+        {{/eq}}
+        <hr/>
+        <h2>Phone Number Verification</h2>
+        <p>Arcus won’t be able to professionally monitor your Place without first verifying your phone number is accurate.
+          Professional monitoring services will not begin until you answer the Test Call from Arcus.
+        </p>
+      </div>
+    {{/eq}}
+  </div>
+</div>

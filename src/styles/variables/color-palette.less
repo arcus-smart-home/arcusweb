@@ -1,0 +1,100 @@
+/**
+* @stylesheet variables/color-palette.less Color Palette
+* @parent styles.theme
+*
+* @description
+* Color variable names follow a Bird species theme and evoke the color they make reference.
+**/
+
+/**
+* @styles colors Colors
+* @parent variables/color-palette.less 0
+*
+* @description
+* These are the main colors used to indicate branding and status.
+*
+* @demo ./src/styles/variables/demos/colors.html
+*/
+
+@ibis:        #FF0000;
+@canary:      #FFB500;
+//@warbler:     #6DCFF6;
+@kingfisher:  #00BFB3;
+@peacock:     #0095C8;
+@bluejay:     #004B87;
+@loon:        #8781BD;
+@honeycreeper:#3C1053;
+@lovebird:    #26D07C;
+@cardinal:    #CE0F69;
+@parakeet:    #00BA6D;
+
+
+/**
+* @styles greys Greys
+* @parent variables/color-palette.less 1
+*
+* @description
+* These are the main shades of grey for text, layout, and generic elements.
+*
+* @demo ./src/styles/variables/demos/greys.html
+*/
+
+@raven:          #000000;
+@swift:          #333333;
+@coot:           #666666;
+@grouse:         #999999;
+@heron:          #CCCCCC;
+@pigeon:         #EFEFEF;
+@dove:           #FBFBFB;
+@crane:          #FFFFFF;
+
+/**
+* @styles alarms Alarms
+* @parent variables/color-palette.less
+*
+* @description
+* These are the alarm colors to be used when an incident is occuring
+*
+* @demo ./src/styles/variables/demos/alarm-colors.html
+*/
+
+@fire:          #AE0007;
+@police:        #0056AE;
+@water:         #0097AE;
+@panic:         #8C8C8C;
+
+@fire-bg:       #EFCCCD;
+@police-bg:     #CCDDEF;
+@water-bg:      #CCEAEF;
+@care-bg:       #F1E8F6;
+
+/**
+* @styles scaffolding Scaffolding
+* @parent variables/color-palette.less 2
+*
+* @description
+* These colors are used for the most global elements, like the body tag, the paragraph tag,
+* and the default link elements. They pull from the above colors.
+*
+* @demo ./src/styles/variables/demos/scaffolding.html
+*/
+
+@body-bg:               @crane;
+@text-color:            @coot;
+@text-color-error:      @cardinal;
+@text-color-small:      @coot;
+
+@headings-color:        @swift;
+@headings-color-small:  @coot;
+
+@link-color:            @peacock;
+@link-hover-color:      @peacock;
+@link-hover-decoration: underline;
+
+@link-color-dark:       @crane;
+@link-hover-color-dark: @crane;
+
+.gradient(@start, @end) {
+  background-color: @start;
+  background: linear-gradient(to right, @start, @end);
+}

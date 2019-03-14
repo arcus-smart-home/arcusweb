@@ -1,0 +1,25 @@
+arcus-pin-code {
+	display: inline-flex;
+	margin-top: @gutter/2;
+	margin-bottom: @gutter/2;
+	form {
+		display: flex;
+		input {
+			display: flex;
+			width: @gutter*1.5;
+			height: @gutter*2.5;
+			border-radius: @border-radius/2;
+			border: @border;
+			margin-right: @gutter/4;
+			text-align: center;
+			font-size: @font-size-h1;
+			padding: 0;
+			&:last-child {
+				margin-right: 0;
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}

@@ -1,0 +1,82 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/context-bar/" />
+<can-import from="i2web/helpers/global" />
+<div class="step {{activeStepClass}}">
+  <arcus-context-bar>
+    <h2>Professional Monitoring Signup: Your Alarms</h2>
+  </arcus-context-bar>
+  <div class="container">
+    <div class="main-content">
+      <div class="alarm-row">
+        <h3>Security (Intruder Detection)</h3>
+        <p>Professional monitoring provides the most effective and reliable deterrent to home intrusion.
+          In the event of an attempted break in, local law enforcement may be notified and dispatched to your home.
+        </p>
+        <button type="button" class="btn" ($click)="viewRequirements('SECURITY')">View Requirements</button>
+      </div>
+      <hr />
+      <div class="alarm-row">
+        <h3>Smoke</h3>
+        <p>When every second counts, quickly responding to fire makes all the difference.
+          The Fire Department may be notified and dispatched when a smoke detector is triggered.</p>
+        <button type="button" class="btn" ($click)="viewRequirements('SMOKE')">View Requirements</button>
+      </div>
+      <hr />
+      <div class="alarm-row">
+        <h3>Carbon Monoxide (CO)</h3>
+        <p>Carbon Monoxide is odorless and colorless, and can only be detected with the right equipment. Breathe easy knowing emergency personnel will be alerted if unsafe levels of Carbon Monoxide are detected.</p>
+        <button type="button" class="btn" ($click)="viewRequirements('CO')">View Requirements</button>
+      </div>
+      <hr />
+      <div class="alarm-row">
+        <h3>Panic</h3>
+        <p>An attempt to notify emergency personnel will be made when a Panic alarm is triggered.</p>
+        <button type="button" class="btn" ($click)="viewRequirements('PANIC')">View Requirements</button>
+      </div>
+      <hr />
+      <div class="alarm-row">
+        <h3>Note</h3>
+        <p>Pairing additional devices that participate in Security, Smoke, CO, and Panic alarms will automatically be included in Professional Monitoring at no additional cost!</p>
+      </div>
+    </div>
+    <div class="side-box">
+      <h4 class="side-box-title">Monitored Alarms</h4>
+      {{#unless isPlaceMonitored}}
+        <p class="no-devices">View Requirements to learn more about pairing appropriate devices for Professional Monitoring</p>
+      {{else}}
+        {{#if isSecurityMonitored}}
+          <p class="monitored-alarm">Security</p>
+        {{/if}}
+        {{#if isSmokeMonitored}}
+          <p class="monitored-alarm">Smoke</p>
+        {{/if}}
+        {{#if isCOMonitored}}
+          <p class="monitored-alarm">Carbon Monoxide</p>
+        {{/if}}
+        {{#if isPanicMonitored}}
+          <p class="monitored-alarm">Panic</p>
+        {{/if}}
+      {{/unless}}
+        <hr/>
+      <a href="{{redirectToUrl('s_promonitoring')}}" target="_blank"><button type="button" class="btn">Dispatch Policy</button></a>
+    </div>
+  </div>
+</div>
+
+
+

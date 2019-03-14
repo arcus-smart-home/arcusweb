@@ -1,0 +1,63 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/scenes/edit-panel/" />
+<can-import from="i2web/components/scenes/icon/" />
+<can-import from="i2web/components/schedule/icon.component" />
+<can-import from="i2web/components/favorite/" />
+<can-import from="i2web/components/form/confirm-field/" />
+
+<div class="row panel-list-container">
+  <div class="panel-primary-wrapper">
+    <div class="col-xs-12 col-md panel-information {{#unless scene['scene:enabled']}}disabled{{/unless}}">
+      <arcus-scenes-icon {scene}="scene" />
+      <div class="scene-information">
+        <arcus-form-confirm-field
+          {(model)}="scene"
+          field="scene:name"
+          field-description="Scene Name"
+          placeholder="Scene Name"
+          notify-on-save="true"
+          attributes="character-count='254'" />
+        <h4>{{pluralizeActions(scene['scene:actions'])}}, {{pluralizeDevices(scene['scene:actions'])}}</h4>
+        <small class="next-scheduled">{{nextScheduledEvent(scene)}}</small>
+        <ul class="col-xs-12 col-md panel-options">
+          <li class="{{#unless scene['scene:enabled']}}disabled{{/unless}}">
+            <arcus-favorite {thing}="scene" {display-property}="'scene:name'" />
+          </li>
+          <li class="{{#unless scene['scene:enabled']}}disabled{{/unless}}">
+            <arcus-schedule-icon {thing}="scene" />
+          </li>
+          <li class="{{#unless scene['scene:enabled']}}disabled{{/unless}}">
+            <a ($click)="toggleNotificationOf(scene)">
+              <i class="{{notificationIconOf(scene)}}" aria-hidden="true"></i>
+              <span class="sr-only">Toggle Notifications</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel-secondary-wrapper">
+    <div class="col-md panel-action">
+      <button class="btn-run {{#unless scene['scene:enabled']}}disabled{{/unless}}"
+        ($click)="runScene(scene)">Run Scene</button>
+    </div>
+    <div class="col-md panel-status">
+      <button class="btn" ($click)="editScene(scene, template)">Edit</button>
+    </div>
+  </div>
+</div>

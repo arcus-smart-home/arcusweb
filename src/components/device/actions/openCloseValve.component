@@ -1,0 +1,123 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-device-action-open-close-valve">
+  <template>
+    <div class="content" ($click)="contentClicked">
+      <button class="btn-run {{#if isTransitioning}}saving{{/if}}" ($click)="toggleValve" {{#if isTransitioning}}disabled{{/if}}>
+        {{#if isTransitioning}}<div class="loader"></div>{{/if}} {{state}}
+      </button>
+    </div>
+  </template>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import Errors from 'i2web/plugins/errors';
+    import Device from 'i2web/models/device';
+    import ValveCapability from 'i2web/models/capability/Valve';
+
+    export default canMap.extend({
+      define: {
+        device: {
+          Type: Device,
+        },
+
+        state: {
+          get() {
+            const VALVESTATE = this.attr('device.valv:valvestate');
+
+            switch (VALVESTATE) {
+              case ValveCapability.VALVESTATE_CLOSED:
+                return 'Open';
+              case ValveCapability.VALVESTATE_OPEN:
+                return 'Close';
+              case ValveCapability.VALVESTATE_CLOSING:
+                return 'Closing';
+              case ValveCapability.VALVESTATE_OPENING:
+                return 'Opening';
+              default:
+                return 'Open';
+            }
+          },
+        },
+
+        isTransitioning: {
+          type: 'boolean',
+          get() {
+            const VALVESTATE = this.attr('device.valv:valvestate');
+            return VALVESTATE === ValveCapability.VALVESTATE_CLOSING || VALVESTATE === ValveCapability.VALVESTATE_OPENING;
+          },
+        },
+
+        isClosed: {
+          type: 'boolean',
+          get() {
+            const VALVESTATE = this.attr('device.valv:valvestate');
+            return VALVESTATE === ValveCapability.VALVESTATE_CLOSED || VALVESTATE === ValveCapability.VALVESTATE_CLOSING;
+          },
+        },
+      },
+      /**
+       * @function contentClicked
+       * @description While the valve is transitioning from open/close or vice versa, we do
+       * not want any click events on the disabled button to route the user to the devices page.
+       */
+      contentClicked(_, el, ev) {
+        if (this.attr('isTransitioning')) {
+          ev.stopPropagation();
+        }
+      },
+      /**
+       * @function toggleValve
+       * @description Toggle the state of the valve between open and closed
+       */
+      toggleValve(_, el, ev) {
+        ev.stopPropagation();
+
+        const device = this.attr('device');
+        const isClosed = this.attr('isClosed');
+        const newValveState = isClosed ? ValveCapability.VALVESTATE_OPEN : ValveCapability.VALVESTATE_CLOSED;
+        device.attr('valv:valvestate', newValveState).save().catch(e => Errors.log(e));
+      },
+    });
+  </script>
+  <script type="events">
+    import ValveCapability from 'i2web/models/capability/Valve';
+    import Errors from 'i2web/plugins/errors';
+
+    // Amount of time we want to wait for the transition to finish
+    const TRANSITION_SECONDS = 120;
+
+    export default {
+      '{device} valv:valvestate': function onValveStateChange(device, ev, newVal, oldVal) {
+        // If the previous value is closed or open, we'll save it to potentially revert back to.
+        if (oldVal === ValveCapability.VALVESTATE_CLOSED || oldVal === ValveCapability.VALVESTATE_OPEN) {
+          this.viewModel.attr('previousValvestate', oldVal);
+        }
+        clearTimeout(this._valvestateTimeoutId);
+        // If we are in a closing or opening state, we want to set a timeout if the valve gets "stuck" in
+        // this state. If after a certain period of time the state doesn't change, we should revert back
+        // to the previous state
+        if (newVal === ValveCapability.VALVESTATE_CLOSING || newVal === ValveCapability.VALVESTATE_OPENING) {
+          this._valvestateTimeoutId = setTimeout(() => {
+            device.attr('valv:valvestate', this.viewModel.attr('previousValvestate')).save().catch(e => Errors.log(e));
+            this.viewModel.removeAttr('previousValvestate');
+          }, TRANSITION_SECONDS * 1000);
+        }
+      },
+    };
+  </script>
+</can-component>

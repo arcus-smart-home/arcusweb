@@ -1,0 +1,55 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/form/change-pin/" />
+<can-import from="i2web/components/form/edit-address/" />
+
+{{#switch activeDisplay}}
+  {{#case 'guestMsg'}}
+    {{close-button type="done"}}
+    <h3>Add a Place</h3>
+    <hr>
+    <h4>You are a Guest</h4>
+    <p>
+      {{#if isAnOwner}}
+        To add a new Place you must switch to a Place you own. Do this and then return here to proceed.
+      {{else}}
+        To add your own Place, create a new account using a different email address.
+      {{/if}}
+    </p>
+  {{/case}}
+  {{#case 'address'}}
+    <arcus-form-edit-address
+      header="Add a Place"
+      description="Follow the steps below to add a new place to your account."
+      subheader-step-1="Step 1. About Your Home"
+      save-button-label="Next"
+      {place}="place"
+      {on-create-place-callback}="@onCreatePlaceFromAddress"
+      show-place-name
+    />
+  {{/case}}
+  {{#case 'pin'}}
+    <arcus-form-change-pin
+      header="Add a Place"
+      subheader="Create a PIN Code"
+      description="This 4 digit PIN code will only be used for this place and will be used to disarm the alarm, unlock locks, and more."
+      {(person)}="person"
+      {place-id}="newPlaceId"
+      hide-cancel-button />
+  {{/case}}
+{{/switch}}
+

@@ -1,0 +1,50 @@
+arcus-spinner {
+  display: block;
+  text-align: center;
+  .spinner-value {
+    .font-regular;
+    color: @swift;
+    font-size: @font-size-h2;
+    margin: @gutter/4 @gutter/2 0;
+    overflow: visible;
+    position: relative;
+  }
+  .value-unit {
+    font-size: 50%;
+    vertical-align: super;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-right: -(@gutter/3); //offsets value to visual center
+    position: absolute;
+  }
+  .btn-increment {
+    &.minus {
+      margin-top: @gutter/4;
+    }
+  }
+}
+.large-spinner {
+  arcus-spinner {
+    .spinner-value {
+      .font-light;
+      font-size: 48px;
+      line-height: 1;
+      padding-top: @gutter/2;
+      padding-bottom: @gutter/2;
+    }
+    .value-unit {
+      .font-regular;
+      display: inline-block;
+      padding-top: 4px;
+      font-size: 27%;
+      vertical-align: top;
+      padding-left: 2px;
+      padding-right: 2px;
+      text-transform: uppercase;
+    }
+  }
+  > span {
+    .font-regular;
+    text-transform: uppercase;
+  }
+}

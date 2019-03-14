@@ -1,0 +1,43 @@
+[
+    {
+    "base:address": "DRIV:dev:93d2f53e-94d5-419b-bf03-6389e3086245",
+    "base:caps": [
+      "dev",
+      "devadv",
+      "devmock",
+      "devconn",
+      "devpow",
+      "shade",
+      "base"
+    ],
+    "base:id": "93d2f53e-94d5-419b-bf03-6389e3086245",
+    "base:images": { },
+    "base:instances": { },
+    "base:tags": [ ],
+    "base:type": "dev",
+    "dev:account": "e54d2ce2-17a2-47a2-a377-e25ac9eb7902",
+    "dev:devtypehint": "Shade",
+    "dev:model": "Somfy",
+    "dev:name": "Mock Shade",
+    "dev:place": "3d496bfc-1098-493e-afd4-7f56c12dbef6",
+    "dev:productId": "b726df",
+    "dev:vendor": "Mockitron",
+    "devadv:added": 1490038946788,
+    "devadv:drivercommit": "1561e06f83fda26a63be35cd4305e8f4d4823f35",
+    "devadv:driverhash": "j+GjR8a1cfPxtYE8gkvT/C4BjLg",
+    "devadv:drivername": "MOCK_Shade",
+    "devadv:driverversion": "1.1",
+    "devadv:protocol": "MOCK",
+    "devadv:protocolid": "M030Q3/18XgN+s+/3zxyhwAAAAA=",
+    "devconn:lastchange": 1490038946814,
+    "devconn:signal": 94,
+    "devconn:state": "ONLINE",
+    "devpow:backupbatterycapable": false,
+    "devpow:battery": 40,
+    "devpow:linecapable": false,
+    "devpow:source": "BATTERY",
+    "devpow:sourcechanged": 1490038946788,
+    "shade:shadestate": "OK",
+    "shade:level": 30
+  }
+]

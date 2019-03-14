@@ -1,0 +1,94 @@
+{
+    "scene:actions": [{
+        "context": {
+            "DRIV:dev:f14448bc-f5ff-45e3-b110-c514981b492a": {
+                "shadeopen": "OPEN"
+            }
+        },
+        "name": "Open or Close Blinds",
+        "template": "blinds"
+    }, {
+        "context": {
+            "DRIV:dev:e384fdc4-d954-409f-8fd8-3e0f9354b90b": {
+                "duration": 30
+            }
+        },
+        "name": "Record Video From Cameras",
+        "template": "cameras"
+    }, {
+        "context": {
+            "DRIV:dev:32c71775-5829-4f9c-bb32-1b01edf37e54": {
+                "vent": "OPEN",
+                "ventlevel": 60
+            }
+        },
+        "name": "Open or Close Vents",
+        "template": "vents"
+    }, {
+        "context": {
+            "SERV:subsecurity:707373e7-2ea4-4fb6-b815-d4490f53d70c": {
+                "alarm-state": "ON"
+            }
+        },
+        "name": "Set the Security Alarm",
+        "template": "security"
+    }, {
+        "context": {
+            "DRIV:dev:91dab4c6-57c1-4ab7-8c22-bdac6e85e45e": {
+                "thermostat": {
+                    "coolSetPoint": 27.888,
+                    "heatSetPoint": 23.888,
+                    "mode": "AUTO",
+                    "scheduleEnabled": false
+                }
+            }
+        },
+        "name": "Set Thermostats",
+        "template": "thermostats"
+    }, {
+        "context": {
+            "DRIV:dev:e2618192-0940-4ede-8850-6f0f966b2afb": {
+                "lockstate": "LOCKED"
+            }
+        },
+        "name": "Lock or Unlock Doors",
+        "template": "doorlocks"
+    }, {
+        "context": {
+            "DRIV:dev:a0ad6e25-254c-401a-895f-607b0f358605": {
+                "dim": 50,
+                "switch": "ON"
+            },
+            "DRIV:dev:b7a39884-070b-4f77-89d4-0537fb583126": {
+                "switch": "ON"
+            }
+        },
+        "name": "Turn Lights On or Off",
+        "template": "switches"
+    }, {
+        "context": {
+            "DRIV:dev:f7671479-9d4d-4047-9c37-e69d49a67049": {
+                "doorState": "OPEN"
+            }
+        },
+        "name": "Open or Close Garage Doors",
+        "template": "garagedoors"
+    }, {
+        "context": {
+            "DRIV:dev:756aa0df-2677-48c2-ae99-34c0365afa42": {
+                "valvestate": "OPEN"
+            }
+        },
+        "name": "Open or Close Water Valves",
+        "template": "watervalves"
+    }, {
+        "context": {
+            "DRIV:dev:9932fa98-d871-4688-a6ea-99705050a4d7": {
+                "fan": "ON",
+                "fanspeed": 1
+            }
+        },
+        "name": "Turn Fans On or Off",
+        "template": "fans"
+    }]
+}

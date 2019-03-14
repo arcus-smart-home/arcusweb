@@ -1,0 +1,85 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="i2web/components/wizard/" />
+<can-import from="i2web/pages/create-account/steps/login/" />
+<can-import from="i2web/pages/create-account/steps/pin/" />
+<can-import from="i2web/pages/create-account/steps/security-questions/" />
+<can-import from="i2web/pages/create-account/steps/welcome/" />
+
+<div class="container">
+  {{#unless accepted}}
+    {{#unless invitation}}
+      <h1>Invitation</h1>
+      <div class="step-info">
+        <p>To accept your invitation to someone's place, enter the invitation code and the email address it was sent to.</p>
+      </div>
+      <div class="stage-fields">
+        <div class="input-wrapper">
+          {{textInput('inviteCode', 'Invitation Code')}}
+        </div>
+        <div class="input-wrapper">
+          {{textInput('inviteeEmail', 'Email Address')}}
+        </div>
+        {{#if formError}}
+          <p class="form-error">
+            Email and/or invitation code not recognized. Please check the email invitation code and try again.
+            Invitation codes expire after 7 days.
+          </p>
+        {{/if}}
+        <a class="btn" href="{{routeUrl page="login"}}">Back</a>
+        <button class="btn" ($click)="onSubmitInviteCode()">Submit</button>
+      </div>
+    {{else}}
+      <h1>Hello, {{invitation.inviteeFirstName}}!</h1>
+      <div class="step-info">
+        <p>
+          Thanks for accepting your invitation to <span class="no-wrap">{{invitersFullName}}</span> place called
+          {{invitation.placeName}}.
+        </p>
+        <p>Get started by answering a few questions!</p>
+      </div>
+      <button class="btn" ($click)="toAccountCreation()">Next</button>
+    {{/unless}}
+  {{else}}
+    <arcus-wizard ($enter)="nextOnEnter" {^@next}="next" {^@restart}="restartWizard" {initial-step-index}="startAt">
+      <arcus-create-account-step-login invited
+        {account}="account"
+        {invite-code}="inviteCode"
+        {invitee-email}="inviteeEmail"
+        {person}="person"
+        {place}="place"
+        {session}="session"
+      />
+      <arcus-create-account-step-security-questions invited
+        {completed-stages}="completedStages"
+        {person}="person"
+      />
+      <arcus-create-account-step-pin invited
+        {completed-stages}="completedStages"
+        {person}="person"
+        {place}="place"
+      />
+      <arcus-create-account-step-welcome invited
+        {account}="account"
+        {person}="person"
+        {place}="place"
+        {route-to-dashboard}="@routeToDashboard"
+        {subpage}="subpage"
+      />
+    </arcus-wizard>
+  {{/unless}}
+</div>

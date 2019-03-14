@@ -1,0 +1,80 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-create-account-use-mobile">
+  <view>
+    <can-import from="i2web/components/create-account/welcome/download-mobile.component" />
+    <div class="modal-container">
+      <div class="modal-content">
+        <h1>Attention</h1>
+          <p>
+            For the best experience, we recommend creating an account and pairing these devices on the Arcus Mobile app.
+            Download it in the App Store or get it on Google Play.
+          </p>
+          <arcus-create-account-welcome-download-mobile {android-launch-url}="androidLaunchURL" {ios-launch-url}="iosLaunchURL" />
+          <button type="button" class="btn" ($click)="hideModal()">Close</button>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </view>
+  <script type="view-model">
+    import canMap from 'can-map';
+    import 'can-map-define';
+    import config from 'i2web/config';
+    export default canMap.extend({
+      define: {
+        /**
+         * @property {string} androidLaunchURL
+         * @parent i2web/components/create-account/use-mobile
+         * @description The base URL for launching/installing the android app.
+         */
+        androidLaunchURL: {
+          get() {
+            return `${config.androidDownloadUrl}`;
+          },
+        },
+        /**
+         * @property {string} iosLaunchURL
+         * @parent i2web/components/create-account/use-mobile
+         * @description The base URL for launching/installing the iOS app.
+         */
+        iosLaunchURL: {
+          get() {
+            return `${config.iosDownloadUrl}`;
+          },
+        },
+        /**
+         * @property {Boolean} showModal
+         * @parent i2web/components/create-account/use-mobile
+         * @description If the User chooses the BLE devices option,
+         * show a modal directing user to download Arcus mobile app.
+         */
+        showModal: {
+          type: 'boolean',
+          value: false,
+        },
+      },
+      /**
+       * @function hideModal
+       * @parent i2web/components/create-account/use-mobile
+       * @description Hide this modal
+       */
+      hideModal() {
+        this.attr('showModal', false);
+      },
+    });
+  </script>
+</can-component>

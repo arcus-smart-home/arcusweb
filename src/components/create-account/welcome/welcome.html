@@ -1,0 +1,89 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<style>
+  arcus-create-account-welcome {
+    margin-top: 60px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+</style>
+<script type="text/stache" id="demo-html">
+  <button ($click)="toggleSubpage()">
+    From {{#if subpage}}Mobile{{else}}Web{{/if}}
+  </button>
+  <button ($click)="togglePlace()">
+    {{#if isPromon}}Promon{{else}}Basic/Premium{{/if}} Place
+  </button>
+  <button ($click)="incrementResetAttempts()">
+    {{#switch activationAttempts}}
+      {{#case 0}}0 Activation Attempts{{/case}}
+      {{#case 1}}1 Activation Attempts{{/case}}
+      {{#case 2}}2 Activation Attempts{{/case}}
+    {{/switch}}
+  </button>
+  <arcus-create-account-welcome
+    {activation-attempts}="activationAttempts"
+    {place}="place"
+    {subpage}="subpage"
+  />
+</script>
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import CanMap from 'can-map';
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/create-account/welcome/';
+  import Place from 'i2web/models/place';
+  import PlaceData from 'i2web/models/fixtures/data/place/place.json';
+
+  const premiumPlace = new Place(PlaceData[0]);
+  const promonPlace = new Place(PlaceData[3]);
+
+  const scope = new CanMap({
+    activationAttempts: 0,
+    isPromon: false,
+    place: premiumPlace,
+    subpage: undefined,
+    incrementResetAttempts() {
+      switch (this.attr('activationAttempts')) {
+        case 0: this.attr('activationAttempts', 1); break;
+        case 1: this.attr('activationAttempts', 2); break;
+        case 2: this.attr('activationAttempts', 0); break;
+      }
+    },
+    togglePlace() {
+      const isPromon = this.attr('isPromon');
+      this.attr('place', (isPromon) ? premiumPlace : promonPlace);
+      this.attr('isPromon', !isPromon);
+    },
+    toggleSubpage() {
+      const subpage = this.attr('subpage');
+      this.attr('subpage', (subpage) ? undefined : 'ios');
+    },
+  });
+  const appScope = new CanMap({
+    supportNumber: '555-555-1212',
+  });
+
+  loginAndRender({
+    template: '#demo-html',
+    scope,
+    appScope,
+  });
+</script>

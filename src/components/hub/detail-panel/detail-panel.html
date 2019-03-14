@@ -1,0 +1,40 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html" class="demo" can-autorender>
+  <can-import from="flexboxgrid/dist/flexboxgrid.min.css"/>
+  <can-import from="i2web/app.less"/>
+  <can-import from="i2web/components/hub/detail-panel/" />
+  <arcus-hub-detail-panel {(hub)}="hub" {place}="place"></arcus-hub-detail-panel>
+</script>
+<script id="demo-source"
+        src="../../../../node_modules/steal/steal.js"
+        main="can-view-autorender">
+  import $ from 'jquery';
+  import canViewModel from 'can-view-model';
+  import canMap from 'can-map';
+  import places from 'i2web/models/fixtures/data/place/place.json';
+  import hubs from 'i2web/models/fixtures/data/device/hub.json';
+  import Place from 'i2web/models/place';
+  import Hub from 'i2web/models/hub';
+
+  const vm = canViewModel($('.demo')[0]);
+
+  vm.attr({
+    hub: new Hub(hubs[0]),
+    place: new Place(places[0]),
+  });
+</script>

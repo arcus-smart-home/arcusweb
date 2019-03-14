@@ -1,0 +1,16 @@
+# License Files
+
+Adds Apache-2.0 file header to the files in the specified directory.
+
+## Installation
+
+```sh
+$ cd i2web/tools/license-files
+i2web/tools/license-files $ npm install
+```
+
+## Example
+
+```sh
+i2web/tools/license-files $ ./license-files ../khakis
+```

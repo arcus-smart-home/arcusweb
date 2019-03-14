@@ -1,0 +1,44 @@
+arcus-settings-people-add-person {
+  .panel-header {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    border-bottom: @border;
+    padding-bottom: @gutter/2;
+  }
+  .panel-menu {
+    padding-left: 0;
+    margin-top: @gutter/2;
+  }
+  .content-container {
+    display: flex;
+    flex-shrink: 1;
+    overflow: hidden;
+
+    .left-content, .right-content {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+  .radio-wrapper {
+    align-items: flex-start;
+    padding-bottom: @gutter/2;  
+    .check {
+      cursor: pointer;
+    }
+    label {
+      white-space: normal;
+      .breakpoint(sm-down {
+        font-size: @font-size-large;
+        margin-right: 0;
+      });
+      p {
+        text-transform: none;
+      }
+    }
+  }
+  button[type="submit"] {
+    margin-top: @gutter;
+    margin-bottom: @gutter*2;
+  }
+}

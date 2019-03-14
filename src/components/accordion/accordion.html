@@ -1,0 +1,90 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/stache" id="demo-html">
+  <arcus-accordion>
+    <arcus-accordion-panel>
+      <arcus-accordion-panel-heading
+        header="Header text"
+        sub-header="Subheader text"
+        itemcount="5 people"
+        {(radio-checked)}="isChecked"
+        radio-name="test"
+        {radio-click}="@testClick"
+      >
+        Some more rich text
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body>
+        <div class="accordion-panel-content">
+          <img src="../../images/avatar.png"/>
+          <div class="accordion-panel-copy">
+            <h3>Bruce Wayne</h3>
+            <p>bruce@wayneindustries</p>
+            <p>(123) 456-7890</p>
+          </div>
+        </div>
+        <div class="accordion-panel-action">
+          <button class="btn-primary">Edit</button>
+          <button class="btn-primary">Change Password</button>
+        </div>
+      </arcus-accordion-panel-body>
+  	</arcus-accordion-panel>
+    <arcus-accordion-panel>
+      <arcus-accordion-panel-heading
+        header="Billing"
+        icon="icon-app-flame"
+      >
+        Some more rich text!
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body>
+        <div class="accordion-panel-content">
+          <div class="accordion-panel-copy">
+            <h3>Bruce Wayne</h3>
+            <p>1007 Mountain Drive</p>
+            <p>Gotham, NY 10001</p>
+            <p><small class="uppercase">Visa Ending in 4444</small></p>
+          </div>
+        </div>
+        <div class="accordion-panel-action">
+          <button class="btn-primary">Edit</button>
+        </div>
+      </arcus-accordion-panel-body>
+    </arcus-accordion-panel>
+  </arcus-accordion>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="@empty" id="demo-source">
+  import loginAndRender from 'i2web/test/util/loginAndRender';
+  import 'flexboxgrid/dist/flexboxgrid.min.css';
+  import 'i2web/app.less';
+  import 'i2web/components/accordion/';
+
+  loginAndRender({
+    renderTo: 'body',
+    template: '#demo-html',
+    scope: {
+      define: {
+        isChecked: {
+          type: 'boolean',
+          value: false,
+        },
+      },
+      testClick() {
+        console.log('clicked');
+      },
+    },
+    appScope: {},
+  });
+</script>

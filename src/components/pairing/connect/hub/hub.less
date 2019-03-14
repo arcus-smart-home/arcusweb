@@ -1,0 +1,45 @@
+arcus-pairing-connect-hub {
+  display: flex;
+  justify-content: center;
+  .pairing-content-wrapper {
+    max-width: 480px;
+    flex-direction: column;
+    p {
+      text-align: center;
+      padding-right: @gutter*(2/3);
+      padding-left: @gutter*(2/3);
+      &.error {
+        color: @cardinal;
+      }
+    }
+    .icon-platform-warning-2 {
+      font-weight: bold;
+    }
+    .btn {
+      display: table;
+      margin: 0 auto;
+      margin-top: @gutter*(2/3);
+    }
+    a.instructions-link {
+      line-height: 4;
+      font-size: @font-size-smaller;
+    }
+  }
+
+  .box-gray-radius{
+    arcus-progress-bar {
+      margin-top: @gutter/2;
+    }
+    .btn {
+      margin-top: @gutter/2;
+    }
+    .input-wrapper {
+      width: 100%;
+      margin-top: @gutter;
+      margin-bottom: @gutter;
+      input {
+        text-transform: uppercase;
+      }
+    }
+  }
+}

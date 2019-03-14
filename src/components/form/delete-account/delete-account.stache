@@ -1,0 +1,46 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<div class="panel-content">
+  <div class="delete-account-panel">
+    <h3>Delete My Arcus Account</h3>
+    <p class="disclaimer">
+      {{#if isOwner}}
+        Deleting this account will erase your Arcus account, email address, and personal information
+        from the Arcus Hub and the Arcus servers. Any other places accessed through this account will also be removed.
+        We will ensure that any billing plans are cancelled.
+      {{else}}
+        Deleting this Arcus account will erase your email address and personal information
+        from the Arcus server. This means you will not be able to login to Arcus.
+      {{/if}}
+    </p>
+    {{#if showConfirm}}
+      <form ($submit)="deleteAccount" id="confirm-delete">
+        <p class="error">Are you sure? This action cannot be reversed.</p>
+        {{#if formError}}
+          <p class="form-error">{{formError}}</p>
+        {{/if}}
+        <input type="submit" value="Yes" class="btn-delete" />
+      </form>
+    {{else}}
+      <form ($submit)="toggleConfirm">
+        <p class="instructions">Type <span class="bold">DELETE</span> below and click submit</p>
+        {{textInput('delete', '')}}
+        <input type="submit" value="Submit" id="delete-submit" class="btn-cancel" {{#unless hasChanges}}disabled{{/unless}} />
+      </form>
+    {{/if}}
+  </div>
+</div>

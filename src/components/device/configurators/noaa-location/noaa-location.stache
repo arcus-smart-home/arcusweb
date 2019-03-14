@@ -1,0 +1,60 @@
+{{! 
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<can-import from="semantic-ui-dropdown-canjs"/>
+<can-import from="can-stache-converters" />
+
+{{#unless forPairingCustomization}}
+  <div class="configurator-header">
+    <h4 class="config-title">National Weather Service Location</h4>
+  </div>
+  <div>
+    <small>Select the state and county where the Halo device is located. Halo will use this information to scan for the strongest weather radio signal in your area.</small>
+  </div>
+  {{#if states.length}}
+    {{#selectInput('state', 'Select a State', placeholder="-State-" id="radio-state")}}
+      {{#each states}}
+        <option value="{{./stateCode}}">{{./state}}</option>
+      {{/each}}
+    {{/selectInput}}
+  {{else}}
+    <div class="loader">Loading states...</div>
+  {{/if}}
+  {{#if counties.length}}
+    {{#selectInput('county', 'Select a County', placeholder="-County-" id="radio-county")}}
+      {{#each counties}}
+        <option value="{{.}}">{{.}}</option>
+      {{/each}}
+    {{/selectInput}}
+  {{/if}}
+{{else}}
+  {{#if states.length}}
+    {{#selectInput('state', '', placeholder="State" id="radio-state")}}
+      {{#each states}}
+        <option value="{{./stateCode}}">{{./state}}</option>
+      {{/each}}
+    {{/selectInput}}
+  {{else}}
+    <div class="loader"> </div>
+  {{/if}}
+  {{#if counties.length}}
+    {{#selectInput('county', '', placeholder="County" id="radio-county")}}
+      {{#each counties}}
+        <option value="{{.}}">{{.}}</option>
+      {{/each}}
+    {{/selectInput}}
+  {{/if}}
+{{/unless}}

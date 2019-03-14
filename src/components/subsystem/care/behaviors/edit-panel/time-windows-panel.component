@@ -1,0 +1,356 @@
+<!--
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<can-component tag="arcus-subsystem-care-behaviors-edit-time-windows-panel">
+  <template>
+    <can-import from="i2web/components/schedule/time/" />
+    <can-import from="i2web/components/schedule/event/weekday-toggle.component" />
+    <can-import from="i2web/components/weekday-select.component" />
+    <arcus-accordion-panel class="time-window-panel" {(^active)}="panelIsActive">
+      <arcus-accordion-panel-heading>
+        <span class="name">{{eventHeading}}</span>
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body>
+        <hr />
+        {{#if hasFormTimeWindow}}
+          <h3 class="start-time-header">
+            Select a Start Time
+          </h3>
+          <arcus-time {(time)}="formStartTime" />
+          <div class="week-day-buttons">
+            <arcus-weekday-select single-day-only
+              {(selected-days)}="formStartDay"
+            />
+          </div>
+          <hr/>
+          <h3 class="end-time-header">
+            Select an End Time
+          </h3>
+          <arcus-time {(time)}="formEndTime" />
+          <div class="week-day-buttons">
+            <arcus-weekday-select single-day-only
+              {(selected-days)}="formEndDay"
+            />
+          </div>
+        {{/if}}
+        <hr class="bottom-seperator" />
+        {{#if formError}}
+          <p class="form-error">
+            {{{formError}}}
+          </p>
+        {{/if}}
+        <div class="bottom-buttons">
+          <button class="btn-primary" ($click)="finishEditing()">
+            Done
+          </button>
+          {{#if newEvent}}
+            <button class="btn-delete" ($click)="cancelEditing()">
+              Cancel
+            </button>
+          {{else}}
+            <button class="btn-delete" ($click)="deleteEvent()">
+              Delete Event
+            </button>
+          {{/if}}
+        </div>
+      </arcus-accordion-panel-body>
+    </arcus-accordion-panel>
+  </template>
+  <script type="view-model">
+    import CanList from 'can-list';
+    import CanMap from 'can-map';
+    import 'can-map-define';
+    import Moment from 'moment';
+    import tz from 'jstz';
+    import AppState from 'i2web/plugins/get-app-state';
+
+    import { extendMoment } from 'moment-range';
+    const moment = extendMoment(Moment);
+
+    const TIME_FORMAT = 'HH:mm:ss';
+
+    export default CanMap.extend({
+      define: {
+        /**
+         * @property {Moment} browserEndMoment
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The Moment corresponding to the end of the timeWindow, in browser timezone
+         */
+        browserEndMoment: {
+          get() {
+            const durationSecs = this.attr('timeWindow.durationSecs');
+            const startMoment = this.attr('browserStartMoment');
+            return moment(startMoment).add(durationSecs, 'seconds');
+          },
+        },
+        /**
+         * @property {Moment} browserStartMoment
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The Moment corresponding to the start of the timeWindow, in browser timezone
+         */
+        browserStartMoment: {
+          get() {
+            const placeStartMoment = this.attr('placeStartMoment');
+            if (this.attr('tzIdBrowser') === this.attr('tzIdPlace')) {
+              return placeStartMoment;
+            }
+            return moment.tz(placeStartMoment, this.attr('tzIdBrowser'));
+          },
+        },
+        /**
+         * @property {String} eventHeading
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The day/time range heading for a particular event
+         */
+        eventHeading: {
+          get() {
+            if (this.attr('newEvent')) return 'New Event';
+            const start = this.attr('browserStartMoment');
+            const end = this.attr('browserEndMoment');
+            return `${start.format('ddd h:mm A')} - ${end.format('ddd h:mm A')}`;
+          },
+        },
+        /**
+         * @property {String} formError
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description If there is an error while attempting to save the time window
+         */
+        formError: {
+          type: 'string',
+        },
+        /**
+         * @property formEndDay, form EndTime, formStartDay, formStartTime
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Attributes used in scheduling-related form components
+         */
+        formEndDay: { Type: CanList },
+        formEndTime: { type: 'string' },
+        formStartDay: { Type: CanList },
+        formStartTime: { type: 'string' },
+        /**
+         * @property {Boolean} hasFormTimeWindow
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Resolves to true when all form control values are completely computed
+         */
+        hasFormTimeWindow: {
+          get() {
+            return this.attr('formEndDay') && this.attr('formEndTime') && this.attr('formStartDay') && this.attr('formStartTime');
+          },
+        },
+        /**
+         * @property {HTMLBool} newEvent
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Whether this panel represents the addition of a new event
+         */
+        newEvent: {
+          type: 'htmlbool',
+        },
+        /**
+         * @property {Boolean} panelIsActive
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Is this event currently being edited
+         */
+        panelIsActive: {
+          type: 'boolean',
+        },
+        /**
+         * @property {Moment} placeStartMoment
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The Moment corresponding to the start of the timeWindow, in Place's timezone
+         */
+        placeStartMoment: {
+          get() {
+            return moment.tz(`${moment().format('YYYY-MM-DD')} ${this.attr('timeWindow.startTime')}`,
+              this.attr('tzIdPlace')).day(this.attr('timeWindow.day'));
+          },
+        },
+        /**
+         * @property {CanMap} timeWindow
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The timeWindow represented by this component
+         */
+        timeWindow: {
+          Type: CanMap,
+        },
+        /**
+         * @property {CanList} timeWindows
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description The full list of the behaviors time windows
+         */
+        timeWindows: {
+          Type: CanList,
+        },
+        /**
+         * @property {Boolean} tzIdPlace
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Timezone of the place
+         */
+        tzIdPlace: {
+          get() {
+            return AppState().attr('place.place:tzId');
+          },
+        },
+        /**
+         * @property {Boolean} tzIdBrowser
+         * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+         * @description Timezone of the browser
+         */
+        tzIdBrowser: {
+          get() {
+            return tz.determine().name();
+          },
+        },
+      },
+      /**
+       * @function cancelEditing
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @description Cancel the editing of this event. If this is a new event
+       * then cancel is "cancel the addition of a new event" so we should delete it
+       */
+      cancelEditing() {
+        this.attr('panelIsActive', false);
+        if (this.attr('newEvent')) {
+          this.attr({
+            formEndDay: null,
+            formEndTime: null,
+            formStartDay: null,
+            formStartTime: null,
+            timeWindow: null });
+        }
+      },
+      /**
+       * @function deleteEvent
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @description Delete the time window event represented by this component
+       */
+      deleteEvent() {
+        this.cancelEditing();
+
+        const timeWindow = this.attr('timeWindow');
+        const index = this.attr('timeWindows').indexOf(timeWindow);
+        this.attr('timeWindows').splice(index, 1);
+      },
+      /**
+       * @function finishEditing
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @description Complete the editing of this event, and update the time
+       * windows collection
+       */
+      finishEditing() {
+        this.attr('formError', null);
+
+        // User-selected Start and End day-of-week, Start and End time
+        const sdow = moment(this.attr('formStartDay.0'), 'ddd').day();
+        const edow = moment(this.attr('formEndDay.0'), 'ddd').day();
+        const sttm = this.attr('formStartTime');
+        const edtm = this.attr('formEndTime');
+
+        if (sdow === edow && sttm === edtm) {
+          this.attr('formError', 'The start time and end time must be different.');
+          return;
+        }
+        // Convert to Start and End moments
+        const stmm = moment(sttm, TIME_FORMAT).day(sdow);
+        let edmm = moment(edtm, TIME_FORMAT).day(edow);
+
+        // If time wraps around past end of current week, adjust end moment to the same day
+        // of the following week so we can accurately calculate the duration in seconds
+        if (edow < sdow || (edow === sdow && edtm < sttm)) {
+          edmm = moment(edtm, TIME_FORMAT).day(edow + 7);
+        }
+        const durSecs = 0.001 * (edmm.valueOf() - stmm.valueOf());
+
+        // Convert to Place's timezone and check for overlap with existing ranges
+        const placestmm = moment.tz(stmm, this.attr('tzIdPlace'));
+        if (this.isRangeOverlapping(placestmm, durSecs)) {
+          this.attr('formError', 'This event overlaps with an existing event.');
+          return;
+        }
+        const timeWindow = {
+          day: placestmm.format('dddd'),
+          durationSecs: durSecs,
+          startTime: placestmm.format(TIME_FORMAT),
+        };
+        this.attr('timeWindow', timeWindow);
+        if (this.attr('newEvent')) {
+          this.attr('panelIsActive', false);
+          this.saveNewTimeWindow(timeWindow);
+        }
+      },
+      /**
+       * @function {Boolean} isRangeOverlapping
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @param {Moment} start of new time range
+       * @param {Moment} durationSeconds duration of new time range
+       * @description Does the event range we are editing overlap with any other event range
+       */
+      isRangeOverlapping(start, durationSeconds) {
+        const finish = moment(start).add(durationSeconds, 'seconds');
+        const earliestRange = moment.range(start, finish);
+        const nextWeekStart = moment(start).add(7, 'days');
+        const nextWeekFinish = moment(nextWeekStart).add(durationSeconds, 'seconds');
+        const latestRange = moment.range(nextWeekStart, nextWeekFinish);
+        const overlapping = this.attr('timeWindows').filter((tw) => {
+          if (this.attr('newEvent') || tw !== this.attr('timeWindow')) {
+            const existingRange = this.rangeFromTimeWindow(tw);
+            return earliestRange.overlaps(existingRange) || latestRange.overlaps(existingRange);
+          }
+          return false;
+        });
+        return overlapping.length > 0;
+      },
+      /**
+       * @function {MomentRange} rangeFromTimeWindow
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @param {Object} timeWindow
+       * @description Creates a range from the given timeWindow, for comparison against a modified range
+       */
+      rangeFromTimeWindow(timeWindow) {
+        const startMoment = moment.tz(`${moment().format('YYYY-MM-DD')} ${timeWindow.startTime}`,
+          this.attr('tzIdPlace')).day(timeWindow.day);
+        const endMoment = moment(startMoment).add(timeWindow.durationSecs, 'seconds');
+        return moment.range(startMoment, endMoment);
+      },
+      /**
+       * @function saveNewTimeWindow
+       * @parent i2web/components/subsystem/care/behaviors/edit-panel/time-windows-panel
+       * @param {Object} start
+       * @description Save the new timeWindow to the behaviors collection of time windows
+       */
+      saveNewTimeWindow(timeWindow) {
+        this.attr('timeWindows').push(timeWindow);
+        this.attr('timeWindow', null);
+      },
+    });
+  </script>
+  <script type="events">
+    import CanList from 'can-list';
+    import moment from 'moment';
+
+    export default {
+      inserted() {
+        const vm = this.viewModel;
+        const startMoment = moment(vm.attr('browserStartMoment'));
+        const endMoment = moment(vm.attr('browserEndMoment'));
+        vm.attr('formStartTime', startMoment.format('HH:mm:ss'));
+        vm.attr('formEndTime', endMoment.format('HH:mm:ss'));
+        vm.attr('formStartDay', new CanList([startMoment.format('ddd').toUpperCase()]));
+        vm.attr('formEndDay', new CanList([endMoment.format('ddd').toUpperCase()]));
+        if (vm.attr('newEvent')) { vm.attr('panelIsActive', true); }
+      },
+    };
+  </script>
+</can-component>
