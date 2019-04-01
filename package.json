@@ -156,7 +156,6 @@
     "fs-extra": "^0.30.0",
     "funcunit": "^3.4.3",
     "generator-donejs": "^1.0.5",
-    "i2web-devtools": "git+ssh://git@bitbucket.org/eyeris/i2web-devtools.git",
     "infanticide": "^1.0.1",
     "lolex": "^1.5.1",
     "mocha": "^3.5.3",
