@@ -1,12 +1,7 @@
 buildscript {
    repositories {
       maven {
-         credentials {
-            username "${maven_username}"
-            password "${maven_password}"
-         }
-
-         url 'http://eyerisbuild.irisbylowes.com/artifactory/repo'
+         url 'https://repo1.maven.org/maven2'
       }
    }
 
