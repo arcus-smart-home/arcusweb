@@ -19,6 +19,7 @@ Clone the repository into a local folder. Install all dependencies using
 ```
 npm install donejs@1.0 -g
 npm install
+npm run bundle-dev
 ```
 
 ## Running tests/linting
@@ -64,5 +65,14 @@ npm run build
 In Unix environment the production application can be started like this:
 
 ```
+npm run start
+```
+
+If you run into problems with npm run start, you may need to create a couple folders:
+```
+mkdir build
+cd build
+mkdir dist
+cd ..
 npm run start
 ```
