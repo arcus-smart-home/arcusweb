@@ -70,23 +70,5 @@ limitations under the License.
       <label for="off-{{uniqueId}}">Off</label>
       <div class="check"></div>
     </li>
-    <hr />
-    <li class="radio-wrapper">
-      <input type="radio" id="fan-off-{{uniqueId}}" name="fan-mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.FANMODE_OFF)">
-      <label for="fanoff-{{uniqueId}}">Off</label>
-      <div class="check"></div>
-    </li>
-    <li class="radio-wrapper">
-      <input type="radio" id="fan-on-{{uniqueId}}" name="fan-mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.FANMODE_ON)">
-      <label for="fanon-{{uniqueId}}">On</label>
-      <div class="check"></div>
-    </li>
-    {{if autoSupported}}
-    <li class="radio-wrapper">
-      <input type="radio" id="fan-auto-{{uniqueId}}" name="fan-mode-{{uniqueId}}" {($checked)}="equal(~mode, ThermostatCapability.FANMODE_AUTO)">
-      <label for="fanon-{{uniqueId}}">Auto</label>
-      <div class="check"></div>
-    </li>
-    {{/if}}
   </ul>
 </div>

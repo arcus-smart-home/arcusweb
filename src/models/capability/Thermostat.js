@@ -158,6 +158,9 @@ export default {
   HVACMODE_COOL: 'COOL',
   HVACMODE_HEAT: 'HEAT',
   HVACMODE_ECO: 'ECO',
+  // TODO: Add these 2 properties below to the capability file in arcusplatform
+  FANMODE_AUTO: 0,
+  FANMODE_ON: 1,
   EMERGENCYHEAT_ON: 'ON',
   EMERGENCYHEAT_OFF: 'OFF',
   CONTROLMODE_PRESENCE: 'PRESENCE',
