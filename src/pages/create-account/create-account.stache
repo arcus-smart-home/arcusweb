@@ -46,22 +46,6 @@ limitations under the License.
     {started-on-mobile}="startedOnMobile"
     {record-progress}="@recordProgress"
   />
-  <arcus-create-account-step-zip-code
-    {completed-stages}="completedStages"
-    {(monitoring-available)}="monitoringAvailable"
-    {place}="place"
-    {started-on-mobile}="startedOnMobile"
-    {record-progress}="@recordProgress"
-  />
-  <arcus-create-account-step-select-plan
-    {completed-stages}="completedStages"
-    {monitoring-available}="monitoringAvailable"
-    {next}="@next"
-    {place}="place"
-    {record-progress}="@recordProgress"
-    {session}="session"
-    {undo-progress}="@undoProgress"
-  />
   <arcus-create-account-step-login
     {(account)}="account"
     {(person)}="person"

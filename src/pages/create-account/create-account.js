@@ -72,14 +72,6 @@ export const ViewModel = canMap.extend({
       },
     },
     /**
-     * @property {string} monitoringAvailable
-     * @parent i2web/pages/create-account
-     * @description Is ProMonitoring available in the User's area
-     */
-    monitoringAvailable: {
-      type: 'string',
-    },
-    /**
      * @property {List<Person>} people
      * @parent i2web/pages/create-account
      * @description All people tied to the new Place
@@ -112,23 +104,6 @@ export const ViewModel = canMap.extend({
      */
     pinCode: {
       type: 'string',
-    },
-    /**
-     * @property {ProMonitoringSettings} promonitoringSettings
-     * @parent i2web/pages/create-account
-     * @description Promonitoring settings config for the new Place
-     */
-    promonitoringSettings: {
-      get(__, setAttr) {
-        const place = this.attr('place');
-        if (place) {
-          ProMonitoringService.GetSettings(place.GetDestination()).then(({ settings }) => {
-            setAttr(settings);
-          }).catch((e) => {
-            Errors.log(`Error getting Pro Monitoring Settings: ${e.message}`);
-          });
-        }
-      },
     },
     /*
      * @property {String} selectedUse
