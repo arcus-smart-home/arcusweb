@@ -30,7 +30,10 @@ const VALID_MODES = [
   ThermostatCapability.HVACMODE_ECO,
   ThermostatCapability.HVACMODE_AUTO,
   ThermostatCapability.HVACMODE_COOL,
-  ThermostatCapability.HVACMODE_HEAT];
+  ThermostatCapability.HVACMODE_HEAT,
+  ThermostatCapability.FANMODE_AUTO,
+  ThermostatCapability.FANMODE_ON,
+  ThermostatCapability.FANMODE_OFF];
 const STD_HEAT_TEMPERATURE_F = 68;
 const STD_COOL_TEMPERATURE_F = 78;
 
@@ -67,10 +70,27 @@ export const ViewModel = canMap.extend({
       type: 'boolean',
     },
     /**
+     * @property {String} fanMode
+     * @parent i2web/components/thermostat
+     * 
+     * FanMode - one of OFF, AUTO, or ON
+     */
+    fanMode: {
+      type: 'string',
+      set(value) {
+        if (value) {
+          if (VALID_MODES.indexOf(value) === -1 || value === ThermostatCapability.FANMODE_OFF) {
+            return ThermostatCapability.FANMODE_OFF;
+          }
+          else return value;
+        }
+      }
+    },
+    /**
      * @property {String} mode
      * @parent i2web/components/thermostat
      *
-     * Mode - one of OFF, AUTO, COOL, or HEAT
+     * HVACMode - one of OFF, AUTO, COOL, or HEAT
      */
     mode: {
       set(value) {
