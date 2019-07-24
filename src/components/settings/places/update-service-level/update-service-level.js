@@ -80,11 +80,7 @@ export const ViewModel = CanMap.extend({
       get() {
         const from = this.attr('currentServiceLevel');
         const to = this.attr('newServiceLevel');
-        if (Place.isPromon(from) && Place.isPremium(to) && !Place.isPromon(to)) {
-          return 'promon-to-premium';
-        } else if (Place.isPromon(from) && Place.isBasic(to)) {
-          return 'promon-to-basic';
-        } else if (Place.isPremium(from) && Place.isBasic(to)) {
+        if (Place.isPremium(from) && Place.isBasic(to)) {
           return 'premium-to-basic';
         }
         return undefined;
