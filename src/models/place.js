@@ -65,11 +65,7 @@ const Place = Base.extend({
    * Determine whether the Place is on a Promon MONTHLY service plan.
    */
   isMonthlyPromon(serviceLevel) {
-    return [
-      PlaceCapability.SERVICELEVEL_PREMIUM_PROMON,
-      PlaceCapability.SERVICELEVEL_PREMIUM_PROMON_FREE,
-      PlaceCapability.SERVICELEVEL_PREMIUM_PROMON_MYPARTNER_DISCOUNT,
-    ].includes(serviceLevel);
+    return false;
   },
   /**
    * @property {Boolean} isPremiumPlan i2web/models/place.static.isPremiumPlan

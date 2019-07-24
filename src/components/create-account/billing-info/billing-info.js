@@ -140,14 +140,6 @@ export const ViewModel = FormViewModel.extend({
             case PlaceCapability.SERVICELEVEL_PREMIUM_ANNUAL:
               cost = costOf(plan, true, 'year');
               return `Your Card will be charged ${cost}.`;
-            case PlaceCapability.SERVICELEVEL_PREMIUM_PROMON:
-              return `Your card will be charged ${cost} upon completion of the
-                Pro Monitoring sign up. Remember, this is not a long-term
-                contract. Change your plan at any time.`;
-            case PlaceCapability.SERVICELEVEL_PREMIUM_PROMON_ANNUAL:
-              cost = costOf(plan, true, 'year');
-              return `Your card will be charged ${cost} upon completion of the
-                Pro Monitoring sign up.`;
             default:
               return '';
           }

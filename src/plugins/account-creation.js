@@ -52,9 +52,9 @@ export function clearAllProgress() {
  */
 export function extractSelectedPlan(place) {
   const tags = place.attr('base:tags').filter(t => t.includes('PREF_PLAN:'));
-  // for example PREF_PLAN:PREMIUM_PROMON
+  // for example PREF_PLAN:PREMIUM
   const plan = tags.length > 0 && tags[0].split(':')[1];
-  return (plan === PlaceCapability.SERVICELEVEL_PREMIUM_PROMON) ? 'PROMON' : plan;
+  return plan;
 }
 
 /**

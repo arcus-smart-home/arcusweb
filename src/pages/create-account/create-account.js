@@ -26,7 +26,6 @@ import Account from 'i2web/models/account';
 import Person from 'i2web/models/person';
 import Place from 'i2web/models/place';
 import PlaceCapability from 'i2web/models/capability/Place';
-import ProMonitoringService from 'i2web/models/service/ProMonitoringService';
 import { extractSelectedUse, generateStages, tagForAnalytics } from 'i2web/plugins/account-creation';
 import Errors from 'i2web/plugins/errors';
 import AppState from 'i2web/plugins/get-app-state';
