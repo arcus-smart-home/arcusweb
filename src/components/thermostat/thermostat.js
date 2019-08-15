@@ -67,12 +67,12 @@ export const ViewModel = canMap.extend({
       type: 'boolean',
     },
     /**
-     * @property {String} fanMode
+     * @property {String} fanmode
      * @parent i2web/components/thermostat
      * 
      * FanMode - one of AUTO (0), or ON (1)
      */
-    fanMode: {
+    fanmode: {
       type: 'number'
     },
     /**
