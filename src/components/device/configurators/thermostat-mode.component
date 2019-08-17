@@ -59,6 +59,19 @@ limitations under the License.
         </label>
         <div class="check"></div>
       </li>
+      <div class="configurator-header">
+        <h4 class="config-title">Choose A Fan Mode</h4>
+      </div>
+      <li class="radio-wrapper" ($click)="fanmodeChanged(ThermostatCapability.FANMODE_AUTO)">
+        <input type="radio" id="fan-auto" name="fan-mode" {($checked)}="isRightFanMode(ThermostatCapability.FANMODE_AUTO)">
+        <label for="fan-auto">Auto</label>
+        <div class="check"></div>
+      </li>
+      <li class="radio-wrapper" ($click)="fanmodeChanged(ThermostatCapability.FANMODE_ON)">
+        <input type="radio" id="fan-on" name="fan-mode" {($checked)}="isRightFanMode(ThermostatCapability.FANMODE_ON)">
+        <label for="fan-on">On</label>
+        <div class="check"></div>
+      </li>
     </ul>
     {{#unless device['web:therm:autoSupported']}}
       {{#eq device['dev:devtypehint'] 'TCCThermostat'}}
@@ -90,10 +103,19 @@ limitations under the License.
         device.save()
           .catch(e => Errors.log(e, true));
       },
+      fanmodeChanged(mode) {
+        const device = this.attr('device');
 
+        device.attr('therm:fanmode', mode);
+        device.save()
+          .catch(e => Errors.log(e, true));
+      },
       isRightMode(mode) {
         return this.attr('device.therm:hvacmode') === mode;
       },
+      isRightFanMode(mode) {
+        return this.attr('device.therm:fanmode') === mode;
+      }
     });
   </script>
 </can-component>

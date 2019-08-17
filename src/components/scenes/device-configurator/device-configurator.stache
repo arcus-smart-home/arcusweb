@@ -139,6 +139,7 @@ limitations under the License.
         {(heat-setpoint)}="FtoC(~sceneDevice.values[selector.name]['heatSetPoint'])"
         {(cool-setpoint)}="FtoC(~sceneDevice.values[selector.name]['coolSetPoint'])"
         {(mode)}="sceneDevice.values[selector.name]['mode']"
+        {(fanmode)}="sceneDevice.values[selector.name]['fanmode']"
         {min-setpoint}="FtoC(~thermostatMinSetPoint)"
         {max-setpoint}="FtoC(~thermostatMaxSetPoint)"
         {auto-supported}="autoSupported" />
