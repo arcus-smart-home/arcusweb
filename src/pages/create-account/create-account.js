@@ -26,7 +26,6 @@ import Account from 'i2web/models/account';
 import Person from 'i2web/models/person';
 import Place from 'i2web/models/place';
 import PlaceCapability from 'i2web/models/capability/Place';
-import ProMonitoringService from 'i2web/models/service/ProMonitoringService';
 import { extractSelectedUse, generateStages, tagForAnalytics } from 'i2web/plugins/account-creation';
 import Errors from 'i2web/plugins/errors';
 import AppState from 'i2web/plugins/get-app-state';
@@ -72,14 +71,6 @@ export const ViewModel = canMap.extend({
       },
     },
     /**
-     * @property {string} monitoringAvailable
-     * @parent i2web/pages/create-account
-     * @description Is ProMonitoring available in the User's area
-     */
-    monitoringAvailable: {
-      type: 'string',
-    },
-    /**
      * @property {List<Person>} people
      * @parent i2web/pages/create-account
      * @description All people tied to the new Place
@@ -112,23 +103,6 @@ export const ViewModel = canMap.extend({
      */
     pinCode: {
       type: 'string',
-    },
-    /**
-     * @property {ProMonitoringSettings} promonitoringSettings
-     * @parent i2web/pages/create-account
-     * @description Promonitoring settings config for the new Place
-     */
-    promonitoringSettings: {
-      get(__, setAttr) {
-        const place = this.attr('place');
-        if (place) {
-          ProMonitoringService.GetSettings(place.GetDestination()).then(({ settings }) => {
-            setAttr(settings);
-          }).catch((e) => {
-            Errors.log(`Error getting Pro Monitoring Settings: ${e.message}`);
-          });
-        }
-      },
     },
     /*
      * @property {String} selectedUse
