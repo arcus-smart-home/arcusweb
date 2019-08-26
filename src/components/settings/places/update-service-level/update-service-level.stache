@@ -16,8 +16,6 @@ limitations under the License.
 
 <can-import from="i2web/components/form/billing/" />
 <can-import from="i2web/components/settings/places/update-service-level/premium-to-basic.component" />
-<can-import from="i2web/components/settings/places/update-service-level/promon-to-basic.component" />
-<can-import from="i2web/components/settings/places/update-service-level/promon-to-premium.component" />
 <can-import from="i2web/components/settings/places/update-service-level/upgrade.component" />
 
 {{#switch activeDisplay}}
