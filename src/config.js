@@ -19,6 +19,7 @@ import appMeta from 'package.json';
 import developmentConfig from 'config/development.json';
 import productionConfig from 'config/production.json';
 import serverConfig from 'config/server.json';
+import alarmConfig from 'config/alarms.json';
 import subsystemConfig from 'config/subsystem.json';
 import ruleCategoriesConfig from 'config/rule-categories.json';
 
