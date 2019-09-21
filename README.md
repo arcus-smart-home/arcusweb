@@ -78,3 +78,7 @@ mkdir dist
 cd ..
 npm run start
 ```
+
+## Building containers for production
+
+`./gradlew :tools:khakis:distDocker`
