@@ -1,0 +1,5 @@
+bin/localhost.cert
+bin/localhost.key
+build
+.gradle
+node_modules
