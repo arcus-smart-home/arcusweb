@@ -12,8 +12,6 @@ nvm install
 nvm use
 ```
 
-Additionally, during the initial installation, you will need SSH access to Bitbucket. Refer to [this article](https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html) to set up your public SSH key.
-
 Clone the repository into a local folder. Install all dependencies using
 
 ```
