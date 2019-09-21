@@ -89,7 +89,9 @@ if (nconf.get('NODE_ENV') === 'production') {
 
 const server = https.createServer({
     requestCert: true,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    key: fs.readFileSync( './bin/localhost.key' ),
+    cert: fs.readFileSync( './bin/localhost.cert' ),
 }, app).listen(port);
 
 server.on('error', (e) => {
