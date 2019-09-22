@@ -1,8 +1,8 @@
 {
   "indexFile": "development.html",
-  "apiUrl": "https://testingurl.replaceme.com",
-  "redirectUrl": "https://testingurl.replaceme.com",
-  "wsUrl": "wss://testingurl.replaceme.com",
+  "apiUrl": "https://testingurl.example.com",
+  "redirectUrl": "https://testingurl.example.com",
+  "wsUrl": "wss://testingurl.example.com",
   "iosDownloadUrl": "https://itunes.apple.com",
   "androidDownloadUrl": "https://play.google.com/store/apps",
   "enableYearlySubscription": "1",

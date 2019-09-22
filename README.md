@@ -12,8 +12,6 @@ nvm install
 nvm use
 ```
 
-Additionally, during the initial installation, you will need SSH access to Bitbucket. Refer to [this article](https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html) to set up your public SSH key.
-
 Clone the repository into a local folder. Install all dependencies using
 
 ```
@@ -38,7 +36,11 @@ The first time, add a host entry for:
 127.0.0.1 localdev.irisbylowes.com
 ```
 
-Then Development mode can be started with:
+Then create a certificate:
+`openssl genrsa -out bin/localhost.key 2048`
+`openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localhost`
+
+Development mode can be started with:
 
 ```
 donejs develop
@@ -76,3 +78,7 @@ mkdir dist
 cd ..
 npm run start
 ```
+
+## Building containers for production
+
+`./gradlew :tools:khakis:distDocker`
