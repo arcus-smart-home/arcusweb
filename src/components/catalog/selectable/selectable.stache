@@ -19,9 +19,7 @@ limitations under the License.
 
 <div class="selectable-container {{containerClasses}}" ($click)="onSelect()">
   <div class="logo-container">
-    {{#if brandLogoURL}}
-      <img src="{{brandLogoURL}}" title="{{thingName}}"/>
-    {{/if}}
+    <span>{{thingName}}</span>
   </div>
 
   <div class="main-container">

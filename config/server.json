@@ -1,4 +1,4 @@
 {
-  "apiUrl": "https://testingurl.replaceme.com",
-  "wsUrl": "wss://testingurl.replaceme.com"
+  "apiUrl": "https://testingurl.example.com",
+  "wsUrl": "wss://testingurl.example.com"
 }
