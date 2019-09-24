@@ -110,7 +110,6 @@
     "card-validator": "^6.2.0",
     "color-convert": "^1.5.0",
     "deep-assign": "^2.0.0",
-    "documentjs": "^0.5.5",
     "done-autorender": "1.0.0",
     "done-component": "1.0.0",
     "element-closest": "^2.0.2",
