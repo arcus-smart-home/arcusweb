@@ -1,18 +1,22 @@
 # Arcus - Web Application
 
-The Arcus Web application is built on DoneJS.
+The Arcus Web application is built on DoneJS. In order to utilize the Arcus Web application, you will need to have access to a running copy of Arcus Platform. 
+
+![Arcus Screenshot on Arcus Web Dashboard](docs/screenshot.png)
 
 ## Getting started
 
-Currently, the i2web project requires Node 8.x LTS and NPM > v3. It is recommended that you install [NVM](https://github.com/creationix/nvm) so you can easily switch between NPM versions. After installing NVM, run:
+Install git and clone the repository into a local folder.
+
+Currently, the arcusweb project requires Node 8.x LTS and NPM > v3. It is recommended that you install [NVM](https://github.com/creationix/nvm) so you can easily switch between NPM versions. After installing NVM, run:
 
 ```
-cd i2web
+cd arcusweb
 nvm install
 nvm use
 ```
 
-Clone the repository into a local folder. Install all dependencies using
+Install all dependencies using
 
 ```
 npm install donejs@1.0 -g
@@ -33,12 +37,12 @@ npm run test
 The first time, add a host entry for:
 
 ```
-127.0.0.1 localdev.irisbylowes.com
+127.0.0.1 localdev.arcussmarthome.com
 ```
 
 Then create a certificate:
 `openssl genrsa -out bin/localhost.key 2048`
-`openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localhost`
+`openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localdev.arcussmarthome.com`
 
 Development mode can be started with:
 
@@ -53,18 +57,18 @@ npm run develop
 and navigating to
 
 ```
-https://localdev.irisbylowes.com:8443
+https://localdev.arcussmarthome.com:8443
 ```
 
 ## Build and production mode
 
-To build the application into a production bundle run
+To build the application into a production bundle run:
 
 ```
 npm run build
 ```
 
-In Unix environment the production application can be started like this:
+In Unix environment the production application can be started like this, though note that the built in web server is not ideal for use in production:
 
 ```
 npm run start
