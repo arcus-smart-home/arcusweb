@@ -73,6 +73,7 @@ limitations under the License.
         <div class="service-plan">
           <div>
             <p class="font-demibold">Current Plan</p>
+            <!-- This would need to be addressed if billing was supported
             {{#if person['web:person:isOwner']}}
               <p class="font-demibold">Plan Payment</p>
             {{/if}}
@@ -82,6 +83,7 @@ limitations under the License.
             {{#if hasAddOns}}
               <p class="font-demibold">Add-On</p>
             {{/if}}
+             -->
           </div>
           <div>
             {{#if place.isPromon}}
@@ -89,6 +91,7 @@ limitations under the License.
             {{else}}
               <p>{{serviceLevel}}{{annualLabel}}</p>
             {{/if}}
+            <!-- This would need to be addressed if billing was supported
             {{#if person['web:person:isOwner']}}
               <p>{{planCostText}}</p>
             {{/if}}
@@ -106,8 +109,9 @@ limitations under the License.
                 </a>
               </span>
             </div>
-          {{/if}}
+          {{/if}} -->
         </div>
+        <!-- This would need to be addressed if billing was supported
         <h3>Billing</h3>
         {{#if person['web:person:isOwner']}}
           <div class="billing">
@@ -132,7 +136,7 @@ limitations under the License.
           </p>
         {{else}}
           <p class="owner-only">This information is only visible to the Account Owner.</p>
-        {{/if}}
+        {{/if}}-->
       </div>
     </div>
   </template>
