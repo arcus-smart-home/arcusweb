@@ -125,7 +125,7 @@ export const ViewModel = StepViewModel.extend({
      */
     keepUpToDate: {
       type: 'boolean',
-      value: true,
+      value: false,
     },
     /**
      * @property {Person} person
