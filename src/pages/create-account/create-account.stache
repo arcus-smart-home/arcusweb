@@ -37,15 +37,6 @@ limitations under the License.
 <arcus-logo-tagline />
 
 <arcus-wizard ($enter)="nextOnEnter" {^@next}="next" {^@prev}="prev" {^@restart}="restartWizard">
-  <arcus-create-account-step-how-to-use
-    {completed-stages}="completedStages"
-    {(place)}="place"
-    {next}="@next"
-    {(selected-use)}="selectedUse"
-    {session}="session"
-    {started-on-mobile}="startedOnMobile"
-    {record-progress}="@recordProgress"
-  />
   <arcus-create-account-step-login
     {(account)}="account"
     {(person)}="person"
@@ -75,30 +66,6 @@ limitations under the License.
     {suggested-addresses}="suggestedAddresses"
     {undo-progress}="@undoProgress"
   />
-  <arcus-create-account-step-security-questions
-    {completed-stages}="completedStages"
-    {person}="person"
-    {record-progress}="@recordProgress"
-    {undo-progress}="@undoProgress"
-  />
-  <arcus-create-account-step-billing-info
-    {account}="account"
-    {^billing-info}="billingInfo"
-    {completed-stages}="completedStages"
-    {person}="person"
-    {place}="place"
-    {undo-progress}="@undoProgress"
-  />
-  <arcus-create-account-step-billing-address
-    {account}="account"
-    {billing-info}="billingInfo"
-    {completed-stages}="completedStages"
-    {place}="place"
-    {prev}="@prev"
-    {record-progress}="@recordProgress"
-    {session}="session"
-    {undo-progress}="@undoProgress"
-  />
   <arcus-create-account-step-pin
     {completed-stages}="completedStages"
     {person}="person"
@@ -115,18 +82,6 @@ limitations under the License.
     {place}="place"
     {promonitoring-settings}="promonitoringSettings"
     {record-progress}="@recordProgress"
-  />
-  <arcus-create-account-step-permit-required
-    {place}="place"
-    {promonitoring-settings}="promonitoringSettings"
-    {record-progress}="@recordProgress"
-    {undo-progress}="@undoProgress"
-  />
-  <arcus-create-account-step-review-info
-    {person}="person"
-    {place}="place"
-    {promonitoring-settings}="promonitoringSettings"
-    {undo-progress}="@undoProgress"
   />
   <arcus-create-account-step-connection-test
     {person}="person"
