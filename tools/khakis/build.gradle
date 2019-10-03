@@ -28,6 +28,16 @@ task "copyDist-ui"(type: Copy) {
   into "ui-server/build/html"
 }
 
+task "cacheBust-ui"(type: Task) {
+  dependsOn "copyDist-ui"
+  doLast {
+    def productionFile = file("ui-server/build/html/build/dist/production.html")
+    def text = productionFile.text
+    text = text.replaceAll("preprod-version", "${dockerVersion}")
+    productionFile.write(text)
+  }
+}
+
 task startService(type: Task) {
 }
 
@@ -84,6 +94,7 @@ task distDocker(type: Task) {
 servers.each { server ->
   task "distDocker-${server.id}"(type: Exec) {
     dependsOn "copyDist-${server.id}"
+    dependsOn "cacheBust-${server.id}"
 
     def List<String> cLine = new ArrayList<String>()
     cLine.add('docker');
