@@ -4,6 +4,7 @@ def dockerVersion = "${version_major}.${version_minor}.${version_patch}-${repo.h
 
 def servers = [
       [ 'id': "ui",  'name': "ui-server",  'port': 8096 ],
+      [ 'id': "static", 'name': 'static-server', 'port': 8097 ],
 ]
 
 buildscript {
@@ -27,6 +28,14 @@ task "copyDist-ui"(type: Copy) {
   include "build/dist/**", "build/src/**", "build/production.html"
   into "ui-server/build/html"
 }
+
+task "copyDist-static"(type: Copy) {
+  dependsOn "clean-static" // TODO
+  from "${rootDir}"
+  include "static/**"
+  into "static-server/build/"
+}
+
 
 task startService(type: Task) {
 }
