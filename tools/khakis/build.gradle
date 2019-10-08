@@ -36,6 +36,9 @@ task "copyDist-static"(type: Copy) {
   into "static-server/build/"
 }
 
+task "cacheBust-static"(type: Task) {
+}
+
 task "cacheBust-ui"(type: Task) {
   dependsOn "copyDist-ui"
   doLast {
