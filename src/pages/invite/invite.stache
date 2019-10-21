@@ -64,10 +64,6 @@ limitations under the License.
         {place}="place"
         {session}="session"
       />
-      <arcus-create-account-step-security-questions invited
-        {completed-stages}="completedStages"
-        {person}="person"
-      />
       <arcus-create-account-step-pin invited
         {completed-stages}="completedStages"
         {person}="person"
