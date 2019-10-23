@@ -48,6 +48,11 @@ limitations under the License.
         <button class="btn btn-cancel" ($click)="onPromptClick">
           Remove Device
         </button>
+        {{#if supportsIdentification}}
+        <button type="button" class="btn identify" ($click)="onIdentifyClick">
+          Identify
+        </button>
+        {{/if}}
       </div>
     {{else}}
       <div class="confirmation">

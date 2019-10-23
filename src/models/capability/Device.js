@@ -78,6 +78,17 @@ This may put the hub in unpairing mode depending on the device being removed.
     ForceRemove() {
       return Bridge.request('dev:ForceRemove', this.GetDestination(), {});
     },
+
+    /**
+     * @function Identify
+     *
+     * Sent to request that a device be identified.
+     *
+     * @return {Promise}
+     */
+    Identify() {
+      return Bridge.request('ident:Identify', this.GetDestination(), {});
+    },
   },
   events: {
     /**

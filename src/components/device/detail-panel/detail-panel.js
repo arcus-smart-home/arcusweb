@@ -19,6 +19,7 @@ import canMap from 'can-map';
 import 'can-map-define';
 import view from './detail-panel.stache';
 import Device from 'i2web/models/device';
+import Errors from 'i2web/plugins/errors';
 import SidePanel from 'i2web/plugins/side-panel';
 
 export const ViewModel = canMap.extend({
@@ -61,6 +62,24 @@ export const ViewModel = canMap.extend({
       type: 'boolean',
       value: false,
     },
+
+    /**
+     * @property {boolean} supportsIdentification
+     * @parent i2web/components/device/detail-panel
+     * @description if the device supports identification
+     */
+    supportsIdentification: {
+      get() {
+        const device = this.attr('device');
+        const caps = device ? device.attr('base:caps') : null;
+
+        if (caps) {
+          return caps.indexOf('ident') !== -1;
+        }
+
+        return false;
+      }
+    }
   },
   /**
    * @function onPromptClick
@@ -87,6 +106,15 @@ export const ViewModel = canMap.extend({
     const device = this.attr('device');
     SidePanel.right('<arcus-device-remove-panel {device}="device" />', { device });
   },
+  /**
+   * @function onIdentifyClick
+   * @parent i2web/components/device/detail-panel
+   * @description handler for when the device identify button is clicked
+   */
+  onIdentifyClick() {
+    const device = this.attr('device')
+    device.Identify().catch(e => Errors.log(e));
+  }
 });
 
 export default Component.extend({
