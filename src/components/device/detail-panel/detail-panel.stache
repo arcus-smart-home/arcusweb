@@ -41,28 +41,28 @@ limitations under the License.
   {{/if}}
 
   <hr/>
+  {{^if isConfirmationShown}}
+    <button class="btn btn-cancel" ($click)="onPromptClick">
+      Remove Device
+    </button>
+  {{else}}
+    <div class="confirmation">
+      <p>Are you sure?</p>
+      {{#if confirmationText}}
+        <p>{{confirmationText}}</p>
+      {{/if}}
 
-  <div class="removal">
-    {{^if isConfirmationShown}}
-      <div>
-        <button class="btn btn-cancel" ($click)="onPromptClick">
-          Remove Device
-        </button>
-      </div>
-    {{else}}
-      <div class="confirmation">
-        <p>Are you sure?</p>
-        {{#if confirmationText}}
-          <p>{{confirmationText}}</p>
-        {{/if}}
-
-        <button class="btn btn-cancel" ($click)="onConfirmationClick">
-          Yes, Remove Device
-        </button>
-        <button class="btn cancel-remove" ($click)="onCancelConfirmationClick">
-          Cancel
-        </button>
-      </div>
-    {{/if}}
-  </div>
+      <button class="btn btn-cancel" ($click)="onConfirmationClick">
+        Yes, Remove Device
+      </button>
+      <button class="btn cancel-remove" ($click)="onCancelConfirmationClick">
+        Cancel
+      </button>
+    </div>
+  {{/if}}
+  {{#if supportsIdentification}}
+  <button type="button" class="btn identify" ($click)="onIdentifyClick">
+    Identify
+  </button>
+  {{/if}}
 </div>
