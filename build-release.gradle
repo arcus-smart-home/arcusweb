@@ -66,35 +66,39 @@ def push(tags) {
    }
 }
 
-task branchRelease << {
-   def oldBranch = repo.branch.current.fullName
-   def newBranch = "release-${version_major}.${version_minor}"
+task branchRelease {
+   doLast {
+      def oldBranch = repo.branch.current.fullName
+      def newBranch = "release-${version_major}.${version_minor}"
 
-   // create a branch at the current point
-   println "Creating branch ${newBranch} at version ${version_major}.${version_minor}.${version_patch}..."
-   repo.checkout(branch: newBranch as String, startPoint: oldBranch, createBranch: true)
-   writeVersion(version_major, version_minor, version_patch, "")
-   push()
+      // create a branch at the current point
+      println "Creating branch ${newBranch} at version ${version_major}.${version_minor}.${version_patch}..."
+      repo.checkout(branch: newBranch as String, startPoint: oldBranch, createBranch: true)
+      writeVersion(version_major, version_minor, version_patch, "")
+      push()
 
-   // back to master
-   println "Updating ${oldBranch} to version ${version_major}.${Integer.parseInt(version_minor)+1}.${version_patch}${version_qualifier}..."
-   repo.checkout(branch: oldBranch)
-   writeVersion(version_major, Integer.parseInt(version_minor)+1, version_patch, version_qualifier)
-   push()
+      // back to master
+      println "Updating ${oldBranch} to version ${version_major}.${Integer.parseInt(version_minor) + 1}.${version_patch}${version_qualifier}..."
+      repo.checkout(branch: oldBranch)
+      writeVersion(version_major, Integer.parseInt(version_minor) + 1, version_patch, version_qualifier)
+      push()
+   }
 }
 
-task tagRelease << {
-   if(!repo.branch.getCurrent().fullName.contains("release-")) {
-      println "Not currently on a release branch, won't tag release..."
-      return
+task tagRelease {
+   doLast {
+      if (!repo.branch.getCurrent().fullName.contains("release-")) {
+         println "Not currently on a release branch, won't tag release..."
+         return
+      }
+
+      println("Tagging release as ${version}...")
+      repo.tag.add(name: "v${version}", message: "Release v${version}", force: true)
+      push(true)
+
+      println("Bumping version...")
+      // update for next build
+      writeVersion(version_major, version_minor, Integer.parseInt(version_patch) + 1, version_qualifier)
+      push()
    }
-
-   println("Tagging release as ${version}...")
-   repo.tag.add(name: "v${version}", message: "Release v${version}", force: true)
-   push(true)
-
-   println("Bumping version...")
-   // update for next build
-   writeVersion(version_major, version_minor, Integer.parseInt(version_patch)+1, version_qualifier)
-   push()
 }
