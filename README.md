@@ -42,7 +42,7 @@ The first time, add a host entry for:
 
 Then create a certificate:
 `openssl genrsa -out bin/localhost.key 2048`
-`openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localdev.arcussmarthome.com`
+`openssl req -new -x509 -key bin/localhost.key -out bin/localhost.cert -days 3650 -subj /CN=localdev.arcussmarthome.com`
 
 Development mode can be started with:
 
