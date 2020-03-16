@@ -111,7 +111,7 @@ limitations under the License.
             if (hub && hub.attr('hubconn:lastchange')) {
               const lastChange = moment(hub.attr('hubconn:lastchange'));
               const duration = moment.duration(moment().diff(lastChange));
-              return `${lastChange.format('MMM DD, YYYY h:mm A')} (${duration.days()} d, ${duration.days()} hrs, ${duration.minutes()} mins)`;
+              return `${lastChange.format('MMM DD, YYYY h:mm A')} (${duration.days()} d, ${duration.hours()} hrs, ${duration.minutes()} mins)`;
             }
             return '-';
           },
