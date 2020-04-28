@@ -38,7 +38,12 @@ limitations under the License.
 
   {{#if supportsTamper}}
   <h4>Last Tamper<br/>
-  <small>{{format-date(device['tamp:tamperchanged'], 'MMM DD YYYY')}} {{format-time(device['tamp:tamperchanged'])}}</small></h4>
+    {{#if device['tamp:tamperchanged']}}
+      <small>{{format-date(device['tamp:tamperchanged'], 'MMM DD YYYY')}} {{format-time(device['tamp:tamperchanged'])}}</small>
+    {{else}}
+      <small>-</small>
+    {{/if}}
+  </h4>
   {{/if}}
 
   {{#if device['web:dev:hasDetails']}}
