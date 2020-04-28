@@ -79,6 +79,24 @@ export const ViewModel = canMap.extend({
 
         return false;
       }
+    },
+
+    /**
+     * @property {boolean} supportsTamper
+     * @parent i2web/components/device/detail-panel
+     * @description if the device supports tamper information
+     */
+    supportsTamper: {
+      get() {
+        const device = this.attr('device');
+        const caps = device ? device.attr('base:caps') : null;
+
+        if (caps) {
+          return caps.indexOf('tamp') !== -1;
+        }
+
+        return false;
+      }
     }
   },
   /**
