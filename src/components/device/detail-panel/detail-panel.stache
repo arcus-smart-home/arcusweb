@@ -36,6 +36,16 @@ limitations under the License.
   <h4>Wireless<br/>
   <small>{{#if device.product['product:protoFamily']}}{{device.product['product:protoFamily']}}{{else}}-{{/if}}</small></h4>
 
+  {{#if supportsTamper}}
+  <h4>Last Tamper<br/>
+    {{#if device['tamp:tamperchanged']}}
+      <small>{{format-date(device['tamp:tamperchanged'], 'MMM DD YYYY')}} {{format-time(device['tamp:tamperchanged'])}}</small>
+    {{else}}
+      <small>-</small>
+    {{/if}}
+  </h4>
+  {{/if}}
+
   {{#if device['web:dev:hasDetails']}}
     {{device-details(device}}
   {{/if}}
