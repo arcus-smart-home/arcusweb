@@ -56,6 +56,9 @@ export const capabilityPlugins = {
     },
     configurators: ['brightness'],
   },
+  'ill:illuminance': {
+    badges: ['illuminance'],
+  },
   'light:colormode': {
     configurators() {
       const color = this.hasCapability('color');

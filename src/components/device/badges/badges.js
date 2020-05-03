@@ -22,6 +22,7 @@ import './gpm.component';
 import './heatingState.component';
 import './hotWaterLevel.component';
 import './humidity.component';
+import './illuminance.component';
 import './leaf.component';
 import './lockState.component';
 import './lowHeatTarget.component';
@@ -157,6 +158,16 @@ import './waterHeaterEnergySmart.component';
  * @parent i2web/components/device/badges
  * @description The humidity component
  * @signature `<arcus-device-badge-humidity>`
+ *
+ */
+
+  // ---------------- ILLUMINANCE DOCUMENTATION -------------------//
+
+/**
+ * @module {canComponent} i2web/components/device/badges/illuminance Illuminance
+ * @parent i2web/components/device/badges
+ * @description illuminance humidity component
+ * @signature `<arcus-device-badge-illuminance>`
  *
  */
 
