@@ -59,6 +59,9 @@ export const capabilityPlugins = {
   'ill:illuminance': {
     badges: ['illuminance'],
   },
+  'uvi:index': {
+    badges: ['ultraviolet-index'],
+  },
   'light:colormode': {
     configurators() {
       const color = this.hasCapability('color');

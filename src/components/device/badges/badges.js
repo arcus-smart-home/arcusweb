@@ -40,6 +40,7 @@ import './spaceheater.component';
 import './temperature.component';
 import './temperatureLocked.component';
 import './thermostat.component';
+import './ultravioletIndex.component';
 import './waterHeaterEnergySmart.component';
 
 /**
@@ -406,6 +407,16 @@ import './waterHeaterEnergySmart.component';
  * @parent i2web/components/device/badges
  * @description The thermostat component
  * @signature `<arcus-device-badge-thermostat>`
+ *
+ */
+
+// ---------------- ULTRAVIOLET INDEX DOCUMENTATION -------------//
+
+/**
+ * @module {canComponent} i2web/components/device/badges/ultravioletIndex UltravioletIndex
+ * @parent i2web/components/device/badges
+ * @description The Ultraviolet Index component
+ * @signature `<arcus-device-badge-ultraviolet-index>`
  *
  */
 
