@@ -17,7 +17,8 @@ echo "   \"wsUrl\"  : \"$ARCUS_WS_URI\","    >> $SERVER_CONF
 echo "   \"iosDownloadUrl\"  : \"$ARCUS_IOS_DOWNLOAD_URI\","    >> $SERVER_CONF
 echo "   \"androidDownloadUrl\"  : \"$ARCUS_ANDROID_DOWNLOAD_URI\","    >> $SERVER_CONF
 echo "   \"enableYearlySubscription\"  : $ARCUS_ENABLE_YEARLY_SUBSCRIPTION,"    >> $SERVER_CONF
-echo "   \"enableHubWifiScan\"  : $ARCUS_ENABLE_HUB_WIFI_SCAN"    >> $SERVER_CONF
+echo "   \"enableHubWifiScan\"  : $ARCUS_ENABLE_HUB_WIFI_SCAN,"    >> $SERVER_CONF
+echo "   \"enableBatteryPercentage\"  : $ARCUS_ENABLE_BATTERY_PERCENTAGE"    >> $SERVER_CONF
 echo "}" >> $SERVER_CONF
 
 nginx -g 'daemon off;'

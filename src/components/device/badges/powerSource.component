@@ -35,6 +35,7 @@ limitations under the License.
   <script type="view-model">
     import canMap from 'can-map';
     import 'can-map-define';
+    import config from 'i2web/config';
     import Device from 'i2web/models/device';
 
     export default canMap.extend({
@@ -51,6 +52,7 @@ limitations under the License.
         showNumericPercentage: {
           get() {
             return (
+              !!parseInt(config.enableBatteryPercentage, 10) ||
               this.attr('isSwannCamera') ||
               this.attr('device.devpow:batteryLow')
             );
