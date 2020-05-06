@@ -163,7 +163,7 @@
     "mockdate": "^2.0.5",
     "nconf": "^0.8.4",
     "npm-run-all": "^3.1.1",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^3.0.2",
     "remap-istanbul": "^0.7.0",
     "rimraf": "^2.7.1",
     "sinon": "^1.17.6",
