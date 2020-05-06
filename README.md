@@ -32,6 +32,10 @@ Tests and ESLint can be run with
 npm run test
 ```
 
+If you experience issues running tests in headless chromium (e.g. they never complete), you may need to execute:
+
+`sudo sysctl -w kernel.unprivileged_userns_clone=1`
+
 ## Development mode
 
 The first time, add a host entry for:
