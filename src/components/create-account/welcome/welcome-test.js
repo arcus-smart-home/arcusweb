@@ -138,7 +138,7 @@ describe('i2web/components/create-account/welcome', function favorite() {
             .innerHTML
             .trim(),
           'Oops',
-          'inform the user there are problems with her account',
+          'inform the user there are problems with her account'
         );
         assert.equal(
           document

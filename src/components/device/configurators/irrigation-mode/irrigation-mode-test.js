@@ -60,7 +60,7 @@ describe('i2web/components/device/configurators/irrigation-mode', function irrig
       assert.equal(
         $('li.radio-wrapper').length,
         5,
-        'there are 5 modes: weekly, interval, even, odd and manual',
+        'there are 5 modes: weekly, interval, even, odd and manual'
       );
     });
 
@@ -76,7 +76,7 @@ describe('i2web/components/device/configurators/irrigation-mode', function irrig
       assert.equal(
         $('.radio-buttons .no-events').length,
         4,
-        'all modes but manual have no events',
+        'all modes but manual have no events'
       );
       assert(
         $('.add-events-message').length,

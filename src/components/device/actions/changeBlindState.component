@@ -116,7 +116,7 @@ limitations under the License.
           'actionTimeoutId',
           setTimeout(() => {
             this.attr('actionTimeoutId', '');
-          }, fiveSeconds),
+          }, fiveSeconds)
         );
 
         this.attr('device')[BLIND_ACTIONS[action]]()
