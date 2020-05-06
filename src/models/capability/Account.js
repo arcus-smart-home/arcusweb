@@ -237,7 +237,7 @@ export default {
     /**
      * @function ApplyPartnerDiscount
      *
-     * Applies the Partner discount and associates this account with the specified Partner account.  May be called again to update the linked myPartnerEmail, the resolved Partner account, or both.
+     * Applies the Partner discount and associates this account with the specified Partner account. May be called again to update the linked myPartnerEmail, the resolved Partner account, or both.
      *
      * @param {string} myPartnerEmail The Partner email address of the account owner
      * @param {string} myPartnerPassword The Partner password of the account owner

@@ -19,7 +19,21 @@
  * Outputs JSON and Clover reports to the file system. Shows the text-based coverage on the command line.
  */
 const testee = require('testee');
-const coveragePromise = testee.test('src/test.coverage.html', 'phantom', {
+const puppeteer = require('puppeteer');
+
+// set chromium to node_modules local chromium supplied by puppeteer
+process.env.LAUNCHPAD_CHROMIUM = puppeteer.executablePath()
+
+browsers = [{
+  "browser": "chrome",
+  "args": [
+    "--headless",
+    "--disable-gpu",
+    "--remote-debugging-port=9222"
+  ]
+}]
+
+const coveragePromise = testee.test('src/test.coverage.html', browsers, {
   coverage: {
     dir: 'src/test/coverage/',
     reporters: ['text', 'html', 'clover'],

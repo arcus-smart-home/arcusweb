@@ -77,7 +77,7 @@ describe('i2web/components/create-account/welcome', function favorite() {
     it('shall render a header of Welcome to Arcus if basic or premium', function basicPremium() {
       scope.attr('place', premiumPlace);
 
-      const shouldBe = 'Home Smart Home. Welcome to Arcus !';
+      const shouldBe = 'Home Smart Home. Welcome to Arcus!';
       const is = document.querySelector('arcus-create-account-welcome h1').innerHTML.trim();
       assert.equal(is, shouldBe, 'header is Home Smart Home for basic/premium');
     });
@@ -138,7 +138,7 @@ describe('i2web/components/create-account/welcome', function favorite() {
             .innerHTML
             .trim(),
           'Oops',
-          'inform the user there are problems with her account',
+          'inform the user there are problems with her account'
         );
         assert.equal(
           document

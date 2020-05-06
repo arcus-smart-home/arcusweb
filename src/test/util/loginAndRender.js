@@ -26,6 +26,7 @@ import PlaceManager from 'i2web/models/place-manager';
 import Cornea from 'i2web/cornea/';
 import 'i2web/plugins/debug';
 import types from 'can-types';
+import userData from 'i2web/models/fixtures/data/user.json';
 
 types.DefaultMap = canMap;
 
@@ -36,6 +37,8 @@ const defaults = {
   template: stache('<strong>{{message}}</strong>'), // Can be an element ID, text or stache template
   scope: {},
   appScope: {},
+  username: userData[0].username,
+  password: userData[0].password,
 };
 
 export default function loginAndRender(options) {

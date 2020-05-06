@@ -35,7 +35,7 @@ const Mode = CanMap.extend({
         const a = this.attr('device.base:address');
         return (
           this.attr(
-            `subsystem.sublawnngarden:${m}Schedules.${a}.events.length`,
+            `subsystem.sublawnngarden:${m}Schedules.${a}.events.length`
           ) > 0
         );
       },

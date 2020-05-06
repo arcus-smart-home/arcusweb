@@ -130,7 +130,7 @@ export const ViewModel = canMap.extend({
    * @description handler for when the device identify button is clicked
    */
   onIdentifyClick() {
-    const device = this.attr('device')
+    const device = this.attr('device');
     device.Identify().catch(e => Errors.log(e));
   }
 });

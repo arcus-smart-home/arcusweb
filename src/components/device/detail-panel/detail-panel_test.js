@@ -59,7 +59,7 @@ describe('i2web/components/device/detail-panel', () => {
   });
   it('shall display correct product information', () => {
     const product = productsById[switchDevices[0]['dev:productId']];
-    assert.include($('arcus-device-detail-panel').text(), product['product:arcusProductId'], 'The display text contains the product Id');
+    assert.include($('arcus-device-detail-panel').text(), product['product:name'], 'The display text contains the product Id');
     assert.include($('arcus-device-detail-panel').text(), product['product:arcusModelId'], 'The display text contains the model id');
     assert.include($('arcus-device-detail-panel').text(), product['product:cert'], 'The display text contains the product certification');
     assert.include($('arcus-device-detail-panel').text(), product['product:protoFamily'], 'The display text contains the wireless info');
