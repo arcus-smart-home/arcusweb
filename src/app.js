@@ -549,7 +549,7 @@ const AppViewModel = canMap.extend({
             })
             .catch((e) => {
               Errors.log(e, true);
-            }),
+            })
         );
 
         // load subsystems and associated alarm subsystem incidents
