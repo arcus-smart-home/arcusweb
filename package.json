@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:eyeris/i2web.git"
+    "url": "git@github.com:arcus-smart-home/arcusplatform.git"
   },
   "license": "© 2019 Arcus",
   "main": "i2web/index.stache!done-autorender",
