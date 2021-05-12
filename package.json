@@ -134,7 +134,7 @@
     "semantic-ui-sticky": "^2.2.11",
     "semantic-ui-transition": "^2.2.1",
     "steal-stache": "3.0.7",
-    "swiper": "^3.4.0",
+    "swiper": "^6.5.1",
     "validate.js": "^0.11.0"
   },
   "devDependencies": {
