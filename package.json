@@ -161,7 +161,7 @@
     "mocha-bamboo-reporter": "^1.1.1",
     "mock-socket": "^5.0.1",
     "mockdate": "^2.0.5",
-    "nconf": "^0.8.4",
+    "nconf": "^0.11.4",
     "npm-run-all": "^3.1.1",
     "puppeteer": "^3.0.2",
     "remap-istanbul": "^0.7.0",
