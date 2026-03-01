@@ -258,9 +258,15 @@ export const ViewModel = FormViewModel.extend({
       this.removeAttr('sessionError');
       this.attr('logInUser')(this.attr('emailAddress'), this.attr('password'), this.attr('isPublic')).then(() => {
         getAppState().attr('logoutRequested', false);
-      }).catch(() => {
+      }).catch((e) => {
         this.attr('saving', false);
-        this.attr('formError', 'Invalid username or password');
+        if (e && e.status === 0) {
+          this.attr('formError', 'Unable to reach the server. Please check your connection and try again.');
+        } else if (e && e.status >= 500) {
+          this.attr('formError', 'A server error occurred. Please try again later.');
+        } else {
+          this.attr('formError', 'Invalid username or password');
+        }
       });
     }
   },

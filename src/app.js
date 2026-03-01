@@ -971,6 +971,7 @@ const AppViewModel = canMap.extend({
     auth.on('authentication:fail', this.authFail.bind(this));
     auth.on('authentication:success', this.authSuccess.bind(this));
     auth.on('authentication:logout', this.authLogout.bind(this));
+    auth.on('connection:lost', this.connectionLost.bind(this));
     auth.authenticate().then(() => {
       this.attr('loginMethod', 'auto');
     }).catch(e => canDev.warn(e));
@@ -1001,24 +1002,28 @@ const AppViewModel = canMap.extend({
     this.attr('reconnecting', false);
   },
   /**
+  * @function connectionLost
+  * @parent i2web/app
+  *
+  * Handles temporary network disconnects while user is authenticated.
+  * Cornea handles reconnection via backoff — we just show a notification.
+  */
+  connectionLost() {
+    if (!this.attr('reconnecting')) {
+      this.attr('reconnecting', true);
+      Notifications.error('Lost connection to Arcus. Reconnecting...', 'icon-app-light-1');
+    }
+  },
+  /**
   * @function authFail
   * @parent i2web/app
   *
-  * if authorization fails, if they were logged in, it is reconnection and an error message will
-  * display, otherwise, they will be redirected to login
+  * If authorization fails (not authenticated and connection failed),
+  * redirect to login.
   */
   authFail() {
     this.attr('authenticating', false);
-    // If user was logged in, this is a reconnection
-    // Show an error. When the reconnection happens, authSuccess will redirect.
-    // If user is fresh, go to login.
-    if (this.attr('loggedIn')) {
-      this.attr('reconnecting', true);
-      // This is just a temporary solution until there is a proper error notification widget.
-      Notifications.error('Lost connection to Arcus. Reconnecting...', 'icon-app-light-1');
-    } else {
-      this.redirectToLogin();
-    }
+    this.redirectToLogin();
   },
   /**
   * @function authLogout
