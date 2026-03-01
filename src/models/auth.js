@@ -204,8 +204,12 @@ class Auth extends events.EventEmitter {
       // if a user was authenticated but their session was killed (account deleted?),
       // they will be logged out elsewhere, but we don't want to trigger an auth:fail in this case
       this.cleanupCornea();
+    } else if (this.authenticated) {
+      // network failure while authenticated — Cornea handles reconnection,
+      // don't reset auth state since the session is still valid
+      this.emit('connection:lost');
     } else {
-      // closed for any other reason
+      // not authenticated and connection failed — real auth failure
       this.emit('authentication:fail');
     }
   }
