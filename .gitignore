@@ -6,3 +6,4 @@ dev-bundle.js
 .gradle
 .idea
 node_modules
+.DS_Store
