@@ -1,6 +1,6 @@
 
 def dockerGroup = "eyeris"
-def dockerVersion = "${version_major}.${version_minor}.${version_patch}-${repo.head().abbreviatedId}";
+def dockerVersion = "${rootProject.version_major}.${rootProject.version_minor}.${rootProject.version_patch}-${rootProject.git_head_short}";
 
 def servers = [
       [ 'id': "ui",  'name': "ui-server",  'port': 8096 ],
@@ -85,7 +85,7 @@ task stopService(type: Task) {
 servers.each { server ->
   task "stopService-${server.id}"(type: Exec) {
     // don't fail if it isn't running
-    ignoreExitValue true
+    ignoreExitValue = true
 
     def List<String> cLine = new ArrayList<String>()
     cLine.add('docker');
@@ -147,14 +147,23 @@ servers.each { server ->
   }
 }
 
-task publishDocker(type: Task) {
+// Tag and push the ui-server image built by distDocker to $REGISTRY_NAME,
+// e.g. REGISTRY_NAME=us-west1-docker.pkg.dev/<project>/<repo> ./gradlew :tools:khakis:pushDocker
+def requireRegistry = {
+  if (!System.getenv('REGISTRY_NAME')) {
+    throw new GradleException("REGISTRY_NAME must be set to the registry to push to")
+  }
 }
 
-servers.each { server ->
-  task "publishDocker-${server.id}"(type: Exec) {
-    dependsOn "distDocker-${server.id}"
-    commandLine 'bin/publish.sh', '-v', "${dockerVersion}", "${server.name}"
-  }
+task tagDocker(type: Exec) {
+  doFirst requireRegistry
+  environment 'VERSION', dockerVersion
+  commandLine 'bin/tag.sh', 'eyeris-ui-server'
+}
 
-  publishDocker.dependsOn << "publishDocker-${server.id}"
+task pushDocker(type: Exec) {
+  dependsOn tagDocker
+  doFirst requireRegistry
+  environment 'VERSION', dockerVersion
+  commandLine 'bin/push.sh', 'eyeris-ui-server'
 }
