@@ -23,6 +23,32 @@ import { FormComponent, FormViewModel } from 'i2web/components/form/';
 import getAppState from 'i2web/plugins/get-app-state';
 import view from './login.stache';
 
+/**
+ * @function loginErrorMessage
+ * @parent i2web/pages/login
+ * @param {Object} e The rejection from Auth.login: a jqXHR for HTTP failures,
+ * or an Error with code 'websocket' if the session was created but the
+ * WebSocket connection failed
+ * @return {String}
+ * @description Only reports bad credentials when the server actually rejected
+ * them (4xx); anything else is a connectivity or server problem
+ */
+export function loginErrorMessage(e) {
+  if (e && e.code === 'websocket') {
+    return 'Unable to connect to Arcus. Please try again later.';
+  }
+  if (e && e.status === 0) {
+    return 'Unable to reach the server. Please check your connection and try again.';
+  }
+  if (e && e.status >= 500) {
+    return 'A server error occurred. Please try again later.';
+  }
+  if (e && e.status >= 400) {
+    return 'Invalid username or password';
+  }
+  return 'Something went wrong while signing in. Please try again.';
+}
+
 export const ViewModel = FormViewModel.extend({
   define: {
     /**
@@ -260,13 +286,7 @@ export const ViewModel = FormViewModel.extend({
         getAppState().attr('logoutRequested', false);
       }).catch((e) => {
         this.attr('saving', false);
-        if (e && e.status === 0) {
-          this.attr('formError', 'Unable to reach the server. Please check your connection and try again.');
-        } else if (e && e.status >= 500) {
-          this.attr('formError', 'A server error occurred. Please try again later.');
-        } else {
-          this.attr('formError', 'Invalid username or password');
-        }
+        this.attr('formError', loginErrorMessage(e));
       });
     }
   },

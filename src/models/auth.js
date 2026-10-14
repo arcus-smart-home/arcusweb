@@ -96,7 +96,13 @@ class Auth extends events.EventEmitter {
         'X-Client-Version': config.version,
       },
     }).then(() => {
-      return this.startCornea();
+      // The credentials were accepted, so a failure here is a server or
+      // connectivity problem. Cornea rejects with no reason, so tag it.
+      return this.startCornea().catch(() => {
+        const error = new Error('Unable to open WebSocket connection');
+        error.code = 'websocket';
+        throw error;
+      });
     });
   }
 
