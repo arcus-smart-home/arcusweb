@@ -90,3 +90,9 @@ npm run start
 ## Building containers for production
 
 `./gradlew :tools:khakis:distDocker`
+
+To tag and push the ui-server image to a registry:
+
+`REGISTRY_NAME=<registry> ./gradlew :tools:khakis:pushDocker`
+
+The build runs on the JDK pinned in `gradle/gradle-daemon-jvm.properties` (Java 21), regardless of `JAVA_HOME`. If no matching JDK is installed, Gradle downloads one.
