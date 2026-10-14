@@ -1,5 +1,5 @@
-# Use Debian Wheezy as the base installation
-FROM nginx
+# Stable nginx line on Debian trixie; picks up patch releases within 1.30
+FROM nginx:1.30-trixie
 
 RUN rm /etc/nginx/conf.d/default.conf
 
