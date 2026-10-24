@@ -8,7 +8,7 @@ The Arcus Web application is built on DoneJS. In order to utilize the Arcus Web 
 
 Install git and clone the repository into a local folder.
 
-Currently, the arcusweb project requires Node 8.x LTS and NPM > v3. It is recommended that you install [NVM](https://github.com/creationix/nvm) so you can easily switch between NPM versions. After installing NVM, run:
+The Node version is pinned in `.nvmrc`. It is recommended that you install [NVM](https://github.com/creationix/nvm) so you can easily switch between Node versions. After installing NVM, run:
 
 ```
 cd arcusweb
@@ -23,6 +23,8 @@ npm install donejs@1.0 -g
 npm install
 npm run bundle-dev
 ```
+
+npm only runs the install scripts of dependencies listed in `allowScripts` in `package.json`. Puppeteer's, which downloads the Chromium the tests run in, is the only one needed.
 
 ## Running tests/linting
 
@@ -95,4 +97,4 @@ To tag and push the ui-server image to a registry:
 
 `REGISTRY_NAME=<registry> ./gradlew :tools:khakis:pushDocker`
 
-The build runs on the JDK pinned in `gradle/gradle-daemon-jvm.properties` (Java 21), regardless of `JAVA_HOME`. If no matching JDK is installed, Gradle downloads one.
+The build runs on the JDK pinned in `gradle/gradle-daemon-jvm.properties` (Java 21), regardless of `JAVA_HOME`. If no matching JDK is installed, Gradle downloads one. Likewise, npm runs on the Node version in `.nvmrc`, which Gradle downloads into `.gradle/nodejs`, so the Node installed on the host (if any) doesn't matter.

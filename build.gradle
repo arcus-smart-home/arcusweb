@@ -1,22 +1,28 @@
+plugins {
+   // Runs npm with a Node downloaded into .gradle rather than whatever the host has
+   id 'com.github.node-gradle.node' version '7.1.0'
+}
+
 apply from: "build-release.gradle"
 
 def distDir = "dist";
 
-task installDeps(type: Exec) {
-   List<String> cLine = [ "npm", "install" ]
-
-   commandLine cLine
+node {
+   // .nvmrc is the one place the Node version is set, for nvm and CI as well as Gradle
+   version = file('.nvmrc').text.trim()
+   download = true
 }
 
-task compileJs(type: Exec) {
+task installDeps(type: NpmTask) {
+   args = [ "install" ]
+}
+
+task compileJs(type: NpmTask) {
    dependsOn installDeps
 
-   List<String> cLine = [ "npm", "run", "build" ]
-
-   commandLine cLine
+   args = [ "run", "build" ]
 }
 
 task clean(type: Delete) {
    delete 'node_modules', 'dist'
 }
-
