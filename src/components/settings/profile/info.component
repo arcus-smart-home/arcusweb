@@ -50,7 +50,7 @@ limitations under the License.
             <p class="font-demibold">Email</p>
           </div>
           <div>
-            <p>{{person['person:name']}}<p>
+            <p>{{person['person:name']}}</p>
             <p>{{person['person:mobileNumber']}}</p>
             <p>{{person['person:email']}}</p>
           </div>
@@ -98,7 +98,9 @@ limitations under the License.
             {{#if hasAddOns}}
               <p>Cellular Backup</p>
             {{/if}}
+             -->
           </div>
+          <!-- This would need to be addressed if billing was supported
           {{#if person['web:person:isOwner']}}
             <div>
               <span>

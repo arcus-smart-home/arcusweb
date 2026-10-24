@@ -19,23 +19,21 @@ limitations under the License.
     <ul>
       <li class="radio-wrapper">
         <input type="radio" id="device-1" name="devicename" can-value="" value="">
-          <label for="device-1" class="complex-label">
-            <i class="icon-platform-light-2 icon"></i> 
-            <span class="name">Kitchen Light <br/>
-            <small class="type">Arcus Smart Bulb</small>
-            </span>
-          </label>
-        </input>
+        <label for="device-1" class="complex-label">
+          <i class="icon-platform-light-2 icon"></i> 
+          <span class="name">Kitchen Light <br/>
+          <small class="type">Arcus Smart Bulb</small>
+          </span>
+        </label>
         <div class="check"></div>
       </li>
       <li class="radio-wrapper">
         <input type="radio" id="device-2" name="devicename" can-value="" value="">
-          <label for="device-2" class="complex-label">
-            <i class="icon-app-night-2 icon"></i> 
-            <span class="name">Night
-            </span>
-          </label>
-        </input>
+        <label for="device-2" class="complex-label">
+          <i class="icon-app-night-2 icon"></i> 
+          <span class="name">Night
+          </span>
+        </label>
         <div class="check"></div>
       </li>
     </ul>

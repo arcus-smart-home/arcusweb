@@ -39,7 +39,7 @@ limitations under the License.
             </div>
             <div>
               <img src="/src/images/peaceofmind.png">
-              <p>Greater peace of mind when you're away from home<p>
+              <p>Greater peace of mind when you're away from home</p>
             </div>
           </div>
           <button type="button" class="btn btn-primary-sclera" ($click)="hideModal()">

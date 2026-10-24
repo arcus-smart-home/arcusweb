@@ -76,5 +76,4 @@ limitations under the License.
     <option value="WY">Wyoming</option>
   {{/selectInput}}
   {{textInput('zipCode', 'Zip Code', attributes='type="tel" key-mask="99999"')}}
-  </div>
 </div>

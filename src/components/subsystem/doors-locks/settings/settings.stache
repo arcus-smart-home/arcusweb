@@ -18,8 +18,7 @@ limitations under the License.
   <div class="row panel-list-container">
     <div class="col-xs-12">
       <h2 class="setting-header">Chime Hub</h2>
-        <p>Chime hub if a contact sensor or hinge is opened</p>
-      </h2>
+      <p>Chime hub if a contact sensor or hinge is opened</p>
     </div>
   </div>
   {{#each devices}}

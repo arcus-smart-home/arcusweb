@@ -51,7 +51,7 @@ limitations under the License.
         </table>
       {{else}}
         {{#eq invoices.length 0}}
-          <div><p><em>You have no invoices.</em><p></div>
+          <div><p><em>You have no invoices.</em></p></div>
         {{else}}
           <div class="loader">Loading...</div>
         {{/eq}}
