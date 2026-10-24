@@ -18,6 +18,7 @@ import canRoute from 'can-route';
 import canMap from 'can-map';
 import 'can-map-define';
 import { isIOS8 } from 'i2web/helpers/global';
+import Passkey from 'i2web/models/passkey';
 import Person from 'i2web/models/service/PersonService';
 import { FormComponent, FormViewModel } from 'i2web/components/form/';
 import getAppState from 'i2web/plugins/get-app-state';
@@ -47,6 +48,31 @@ export function loginErrorMessage(e) {
     return 'Invalid username or password';
   }
   return 'Something went wrong while signing in. Please try again.';
+}
+
+/**
+ * @function passkeyLoginErrorMessage
+ * @parent i2web/pages/login
+ * @param {Object} e The rejection from Auth.loginWithPasskey: a DOMException
+ * from the browser's passkey prompt, a jqXHR for HTTP failures, or an Error
+ * with code 'websocket'
+ * @return {String|null} null when the person dismissed the browser's prompt,
+ * since there's nothing to tell them
+ */
+export function passkeyLoginErrorMessage(e) {
+  if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
+    return null;
+  }
+  if (e && e.status === 404) {
+    return 'Passkeys are not available right now. Please log in with your password.';
+  }
+  if (e && e.status === 429) {
+    return 'Too many attempts. Please wait a few minutes and try again.';
+  }
+  if (e && e.status >= 400 && e.status < 500) {
+    return 'That passkey could not be used to log in. Please log in with your password.';
+  }
+  return loginErrorMessage(e);
 }
 
 export const ViewModel = FormViewModel.extend({
@@ -165,6 +191,27 @@ export const ViewModel = FormViewModel.extend({
     * @description flag as to whether we are in a saving state
     */
     saving: {
+      type: 'boolean',
+      value: false,
+    },
+    /**
+    * @property {Boolean} passkeysSupported
+    * @parent i2web/pages/login
+    *
+    * @description Whether to offer logging in with a passkey
+    */
+    passkeysSupported: {
+      get() {
+        return Passkey.isSupported();
+      },
+    },
+    /**
+    * @property {Boolean} waitingForPasskey
+    * @parent i2web/pages/login
+    *
+    * @description flag as to whether a passkey login is in progress
+    */
+    waitingForPasskey: {
       type: 'boolean',
       value: false,
     },
@@ -289,6 +336,33 @@ export const ViewModel = FormViewModel.extend({
         this.attr('formError', loginErrorMessage(e));
       });
     }
+  },
+  /**
+  * @function loginWithPasskey
+  * @parent i2web/pages/login
+  * @param vm
+  * @param el
+  * @param ev
+  * @description Logs in with a passkey the browser prompts the person for
+  */
+  loginWithPasskey(vm, el, ev) {
+    ev.preventDefault();
+    if (this.attr('saving') || this.attr('waitingForPasskey')) {
+      return;
+    }
+
+    this.attr('waitingForPasskey', true);
+    this.removeAttr('sessionError');
+    this.attr('formError', null);
+    this.attr('logInWithPasskey')(this.attr('isPublic')).then(() => {
+      getAppState().attr('logoutRequested', false);
+    }).catch((e) => {
+      this.attr('waitingForPasskey', false);
+      const message = passkeyLoginErrorMessage(e);
+      if (message) {
+        this.attr('formError', message);
+      }
+    });
   },
   /**
   * @function sendCode

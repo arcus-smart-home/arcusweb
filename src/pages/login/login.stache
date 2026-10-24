@@ -161,6 +161,17 @@ limitations under the License.
           {{/if}}
         {{/unless}}
       </div>
+      {{#if passkeysSupported}}
+        <div class="passkey-login">
+          <button type="button" ($click)="loginWithPasskey" class="btn{{#if waitingForPasskey}} saving{{/if}}">
+            {{#if waitingForPasskey}}
+              <div class="loader"></div> Waiting for Passkey
+            {{else}}
+              Log In With a Passkey
+            {{/if}}
+          </button>
+        </div>
+      {{/if}}
       <div hidden>
         <input type="submit"/>
       </div>

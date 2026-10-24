@@ -45,7 +45,9 @@ import 'i2web/components/device/actions/thermostat-slider/thermostat-slider_test
 import 'i2web/components/event-list/event-list_test';
 import 'i2web/components/favorite/favorite_test';
 import 'i2web/components/form/form_test';
+import 'i2web/components/form/add-passkey/add-passkey_test';
 import 'i2web/components/form/delete-account/delete-account_test';
+import 'i2web/components/form/passkeys/passkeys_test';
 import 'i2web/components/header/header_test';
 import 'i2web/components/hub/configuration-panel/configuration-panel_test';
 import 'i2web/components/hub/detail-panel/detail-panel_test';
@@ -143,7 +145,7 @@ import 'i2web/cornea/backoff_test';
 // TODO
 
 // model tests
-// TODO
+import 'i2web/models/passkey_test';
 
 // page tests
 import 'i2web/pages/devices/devices_test';

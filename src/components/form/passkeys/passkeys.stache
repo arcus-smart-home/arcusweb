@@ -1,0 +1,58 @@
+{{!
+Copyright 2019 Arcus Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+}}
+
+<form ($submit)="removePasskeys" {{#if saving}}disabled{{/if}}>
+  <button type="submit" class="btn{{#unless formValidates}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
+    {{#if saving}}
+      <div class="loader"></div> Saving
+    {{else}}
+      Save
+    {{/if}}
+  </button>
+  {{close-button type="cancel"}}
+  {{#if formError}}
+    <p class="form-error">{{formError}}</p>
+  {{/if}}
+  <div class="panel-content">
+    <h2>Passkeys</h2>
+    <p class="panel-description">Below are the passkeys you can log in with. To stop using a passkey, select the minus sign next to it.</p>
+    <p class="panel-context">Removing a passkey here stops it from working with Arcus. You can also delete it from the device or password manager that keeps it.</p>
+    {{#if passkeys}}
+      {{#if passkeys.length}}
+        <ul class="passkey-list">
+        {{#each passkeys}}
+          <li>
+            <span ($click)="removeFromList(., %element)" class="delete-passkey"></span>
+            <div class="passkey-info">
+              <p class="passkey-name">{{name}}</p>
+              <p class="passkey-dates">
+                Added {{format-date created 'MMM D, YYYY'}}
+                {{#if lastUsed}}
+                  &middot; Last used {{format-date lastUsed 'MMM D, YYYY'}}
+                {{/if}}
+              </p>
+            </div>
+          </li>
+        {{/each}}
+        </ul>
+      {{else}}
+        <p>You haven't added any passkeys yet.</p>
+      {{/if}}
+    {{else}}
+      <div class="loader">Loading...</div>
+    {{/if}}
+  </div>
+</form>
