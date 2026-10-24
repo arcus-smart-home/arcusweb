@@ -89,6 +89,10 @@ cd ..
 npm run start
 ```
 
+## Passkeys
+
+People can log in with a passkey instead of their password, and add or remove passkeys under Settings > Profile. The web app offers passkeys only when the ui-server container is started with `ARCUS_ENABLE_PASSKEYS=1` and the browser supports them. Set it only when the platform's client-bridge has `passkey.rp.id` set (see `docs/security.md` in arcusplatform). Passkeys are bound to that domain, so the web app must be served from it or one of its subdomains, and its origin must be listed in `passkey.origins`.
+
 ## Building containers for production
 
 `./gradlew :tools:khakis:distDocker`
@@ -98,7 +102,3 @@ To tag and push the ui-server image to a registry:
 `REGISTRY_NAME=<registry> ./gradlew :tools:khakis:pushDocker`
 
 The build runs on the JDK pinned in `gradle/gradle-daemon-jvm.properties` (Java 21), regardless of `JAVA_HOME`. If no matching JDK is installed, Gradle downloads one. Likewise, npm runs on the Node version in `.nvmrc`, which Gradle downloads into `.gradle/nodejs`, so the Node installed on the host (if any) doesn't matter.
-
-## Passkeys
-
-People can log in with a passkey instead of their password, and add or remove passkeys under Settings > Profile. The web app offers passkeys only when the ui-server container is started with `ARCUS_ENABLE_PASSKEYS=1` and the browser supports them. Set it only when the platform's client-bridge has `passkey.rp.id` set (see `docs/security.md` in arcusplatform). Passkeys are bound to that domain, so the web app must be served from it or one of its subdomains, and its origin must be listed in `passkey.origins`.
