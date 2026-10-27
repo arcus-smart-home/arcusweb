@@ -20,11 +20,10 @@ limitations under the License.
       {{#each things}}
         <li class="radio-wrapper" ($click)="selectOption(.)">
           <input type="radio" id="person-{{%index}}" name="personname" {$checked}="isSelectedContext(.)">
-            <label for="person-{{%index}}" class="complex-label">
-              {{{iconOf(.)}}}
-              <span class="name">{{#if ['person:firstName']}}{{['person:firstName']}}{{else}}{{['dev:name']}}{{/if}}</span>
-            </label>
-          </input>
+          <label for="person-{{%index}}" class="complex-label">
+            {{{iconOf(.)}}}
+            <span class="name">{{#if ['person:firstName']}}{{['person:firstName']}}{{else}}{{['dev:name']}}{{/if}}</span>
+          </label>
           <div class="check"></div>
         </li>
       {{/each}}

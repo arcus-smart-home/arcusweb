@@ -57,29 +57,30 @@ limitations under the License.
       </div>
     {{/if}}
   </div>
- <div class="video-storage">
-  <h3>
-    <a data-analytics="dashboard.{{subsystem.analyticsTag}}.storage" href="{{ routeUrl(page="services" subpage=subsystem.slug action="storage") }}">
-      Video Storage
-    </a>
-  </h3>
-  <div class="storage-info">
-    <p class="service-level">{{serviceLevelText}}</p>
-    <p>
+  <div class="video-storage">
+    <h3>
+      <a data-analytics="dashboard.{{subsystem.analyticsTag}}.storage" href="{{ routeUrl(page="services" subpage=subsystem.slug action="storage") }}">
+        Video Storage
+      </a>
+    </h3>
+    <div class="storage-info">
+      <p class="service-level">{{serviceLevelText}}</p>
+      <p>
+        {{#if place.isBasic}}
+          Unlimited video clip storage for a rolling 1 day period. Download option included.
+        {{else}}
+          Unlimited video clip storage for a rolling 30 day period. Pin up to 150
+          videos for an infinite amount of time. Download option included.
+        {{/if}}
+      </p>
       {{#if place.isBasic}}
-        Unlimited video clip storage for a rolling 1 day period. Download option included.
-      {{else}}
-        Unlimited video clip storage for a rolling 30 day period. Pin up to 150
-        videos for an infinite amount of time. Download option included.
+        <small>
+          To increase your storage, upgrade your service plan.
+        </small>
+        <div>
+          <arcus-upgrade-now />
+        </div>
       {{/if}}
-    </p>
-    {{#if place.isBasic}}
-      <small>
-        To increase your storage, upgrade your service plan.
-      </small>
-      <div>
-        <arcus-upgrade-now />
-      </div>
-    {{/if}}
+    </div>
   </div>
 </div>

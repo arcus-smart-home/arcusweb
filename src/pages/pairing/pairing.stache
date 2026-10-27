@@ -208,35 +208,36 @@ limitations under the License.
       {{/default}}
     {{/switch}}
   </div>
-{{#if dismissCompletionSteps.length}}
-  <arcus-pairing-completion-manager
-    {exit}="@onConfirmExitPairing"
-    {(steps)}="dismissCompletionSteps"
-  />
+  {{#if dismissCompletionSteps.length}}
+    <arcus-pairing-completion-manager
+      {exit}="@onConfirmExitPairing"
+      {(steps)}="dismissCompletionSteps"
+    />
+  {{/if}}
+  {{#if showExitPrompt}}
+    <arcus-pairing-exit-prompt
+      {has-unpaired-devices}="hasUnpairedDevices"
+      {on-confirm-exit-pairing}="@onConfirmExitPairing"
+      {on-resume-pairing}="@onResumePairing"
+    />
+  {{/if}}
+  {{#if showFactoryResetModal}}
+    <arcus-pairing-reset-modal
+      {pairing-device}="pairingDevice"
+      {on-confirm-factory-reset}="@onConfirmFactoryReset"
+      {on-cancel-factory-reset}="@onCancelFactoryReset"
+    />
+  {{/if}}
+  {{#if showRemoveDeviceModal}}
+    <arcus-pairing-remove-modal
+      {pairing-device}="pairingDevice"
+      {on-remove-device}="@onRemoveDevice"
+      {on-cancel}="@onCancelRemoveDevice"
+    />
+  {{/if}}
+  {{#if showFirmwareExitModal}}
+    <arcus-pairing-firmware-exit
+      {(show-firmware-exit-modal)}="showFirmwareExitModal"
+    />
 {{/if}}
-{{#if showExitPrompt}}
-  <arcus-pairing-exit-prompt
-    {has-unpaired-devices}="hasUnpairedDevices"
-    {on-confirm-exit-pairing}="@onConfirmExitPairing"
-    {on-resume-pairing}="@onResumePairing"
-  />
-{{/if}}
-{{#if showFactoryResetModal}}
-  <arcus-pairing-reset-modal
-    {pairing-device}="pairingDevice"
-    {on-confirm-factory-reset}="@onConfirmFactoryReset"
-    {on-cancel-factory-reset}="@onCancelFactoryReset"
-  />
-{{/if}}
-{{#if showRemoveDeviceModal}}
-  <arcus-pairing-remove-modal
-    {pairing-device}="pairingDevice"
-    {on-remove-device}="@onRemoveDevice"
-    {on-cancel}="@onCancelRemoveDevice"
-  />
-{{/if}}
-{{#if showFirmwareExitModal}}
-  <arcus-pairing-firmware-exit
-    {(show-firmware-exit-modal)}="showFirmwareExitModal"
-  />
-{{/if}}
+</div>
