@@ -175,5 +175,12 @@
     "testee": "0.9.1",
     "vhost": "^3.0.2",
     "less": "3.11.1"
+  },
+  "allowScripts": {
+    "puppeteer@3.0.2": true,
+    "ejs": false,
+    "es5-ext": false,
+    "fsevents": false,
+    "spawn-sync": false
   }
 }
