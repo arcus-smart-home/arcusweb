@@ -11,6 +11,8 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    # testee waits forever if the browser exits, so stop a hung run well before GitHub's 6 hours
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -25,6 +27,7 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       # Builds the production bundle with the Node in .nvmrc, then the ui-server and static-server images
