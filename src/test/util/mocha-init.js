@@ -42,7 +42,10 @@ function setupMochaDOM() {
     page.id = 'page';
     testArea.id = 'test-area';
     page.appendChild(testArea);
-    (document.body || document.documentElement).appendChild(page);
+    // keep the test area above the mocha report: syn's drag and move find elements by viewport
+    // coordinates, so anything the growing report pushes below the window can't be reached
+    const parent = document.body || document.documentElement;
+    parent.insertBefore(page, parent.firstChild);
   }
 }
 

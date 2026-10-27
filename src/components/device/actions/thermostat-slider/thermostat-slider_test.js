@@ -48,6 +48,14 @@ function initComponent() {
 function cleanUpComponent() {
   testArea.innerHTML = '';
 }
+// drag a handle horizontally by `distance` pixels. syn reads "100x0" as the page point (100, 0);
+// a relative move needs a sign on both numbers. It also works in viewport coordinates, so start
+// from the top of the page.
+function dragHandle(handle, distance) {
+  window.scrollTo(0, 0);
+  const dx = Math.round(distance);
+  return new Promise(resolve => F(handle).drag(`${dx < 0 ? '' : '+'}${dx}x+0`, resolve));
+}
 
 
 describe('i2web/components/device/actions/thermostat-slider', function favorite() {
@@ -91,7 +99,7 @@ describe('i2web/components/device/actions/thermostat-slider', function favorite(
 
       it('updates output button value on handle move', async () => {
         const startingValue = testArea.querySelector('button.btn-value').innerHTML;
-        await new Promise(resolve => F('.noUi-handle:first').drag('100x0', resolve));
+        await dragHandle(testArea.querySelector('.noUi-handle'), 100);
         const endingValue = testArea.querySelector('button.btn-value').innerHTML;
         assert.notEqual(startingValue, endingValue);
       });
@@ -99,8 +107,9 @@ describe('i2web/components/device/actions/thermostat-slider', function favorite(
       it('maintains the setpoint separation when dragging handle', async () => {
         const margin = vm.attr('device.therm:setpointseparation');
 
-        // drag heat handle as far right as possible
-        await new Promise(resolve => F('.noUi-handle:first').drag('-1000x0', resolve));
+        // drag heat handle onto the cool handle; the slider stops it a setpoint separation away
+        const [heatHandle, coolHandle] = testArea.querySelectorAll('.noUi-handle');
+        await dragHandle(heatHandle, coolHandle.getBoundingClientRect().left - heatHandle.getBoundingClientRect().left);
         // get difference between heatsetpoint and coolsetpoint
         const difference = _.round(vm.attr('device.therm:coolsetpoint') - vm.attr('device.therm:heatsetpoint'), 10);
         // may be mild difference in values due to slider snapping to closest fahrenheit degree
