@@ -91,7 +91,8 @@ describe('i2web/components/device/actions/thermostat-slider', function favorite(
 
       it('updates output button value on handle move', async () => {
         const startingValue = testArea.querySelector('button.btn-value').innerHTML;
-        await new Promise(resolve => F('.noUi-handle:first').drag('100x0', resolve));
+        // syn reads "100x0" as the page point (100, 0); a relative move needs a sign on both numbers
+        await new Promise(resolve => F('#test-area .noUi-handle-lower').drag('+100x+0', resolve));
         const endingValue = testArea.querySelector('button.btn-value').innerHTML;
         assert.notEqual(startingValue, endingValue);
       });
@@ -99,8 +100,8 @@ describe('i2web/components/device/actions/thermostat-slider', function favorite(
       it('maintains the setpoint separation when dragging handle', async () => {
         const margin = vm.attr('device.therm:setpointseparation');
 
-        // drag heat handle as far right as possible
-        await new Promise(resolve => F('.noUi-handle:first').drag('-1000x0', resolve));
+        // drag heat handle onto the cool handle; the slider stops it a setpoint separation away
+        await new Promise(resolve => F('#test-area .noUi-handle-lower').drag('#test-area .noUi-handle-upper', resolve));
         // get difference between heatsetpoint and coolsetpoint
         const difference = _.round(vm.attr('device.therm:coolsetpoint') - vm.attr('device.therm:heatsetpoint'), 10);
         // may be mild difference in values due to slider snapping to closest fahrenheit degree
