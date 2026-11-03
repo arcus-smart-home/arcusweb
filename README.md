@@ -89,6 +89,10 @@ cd ..
 npm run start
 ```
 
+## Passkeys
+
+People can log in with a passkey instead of their password, and add or remove passkeys under Settings > Profile. The web app offers passkeys only when the ui-server container is started with `ARCUS_ENABLE_PASSKEYS=1` and the browser supports them. Set it only when the platform's client-bridge has `passkey.rp.id` set (see `docs/security.md` in arcusplatform). Passkeys are bound to that domain, so the web app must be served from it or one of its subdomains, and its origin must be listed in `passkey.origins`.
+
 ## Building containers for production
 
 `./gradlew :tools:khakis:distDocker`

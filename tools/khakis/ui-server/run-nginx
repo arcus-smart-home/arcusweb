@@ -11,6 +11,9 @@ fi
 if [[ "${ARCUS_ENABLE_BATTERY_PERCENTAGE}" == "" ]]; then
     ARCUS_ENABLE_BATTERY_PERCENTAGE="0"
 fi
+if [[ "${ARCUS_ENABLE_PASSKEYS}" == "" ]]; then
+    ARCUS_ENABLE_PASSKEYS="0"
+fi
 
 mkdir -p $CONF_DIR
 # Overwrite (not append) so container restarts don't produce duplicate entries
@@ -23,7 +26,8 @@ cat > "$SERVER_CONF.tmp" <<EOF
    "androidDownloadUrl"  : "$ARCUS_ANDROID_DOWNLOAD_URI",
    "enableYearlySubscription"  : $ARCUS_ENABLE_YEARLY_SUBSCRIPTION,
    "enableHubWifiScan"  : $ARCUS_ENABLE_HUB_WIFI_SCAN,
-   "enableBatteryPercentage"  : $ARCUS_ENABLE_BATTERY_PERCENTAGE
+   "enableBatteryPercentage"  : $ARCUS_ENABLE_BATTERY_PERCENTAGE,
+   "enablePasskeys"  : $ARCUS_ENABLE_PASSKEYS
 }
 EOF
 mv "$SERVER_CONF.tmp" "$SERVER_CONF"

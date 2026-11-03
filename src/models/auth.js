@@ -18,6 +18,7 @@ import $ from 'jquery';
 import Cornea from 'i2web/cornea/';
 import 'i2web/plugins/jquery.ajax.promise';
 import config from 'i2web/config';
+import Passkey from 'i2web/models/passkey';
 import events from 'events';
 import _trimEnd from 'lodash/trimEnd';
 
@@ -95,14 +96,34 @@ class Auth extends events.EventEmitter {
       headers: {
         'X-Client-Version': config.version,
       },
-    }).then(() => {
-      // The credentials were accepted, so a failure here is a server or
-      // connectivity problem. Cornea rejects with no reason, so tag it.
-      return this.startCornea().catch(() => {
-        const error = new Error('Unable to open WebSocket connection');
-        error.code = 'websocket';
-        throw error;
-      });
+    }).then(() => this.connectAfterLogin());
+  }
+
+  /**
+   * @function loginWithPasskey
+   *
+   * Creates a new session for the client using one of the person's passkeys.
+   * If successful, an httpOnly cookie containing an appropriate token will be created.
+   * @param {Boolean} isPublic
+   * @return {Promise}
+   */
+  loginWithPasskey(isPublic) {
+    return Passkey.login(isPublic).then(() => this.connectAfterLogin());
+  }
+
+  /**
+   * @function connectAfterLogin
+   *
+   * Opens the WebSocket once a login has set the session cookie.
+   * @return {Promise}
+   */
+  connectAfterLogin() {
+    // The credentials were accepted, so a failure here is a server or
+    // connectivity problem. Cornea rejects with no reason, so tag it.
+    return this.startCornea().catch(() => {
+      const error = new Error('Unable to open WebSocket connection');
+      error.code = 'websocket';
+      throw error;
     });
   }
 

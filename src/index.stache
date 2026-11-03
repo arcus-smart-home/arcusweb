@@ -57,7 +57,7 @@ limitations under the License.
             {{#if isPending}}
               <div class="loader">Loading...</div>
             {{else}}
-                <arcus-page-login {log-in-user}="@login" {email-address}="email" />
+                <arcus-page-login {log-in-user}="@login" {log-in-with-passkey}="@loginWithPasskey" {email-address}="email" />
             {{/if}}
           </can-import>
         {{/case}}

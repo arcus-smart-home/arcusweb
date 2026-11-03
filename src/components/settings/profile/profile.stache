@@ -108,6 +108,28 @@ limitations under the License.
     </arcus-accordion-panel-body>
   </arcus-accordion-panel>
 
+  {{#if passkeysSupported}}
+    <arcus-accordion-panel action="passkeys" {active}="isPanelActive('passkeys')">
+      <arcus-accordion-panel-heading>
+        <h2>Passkeys</h2>
+      </arcus-accordion-panel-heading>
+      <arcus-accordion-panel-body>
+        <div class="accordion-panel-content">
+          <div class="accordion-panel-copy">
+            <h3>Log In With a Passkey</h3>
+            <p>A passkey lets you log in with your fingerprint, face, or screen lock instead of your password. Your password keeps working, so you can still use it to log in or to reset your account.</p>
+          </div>
+        </div>
+        <div class="accordion-panel-action">
+          <div class="accordion-buttons">
+            <button class="btn-primary" ($click)="addPasskey()">Add</button>
+            <button class="btn-primary" ($click)="managePasskeys()">Edit</button>
+          </div>
+        </div>
+      </arcus-accordion-panel-body>
+    </arcus-accordion-panel>
+  {{/if}}
+
   <arcus-accordion-panel action="push-notifications" {active}="isPanelActive('push-notifications')">
     <arcus-accordion-panel-heading>
       <h2>Push Notifications</h2>

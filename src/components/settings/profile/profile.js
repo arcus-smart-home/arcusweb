@@ -24,6 +24,7 @@ import config from 'i2web/config';
 import Account from 'i2web/models/account';
 import MobileDevice, { MobileDeviceConnection } from 'i2web/models/mobile-device';
 import Person from 'i2web/models/person';
+import Passkey from 'i2web/models/passkey';
 import Place from 'i2web/models/place';
 import PlaceCapability from 'i2web/models/capability/Place';
 import SidePanel from 'i2web/plugins/side-panel';
@@ -40,6 +41,8 @@ import 'i2web/components/form/change-pin/';
 import 'i2web/components/form/security-question/';
 import 'i2web/components/form/delete-account/';
 import 'i2web/components/form/push-notifications/';
+import 'i2web/components/form/add-passkey/';
+import 'i2web/components/form/passkeys/';
 
 const SecurityQAModel = canMap.extend({
   define: {
@@ -239,6 +242,16 @@ export const ViewModel = canMap.extend({
       },
     },
     /**
+     * @property {boolean} passkeysSupported
+     * @parent i2web/components/settings/profile
+     * @description Whether to offer passkeys
+     */
+    passkeysSupported: {
+      get() {
+        return Passkey.isSupported();
+      },
+    },
+    /**
      * @property {boolean} isAssociated
      * @parent i2web/components/settings/profile
      * @description  Whether the user is associated to an original creator account.
@@ -375,6 +388,22 @@ export const ViewModel = canMap.extend({
       account: this.compute('account'),
       person: this.compute('person'),
     });
+  },
+  /**
+   * @function addPasskey
+   * @parent i2web/pages/settings/profile
+   * @description opens the side panel with the add passkey form inside.
+   */
+  addPasskey() {
+    SidePanel.right('<arcus-form-add-passkey />');
+  },
+  /**
+   * @function managePasskeys
+   * @parent i2web/pages/settings/profile
+   * @description opens the side panel with the list of passkeys inside.
+   */
+  managePasskeys() {
+    SidePanel.right('<arcus-form-passkeys />');
   },
   /**
    * @function pickPushNotifications

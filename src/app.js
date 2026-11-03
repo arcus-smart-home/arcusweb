@@ -1056,6 +1056,15 @@ const AppViewModel = canMap.extend({
     return auth.login(username, password, isPublic);
   },
   /**
+  * @function loginWithPasskey
+  * @parent i2web/app
+  * @param {String} isPublic
+  * logs in with one of the person's passkeys
+  */
+  loginWithPasskey(isPublic) {
+    return auth.loginWithPasskey(isPublic);
+  },
+  /**
   * @function logout
   * @parent i2web/app
   *

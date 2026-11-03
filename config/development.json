@@ -6,5 +6,6 @@
   "iosDownloadUrl": "https://itunes.apple.com",
   "androidDownloadUrl": "https://play.google.com/store/apps",
   "enableYearlySubscription": "1",
-  "enableHubWifiScan": "1"
+  "enableHubWifiScan": "1",
+  "enablePasskeys": "1"
 }

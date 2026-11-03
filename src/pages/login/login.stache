@@ -141,7 +141,7 @@ limitations under the License.
           <p>{{formError}}</p>
         </div>
       {{/if}}
-      <div class="button-wrapper">
+      <div class="button-wrapper{{#if passkeysSupported}} with-passkey{{/if}}">
         <button type="submit" class="btn{{#unless loginFormHasChanges}} disabled{{/unless}}{{#if saving}} saving{{/if}}">
           {{#if saving}}
             <div class="loader"></div> Logging In
@@ -149,6 +149,15 @@ limitations under the License.
             Login
           {{/if}}
         </button>
+        {{#if passkeysSupported}}
+          <button type="button" ($click)="loginWithPasskey" class="btn{{#if waitingForPasskey}} saving{{/if}}">
+            {{#if waitingForPasskey}}
+              <div class="loader"></div> Waiting for Passkey
+            {{else}}
+              Log In With a Passkey
+            {{/if}}
+          </button>
+        {{/if}}
         {{#unless fromEmailLink}}
           {{#if cannotRenderCreateAccount}}
             <a class="create-account-link" href="{{routeUrl page="login" subpage="create-account"}}" ($click)="transitionTo(%event, 'login', 'create-account')">
