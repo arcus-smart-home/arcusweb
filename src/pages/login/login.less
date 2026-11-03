@@ -93,6 +93,13 @@ arcus-page-login {
           margin-right: @gutter/2;
         }
       }
+      // The two ways to log in share a row, and Create An Account moves below them
+      &.with-passkey {
+        flex-wrap: wrap;
+        .create-account-link {
+          flex-basis: 100%;
+        }
+      }
     }
   }
   .login-form {
@@ -107,12 +114,6 @@ arcus-page-login {
         color: @text-color;
         min-width: 280px;
       }
-    }
-    .passkey-login {
-      margin-top: @gutter/2;
-      .breakpoint(md-down, {
-        text-align: center;
-      });
     }
   }
   .login-error {
