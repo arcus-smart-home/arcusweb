@@ -55,10 +55,12 @@ describe('i2web/pages/login', () => {
   });
 
   describe('passkeyLoginErrorMessage', () => {
-    it('says nothing when the browser prompt is dismissed', () => {
-      ['NotAllowedError', 'AbortError'].forEach((name) => {
-        assert.isNull(passkeyLoginErrorMessage({ name }));
-      });
+    it('says nothing when the request is aborted', () => {
+      assert.isNull(passkeyLoginErrorMessage({ name: 'AbortError' }));
+    });
+
+    it('reports a prompt that ended without a passkey', () => {
+      assert.equal(passkeyLoginErrorMessage({ name: 'NotAllowedError' }), 'No passkey was used. Please try again, or log in with your password.');
     });
 
     it('reports a passkey the platform refuses', () => {

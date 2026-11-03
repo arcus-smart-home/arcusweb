@@ -41,10 +41,12 @@ describe('i2web/components/form/add-passkey', function addPasskey() {
   });
 
   describe('addPasskeyErrorMessage', function errorMessage() {
-    it('says nothing when the browser prompt is dismissed', function dismissed() {
-      ['NotAllowedError', 'AbortError'].forEach((name) => {
-        assert.isNull(addPasskeyErrorMessage({ name }));
-      });
+    it('says nothing when the request is aborted', function aborted() {
+      assert.isNull(addPasskeyErrorMessage({ name: 'AbortError' }));
+    });
+
+    it('reports a prompt that ended without a passkey', function noPasskey() {
+      assert.equal(addPasskeyErrorMessage({ name: 'NotAllowedError' }), 'No passkey was added. Please try again.');
     });
 
     it('reports a passkey that is already saved', function duplicate() {

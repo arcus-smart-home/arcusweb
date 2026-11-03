@@ -43,11 +43,15 @@ export function suggestedName(userAgent = window.navigator.userAgent) {
  * @parent i2web/components/form/add-passkey
  * @param {Object} e The rejection from Passkey.register: a DOMException from
  * the browser's passkey prompt, or a jqXHR for HTTP failures
- * @return {String|null} null when the person dismissed the browser's prompt
+ * @return {String|null} null when the request was aborted, since nothing went wrong
  */
 export function addPasskeyErrorMessage(e) {
-  if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
+  if (e && e.name === 'AbortError') {
     return null;
+  }
+  // Browsers report a closed prompt and a timeout the same way
+  if (e && e.name === 'NotAllowedError') {
+    return 'No passkey was added. Please try again.';
   }
   if (e && e.name === 'InvalidStateError') {
     return 'You already have a passkey for your Arcus account saved here.';

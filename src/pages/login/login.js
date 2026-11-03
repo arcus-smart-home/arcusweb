@@ -56,12 +56,16 @@ export function loginErrorMessage(e) {
  * @param {Object} e The rejection from Auth.loginWithPasskey: a DOMException
  * from the browser's passkey prompt, a jqXHR for HTTP failures, or an Error
  * with code 'websocket'
- * @return {String|null} null when the person dismissed the browser's prompt,
- * since there's nothing to tell them
+ * @return {String|null} null when the request was aborted, since nothing went wrong
  */
 export function passkeyLoginErrorMessage(e) {
-  if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
+  if (e && e.name === 'AbortError') {
     return null;
+  }
+  // Browsers report a closed prompt, a timeout, and having no passkey for this
+  // site on the device the same way, so the message has to fit all of them
+  if (e && e.name === 'NotAllowedError') {
+    return 'No passkey was used. Please try again, or log in with your password.';
   }
   if (e && e.status === 404) {
     return 'Passkeys are not available right now. Please log in with your password.';
