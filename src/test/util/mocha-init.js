@@ -52,6 +52,12 @@ function setupMochaDOM() {
 export default function mochaInit(testScriptPath) {
   mocha.setup('bdd');
   F.attach(mocha);
+  // a FuncUnit wait that times out throws before it starts the next queued action, which leaves
+  // the queue stuck and fails every later FuncUnit call in the run; give each test an empty queue
+  mocha.suite.afterEach(function resetFuncUnitQueue() {
+    F._queue = [];
+    F._incallback = false;
+  });
   setupMochaDOM();
   steal.import(testScriptPath).then(() => {
     if (loader.global.Testee) {

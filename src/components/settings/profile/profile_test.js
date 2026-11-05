@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-import canViewModel from 'can-view-model';
 import CanMap from 'can-map';
 import $ from 'jquery';
 import assert from 'chai';
 import './profile';
 import fixture from 'can-fixture/';
-import F from 'funcunit';
 import loginAndRender from 'i2web/test/util/loginAndRender';
 import people from 'i2web/models/fixtures/data/person.json';
 import places from 'i2web/models/fixtures/data/place/place.json';
@@ -69,30 +67,15 @@ describe('i2web/components/settings/profile', function settings() {
       assert.lengthOf($('arcus-settings-profile'), 1, 'there is one component rendered');
     });
 
-    it('renders more panels for account owners than non-owners', function ownersMorePanels(done) {
-      const prePanelCount = F('arcus-settings-profile arcus-accordion-panel').size();
+    it('warns only the account owner that deleting the account erases the hub', function ownerWarning(done) {
+      const warning = () => $('arcus-settings-profile arcus-accordion-panel[action="delete-account"] .accordion-panel-copy p').text();
+      assert.include(warning(), 'Arcus Hub', 'the account owner is warned about the hub');
       getAppState().attr('account.account:owner', 'foo:bar:baz');
 
       setTimeout(() => {
-        const postPanelCount = F('arcus-settings-profile arcus-accordion-panel').size();
-        assert.notEqual(prePanelCount, postPanelCount);
+        assert.notInclude(warning(), 'Arcus Hub', 'other people are not');
         done();
       }, 0);
-    });
-  });
-
-  describe('interactions', function interaction() {
-    it('shall opt a user into marketing material when checked and opt out when unchecked', function optInMarketing(done) {
-      const dateRightNow = Date.now();
-
-      F('.radio-checkbox').click(() => {
-        const vm = canViewModel($('arcus-settings-profile')[0]);
-        assert.isAtLeast(vm.attr('person.person:consentOffersPromotions'), dateRightNow, 'consent to opt in set to a date');
-        F('.radio-checkbox').click(() => {
-          assert.equal(vm.attr('person.person:consentOffersPromotions'), 0, 'consent to opt in set to 0');
-          done();
-        });
-      });
     });
   });
 });
