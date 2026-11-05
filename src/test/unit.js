@@ -145,6 +145,7 @@ import 'i2web/cornea/backoff_test';
 // TODO
 
 // model tests
+import 'i2web/models/device_test';
 import 'i2web/models/passkey_test';
 
 // page tests

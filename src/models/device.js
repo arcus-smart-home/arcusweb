@@ -30,6 +30,7 @@ import deepAssign from 'deep-assign';
 import colorConvert from 'color-convert';
 import { capabilityPlugins, productConfig, deviceTypeConfig, defaultConfig } from 'config/device';
 import AppState from 'i2web/plugins/get-app-state';
+import canMap from 'can-map';
 import { ModelConnection } from './base';
 import mixinCapabilitiesBase from './mixinCapabilitiesBase';
 import moment from 'moment';
@@ -229,10 +230,21 @@ const Device = mixinCapabilitiesBase.extend('Device', {
           ProductCatalogService.GetProduct(placeAddress, productId)
             .then(({ product }) => {
               if (!_isEmpty(product)) {
+                // The response is plain JSON, and a dotted read such as
+                // attr('product.product:vendor') can't reach into a plain object,
+                // so hand back the can-map copy instead.
+                let found;
                 if (products) {
                   products.attr(product['product:id'], product);
+                  found = products.attr(product['product:id']);
+                } else {
+                  found = new canMap(product);
                 }
-                setAttr(product);
+                // can-compute only passes setAttr when something is bound to this
+                // property; a one-off read still leaves the product in the cache above.
+                if (setAttr) {
+                  setAttr(found);
+                }
               }
             })
             .catch(Errors.log);
