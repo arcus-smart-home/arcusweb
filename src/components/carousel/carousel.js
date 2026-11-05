@@ -154,14 +154,18 @@ export default Component.extend({
       });
 
       const watchSize = new WatchElementResize(el);
-      watchSize.on('resize', _.debounce((ev) => {
+      this.onResize = _.debounce((ev) => {
         this.viewModel.attr('containerWidth', ev.element.offset.width);
         this.viewModel.attr('carousel').onResize(true);
-      }, 100));
+      }, 100);
+      watchSize.on('resize', this.onResize);
       // so we can remove the above resize listener later
       this.viewModel.attr('watchForResize', watchSize);
     },
-    '{element} beforeremove': function beforeRemove() {
+    // beforeremove only fires when a live binding removes the component, not on a jQuery remove
+    removed() {
+      // a resize debounced before removal would otherwise call into the destroyed swiper
+      this.onResize.cancel();
       this.viewModel.destroyCarousel();
     },
   },
